@@ -29,20 +29,20 @@ public class PluginDataDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
-   @Schema(description = "插件编号", required=true)
+   @Schema(description = "插件编号")
     private String code;
 
-   @Schema(description = "插件名称", required=true)
+   @Schema(description = "插件名称")
     private String title;
 
-   @Schema(description = "元数据ID", required=true)
+   @Schema(description = "元数据ID")
     private String schemaId;
 
     @Dict(dicCode = "plugin_group")
-   @Schema(description = "分组ID", required=true)
+   @Schema(description = "分组ID")
     private String groupId;
 
     @JsonSerialize(using = DesensitizeSerializer.class)
@@ -53,13 +53,13 @@ public class PluginDataDTO implements Serializable {
    @Schema(description = "后端服务类")
     private String serviceClazz;
 
-   @Schema(description = "前端页面", required=true)
+   @Schema(description = "前端页面")
     private String component;
 
-   @Schema(description = "是否使用", required=true)
+   @Schema(description = "是否使用")
     private Boolean inUse;
 
-   @Schema(description = "插件状态", required=true)
+   @Schema(description = "插件状态")
     private String state;
 
 }

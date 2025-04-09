@@ -3,6 +3,7 @@ package com.yf.base.api.api;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @author bool
  * @date 2019-06-14 21:15
  */
+@Log4j2
 @NoArgsConstructor
 @AllArgsConstructor
 public enum ApiError implements Serializable {
@@ -53,7 +55,7 @@ public enum ApiError implements Serializable {
      */
     public static void main(String[] args) {
         for (ApiError e : ApiError.values()) {
-            System.out.println("'"+e.name().replace("ERROR_", "")+"':'"+e.msg+"',");
+            log.info("'"+e.name().replace("ERROR_", "")+"':'"+e.msg+"',");
         }
     }
 

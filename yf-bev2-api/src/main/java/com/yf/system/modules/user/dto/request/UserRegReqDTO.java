@@ -19,22 +19,22 @@ public class UserRegReqDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-   @Schema(description = "帐号", required=true)
+   @Schema(description = "帐号")
     private String userName;
 
-   @Schema(description = "密码", required=true)
+   @Schema(description = "密码")
     private String password;
 
-   @Schema(description = "姓名", required=true)
+   @Schema(description = "姓名")
     private String realName;
 
-   @Schema(description = "部门", required=true)
+   @Schema(description = "部门")
     private String deptCode;
 
-   @Schema(description = "验证码KEY", required=true)
+   @Schema(description = "验证码KEY")
     private String captchaKey;
 
-   @Schema(description = "验证码值", required=true)
+   @Schema(description = "验证码值")
     private String captchaValue;
 
 

@@ -22,14 +22,14 @@ public class MenuTreeRespDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
    @Schema(description = "上级菜单")
     private String parentId;
 
     @Dict(dicCode = "menu_type")
-   @Schema(description = "1菜单2功能", required=true)
+   @Schema(description = "1菜单2功能")
     private Integer menuType;
 
    @Schema(description = "权限标识")
@@ -65,7 +65,7 @@ public class MenuTreeRespDTO implements Serializable {
    @Schema(description = "越小越前")
     private Integer sort;
 
-   @Schema(description = "子菜单列表", required=true)
+   @Schema(description = "子菜单列表")
     private List<MenuTreeRespDTO> children;
 
 

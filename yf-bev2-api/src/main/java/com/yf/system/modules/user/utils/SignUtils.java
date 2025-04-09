@@ -1,12 +1,14 @@
 package com.yf.system.modules.user.utils;
 
 import com.yf.base.utils.Md5Util;
+import lombok.extern.log4j.Log4j2;
 
 
 /**
  * MD5签名验证工具
  * @author bool
  */
+@Log4j2
 public class SignUtils {
 
     /**
@@ -79,6 +81,6 @@ public class SignUtils {
     public static void main(String [] args) {
         // 构建跳转地址
         String url = generateUrl("http://120.211.98.242:18088", "zhangsan202204143", "可能乱码04143", "student", "北京云帆,技术部");
-        System.out.println("跳转地址："+url);
+        log.info("跳转地址："+url);
     }
 }

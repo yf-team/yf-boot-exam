@@ -108,6 +108,6 @@ public class DesensitizeSerializer extends JsonSerializer<String> {
 
         json = json.replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
        Map<String,Object> map = JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {});
-       System.out.println(map.toString());
+       log.info(map.toString());
     }
 }

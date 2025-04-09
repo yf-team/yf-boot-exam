@@ -49,7 +49,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		log.info("++++++++++开始校验详细权限");
 
-		System.out.println("++++++++详细权限校验。。。。");
+		log.info("++++++++详细权限校验。。。。");
 
 		String userId = null;
 		if (principals != null) {

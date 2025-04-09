@@ -6,8 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
@@ -16,6 +15,7 @@ import java.io.IOException;
  * JSON工具类
  * @author van
  */
+@Log4j2
 public class JsonHelper {
 
     /**
@@ -104,49 +104,8 @@ public class JsonHelper {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true) ;
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         return objectMapper;
-    }
-
-    @Data
-    public static class TestDD{
-        private static final long serialVersionUID = 1L;
-
-
-       @Schema(description = "ID", required=true)
-        private String id;
-
-       @Schema(description = "存储Bucket")
-        private String bucket;
-
-       @Schema(description = "秘钥ID")
-        private String accessKeyId;
-
-       @Schema(description = "秘钥密码")
-        private String accessKeySecret;
-
-       @Schema(description = "节点")
-        private String endpoint;
-
-       @Schema(description = "访问路径")
-        private String url;
-
-       @Schema(description = "智能媒体项目名")
-        private String project;
-
-       @Schema(description = "MPS管道ID")
-        private String pipeline;
-    }
-
-    public static void main(String[] args) {
-
-        String oriResourceStr = "{\"accessKeyId\":\"LTAI5tPdS3emyNm8yU464pJU\",\"pipeline\":\"77bbcf2b2b3f4b5f945f57810ba81aec\",\"bucket\":\"yf-exam-prod\",\"accessKeySecret\":\"ITyqpdvSH4ZLP6pB8E7iqTefCA86X4\",\"endpoint\":\"oss-cn-beijing\",\"project\":\"ossdocdefault\",\"url\":\"https://files.yfhl.net/\"}";
-        TestDD oriResource = JsonHelper.parseObject(oriResourceStr, TestDD.class);
-
-        System.out.println(oriResource);
-
-
     }
 }

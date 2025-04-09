@@ -1,5 +1,7 @@
 package com.yf.base.utils.file;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +16,7 @@ import java.util.zip.ZipOutputStream;
  * 压缩文件工具类
  * @author Dav
  */
+@Log4j2
 public class ZipUtils {
 
     /**
@@ -57,7 +60,7 @@ public class ZipUtils {
         if (!src.exists()) {
             return;
         }
-        System.out.println("压缩" + baseDir + src.getName());
+        log.info("压缩" + baseDir + src.getName());
         if (src.isFile()) {
             compressFile(src, zos, baseDir);
         } else if (src.isDirectory()) {

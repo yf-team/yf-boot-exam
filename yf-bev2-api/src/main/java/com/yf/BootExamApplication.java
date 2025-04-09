@@ -17,11 +17,11 @@ import java.net.UnknownHostException;
 @Log4j2
 @SpringBootApplication
 @EnableCaching
-public class BootApplication {
+public class BootExamApplication {
 
 	public static void main(String[] args) throws UnknownHostException {
 
-		ConfigurableApplicationContext application = SpringApplication.run(BootApplication.class, args);
+		ConfigurableApplicationContext application = SpringApplication.run(BootExamApplication.class, args);
 		Environment env = application.getEnvironment();
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String port = env.getProperty("server.port");

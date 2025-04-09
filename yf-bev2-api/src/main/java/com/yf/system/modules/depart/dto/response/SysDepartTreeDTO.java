@@ -3,7 +3,9 @@ package com.yf.system.modules.depart.dto.response;
 import com.yf.system.modules.depart.dto.SysDepartDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -14,13 +16,15 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2020-09-02 17:25
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name="部门树结构响应类", description="部门树结构响应类")
 public class SysDepartTreeDTO extends SysDepartDTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-   @Schema(description = "子列表", required=true)
+   @Schema(description = "子列表")
     private List<SysDepartTreeDTO> children;
 
    @Schema(description = "前端显示用")

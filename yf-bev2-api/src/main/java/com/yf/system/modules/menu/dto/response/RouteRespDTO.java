@@ -22,7 +22,7 @@ public class RouteRespDTO implements Serializable {
 
 
     @JsonIgnore
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
     @JsonIgnore

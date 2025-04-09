@@ -21,37 +21,37 @@ public class SysDepartDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
-   @Schema(description = "1公司2部门", required=true)
+   @Schema(description = "1公司2部门")
     private Integer deptType;
 
-   @Schema(description = "所属上级", required=true)
+   @Schema(description = "所属上级")
     private String parentId;
 
-   @Schema(description = "部门名称", required=true)
+   @Schema(description = "部门名称")
     private String deptName;
 
-   @Schema(description = "部门编码", required=true)
+   @Schema(description = "部门编码")
     private String deptCode;
 
-   @Schema(description = "部门层级", required=true)
+   @Schema(description = "部门层级")
     private Integer deptLevel;
 
-   @Schema(description = "排序", required=true)
+   @Schema(description = "排序")
     private Integer sort;
 
-   @Schema(description = "创建时间", required=true)
+   @Schema(description = "创建时间")
     private Date createTime;
 
-   @Schema(description = "更新时间", required=true)
+   @Schema(description = "更新时间")
     private Date updateTime;
 
-   @Schema(description = "创建人", required=true)
+   @Schema(description = "创建人")
     private String createBy;
 
-   @Schema(description = "修改人", required=true)
+   @Schema(description = "修改人")
     private String updateBy;
 
 }

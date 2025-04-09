@@ -3,13 +3,16 @@ package com.yf.ability.shiro.jwt;
 import lombok.Data;
 import org.apache.shiro.authc.AuthenticationToken;
 
+import java.io.Serial;
+
 /**
  * @author bool
  */
 @Data
 public class JwtToken implements AuthenticationToken {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * JWT的字符token

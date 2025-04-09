@@ -19,6 +19,7 @@ import com.yf.system.modules.role.service.SysRoleMenuService;
 import com.yf.system.modules.user.UserUtils;
 import com.yf.system.modules.user.entity.SysUserRole;
 import com.yf.system.modules.user.service.SysUserRoleService;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -40,6 +41,7 @@ import java.util.Map;
  * @author 聪明笨狗
  * @since 2021-03-02 13:09
  */
+@Log4j2
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
@@ -109,7 +111,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             throw new ServiceException("您还没有任何角色授权，请联系管理员！");
         }
 
-        System.out.println("++++++++++角色列表：" + JsonHelper.toJson(roleList));
+        log.info("++++++++++角色列表：" + JsonHelper.toJson(roleList));
 
         // 获取路由表
         List<RouteRespDTO> routes = baseMapper.listMenuByRoles(roleList);
@@ -144,7 +146,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Cacheable(value = CacheKey.MENU, key = "'permissions-'+#p0")
     @Override
     public List<String> listPermissionByRoles(List<String> roleIds) {
-        System.out.println("+++++roles:" + JsonHelper.toJson(roleIds));
+        log.info("+++++roles:" + JsonHelper.toJson(roleIds));
         return baseMapper.listPermissionByRoles(roleIds);
     }
 

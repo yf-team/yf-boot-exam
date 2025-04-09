@@ -20,13 +20,13 @@ public class SysUserUpdateReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "头像", required=true)
+   @Schema(description = "头像")
     private String avatar;
 
-   @Schema(description = "真实姓名", required=true)
+   @Schema(description = "真实姓名")
     private String realName;
 
-   @Schema(description = "密码", required=true)
+   @Schema(description = "密码")
     private String password;
 
    @Schema(description = "身份证号码")

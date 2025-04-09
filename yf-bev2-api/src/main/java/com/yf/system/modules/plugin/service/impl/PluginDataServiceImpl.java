@@ -13,6 +13,7 @@ import com.yf.system.modules.plugin.dto.PluginDataDTO;
 import com.yf.system.modules.plugin.entity.PluginData;
 import com.yf.system.modules.plugin.mapper.PluginDataMapper;
 import com.yf.system.modules.plugin.service.PluginDataService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2022-09-05 10:05
 */
+@Log4j2
 @Service
 public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginData> implements PluginDataService {
 
@@ -40,7 +42,7 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
         //获得数据
         IPage<PluginData> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        System.out.println("++++++service转换了。。。");
+        log.info("++++++service转换了。。。");
         IPage<PluginDataDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginDataDTO>>(){});
         return pageData;
     }

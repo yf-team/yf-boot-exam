@@ -4,12 +4,14 @@ package com.yf.base.api.exception;
 import com.yf.base.api.api.ApiError;
 import com.yf.base.api.api.ApiRest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
  * 通用异常处理类
  * @author bool
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ServiceException extends RuntimeException{
 

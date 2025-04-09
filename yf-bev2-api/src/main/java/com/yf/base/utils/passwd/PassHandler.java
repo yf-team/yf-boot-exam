@@ -2,6 +2,7 @@ package com.yf.base.utils.passwd;
 
 
 import com.yf.base.utils.file.MD5Util;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
@@ -12,6 +13,7 @@ import org.apache.commons.lang3.RandomStringUtils;
  * @author Bool
  * @version
  */
+@Log4j2
 public class PassHandler {
 
 	/**
@@ -48,9 +50,9 @@ public class PassHandler {
 
 	public static void main(String[] args) {
 		PassInfo pa = buildPassword("4RK#nxUp1yu981Rx");
-		System.out.println("UPDATE sys_user SET `password`='"+pa.getPassword()+"',salt='"+pa.getSalt()+"',data_flag=0 WHERE user_name='admin';");
+		log.info("UPDATE sys_user SET `password`='"+pa.getPassword()+"',salt='"+pa.getSalt()+"',data_flag=0 WHERE user_name='admin';");
 
 		PassInfo ps = buildPassword("RzQ#zSb*MFX89bCP");
-		System.out.println("UPDATE sys_user SET `password`='"+ps.getPassword()+"',salt='"+ps.getSalt()+"',data_flag=0 WHERE user_name='student';");
+		log.info("UPDATE sys_user SET `password`='"+ps.getPassword()+"',salt='"+ps.getSalt()+"',data_flag=0 WHERE user_name='student';");
 	}
 }

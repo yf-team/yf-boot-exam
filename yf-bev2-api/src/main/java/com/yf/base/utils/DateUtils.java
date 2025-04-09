@@ -1,5 +1,7 @@
 package com.yf.base.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.GregorianCalendar;
  *
  * @author Bool
  */
+@Log4j2
 public class DateUtils {
 
     /**
@@ -31,8 +34,7 @@ public class DateUtils {
         now.setTime(new Date());
 
         long l = now.getTimeInMillis() - start.getTimeInMillis();
-        int days = new Long(l / (1000 * 60 * 60 * 24)).intValue();
-        return days;
+        return (int)(l / (1000 * 60 * 60 * 24));
     }
 
 
@@ -113,7 +115,7 @@ public class DateUtils {
         cl.set(Calendar.MINUTE, 59);
         cl.set(Calendar.SECOND, 59);
 
-        System.out.println(DateUtils.formatDate(cl.getTime(), "yyyy-MM-dd HH:mm:ss"));
+        log.info(DateUtils.formatDate(cl.getTime(), "yyyy-MM-dd HH:mm:ss"));
 
         return cl.getTime();
     }

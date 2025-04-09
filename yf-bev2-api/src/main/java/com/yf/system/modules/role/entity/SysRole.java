@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -17,10 +19,12 @@ import java.util.Date;
 * @author 聪明笨狗
 * @since 2020-04-13 16:57
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_role")
 public class SysRole extends Model<SysRole> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

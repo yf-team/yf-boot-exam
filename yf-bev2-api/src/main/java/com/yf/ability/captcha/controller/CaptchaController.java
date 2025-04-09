@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,7 @@ import java.util.UUID;
  *
  * @since 2019-04-16 10:14
  */
+@Log4j2
 @Tag(name = "验证码生成类")
 @RestController
 @RequestMapping("/api/common/captcha")
@@ -71,7 +73,7 @@ public class CaptchaController extends BaseController {
     }
 
     public static void main(String[] args) {
-        System.out.println(UUID.randomUUID());
+        log.info(UUID.randomUUID());
     }
 
 }

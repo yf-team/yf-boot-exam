@@ -22,32 +22,32 @@ public class SysRoleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "角色ID", required=true)
+   @Schema(description = "角色ID")
     private String id;
 
-   @Schema(description = "角色名称", required=true)
+   @Schema(description = "角色名称")
     private String roleName;
 
     @Dict(dicCode = "data_scope")
-   @Schema(description = "数据权限", required=true)
+   @Schema(description = "数据权限")
     private Integer dataScope;
 
-   @Schema(description = "越大越高", required=true)
+   @Schema(description = "越大越高")
     private Integer roleLevel;
 
    @Schema(description = "备注信息")
     private String remark;
 
-   @Schema(description = "创建时间", required=true)
+   @Schema(description = "创建时间")
     private Date createTime;
 
-   @Schema(description = "更新时间", required=true)
+   @Schema(description = "更新时间")
     private Date updateTime;
 
-   @Schema(description = "创建人", required=true)
+   @Schema(description = "创建人")
     private String createBy;
 
-   @Schema(description = "修改人", required=true)
+   @Schema(description = "修改人")
     private String updateBy;
 
 }

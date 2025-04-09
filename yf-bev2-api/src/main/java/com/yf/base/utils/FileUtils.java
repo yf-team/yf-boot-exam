@@ -1,10 +1,13 @@
 package com.yf.base.utils;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.File;
 
 /**
  * @author bool
  */
+@Log4j2
 public class FileUtils {
 
     public static boolean checkDelete(String path){
@@ -38,14 +41,14 @@ public class FileUtils {
 
 
             if(checkDelete(item.getAbsolutePath())){
-                System.out.println("+++++++++删除文件："+item.getAbsolutePath());
+                log.info("+++++++++删除文件："+item.getAbsolutePath());
                 item.delete();
             }
         }
 
         // 删除大文件夹
         if(checkDelete(file.getAbsolutePath())){
-            System.out.println("+++++++++删除文件："+file.getAbsolutePath());
+            log.info("+++++++++删除文件："+file.getAbsolutePath());
             file.delete();
         }
     }

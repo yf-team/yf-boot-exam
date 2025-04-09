@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
 
 /**
 * <p>
@@ -14,10 +17,12 @@ import lombok.Data;
 * @author 聪明笨狗
 * @since 2020-12-01 14:00
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_dic")
 public class SysDic extends Model<SysDic> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

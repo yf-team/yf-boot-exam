@@ -3,6 +3,7 @@ package com.yf.ability.upload.factory;
 import com.yf.ability.upload.service.UploadService;
 import com.yf.base.utils.SpringUtils;
 import com.yf.system.modules.plugin.service.PluginDataService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
  * 服务器端上传文件方法
  * @author van
  */
+@Log4j2
 @Service
 public class UploadFactory {
 
@@ -30,7 +32,7 @@ public class UploadFactory {
         // 获得实现类
         String clazz = pluginDataService.findServiceClazz(GROUP_ID);
 
-        System.out.println("+++++服务实现类："+clazz);
+        log.info("+++++服务实现类："+clazz);
 
         try {
             return (UploadService)SpringUtils.getBean(Class.forName(clazz));

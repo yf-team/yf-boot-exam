@@ -1,6 +1,7 @@
 package com.yf.base.utils.http;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author bool
  * @date 2016-07-20 15:31
  */
+@Log4j2
 public class HttpClientUtil {
 
 	/**
@@ -163,10 +165,10 @@ public class HttpClientUtil {
 			URL url = new URL(input);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			int code = conn.getResponseCode();
-			System.out.println("++++++检测URL："+input+"\n响应代码："+code);
+			log.info("++++++检测URL："+input+"\n响应代码："+code);
 			if(code == 200){
 				String contentType = conn.getContentType();
-				System.out.println("++++数据类型："+contentType);
+				log.info("++++数据类型："+contentType);
 				return contentType.contains(type);
 			}
 			return code==200;
@@ -178,7 +180,7 @@ public class HttpClientUtil {
 
 	public static void main(String[] args) {
 		boolean sss = exist("https://cdn.jeegen.com/2022/6/17/1655436586635-3aeecedc.jpg", "image");
-		System.out.println(sss);
+		log.info(sss);
 	}
 
 }

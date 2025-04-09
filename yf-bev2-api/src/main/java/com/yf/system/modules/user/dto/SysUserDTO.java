@@ -22,25 +22,25 @@ public class SysUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
-   @Schema(description = "用户名", required=true)
+   @Schema(description = "用户名")
     private String userName;
 
-   @Schema(description = "头像", required=true)
+   @Schema(description = "头像")
     private String avatar;
 
-   @Schema(description = "真实姓名", required=true)
+   @Schema(description = "真实姓名")
     private String realName;
 
-   @Schema(description = "密码", required=true)
+   @Schema(description = "密码")
     private String password;
 
-   @Schema(description = "密码盐", required=true)
+   @Schema(description = "密码盐")
     private String salt;
 
-   @Schema(description = "状态", required=true)
+   @Schema(description = "状态")
     private Integer state;
 
    @Schema(description = "身份证号码")
@@ -56,16 +56,16 @@ public class SysUserDTO implements Serializable {
    @Schema(description = "部门编码")
     private String deptCode;
 
-   @Schema(description = "创建时间", required=true)
+   @Schema(description = "创建时间")
     private Date createTime;
 
-   @Schema(description = "更新时间", required=true)
+   @Schema(description = "更新时间")
     private Date updateTime;
 
-   @Schema(description = "创建人", required=true)
+   @Schema(description = "创建人")
     private String createBy;
 
-   @Schema(description = "修改人", required=true)
+   @Schema(description = "修改人")
     private String updateBy;
 
 }

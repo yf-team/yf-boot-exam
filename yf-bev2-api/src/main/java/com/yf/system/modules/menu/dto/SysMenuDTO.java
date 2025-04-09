@@ -21,13 +21,13 @@ public class SysMenuDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
    @Schema(description = "上级菜单")
     private String parentId;
 
-   @Schema(description = "1菜单2功能", required=true)
+   @Schema(description = "1菜单2功能")
     private Integer menuType;
 
    @Schema(description = "权限标识")
@@ -63,16 +63,16 @@ public class SysMenuDTO implements Serializable {
    @Schema(description = "越小越前")
     private Integer sort;
 
-   @Schema(description = "创建时间", required=true)
+   @Schema(description = "创建时间")
     private Date createTime;
 
-   @Schema(description = "更新时间", required=true)
+   @Schema(description = "更新时间")
     private Date updateTime;
 
-   @Schema(description = "创建人", required=true)
+   @Schema(description = "创建人")
     private String createBy;
 
-   @Schema(description = "修改人", required=true)
+   @Schema(description = "修改人")
     private String updateBy;
 
 }

@@ -21,22 +21,22 @@ public class SysUserQueryReqDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "角色ID", required=true)
+   @Schema(description = "角色ID")
     private List<String> roleIds;
 
-   @Schema(description = "用户名", required=true)
+   @Schema(description = "用户名")
     private String userName;
 
-   @Schema(description = "机构编码", required=true)
+   @Schema(description = "机构编码")
     private String deptCode;
 
-   @Schema(description = "排除列表", required=true)
+   @Schema(description = "排除列表")
     private List<String> excludes;
 
-   @Schema(description = "状态", required=true)
+   @Schema(description = "状态")
     private Integer state;
 
-   @Schema(description = "手机号码", required=true)
+   @Schema(description = "手机号码")
     private String mobile;
 
 }

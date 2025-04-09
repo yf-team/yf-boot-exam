@@ -1,5 +1,6 @@
 package com.yf.base.utils;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.ClassPathResource;
 
@@ -10,6 +11,7 @@ import java.io.*;
  * 资源工具
  * @author bool
  */
+@Log4j2
 public class ResourceUtil {
 
 
@@ -91,6 +93,6 @@ public class ResourceUtil {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println(fullPath("tmpl/learn-cert.docx"));
+        log.info(fullPath("tmpl/learn-cert.docx"));
     }
 }

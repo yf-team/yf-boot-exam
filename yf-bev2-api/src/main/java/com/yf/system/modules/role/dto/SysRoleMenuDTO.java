@@ -20,13 +20,13 @@ public class SysRoleMenuDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
-   @Schema(description = "角色ID", required=true)
+   @Schema(description = "角色ID")
     private String roleId;
 
-   @Schema(description = "菜单ID", required=true)
+   @Schema(description = "菜单ID")
     private String menuId;
 
 }

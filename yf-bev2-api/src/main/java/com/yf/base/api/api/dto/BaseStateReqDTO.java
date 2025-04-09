@@ -1,9 +1,8 @@
 package com.yf.base.api.api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -15,16 +14,15 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2019-04-20 12:15
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name="通用状态请求类", description="通用状态请求类")
-@AllArgsConstructor
-@NoArgsConstructor
 public class BaseStateReqDTO extends BaseDTO {
 
 
-   @Schema(description = "要修改对象的ID列表", required=true)
+   @Schema(description = "要修改对象的ID列表")
     private List<String> ids;
 
-   @Schema(description = "通用状态，0为正常，1为禁用", required=true)
+   @Schema(description = "通用状态，0为正常，1为禁用")
     private Integer state;
 }

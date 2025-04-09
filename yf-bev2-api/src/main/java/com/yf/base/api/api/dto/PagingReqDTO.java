@@ -18,10 +18,10 @@ import java.util.List;
 public class PagingReqDTO<T> {
 
 
-   @Schema(description = "当前页码", required = true, example = "1")
+   @Schema(description = "当前页码", example = "1")
     private Integer current;
 
-   @Schema(description = "每页数量", required = true, example = "10")
+   @Schema(description = "每页数量", example = "10")
     private Integer size;
 
    @Schema(description = "查询参数")

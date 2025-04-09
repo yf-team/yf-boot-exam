@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
 
 /**
 * <p>
@@ -15,10 +18,12 @@ import lombok.Data;
 * @author 聪明笨狗
 * @since 2022-09-05 10:05
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("pl_plugin_schema")
 public class PluginSchema extends Model<PluginSchema> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

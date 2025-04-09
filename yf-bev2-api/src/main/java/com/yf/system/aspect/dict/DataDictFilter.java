@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.yf.base.utils.SpringUtils;
 import com.yf.system.modules.dict.service.SysDicValueService;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
  *
  * @author van
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Log4j2
 public class DataDictFilter extends JsonSerializer<Object> {

@@ -19,16 +19,16 @@ public class SysUserLoginReqDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-   @Schema(description = "用户名", required=true)
+   @Schema(description = "用户名")
     private String userName;
 
-   @Schema(description = "密码", required=true)
+   @Schema(description = "密码")
     private String password;
 
-   @Schema(description = "验证码key", required=true)
+   @Schema(description = "验证码key")
     private String captchaKey;
 
-   @Schema(description = "用户输入的验证码值", required=true)
+   @Schema(description = "用户输入的验证码值")
     private String captchaValue;
 
 }

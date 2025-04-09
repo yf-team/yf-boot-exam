@@ -25,7 +25,7 @@ public class MyExcelWriter extends BigExcelWriter {
             // 解决自动设置列宽中文失效的问题
             int colWidth = sheet.getColumnWidth(i);
             if(colWidth<255*256){
-                sheet.setColumnWidth(i, colWidth < 3000 ? 3000 : colWidth);
+                sheet.setColumnWidth(i, Math.max(colWidth, 3000));
             }else{
                 sheet.setColumnWidth(i,6000 );
             }

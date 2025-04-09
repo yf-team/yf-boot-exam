@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -16,10 +19,12 @@ import java.util.Date;
 * @author 聪明笨狗
 * @since 2021-08-02 14:49
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_user_bind")
 public class SysUserBind extends Model<SysUserBind> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

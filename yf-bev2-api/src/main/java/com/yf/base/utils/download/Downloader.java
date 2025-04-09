@@ -6,6 +6,7 @@ import com.yf.base.utils.download.thread.DownloadThread;
 import com.yf.base.utils.file.MD5Util;
 import com.yf.base.utils.file.TextFileUtils;
 import com.yf.base.utils.jackson.JsonHelper;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  * @author bool
  * @date 2018/8/23 08:49
  */
+@Log4j2
 public class Downloader {
 
     /**
@@ -291,17 +293,17 @@ public class Downloader {
             Thread.sleep(800);
             //计算下载进度
             float percent = downloader.getDownloaded() * 100f / downloader.getFileLength();
-            System.out.println("+++++下载进度为:" + percent + "%");
+            log.info("+++++下载进度为:" + percent + "%");
         }
 
         //可以做一些文件的完整性校验
         String md5 = MD5Util.getFileMD5(new File(dist));
-        System.out.println("+++++下载件MD5:" + md5);
+        log.info("+++++下载件MD5:" + md5);
 
         //比较源文件的MD5
         String example = "/Users/bool/Downloads/itranslate.dmg";
         String exMD5 = MD5Util.getFileMD5(new File(example));
-        System.out.println("+++++参考件MD5:" + exMD5);
+        log.info("+++++参考件MD5:" + exMD5);
 
     }
 }

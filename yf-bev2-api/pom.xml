@@ -17,13 +17,13 @@
         <oss.version>3.7.0</oss.version>
         <aliyun.sdk.version>4.4.9</aliyun.sdk.version>
         <swagger.version>2.9.2</swagger.version>
-        <dozer.version>5.5.1</dozer.version>
+        <dozer.version>6.5.0</dozer.version>
         <apache.commons.version>3.8</apache.commons.version>
         <lombok.version>1.18.38</lombok.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <poi.version>4.1.2</poi.version>
         <log4j2.version>2.16.0</log4j2.version>
-        <shiro.version>2.0.1</shiro.version>
+        <shiro.version>2.0.2</shiro.version>
     </properties>
 
 
@@ -113,6 +113,24 @@
             </exclusions>
         </dependency>
 
+        <!-- shiro-redis 3.x + Jedis 3.x -->
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>3.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>redis.clients</groupId>
+                    <artifactId>jedis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.7.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -188,17 +206,23 @@
         </dependency>
 
 
-
-
-
-
-        <!-- 以下jar包尚未处理Springboot3-->
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+            <version>7.0.0</version>
+        </dependency>
 
 
         <!-- WEB支持 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <!-- 缓存支持 -->
@@ -227,59 +251,19 @@
         </dependency>
 
 
-
-
-
         <!-- WebSocket用于文件阅读 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!-- 开发热更新 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
+
+        <!-- 以下jar包尚未处理Springboot3-->
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.9.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>${dozer.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>org.dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-
-
 
 
         <!-- poi office -->

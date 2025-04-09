@@ -2,11 +2,13 @@ package com.yf.base.utils;
 
 
 import com.yf.base.api.exception.ServiceException;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 部门编码生成器，用于生成每个级别的部门，每个同级部门最多支持2573个，超出会异常
  * @author Van
  */
+@Log4j2
 public class DeptCodeGen {
 
     /**
@@ -35,7 +37,7 @@ public class DeptCodeGen {
 
     public static void main(String[] args) {
         for(int i=0;i<=2573;i++){
-            System.out.println(gen(i));
+            log.info(gen(i));
         }
     }
 }

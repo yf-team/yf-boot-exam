@@ -1,6 +1,7 @@
 package com.yf.base.utils;
 
 import com.yf.base.utils.jackson.JsonHelper;
+import lombok.extern.log4j.Log4j2;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
  * 计算工具类
  * @author van
  */
+@Log4j2
 public class CalcUtils {
 
     /**
@@ -49,6 +51,6 @@ public class CalcUtils {
 
     public static void main(String[] args) {
         List<BigDecimal> list = avgSplit(new BigDecimal(10), 3);
-        System.out.println(JsonHelper.toJson(list));
+        log.info(JsonHelper.toJson(list));
     }
 }

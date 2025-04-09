@@ -20,7 +20,7 @@ public class PluginSchemaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID", required=true)
+   @Schema(description = "ID")
     private String id;
 
    @Schema(description = "元数据")

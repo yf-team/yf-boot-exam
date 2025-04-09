@@ -18,10 +18,10 @@ import java.io.Serializable;
 public class SysUserPassReqDTO implements Serializable {
 
 
-   @Schema(description = "旧密码", required=true)
+   @Schema(description = "旧密码")
     private String oldPassword;
 
-   @Schema(description = "新密码", required=true)
+   @Schema(description = "新密码")
     private String password;
 
 }

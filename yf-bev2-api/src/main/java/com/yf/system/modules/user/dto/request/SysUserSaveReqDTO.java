@@ -3,6 +3,7 @@ package com.yf.system.modules.user.dto.request;
 import com.yf.system.modules.user.dto.SysUserDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -14,10 +15,11 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2020-04-13 16:57
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name="管理员保存请求类", description="管理员保存请求类")
 public class SysUserSaveReqDTO extends SysUserDTO {
 
-   @Schema(description = "角色列表", required=true)
+   @Schema(description = "角色列表")
     private List<String> roles;
 }
