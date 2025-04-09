@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yf</groupId>
-    <artifactId>yf-exam-api</artifactId>
+    <artifactId>yf-bev2-api</artifactId>
     <packaging>jar</packaging>
     <version>2.0.101</version>
-    <name>yf-exam-api</name>
+    <name>yf-bev2-api</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -113,11 +113,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.crazycake</groupId>
-            <artifactId>shiro-redis-spring-boot-starter</artifactId>
-            <version>3.3.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>

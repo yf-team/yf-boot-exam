@@ -14,7 +14,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        name: 'Redirect',
+        name: 'RedirectPath',
         component: () => import('@/views/Redirect/Redirect.vue'),
         meta: {}
       }

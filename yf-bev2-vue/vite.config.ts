@@ -107,7 +107,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       }
     },
     server: {
-      port: 5000,
+      port: 8000,
       hmr: {
         overlay: false
       },

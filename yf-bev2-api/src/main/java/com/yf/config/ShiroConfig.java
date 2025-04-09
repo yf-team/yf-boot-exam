@@ -3,8 +3,9 @@ package com.yf.config;
 import com.yf.ability.shiro.CNFilterFactoryBean;
 import com.yf.ability.shiro.MyShiroRealm;
 import com.yf.ability.shiro.aop.JwtFilter;
+import com.yf.config.shiro.ShiroRedisCacheManager;
+import jakarta.servlet.Filter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
@@ -12,15 +13,12 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.redis.core.RedisTemplate;
 
-import jakarta.servlet.Filter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -34,19 +32,13 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    @Value("${spring.data.redis.port}")
-    private String redisPort;
+    @Bean
+    public ShiroRedisCacheManager shiroRedisCacheManager(
+            RedisTemplate<String, Object> redisTemplate) {
+        return new ShiroRedisCacheManager(redisTemplate, 18000L); // 缓存过期时间 30 分钟
+    }
 
-    @Value("${spring.data.redis.host}")
-    private String redisHost;
-
-    @Value("${spring.data.redis.password}")
-    private String redisPass;
-
-	@Value("${spring.data.redis.database}")
-	private Integer database;
-
-	/**
+    /**
 	 * Filter Chain定义说明
 	 *
 	 * 1、一个URL可以配置多个Filter，使用逗号分隔
@@ -119,7 +111,7 @@ public class ShiroConfig {
 	}
 
 	@Bean("securityManager")
-	public DefaultWebSecurityManager securityManager(MyShiroRealm myRealm) {
+	public DefaultWebSecurityManager securityManager(MyShiroRealm myRealm, ShiroRedisCacheManager shiroRedisCacheManager) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
 		DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
@@ -127,7 +119,7 @@ public class ShiroConfig {
 		subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
 		securityManager.setSubjectDAO(subjectDAO);
         //自定义缓存实现,使用redis
-        securityManager.setCacheManager(redisCacheManager());
+        securityManager.setCacheManager(shiroRedisCacheManager);
 		securityManager.setRealm(myRealm);
 		return securityManager;
 	}
@@ -156,41 +148,4 @@ public class ShiroConfig {
 		advisor.setSecurityManager(securityManager);
 		return advisor;
 	}
-
-    /**
-     * cacheManager 缓存 redis实现
-     * 使用的是shiro-redis开源插件
-     *
-     * @return
-     */
-    public RedisCacheManager redisCacheManager() {
-        log.info("++++++++++初始化缓存管理器:RedisCacheManager");
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        //redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)
-        redisCacheManager.setPrincipalIdFieldName("id");
-        //用户权限信息缓存时间
-        redisCacheManager.setExpire(Integer.MAX_VALUE);
-        return redisCacheManager;
-    }
-
-    /**
-     * 配置shiro redisManager
-     * 使用的是shiro-redis开源插件
-     *
-     * @return
-     */
-    @Bean
-    public RedisManager redisManager() {
-        log.info("++++++++++初始化权限缓存:RedisManager:" + redisHost + ":" + redisPort);
-		RedisManager redisManager = new RedisManager();
-		redisManager.setHost(redisHost + ":"  + redisPort);
-		redisManager.setDatabase(database);
-		redisManager.setTimeout(0);
-		if (!StringUtils.isEmpty(redisPass)) {
-			redisManager.setPassword(redisPass);
-		}
-		return redisManager;
-    }
-
 }

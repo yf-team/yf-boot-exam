@@ -42,7 +42,6 @@ spring:
             threadsInheritContextClassLoaderOfInitializingThread: true
 
 
-
 # 开启文档
 springdoc:
   api-docs:
@@ -55,4 +54,4 @@ logging:
   level:
     root: info
   file:
-    path: logs/${spring.application.name}/
+    path: logs/

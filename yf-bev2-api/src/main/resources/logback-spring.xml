@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
     <property name="log.path" value="${LOG_PATH:-.}" />
+    <property name="LOG_CHARSET" value="UTF-8" />
 
-    <!-- 控制台打印日志的相关配置 -->
+    <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- 日志格式 -->
         <encoder>
+            <charset>${LOG_CHARSET}</charset>
             <pattern>%d{MM-dd HH:mm:ss.SSS} %-5level [%logger{50}] - %msg%n</pattern>
         </encoder>
     </appender>
+
 
     <!--debug级别日志输出器-->
     <appender name="FILE-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -19,6 +21,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
+            <charset>${LOG_CHARSET}</charset>
             <pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -37,6 +40,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
+            <charset>${LOG_CHARSET}</charset>
             <pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -56,6 +60,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
+            <charset>${LOG_CHARSET}</charset>
             <pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -74,6 +79,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
+            <charset>${LOG_CHARSET}</charset>
             <pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">

@@ -2,7 +2,7 @@
 NODE_ENV=production
 
 # 接口域名
-VITE_API_HOST=http://localhost:8080
+VITE_API_HOST=https://demo.jeegen.com
 
 # 接口前缀
 VITE_API_BASE_PATH=pro
