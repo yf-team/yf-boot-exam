@@ -105,7 +105,7 @@ export default {
   },
   login: {
     welcome: '欢迎使用本系统',
-    message: '基于SpringBoot+Vue3前后端完整中后台管理系统解决方案。',
+    message: '基于SpringBoot3.0+Vue3.0的在线考试系统',
     username: '用户名',
     realName: '姓名',
     password: '密码',

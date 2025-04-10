@@ -1,11 +1,18 @@
 spring:
   # 数据库配置
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/yf_boot_exam?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true
     username: root
     password: root@123
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 1000
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+      pool-name: YfBeHikariCP
 
   # Redis配置
   data:

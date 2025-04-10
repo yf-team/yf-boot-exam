@@ -87,7 +87,7 @@ public class DataDictFilter extends JsonSerializer<Object> {
                 return dictText;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return "";

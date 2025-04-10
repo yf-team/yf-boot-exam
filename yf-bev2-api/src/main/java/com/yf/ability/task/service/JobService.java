@@ -1,5 +1,7 @@
 package com.yf.ability.task.service;
 
+import org.quartz.Job;
+
 /**
  * 任务业务类，用于动态处理任务信息
  * @author bool
@@ -21,7 +23,7 @@ public interface JobService {
      * @param cron
      * @param data
      */
-    void addCronJob(Class jobClass, String jobName, String jobGroup, String cron, String data);
+    void addCronJob(Class<? extends Job> jobClass, String jobName, String jobGroup, String cron, String data);
 
     /**
      * 添加立即执行的任务
@@ -30,7 +32,7 @@ public interface JobService {
      * @param jobGroup
      * @param data
      */
-    void addCronJob(Class jobClass, String jobName, String jobGroup, String data);
+    void addCronJob(Class<? extends Job> jobClass, String jobName, String jobGroup, String data);
 
     /**
      * 暂停任务

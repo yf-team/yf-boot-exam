@@ -1,10 +1,11 @@
 package com.yf.ability.task.service.impl;
 
-import com.yf.base.utils.CronUtils;
 import com.yf.ability.task.service.JobService;
+import com.yf.base.utils.CronUtils;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +17,27 @@ import java.util.Random;
  */
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class JobServiceImpl implements JobService {
 
     /**
      * Quartz定时任务核心的功能实现类
      */
     private Scheduler scheduler;
-
     /**
-     * 注入
-     * @param schedulerFactoryBean
+     * Quartz 工厂类
      */
-    public JobServiceImpl(@Autowired SchedulerFactoryBean schedulerFactoryBean) {
-        scheduler = schedulerFactoryBean.getScheduler();
+    private final SchedulerFactoryBean schedulerFactoryBean;
+
+
+    @PostConstruct
+    public void init() {
+        this.scheduler = schedulerFactoryBean.getScheduler();
     }
 
 
     @Override
-    public void addCronJob(Class jobClass, String jobName, String jobGroup, String cron, String data) {
+    public void addCronJob(Class<? extends Job> jobClass, String jobName, String jobGroup, String cron, String data) {
         try {
             JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
             JobDetail jobDetail = scheduler.getJobDetail(jobKey);
@@ -57,15 +61,15 @@ public class JobServiceImpl implements JobService {
             scheduler.scheduleJob(jobDetail, trigger);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
     @Override
-    public void addCronJob(Class jobClass, String jobName, String jobGroup, String data) {
+    public void addCronJob(Class<? extends Job> jobClass, String jobName, String jobGroup, String data) {
 
         // 随机3-8秒后执行
-        java.util.Calendar cl = java.util.Calendar.getInstance();
+        Calendar cl = Calendar.getInstance();
         cl.setTimeInMillis(System.currentTimeMillis());
         cl.add(Calendar.SECOND, 3 + new Random().nextInt(5));
 
@@ -80,7 +84,7 @@ public class JobServiceImpl implements JobService {
             scheduler.pauseTrigger(triggerKey);
             log.info("++++++++++暂停任务：{}", jobName);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+           log.error(e);
         }
     }
 
@@ -91,7 +95,7 @@ public class JobServiceImpl implements JobService {
             scheduler.resumeTrigger(triggerKey);
             log.info("++++++++++重启任务：{}", jobName);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -102,7 +106,7 @@ public class JobServiceImpl implements JobService {
             scheduler.deleteJob(jobKey);
             log.info("++++++++++删除任务：{}", jobKey);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 }

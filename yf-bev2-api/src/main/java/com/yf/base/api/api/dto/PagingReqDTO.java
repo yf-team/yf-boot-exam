@@ -34,12 +34,14 @@ public class PagingReqDTO<T> {
    @Schema(description = "当前用户的ID")
     private String userId;
 
+
     /**
      * 转换成MyBatis的简单分页对象
      * @return
+     * @param <E> 实现类
      */
-    public Page toPage(){
-        Page page = new Page();
+    public <E> Page<E> toPage(){
+        Page<E> page = new Page<>();
         page.setCurrent(this.current);
         page.setSize(this.size);
         page.setOrders(orders);

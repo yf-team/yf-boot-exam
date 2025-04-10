@@ -1,4 +1,4 @@
-package com.yf.web.aspect.mybatis;
+package com.yf.config.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.yf.system.modules.user.UserUtils;

@@ -17,10 +17,10 @@ import com.yf.system.modules.user.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,13 +38,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Log4j2
 @RequestMapping("/api/sys/user")
+@RequiredArgsConstructor
 public class SysUserController extends BaseController {
 
-    @Autowired
-    private SysUserService baseService;
+    private final SysUserService baseService;
 
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private final SysUserRoleService sysUserRoleService;
 
 
     /**

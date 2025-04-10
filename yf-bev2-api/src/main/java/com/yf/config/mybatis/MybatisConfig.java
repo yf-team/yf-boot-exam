@@ -1,4 +1,4 @@
-package com.yf.config;
+package com.yf.config.mybatis;
 
 // import com.yf.system.aspect.mybatis.QueryInterceptor;
 // import com.yf.system.aspect.mybatis.UpdateInterceptor;

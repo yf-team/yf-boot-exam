@@ -15,10 +15,10 @@ import com.yf.base.api.api.ApiError;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.BeanMapper;
-import com.yf.base.utils.passwd.PassHandler;
-import com.yf.base.utils.passwd.PassInfo;
 import com.yf.base.utils.CacheKey;
 import com.yf.base.utils.jackson.JsonHelper;
+import com.yf.base.utils.passwd.PassHandler;
+import com.yf.base.utils.passwd.PassInfo;
 import com.yf.system.modules.config.enums.FuncSwitch;
 import com.yf.system.modules.config.service.CfgSwitchService;
 import com.yf.system.modules.menu.service.SysMenuService;
@@ -34,8 +34,9 @@ import com.yf.system.modules.user.mapper.SysUserMapper;
 import com.yf.system.modules.user.service.SysUserBindService;
 import com.yf.system.modules.user.service.SysUserRoleService;
 import com.yf.system.modules.user.service.SysUserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,26 +54,22 @@ import java.util.Map;
  * @author 聪明笨狗
  * @since 2020-04-13 16:57
  */
+@Log4j2
 @Service
+@RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService, ShiroUserService {
 
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private final SysUserRoleService sysUserRoleService;
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
-    @Autowired
-    private CaptchaService captchaService;
+    private final CaptchaService captchaService;
 
-    @Autowired
-    private SysUserBindService sysUserBindService;
+    private final SysUserBindService sysUserBindService;
 
-    @Autowired
-    private CfgSwitchService cfgSwitchService;
+    private final CfgSwitchService cfgSwitchService;
 
-    @Autowired
-    private SysMenuService sysMenuService;
+    private final SysMenuService sysMenuService;
 
 
     @Override
@@ -240,7 +237,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 String [] keys = new String[]{Constant.USER_NAME_KEY + username};
                 redisService.del(keys);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e);
             }
         }
     }

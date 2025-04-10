@@ -1,21 +1,22 @@
 package com.yf.ability.captcha.controller;
 
-import com.wf.captcha.SpecCaptcha;
+import com.yf.ability.captcha.TransparentCaptcha;
 import com.yf.ability.captcha.service.CaptchaService;
 import com.yf.base.api.api.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.util.UUID;
 
 
@@ -30,13 +31,12 @@ import java.util.UUID;
  */
 @Log4j2
 @Tag(name = "验证码生成类")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/common/captcha")
 public class CaptchaController extends BaseController {
 
-    @Autowired
-    private CaptchaService captchaService;
-
+    private final CaptchaService captchaService;
 
     @RequestMapping(value="/gen", method = RequestMethod.GET)
     @Operation(summary = "验证码图片")
@@ -48,27 +48,16 @@ public class CaptchaController extends BaseController {
     public void captcha(HttpServletResponse response, @RequestParam("key") String key) throws Exception {
 
         // 设置请求头为输出图片类型
-        response.setContentType("image/gif");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
+        response.setContentType("image/png");
+        response.setHeader("Cache-Control", "no-store");
 
-        // 算术类型
-        SpecCaptcha captcha = new SpecCaptcha(130, 48);
-        // 几位数运算，默认是两位
-        captcha.setLen(4);
-
-        // 输出图片流
-        ServletOutputStream os = null;
-        try {
-            os = response.getOutputStream();
-            captcha.out(os);
-        }finally {
-            os.close();
-        }
+        TransparentCaptcha captcha = new TransparentCaptcha(130, 48, 4, 20);
+        String code = captcha.getCode();
+        BufferedImage image = (BufferedImage)captcha.createImage(code);
+        ImageIO.write(image, "png", response.getOutputStream());
 
         // 存入REDIS
-        captchaService.saveCaptcha(key, captcha.text().toLowerCase());
+        captchaService.saveCaptcha(key, code.toLowerCase());
 
     }
 
