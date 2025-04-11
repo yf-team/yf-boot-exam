@@ -3,6 +3,7 @@
     filterable
     remote
     clearable
+    :disabled="disabled"
     remote-show-suffix
     v-model="value"
     :remote-method="handlerSearch"
@@ -31,6 +32,10 @@ const props = defineProps({
   dicCode: {
     type: String,
     default: ''
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 

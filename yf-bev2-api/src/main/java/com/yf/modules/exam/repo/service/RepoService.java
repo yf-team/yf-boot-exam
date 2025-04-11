@@ -1,11 +1,12 @@
-package com.yf.mudules.exam.repo.service;
+package com.yf.modules.exam.repo.service;
 
-import com.yf.mudules.exam.repo.entity.Repo;
-import com.baomidou.mybatisplus.extension.service.IService;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yf.boot.base.api.api.dto.PagingReqDTO;
-import com.yf.mudules.exam.repo.dto.RepoDTO;
+import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.modules.exam.repo.dto.RepoDTO;
+import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.entity.Repo;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface RepoService extends IService<Repo> {
     * @param reqDTO
     * @return
     */
-    IPage<RepoDTO> paging(PagingReqDTO<RepoDTO> reqDTO);
+    IPage<RepoListRespDTO> paging(PagingReqDTO<RepoDTO> reqDTO);
 
     /**
     * 添加或保存

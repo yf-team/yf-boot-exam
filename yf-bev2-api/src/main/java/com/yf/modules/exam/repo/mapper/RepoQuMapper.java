@@ -1,7 +1,8 @@
-package com.yf.mudules.exam.repo.mapper;
+package com.yf.modules.exam.repo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yf.mudules.exam.repo.entity.RepoQu;
+import com.yf.modules.exam.repo.entity.RepoQu;
+
 /**
 * <p>
 * 问题题目Mapper

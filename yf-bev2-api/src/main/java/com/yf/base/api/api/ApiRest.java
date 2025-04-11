@@ -24,14 +24,14 @@ public class ApiRest<T>{
     /**
      * 响应代码
      */
-   @Schema(description = "响应代码,0为成功,1为失败", required = true)
+   @Schema(description = "响应代码,0为成功,1为失败")
     private Integer code;
 
     /**
      * 请求或响应body
      */
    @Schema(description = "响应内容")
-    protected T data;
+   protected T data;
 
 
     /**

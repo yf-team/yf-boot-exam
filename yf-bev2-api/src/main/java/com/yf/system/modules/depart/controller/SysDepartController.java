@@ -46,7 +46,7 @@ public class SysDepartController extends BaseController {
     @RequiresPermissions(value = {"sys:depart:add", "sys:depart:edit"}, logical = Logical.OR)
     @Operation(summary = "添加或修改")
     @PostMapping("/save")
-    public ApiRest save(@RequestBody SysDepartDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody SysDepartDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
@@ -59,7 +59,7 @@ public class SysDepartController extends BaseController {
     @RequiresPermissions(value = {"sys:depart:delete"})
     @Operation(summary = "批量删除")
     @PostMapping("/delete")
-    public ApiRest edit(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> edit(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
         return super.success();
@@ -112,7 +112,7 @@ public class SysDepartController extends BaseController {
     @RequiresPermissions(value = {"sys:depart:edit"}, logical = Logical.OR)
     @Operation(summary = "调整部门排序")
     @PostMapping( "/sort")
-    public ApiRest sort(@RequestBody DepartSortReqDTO reqDTO) {
+    public ApiRest<?> sort(@RequestBody DepartSortReqDTO reqDTO) {
         baseService.sort(reqDTO);
         return super.success();
     }

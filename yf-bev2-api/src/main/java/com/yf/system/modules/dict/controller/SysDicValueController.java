@@ -57,7 +57,7 @@ public class SysDicValueController extends BaseController {
     @RequiresPermissions(value = {"sys:dict:delete"})
     @Operation(summary = "批量删除")
     @RequestMapping(value = "/delete", method = { RequestMethod.POST})
-    public ApiRest edit(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> edit(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.removeByIds(reqDTO.getIds());
         return super.success();

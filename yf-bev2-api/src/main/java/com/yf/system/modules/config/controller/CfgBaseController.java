@@ -43,7 +43,7 @@ public class CfgBaseController extends BaseController {
     */
     @Operation(summary = "保存基础配置")
     @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest save(@RequestBody CfgBaseDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody CfgBaseDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }

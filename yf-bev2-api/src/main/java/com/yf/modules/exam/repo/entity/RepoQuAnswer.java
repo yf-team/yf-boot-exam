@@ -1,4 +1,4 @@
-package com.yf.mudules.exam.repo.entity;
+package com.yf.modules.exam.repo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
-import java.util.Date;
+import lombok.EqualsAndHashCode;
+
+import java.io.Serial;
 
 /**
 * <p>
@@ -16,10 +18,12 @@ import java.util.Date;
 * @author 聪明笨狗
 * @since 2025-04-11 09:42
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_repo_qu_answer")
 public class RepoQuAnswer extends Model<RepoQuAnswer> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     /**

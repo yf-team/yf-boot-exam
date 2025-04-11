@@ -81,7 +81,7 @@ public class SysUserController extends BaseController {
      */
     @Operation(summary = "退出登录")
     @RequestMapping(value = "/logout", method = {RequestMethod.POST})
-    public ApiRest logout(HttpServletRequest request) {
+    public ApiRest<?> logout(HttpServletRequest request) {
         String token = request.getHeader("token");
         baseService.logout(token);
         return super.success();
@@ -94,7 +94,7 @@ public class SysUserController extends BaseController {
      */
     @Operation(summary = "获取会话")
     @RequestMapping(value = "/info", method = {RequestMethod.POST})
-    public ApiRest info(@RequestBody BaseTokenReqDTO reqDTO) {
+    public ApiRest<?> info(@RequestBody BaseTokenReqDTO reqDTO) {
         SysUserLoginDTO respDTO = baseService.token(reqDTO.getToken());
         return success(respDTO);
     }
@@ -107,7 +107,7 @@ public class SysUserController extends BaseController {
     @DataProtect(clazz = SysUser.class, update = true, currUsr = true)
     @Operation(summary = "修改用户资料")
     @RequestMapping(value = "/update", method = {RequestMethod.POST})
-    public ApiRest update(@RequestBody SysUserUpdateReqDTO reqDTO) {
+    public ApiRest<?> update(@RequestBody SysUserUpdateReqDTO reqDTO) {
         baseService.update(reqDTO);
         return success();
     }
@@ -124,7 +124,7 @@ public class SysUserController extends BaseController {
     @DataProtect(clazz = SysUser.class, update = true)
     @Operation(summary = "保存或修改")
     @RequestMapping(value = "/save", method = {RequestMethod.POST})
-    public ApiRest save(@RequestBody SysUserSaveReqDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody SysUserSaveReqDTO reqDTO) {
         baseService.save(reqDTO);
         return success();
     }
@@ -140,7 +140,7 @@ public class SysUserController extends BaseController {
     @DataProtect(clazz = SysUser.class, delete = true)
     @Operation(summary = "批量删除")
     @RequestMapping(value = "/delete", method = {RequestMethod.POST})
-    public ApiRest delete(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
         return super.success();
@@ -171,7 +171,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions(value = {"sys:user:state"})
     @Operation(summary = "修改状态")
     @RequestMapping(value = "/state", method = {RequestMethod.POST})
-    public ApiRest state(@RequestBody BaseStateReqDTO reqDTO) {
+    public ApiRest<?> state(@RequestBody BaseStateReqDTO reqDTO) {
 
         // 条件
         QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
@@ -210,7 +210,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions(value = {"sys:user:batch-role"})
     @Operation(summary = "批量修改角色")
     @RequestMapping(value = "/batch-role", method = {RequestMethod.POST})
-    public ApiRest batchRole(@RequestBody UserRoleReqDTO reqDTO) {
+    public ApiRest<?> batchRole(@RequestBody UserRoleReqDTO reqDTO) {
         sysUserRoleService.batchRole(reqDTO);
         return success();
     }

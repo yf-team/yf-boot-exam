@@ -1,11 +1,12 @@
-package com.yf.mudules.exam.repo.service;
+package com.yf.modules.exam.repo.service;
 
-import com.yf.mudules.exam.repo.entity.RepoQu;
-import com.baomidou.mybatisplus.extension.service.IService;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yf.boot.base.api.api.dto.PagingReqDTO;
-import com.yf.mudules.exam.repo.dto.RepoQuDTO;
+import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.modules.exam.repo.dto.RepoQuDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuReqDTO;
+import com.yf.modules.exam.repo.entity.RepoQu;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface RepoQuService extends IService<RepoQu> {
     * @param reqDTO
     * @return
     */
-    void save(RepoQuDTO reqDTO);
+    void save(RepoQuReqDTO reqDTO);
 
     /**
     * 批量删除
@@ -45,7 +46,7 @@ public interface RepoQuService extends IService<RepoQu> {
     * @param id
     * @return
     */
-    RepoQuDTO detail(String id);
+    RepoQuReqDTO detail(String id);
 
     /**
     * 查找列表

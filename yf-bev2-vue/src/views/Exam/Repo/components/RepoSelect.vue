@@ -1,31 +1,22 @@
 <template>
-  <el-tree-select
-    style="width: 100%"
-    :check-strictly="true"
-    v-model="value"
-    :data="treeData"
-    :render-after-expand="false"
-    @change="handlerChange"
-    :props="{ label: 'deptName' }"
-  />
+  <el-select v-model="value" placeholder="请选择题库" @change="selectChange" style="width: 100%">
+    <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id || ''" />
+  </el-select>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch, onMounted, unref } from 'vue'
-import { treeApi } from '@/api/sys/depart'
+import { pagingApi } from '@/api/modules/exam/repo'
+import type { RepoDataType } from '../types'
 
-const value = ref()
-const treeData = ref([])
+const value = ref<String>()
+const options = ref<RepoDataType[]>([])
 
 // 组件参数
 const props = defineProps({
   modelValue: {
     type: String,
     default: ''
-  },
-  title: {
-    type: String,
-    default: '请选择数据'
   }
 })
 
@@ -42,13 +33,13 @@ watch(
 // 加载数据
 const loadData = async () => {
   // 加载下拉列表
-  await treeApi().then((res) => {
-    treeData.value = res.data
+  await pagingApi({ current: 1, size: 100, params: {} }).then((res) => {
+    options.value = res.data.records
   })
 }
 
-// 加载数据
-const handlerChange = async () => {
+// 选定内容
+const selectChange = () => {
   emit('update:modelValue', unref(value))
 }
 

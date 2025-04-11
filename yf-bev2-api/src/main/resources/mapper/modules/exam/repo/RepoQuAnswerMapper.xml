@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yf.mudules.exam.repo.mapper.RepoQuAnswerMapper">
+<mapper namespace="com.yf.modules.exam.repo.mapper.RepoQuAnswerMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yf.mudules.exam.repo.dto.RepoQuAnswerDTO">
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.repo.dto.RepoQuAnswerDTO">
         <id column="id" property="id" />
         <result column="qu_id" property="quId" />
         <result column="is_right" property="isRight" />
@@ -11,10 +11,5 @@
         <result column="image" property="image" />
         <result column="tag" property="tag" />
     </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`qu_id`,`is_right`,`content`,`image`,`tag`
-    </sql>
 
 </mapper>

@@ -59,7 +59,7 @@ public class SysMenuController extends BaseController {
     @DataProtect(clazz = SysMenu.class, update = true)
     @Operation(summary = "添加或修改")
     @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest save(@RequestBody SysMenuDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody SysMenuDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
@@ -73,7 +73,7 @@ public class SysMenuController extends BaseController {
     @DataProtect(clazz = SysMenu.class, delete = true)
     @Operation(summary = "批量删除")
     @RequestMapping(value = "/delete", method = { RequestMethod.POST})
-    public ApiRest delete(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
         return super.success();
@@ -117,7 +117,7 @@ public class SysMenuController extends BaseController {
     @DataProtect(clazz = SysMenu.class, update = true)
     @Operation(summary = "调整菜单排序")
     @RequestMapping(value = "/sort", method = { RequestMethod.POST})
-    public ApiRest sort(@RequestBody DepartSortReqDTO reqDTO) {
+    public ApiRest<?> sort(@RequestBody DepartSortReqDTO reqDTO) {
         baseService.sort(reqDTO);
         return super.success();
     }

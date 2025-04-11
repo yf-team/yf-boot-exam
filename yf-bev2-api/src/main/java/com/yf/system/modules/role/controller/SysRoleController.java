@@ -55,7 +55,7 @@ public class SysRoleController extends BaseController {
     @DataProtect(clazz = SysRole.class, update = true)
     @Operation(summary = "添加或修改")
     @PostMapping("/save")
-    public ApiRest save(@Validated @RequestBody SysRoleDTO reqDTO) {
+    public ApiRest<?> save(@Validated @RequestBody SysRoleDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
@@ -69,7 +69,7 @@ public class SysRoleController extends BaseController {
     @DataProtect(clazz = SysRole.class, delete = true)
     @Operation(summary = "批量删除")
     @PostMapping("/delete")
-    public ApiRest delete(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
         return super.success();
@@ -129,7 +129,7 @@ public class SysRoleController extends BaseController {
     @RequiresPermissions(value = {"sys:role:grant"})
     @Operation(summary = "保存角色菜单授权")
     @PostMapping("/save-menus")
-    public ApiRest saveMenus(@RequestBody SysRoleMenuReqDTO reqDTO) {
+    public ApiRest<?> saveMenus(@RequestBody SysRoleMenuReqDTO reqDTO) {
 
         // 保存授权
         sysRoleMenuService.saveRoleIds(reqDTO.getId(), reqDTO.getMenuIds());

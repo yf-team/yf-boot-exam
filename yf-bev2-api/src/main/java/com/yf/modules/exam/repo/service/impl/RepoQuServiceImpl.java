@@ -1,19 +1,24 @@
-package com.yf.mudules.exam.repo.service.impl;
+package com.yf.modules.exam.repo.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yf.boot.base.api.api.dto.PagingReqDTO;
-import com.yf.boot.base.api.utils.BeanMapper;
-import com.yf.mudules.exam.repo.dto.RepoQuDTO;
-import com.yf.mudules.exam.repo.entity.RepoQu;
-import com.yf.mudules.exam.repo.mapper.RepoQuMapper;
-import com.yf.mudules.exam.repo.service.RepoQuService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.utils.BeanMapper;
+import com.yf.base.utils.jackson.JsonHelper;
+import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
+import com.yf.modules.exam.repo.dto.RepoQuDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuReqDTO;
+import com.yf.modules.exam.repo.entity.RepoQu;
+import com.yf.modules.exam.repo.mapper.RepoQuMapper;
+import com.yf.modules.exam.repo.service.RepoQuAnswerService;
+import com.yf.modules.exam.repo.service.RepoQuService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,8 +30,12 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2025-04-11 09:42
 */
+@RequiredArgsConstructor
 @Service
 public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> implements RepoQuService {
+
+
+    private final RepoQuAnswerService repoQuAnswerService;
 
     @Override
     public IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuDTO> reqDTO) {
@@ -40,17 +49,21 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
         //获得数据
         IPage<RepoQu> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<RepoQuDTO> pageData = JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<RepoQuDTO>>(){});
+        IPage<RepoQuDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<RepoQuDTO>>(){});
         return pageData;
     }
 
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(RepoQuDTO reqDTO){
+    public void save(RepoQuReqDTO reqDTO){
         //复制参数
         RepoQu entity = new RepoQu();
         BeanMapper.copy(reqDTO, entity);
         this.saveOrUpdate(entity);
+
+        // 保存选项
+        repoQuAnswerService.saveAll(entity.getId(), reqDTO.getAnswerList());
     }
 
     @Override
@@ -60,10 +73,14 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     }
 
     @Override
-    public RepoQuDTO detail(String id){
+    public RepoQuReqDTO detail(String id){
+        // 基本信息
         RepoQu entity = this.getById(id);
-        RepoQuDTO dto = new RepoQuDTO();
+        RepoQuReqDTO dto = new RepoQuReqDTO();
         BeanMapper.copy(entity, dto);
+
+        List<RepoQuAnswerDTO> answerList = repoQuAnswerService.listByQuId(id);
+        dto.setAnswerList(answerList);
         return dto;
     }
 

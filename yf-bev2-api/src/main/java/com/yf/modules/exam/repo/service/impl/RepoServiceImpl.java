@@ -1,19 +1,17 @@
-package com.yf.mudules.exam.repo.service.impl;
+package com.yf.modules.exam.repo.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yf.boot.base.api.api.dto.PagingReqDTO;
-import com.yf.boot.base.api.utils.BeanMapper;
-import com.yf.mudules.exam.repo.dto.RepoDTO;
-import com.yf.mudules.exam.repo.entity.Repo;
-import com.yf.mudules.exam.repo.mapper.RepoMapper;
-import com.yf.mudules.exam.repo.service.RepoService;
+import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.utils.BeanMapper;
+import com.yf.modules.exam.repo.dto.RepoDTO;
+import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.entity.Repo;
+import com.yf.modules.exam.repo.mapper.RepoMapper;
+import com.yf.modules.exam.repo.service.RepoService;
 import org.springframework.stereotype.Service;
-import java.util.Map;
 
 import java.util.List;
 
@@ -29,19 +27,8 @@ import java.util.List;
 public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements RepoService {
 
     @Override
-    public IPage<RepoDTO> paging(PagingReqDTO<RepoDTO> reqDTO) {
-
-        //查询条件
-        QueryWrapper<Repo> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        RepoDTO params = reqDTO.getParams();
-
-        //获得数据
-        IPage<Repo> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<RepoDTO> pageData = JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<RepoDTO>>(){});
-        return pageData;
+    public IPage<RepoListRespDTO> paging(PagingReqDTO<RepoDTO> reqDTO) {
+        return baseMapper.paging(reqDTO.toPage(), reqDTO.getParams());
     }
 
 

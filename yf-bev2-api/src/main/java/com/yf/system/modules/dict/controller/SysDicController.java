@@ -45,7 +45,7 @@ public class SysDicController extends BaseController {
     @DataProtect(clazz = SysDic.class, update = true)
     @Operation(summary = "添加或修改")
     @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest save(@RequestBody SysDicDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody SysDicDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
@@ -59,7 +59,7 @@ public class SysDicController extends BaseController {
     @DataProtect(clazz = SysDic.class, delete = true)
     @Operation(summary = "批量删除")
     @RequestMapping(value = "/delete", method = { RequestMethod.POST})
-    public ApiRest delete(@RequestBody BaseIdsReqDTO reqDTO) {
+    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
         return super.success();

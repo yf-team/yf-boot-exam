@@ -1,19 +1,16 @@
-// 实体对象
-export type RoleDataType = {
+// 用户对象
+export type RepoDataType = {
   id?: string
-  roleName?: string
-  dataScope?: string
-  roleLevel?: string
+  title?: string
+  catId?: string
 }
 
-// 用户对象
-export type UserDataType = {
+// 试题对象
+export type QuDataType = {
   id?: string
-  userName?: string
-  realName?: string
-  deptCode?: string
-  roles?: string[]
-  mobile?: string
-  idCard?: string
-  avatar?: string
+  title?: string
+  quType?: string
+  repoId?: string
+  difficultyLevel?: string
+  content?: string
 }

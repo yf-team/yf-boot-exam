@@ -1,11 +1,13 @@
-package com.yf.mudules.exam.repo.dto.request;
+package com.yf.modules.exam.repo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.yf.base.api.annon.Dict;
+import com.yf.base.utils.HtmlUtils;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import java.util.Date;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
 * <p>
@@ -16,43 +18,57 @@ import java.io.Serializable;
 * @since 2025-04-11 09:42
 */
 @Data
-@ApiModel(value="问题题目", description="问题题目")
+@Schema(description="问题题目")
 public class RepoQuDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     
-    @ApiModelProperty(value = "ID", required=true)
+    @Schema(description = "ID")
     private String id;
-    
-    @ApiModelProperty(value = "所属题库", required=true)
+
+    @Dict(dictTable = "el_repo", dicText = "title", dicCode = "id")
+    @Schema(description = "所属题库")
     private String repoId;
     
-    @ApiModelProperty(value = "所属章节")
+    @Schema(description = "所属章节")
     private String chapterId;
-    
-    @ApiModelProperty(value = "题目类型", required=true)
+
+    @Dict(dicCode = "qu_type")
+    @Schema(description = "题目类型")
     private String quType;
-    
-    @ApiModelProperty(value = "难度等级", required=true)
+
+    @Dict(dicCode = "qu_difficulty_level")
+    @Schema(description = "难度等级")
     private String difficultyLevel;
     
-    @ApiModelProperty(value = "题目内容", required=true)
+    @Schema(description = "题目内容")
     private String content;
     
-    @ApiModelProperty(value = "整题解析")
+    @Schema(description = "整题解析")
     private String analysis;
     
-    @ApiModelProperty(value = "创建时间", required=true)
+    @Schema(description = "创建时间")
     private Date createTime;
     
-    @ApiModelProperty(value = "更新时间", required=true)
+    @Schema(description = "更新时间")
     private Date updateTime;
-    
-    @ApiModelProperty(value = "创建人")
+
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
+    @Schema(description = "创建人")
     private String createBy;
-    
-    @ApiModelProperty(value = "修改人")
+
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
+    @Schema(description = "修改人")
     private String updateBy;
+
+    /**
+     * 获取题干文本
+     * @return
+     */
+    public String getContentText(){
+        return HtmlUtils.splitAndFilterString(content, 200);
+    }
     
 }

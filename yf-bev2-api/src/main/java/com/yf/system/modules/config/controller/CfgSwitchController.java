@@ -37,7 +37,7 @@ public class CfgSwitchController extends BaseController {
      */
     @Operation(summary = "添加或修改")
     @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest save(@RequestBody Map<String,Object> map) {
+    public ApiRest<?> save(@RequestBody Map<String,Object> map) {
         baseService.save(map);
         return super.success();
     }
@@ -48,7 +48,7 @@ public class CfgSwitchController extends BaseController {
      */
     @Operation(summary = "查找详情")
     @RequestMapping(value = "/detail", method = { RequestMethod.POST})
-    public ApiRest detail() {
+    public ApiRest<?> detail() {
         Map<String,Object> map = baseService.allMap();
         return super.success(map);
     }

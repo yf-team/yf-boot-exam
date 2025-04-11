@@ -1,10 +1,9 @@
-package com.yf.mudules.exam.repo.dto.request;
+package com.yf.modules.exam.repo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import java.util.Date;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -16,28 +15,29 @@ import java.io.Serializable;
 * @since 2025-04-11 09:42
 */
 @Data
-@ApiModel(value="候选答案", description="候选答案")
+@Schema(description="候选答案")
 public class RepoQuAnswerDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     
-    @ApiModelProperty(value = "ID", required=true)
+    @Schema(description = "ID")
     private String id;
     
-    @ApiModelProperty(value = "问题ID", required=true)
+    @Schema(description = "问题ID")
     private String quId;
     
-    @ApiModelProperty(value = "是否正确", required=true)
+    @Schema(description = "是否正确")
     private Boolean isRight;
     
-    @ApiModelProperty(value = "答案内容", required=true)
+    @Schema(description = "答案内容")
     private String content;
     
-    @ApiModelProperty(value = "图片地址")
+    @Schema(description = "图片地址")
     private String image;
     
-    @ApiModelProperty(value = "ABCD标签")
+    @Schema(description = "ABCD标签")
     private String tag;
     
 }

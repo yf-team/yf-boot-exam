@@ -1,20 +1,19 @@
-package com.yf.mudules.exam.repo.service.impl;
+package com.yf.modules.exam.repo.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yf.boot.base.api.api.dto.PagingReqDTO;
-import com.yf.boot.base.api.utils.BeanMapper;
-import com.yf.mudules.exam.repo.dto.RepoQuAnswerDTO;
-import com.yf.mudules.exam.repo.entity.RepoQuAnswer;
-import com.yf.mudules.exam.repo.mapper.RepoQuAnswerMapper;
-import com.yf.mudules.exam.repo.service.RepoQuAnswerService;
+import com.yf.base.utils.AbcTags;
+import com.yf.base.utils.BeanMapper;
+import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
+import com.yf.modules.exam.repo.entity.RepoQuAnswer;
+import com.yf.modules.exam.repo.mapper.RepoQuAnswerMapper;
+import com.yf.modules.exam.repo.service.RepoQuAnswerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import java.util.Map;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,57 +27,85 @@ import java.util.List;
 @Service
 public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, RepoQuAnswer> implements RepoQuAnswerService {
 
-    @Override
-    public IPage<RepoQuAnswerDTO> paging(PagingReqDTO<RepoQuAnswerDTO> reqDTO) {
 
-        //查询条件
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveAll(String quId, List<RepoQuAnswerDTO> dtoList) {
+
+        //最终要保存的列表
+        List<RepoQuAnswer> saveList = new ArrayList<>();
+
+        //已存在的标签列表
+        List<String> ids = this.findExistsList(quId);
+
+        if(!CollectionUtils.isEmpty(dtoList)){
+
+            int i = 0;
+
+            for(RepoQuAnswerDTO item: dtoList){
+
+                //标签ID
+                String id = item.getId();
+                RepoQuAnswer answer = new RepoQuAnswer();
+                BeanMapper.copy(item, answer);
+                answer.setQuId(quId);
+                if(StringUtils.isBlank(answer.getTag())) {
+                    answer.setTag(AbcTags.get(i));
+                }
+
+                //补全ID避免新增
+                ids.remove(id);
+                i++;
+                saveList.add(answer);
+            }
+
+            //保存标签列表
+            this.saveOrUpdateBatch(saveList);
+
+            //删除已移除
+            if(!ids.isEmpty()){
+                this.removeByIds(ids);
+            }
+        }else{
+
+            QueryWrapper<RepoQuAnswer> wrapper = new QueryWrapper<>();
+            wrapper.lambda().eq(RepoQuAnswer::getQuId, quId);
+            this.remove(wrapper);
+        }
+
+    }
+
+    @Override
+    public List<RepoQuAnswerDTO> listByQuId(String quId) {
         QueryWrapper<RepoQuAnswer> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        RepoQuAnswerDTO params = reqDTO.getParams();
-
-        //获得数据
-        IPage<RepoQuAnswer> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<RepoQuAnswerDTO> pageData = JSON.parseObject(JSON.toJSONString(page), new TypeReference<Page<RepoQuAnswerDTO>>(){});
-        return pageData;
-    }
-
-
-    @Override
-    public void save(RepoQuAnswerDTO reqDTO){
-        //复制参数
-        RepoQuAnswer entity = new RepoQuAnswer();
-        BeanMapper.copy(reqDTO, entity);
-        this.saveOrUpdate(entity);
-    }
-
-    @Override
-    public void delete(List<String> ids){
-        //批量删除
-        this.removeByIds(ids);
-    }
-
-    @Override
-    public RepoQuAnswerDTO detail(String id){
-        RepoQuAnswer entity = this.getById(id);
-        RepoQuAnswerDTO dto = new RepoQuAnswerDTO();
-        BeanMapper.copy(entity, dto);
-        return dto;
-    }
-
-    @Override
-    public List<RepoQuAnswerDTO> list(RepoQuAnswerDTO reqDTO){
-
-        //分页查询并转换
-        QueryWrapper<RepoQuAnswer> wrapper = new QueryWrapper<>();
-
-        //转换并返回
+        wrapper.lambda().eq(RepoQuAnswer::getQuId, quId);
         List<RepoQuAnswer> list = this.list(wrapper);
 
-        //转换数据
-        List<RepoQuAnswerDTO> dtoList = BeanMapper.mapList(list, RepoQuAnswerDTO.class);
+        if (!CollectionUtils.isEmpty(list)) {
+           return BeanMapper.mapList(list, RepoQuAnswerDTO.class);
+        }
 
-        return dtoList;
+        return List.of();
+    }
+
+    /**
+     * 查找已存在的列表
+     * @param quId
+     * @return
+     */
+    private List<String> findExistsList(String quId) {
+        //返回结果
+        List<String> ids = new ArrayList<>();
+
+        QueryWrapper<RepoQuAnswer> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(RepoQuAnswer::getQuId, quId);
+        List<RepoQuAnswer> list = this.list(wrapper);
+
+        if (!CollectionUtils.isEmpty(list)) {
+            for (RepoQuAnswer item : list) {
+                ids.add(item.getId());
+            }
+        }
+        return ids;
     }
 }

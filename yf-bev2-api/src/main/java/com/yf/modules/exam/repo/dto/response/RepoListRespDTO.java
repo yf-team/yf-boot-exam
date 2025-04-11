@@ -1,52 +1,32 @@
-package com.yf.modules.exam.repo.dto;
+package com.yf.modules.exam.repo.dto.response;
 
-import com.yf.base.api.annon.Dict;
+import com.yf.base.utils.HtmlUtils;
+import com.yf.modules.exam.repo.dto.RepoDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.io.Serial;
 
 /**
 * <p>
-* 题库数据传输类
+* 题库列表响应类
 * </p>
 *
 * @author 聪明笨狗
 * @since 2025-04-11 09:42
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(description="题库")
-public class RepoDTO implements Serializable {
+@Schema(description="题库列表响应类")
+public class RepoListRespDTO extends RepoDTO {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
-    
-    @Schema(description = "ID")
-    private String id;
-    
-    @Schema(description = "题库名称")
-    private String title;
+    @Schema(description = "题目数量")
+    private Integer quCount;
 
-    @Dict(dicCode = "repo_catalog")
-    @Schema(description = "分类ID")
-    private String catId;
-    
-    @Schema(description = "题库备注")
-    private String remark;
-    
-    @Schema(description = "创建时间")
-    private Date createTime;
-    
-    @Schema(description = "更新时间")
-    private Date updateTime;
 
-    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
-    @Schema(description = "创建人")
-    private String createBy;
-
-    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
-    @Schema(description = "修改人")
-    private String updateBy;
     
 }

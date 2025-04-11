@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yf.mudules.exam.repo.mapper.RepoMapper">
+<mapper namespace="com.yf.modules.exam.repo.mapper.RepoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.yf.mudules.exam.repo.dto.RepoDTO">
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.repo.dto.RepoDTO">
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="cat_id" property="catId" />
@@ -14,9 +14,21 @@
         <result column="update_by" property="updateBy" />
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`title`,`cat_id`,`remark`,`create_time`,`update_time`,`create_by`,`update_by`
-    </sql>
+    <resultMap id="ListResultMap"
+               type="com.yf.modules.exam.repo.dto.response.RepoListRespDTO"
+               extends="BaseResultMap">
+        <result column="quCount" property="quCount" />
+    </resultMap>
+
+    <select id="paging" resultMap="ListResultMap">
+        SELECT repo.*,(SELECT COUNT(*) FROM el_repo_qu WHERE repo_id=repo.id) AS quCount FROM el_repo repo
+        <where>
+            <if test="query!=null">
+                <if test="query.title!=null">
+                    AND repo.title LIKE CONCAT('%', #{query.title}, '%')
+                </if>
+            </if>
+        </where>
+    </select>
 
 </mapper>

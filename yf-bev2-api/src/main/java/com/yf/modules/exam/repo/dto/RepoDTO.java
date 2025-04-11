@@ -1,11 +1,12 @@
-package com.yf.mudules.exam.repo.dto.request;
+package com.yf.modules.exam.repo.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.yf.base.api.annon.Dict;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import java.util.Date;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
 * <p>
@@ -16,34 +17,38 @@ import java.io.Serializable;
 * @since 2025-04-11 09:42
 */
 @Data
-@ApiModel(value="题库", description="题库")
+@Schema(description="题库")
 public class RepoDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     
-    @ApiModelProperty(value = "ID", required=true)
+    @Schema(description = "ID")
     private String id;
     
-    @ApiModelProperty(value = "题库名称", required=true)
+    @Schema(description = "题库名称")
     private String title;
-    
-    @ApiModelProperty(value = "分类ID")
+
+    @Dict(dicCode = "repo_catalog")
+    @Schema(description = "分类ID")
     private String catId;
     
-    @ApiModelProperty(value = "题库备注")
+    @Schema(description = "题库备注")
     private String remark;
     
-    @ApiModelProperty(value = "创建时间", required=true)
+    @Schema(description = "创建时间")
     private Date createTime;
     
-    @ApiModelProperty(value = "更新时间", required=true)
+    @Schema(description = "更新时间")
     private Date updateTime;
-    
-    @ApiModelProperty(value = "创建人")
+
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
+    @Schema(description = "创建人")
     private String createBy;
-    
-    @ApiModelProperty(value = "修改人")
+
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
+    @Schema(description = "修改人")
     private String updateBy;
     
 }

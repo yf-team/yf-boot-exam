@@ -2,14 +2,21 @@ import request from '@/config/axios'
 
 export const saveApi = (data: any) => {
   return request.post({
-    url: '/api/sys/depart/save',
+    url: '/api/exam/repo/repo/save',
     data
   })
 }
 
-export const treeApi = (data?: any) => {
+export const detailApi = (data: any) => {
   return request.post({
-    url: '/api/sys/depart/tree',
+    url: '/api/exam/repo/repo/detail',
+    data
+  })
+}
+
+export const pagingApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/repo/repo/paging',
     data
   })
 }
