@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.repo.dto.RepoDTO;
 import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.dto.response.RepoStatRespDTO;
 import com.yf.modules.exam.repo.entity.Repo;
 
 import java.util.List;
@@ -50,8 +51,8 @@ public interface RepoService extends IService<Repo> {
 
     /**
     * 查找列表
-    * @param reqDTO
+    * @param repoId
     * @return
     */
-    List<RepoDTO> list(RepoDTO reqDTO);
+    List<RepoStatRespDTO> listStat(String repoId);
 }

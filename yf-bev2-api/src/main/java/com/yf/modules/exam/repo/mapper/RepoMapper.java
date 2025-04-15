@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yf.modules.exam.repo.dto.RepoDTO;
 import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.dto.response.RepoStatRespDTO;
 import com.yf.modules.exam.repo.entity.Repo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * <p>
@@ -25,4 +28,12 @@ public interface RepoMapper extends BaseMapper<Repo> {
      * @return
      */
     IPage<RepoListRespDTO> paging(Page<Repo> page, @Param("query") RepoDTO query);
+
+
+    /**
+     * 题库统计，用于考试组卷
+     * @param repoId
+     * @return
+     */
+    List<RepoStatRespDTO> listStat(@Param("repoId") String repoId);
 }

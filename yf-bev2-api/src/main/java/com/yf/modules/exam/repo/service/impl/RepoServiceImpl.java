@@ -1,13 +1,13 @@
 package com.yf.modules.exam.repo.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.utils.BeanMapper;
 import com.yf.modules.exam.repo.dto.RepoDTO;
 import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.dto.response.RepoStatRespDTO;
 import com.yf.modules.exam.repo.entity.Repo;
 import com.yf.modules.exam.repo.mapper.RepoMapper;
 import com.yf.modules.exam.repo.service.RepoService;
@@ -55,17 +55,8 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements Re
     }
 
     @Override
-    public List<RepoDTO> list(RepoDTO reqDTO){
-
-        //分页查询并转换
-        QueryWrapper<Repo> wrapper = new QueryWrapper<>();
-
-        //转换并返回
-        List<Repo> list = this.list(wrapper);
-
-        //转换数据
-        List<RepoDTO> dtoList = BeanMapper.mapList(list, RepoDTO.class);
-
-        return dtoList;
+    public List<RepoStatRespDTO> listStat(String repoId) {
+        return baseMapper.listStat(repoId);
     }
+
 }

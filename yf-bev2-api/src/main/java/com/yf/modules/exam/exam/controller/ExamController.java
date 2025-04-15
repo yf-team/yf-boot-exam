@@ -7,6 +7,7 @@ import com.yf.base.api.api.dto.BaseIdReqDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamDTO;
+import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.service.ExamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +43,7 @@ public class ExamController extends BaseController {
     @Operation(summary = "添加或修改")
     @RequiresPermissions(value = {"exam:exam:add", "exam:exam:edit"}, logical = Logical.OR)
     @PostMapping("/save")
-    public ApiRest<?> save(@RequestBody ExamDTO reqDTO) {
+    public ApiRest<?> save(@RequestBody ExamDetailDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
@@ -69,8 +70,8 @@ public class ExamController extends BaseController {
     @Operation(summary = "查找详情")
     @RequiresPermissions("exam:exam:view")
     @PostMapping("/detail")
-    public ApiRest<ExamDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
-        ExamDTO dto = baseService.detail(reqDTO.getId());
+    public ApiRest<ExamDetailDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
+        ExamDetailDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
     }
 

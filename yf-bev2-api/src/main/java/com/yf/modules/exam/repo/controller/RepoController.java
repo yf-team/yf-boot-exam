@@ -8,6 +8,7 @@ import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.repo.dto.RepoDTO;
 import com.yf.modules.exam.repo.dto.response.RepoListRespDTO;
+import com.yf.modules.exam.repo.dto.response.RepoStatRespDTO;
 import com.yf.modules.exam.repo.service.RepoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -96,10 +97,9 @@ public class RepoController extends BaseController {
      */
     @Operation(summary = "查找列表")
     @RequiresPermissions("repo:repo:view")
-    @PostMapping("/list")
-    public ApiRest<List<RepoDTO>> list(@RequestBody RepoDTO reqDTO) {
-        // 查找列表
-        List<RepoDTO> dtoList = repoService.list(reqDTO);
+    @PostMapping("/list-stat")
+    public ApiRest<List<RepoStatRespDTO>> list(@RequestBody BaseIdReqDTO reqDTO) {
+        List<RepoStatRespDTO> dtoList = repoService.listStat(reqDTO.getId());
         return super.success(dtoList);
     }
 }

@@ -20,3 +20,10 @@ export const pagingApi = (data: any) => {
     data
   })
 }
+
+export const statApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/repo/repo/list-stat',
+    data
+  })
+}

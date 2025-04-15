@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamDTO;
+import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.entity.Exam;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface ExamService extends IService<Exam> {
     * @param reqDTO
     * @return
     */
-    void save(ExamDTO reqDTO);
+    void save(ExamDetailDTO reqDTO);
 
     /**
     * 批量删除
@@ -44,5 +45,5 @@ public interface ExamService extends IService<Exam> {
     * @param id
     * @return
     */
-    ExamDTO detail(String id);
+    ExamDetailDTO detail(String id);
 }

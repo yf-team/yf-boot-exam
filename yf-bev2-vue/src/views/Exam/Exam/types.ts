@@ -1,25 +1,24 @@
-// 用户对象
-export type RepoDataType = {
+export type ExamType = {
   id?: string
   title?: string
-  catId?: string
-}
-
-// 试题对象
-export type QuDataType = {
-  id?: string
-  title?: string
-  quType?: string
+  content?: string
+  startTime?: string
+  endTime?: string
+  qualifyScore: number
+  totalScore?: number
+  totalTime?: number
+  chance?: number
+  lateMax?: number
+  handMin?: number
+  ruleList?: ExamRuleType[]
   repoId?: string
-  difficultyLevel?: string
-  content?: string
-  analysis?: string
-  answerList?: AnswerDataType[]
 }
 
-// 选项
-export type AnswerDataType = {
+export type ExamRuleType = {
   id?: string
-  isRight?: boolean
-  content?: string
+  examId?: string
+  repoId?: string
+  quType?: string
+  quCount?: number
+  quScore?: number
 }
