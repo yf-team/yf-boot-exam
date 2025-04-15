@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yf.modules.exam.paper.mapper.PaperMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.paper.dto.PaperDTO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="exam_id" property="examId" />
+        <result column="title" property="title" />
+        <result column="total_time" property="totalTime" />
+        <result column="user_time" property="userTime" />
+        <result column="total_score" property="totalScore" />
+        <result column="qualify_score" property="qualifyScore" />
+        <result column="user_score" property="userScore" />
+        <result column="limit_time" property="limitTime" />
+        <result column="hand_time" property="handTime" />
+        <result column="hand_state" property="handState" />
+        <result column="passed" property="passed" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        `id`,`user_id`,`exam_id`,`title`,`total_time`,`user_time`,`total_score`,`qualify_score`,`user_score`,`limit_time`,`hand_time`,`hand_state`,`passed`,`create_time`,`update_time`,`create_by`,`update_by`
+    </sql>
+
+</mapper>

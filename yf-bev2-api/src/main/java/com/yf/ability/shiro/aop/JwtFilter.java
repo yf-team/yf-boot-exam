@@ -121,7 +121,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 		httpServletResponse.setStatus(200);
 
 		// 写入错误信息
-		ApiRest apiRest = new ApiRest(ApiError.ERROR_10010002);
+		ApiRest<?> apiRest = new ApiRest(ApiError.ERROR_10010002);
 		httpServletResponse.getWriter().print(JsonHelper.toJson(apiRest));
 		return false;
 	}

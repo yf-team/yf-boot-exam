@@ -1,4 +1,4 @@
-package com.yf.modules.exam.repo.controller;
+package com.yf.modules.exam.exam.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yf.base.api.api.ApiRest;
@@ -6,31 +6,33 @@ import com.yf.base.api.api.controller.BaseController;
 import com.yf.base.api.api.dto.BaseIdReqDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
-import com.yf.modules.exam.repo.dto.RepoQuDTO;
-import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
-import com.yf.modules.exam.repo.service.RepoQuService;
+import com.yf.modules.exam.exam.dto.ExamDTO;
+import com.yf.modules.exam.exam.service.ExamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
 * <p>
-* 问题题目控制器
+* 课程控制器
 * </p>
 *
 * @author 聪明笨狗
-* @since 2025-04-11 09:42
+* @since 2025-04-14 17:29
 */
-@Tag(name="问题题目")
+@Tag(name="课程")
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/exam/repo/qu")
-public class RepoQuController extends BaseController {
+@RequestMapping("/api/exam/exam/exam")
+public class ExamController extends BaseController {
 
-    private final RepoQuService repoQuService;
+    @Autowired
+    private ExamService baseService;
 
     /**
     * 添加或修改
@@ -38,10 +40,10 @@ public class RepoQuController extends BaseController {
     * @return
     */
     @Operation(summary = "添加或修改")
-    @RequiresPermissions(value = {"repo:qu:add", "repo:qu:edit"}, logical = Logical.OR)
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest<?> save(@RequestBody RepoQuDetailDTO reqDTO) {
-        repoQuService.save(reqDTO);
+    @RequiresPermissions(value = {"exam:exam:add", "exam:exam:edit"}, logical = Logical.OR)
+    @PostMapping("/save")
+    public ApiRest<?> save(@RequestBody ExamDTO reqDTO) {
+        baseService.save(reqDTO);
         return super.success();
     }
 
@@ -51,11 +53,11 @@ public class RepoQuController extends BaseController {
     * @return
     */
     @Operation(summary = "批量删除")
-    @RequiresPermissions("repo:qu:delete")
+    @RequiresPermissions("exam:exam:delete")
     @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
-        repoQuService.delete(reqDTO.getIds());
+        baseService.delete(reqDTO.getIds());
         return super.success();
     }
 
@@ -65,10 +67,10 @@ public class RepoQuController extends BaseController {
     * @return
     */
     @Operation(summary = "查找详情")
-    @RequiresPermissions("repo:qu:view")
+    @RequiresPermissions("exam:exam:view")
     @PostMapping("/detail")
-    public ApiRest<RepoQuDetailDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
-        RepoQuDetailDTO dto = repoQuService.detail(reqDTO.getId());
+    public ApiRest<ExamDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
+        ExamDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
     }
 
@@ -78,12 +80,12 @@ public class RepoQuController extends BaseController {
     * @return
     */
     @Operation(summary = "分页查找")
-    @RequiresPermissions("repo:qu:view")
+    @RequiresPermissions("exam:exam:view")
     @PostMapping("/paging")
-    public ApiRest<IPage<RepoQuDTO>> paging(@RequestBody PagingReqDTO<RepoQuDTO> reqDTO) {
+    public ApiRest<IPage<ExamDTO>> paging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
 
         //分页查询并转换
-        IPage<RepoQuDTO> page = repoQuService.paging(reqDTO);
+        IPage<ExamDTO> page = baseService.paging(reqDTO);
 
         return super.success(page);
     }

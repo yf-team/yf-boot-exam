@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yf.modules.exam.exam.mapper.ExamMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.exam.dto.ExamDTO">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="open_type" property="openType" />
+        <result column="password" property="password" />
+        <result column="state" property="state" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="total_score" property="totalScore" />
+        <result column="total_time" property="totalTime" />
+        <result column="qualify_score" property="qualifyScore" />
+        <result column="chance" property="chance" />
+        <result column="hand_min" property="handMin" />
+        <result column="late_max" property="lateMax" />
+        <result column="thanks" property="thanks" />
+        <result column="result_type" property="resultType" />
+        <result column="result_oppty" property="resultOppty" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+
+</mapper>

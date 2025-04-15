@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yf.modules.exam.tmpl.mapper.TmplQuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.tmpl.dto.TmplQuDTO">
+        <id column="id" property="id" />
+        <result column="tmpl_id" property="tmplId" />
+        <result column="qu_id" property="quId" />
+        <result column="qu_type" property="quType" />
+        <result column="qu_score" property="quScore" />
+        <result column="sort" property="sort" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        `id`,`tmpl_id`,`qu_id`,`qu_type`,`qu_score`,`sort`
+    </sql>
+
+</mapper>

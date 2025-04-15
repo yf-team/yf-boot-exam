@@ -67,7 +67,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRest<?> shiroExceptionHandler(AuthorizationException e) {
         log.error(e);
-        ApiRest rest = new ApiRest();
+        ApiRest<?> rest = new ApiRest();
         rest.setMsg("您无权执行此操作，请联系管理员！");
         rest.setCode(-1);
         return rest;
@@ -83,7 +83,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRest<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e);
-        ApiRest apiRest = new ApiRest();
+        ApiRest<?> apiRest = new ApiRest();
         apiRest.setCode(1);
         apiRest.setMsg(e.getBindingResult().getFieldError().getDefaultMessage());
         return apiRest;
@@ -102,7 +102,7 @@ public class ServiceExceptionHandler {
 
         log.error(e);
 
-        ApiRest apiRest = new ApiRest();
+        ApiRest<?> apiRest = new ApiRest();
         apiRest.setCode(1);
         String msg = e.getMessage();
 
@@ -126,7 +126,7 @@ public class ServiceExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public ApiRest<?> handleNoSuchBeanDefinitionException(NoSuchBeanDefinitionException e) {
         log.error(e);
-        ApiRest apiRest = new ApiRest();
+        ApiRest<?> apiRest = new ApiRest();
         apiRest.setCode(1);
         apiRest.setMsg(e.getMessage());
         return apiRest;

@@ -30,7 +30,7 @@ public class ServiceException extends RuntimeException{
      * 从结果初始化
      * @param apiRest
      */
-    public ServiceException(ApiRest apiRest){
+    public ServiceException(ApiRest<?> apiRest){
         this.code = apiRest.getCode();
         this.msg = apiRest.getMsg();
     }

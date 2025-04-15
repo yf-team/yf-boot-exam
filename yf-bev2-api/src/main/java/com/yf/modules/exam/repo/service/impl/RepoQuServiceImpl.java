@@ -11,12 +11,13 @@ import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
 import com.yf.modules.exam.repo.dto.RepoQuDTO;
-import com.yf.modules.exam.repo.dto.request.RepoQuReqDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 import com.yf.modules.exam.repo.entity.RepoQu;
 import com.yf.modules.exam.repo.mapper.RepoQuMapper;
 import com.yf.modules.exam.repo.service.RepoQuAnswerService;
 import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,17 +47,23 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
         // 请求参数
         RepoQuDTO params = reqDTO.getParams();
 
+        if (params!=null) {
+            if (StringUtils.isNotBlank(params.getContent())){
+                wrapper.lambda().like(RepoQu::getContent, params.getContent());
+            }
+        }
+
+        wrapper.lambda().orderByDesc(RepoQu::getCreateTime);
+
         //获得数据
         IPage<RepoQu> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<RepoQuDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<RepoQuDTO>>(){});
-        return pageData;
+        return JsonHelper.parseObject(page, new TypeReference<Page<RepoQuDTO>>(){});
     }
 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(RepoQuReqDTO reqDTO){
+    public void save(RepoQuDetailDTO reqDTO){
         //复制参数
         RepoQu entity = new RepoQu();
         BeanMapper.copy(reqDTO, entity);
@@ -73,10 +80,10 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     }
 
     @Override
-    public RepoQuReqDTO detail(String id){
+    public RepoQuDetailDTO detail(String id){
         // 基本信息
         RepoQu entity = this.getById(id);
-        RepoQuReqDTO dto = new RepoQuReqDTO();
+        RepoQuDetailDTO dto = new RepoQuDetailDTO();
         BeanMapper.copy(entity, dto);
 
         List<RepoQuAnswerDTO> answerList = repoQuAnswerService.listByQuId(id);

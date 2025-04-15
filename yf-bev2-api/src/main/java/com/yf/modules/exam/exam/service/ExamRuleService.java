@@ -1,38 +1,36 @@
-package com.yf.modules.exam.repo.service;
-
+package com.yf.modules.exam.exam.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
-import com.yf.modules.exam.repo.dto.RepoQuDTO;
-import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
-import com.yf.modules.exam.repo.entity.RepoQu;
+import com.yf.modules.exam.exam.dto.ExamRuleDTO;
+import com.yf.modules.exam.exam.entity.ExamRule;
 
 import java.util.List;
 
 /**
 * <p>
-* 问题题目业务接口类
+* 考试规则业务接口类
 * </p>
 *
 * @author 聪明笨狗
-* @since 2025-04-11 09:42
+* @since 2025-04-14 17:29
 */
-public interface RepoQuService extends IService<RepoQu> {
+public interface ExamRuleService extends IService<ExamRule> {
 
     /**
     * 分页查询数据
     * @param reqDTO
     * @return
     */
-    IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuDTO> reqDTO);
+    IPage<ExamRuleDTO> paging(PagingReqDTO<ExamRuleDTO> reqDTO);
 
     /**
     * 添加或保存
     * @param reqDTO
     * @return
     */
-    void save(RepoQuDetailDTO reqDTO);
+    void save(ExamRuleDTO reqDTO);
 
     /**
     * 批量删除
@@ -46,12 +44,12 @@ public interface RepoQuService extends IService<RepoQu> {
     * @param id
     * @return
     */
-    RepoQuDetailDTO detail(String id);
+    ExamRuleDTO detail(String id);
 
     /**
     * 查找列表
     * @param reqDTO
     * @return
     */
-    List<RepoQuDTO> list(RepoQuDTO reqDTO);
+    List<ExamRuleDTO> list(ExamRuleDTO reqDTO);
 }

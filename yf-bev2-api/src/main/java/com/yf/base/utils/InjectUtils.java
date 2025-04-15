@@ -79,7 +79,7 @@ public class InjectUtils {
         try {
 
             //固定错误
-            ApiRest apiRest = new ApiRest(ApiError.ERROR_10010002);
+            ApiRest<?> apiRest = new ApiRest(ApiError.ERROR_10010002);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
             response.getWriter().write(JsonHelper.toJson(apiRest));

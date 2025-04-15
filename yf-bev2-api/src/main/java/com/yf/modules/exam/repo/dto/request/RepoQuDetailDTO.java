@@ -19,7 +19,7 @@ import java.util.List;
 */
 @Data
 @Schema(description="问题保存&详情类")
-public class RepoQuReqDTO implements Serializable {
+public class RepoQuDetailDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

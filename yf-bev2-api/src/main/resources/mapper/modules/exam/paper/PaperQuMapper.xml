@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yf.modules.exam.paper.mapper.PaperQuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.paper.dto.PaperQuDTO">
+        <id column="id" property="id" />
+        <result column="paper_id" property="paperId" />
+        <result column="qu_id" property="quId" />
+        <result column="qu_type" property="quType" />
+        <result column="answered" property="answered" />
+        <result column="mark" property="mark" />
+        <result column="answer" property="answer" />
+        <result column="sort" property="sort" />
+        <result column="score" property="score" />
+        <result column="actual_score" property="actualScore" />
+        <result column="is_right" property="isRight" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        `id`,`paper_id`,`qu_id`,`qu_type`,`answered`,`mark`,`answer`,`sort`,`score`,`actual_score`,`is_right`
+    </sql>
+
+</mapper>

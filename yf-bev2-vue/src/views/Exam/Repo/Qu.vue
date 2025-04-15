@@ -8,7 +8,7 @@
       ref="table"
     >
       <template #search>
-        <el-input class="filter-item" v-model="query.params['content']" placeholder="搜索题目" />
+        <el-input class="filter-item" v-model="query.params.content" placeholder="搜索题目" />
       </template>
 
       <template #columns>
@@ -54,8 +54,8 @@ let query = ref<TableQueryType>({
   current: 1,
   size: 10,
   params: {
-    title: '',
-    repoId: repoId
+    repoId: repoId,
+    content: ''
   }
 })
 
@@ -65,15 +65,23 @@ let options = ref<OptionsType>({
   delUrl: '/api/exam/repo/qu/delete',
   add: {
     enable: true,
-    permission: ['sys:user:add']
+    permission: ['repo:qu:add']
   },
   edit: {
     enable: true,
-    permission: ['sys:user:edit']
+    permission: ['repo:qu:edit']
   },
   del: {
     enable: true,
-    permission: ['sys:user:delete']
+    permission: ['repo:qu:delete']
+  },
+  ip: {
+    enable: true,
+    permission: ['repo:qu:import']
+  },
+  op: {
+    enable: true,
+    permission: ['repo:qu:export']
   }
 })
 
