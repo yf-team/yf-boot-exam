@@ -104,9 +104,15 @@ import { ExamType } from '@/views/Exam/Exam/types'
 import RepoSelect from '@/views/Exam/Repo/components/RepoSelect.vue'
 import { statApi } from '@/api/modules/exam/repo'
 import { saveApi, detailApi } from '@/api/modules/exam/exam'
+import { useRoute } from 'vue-router'
 
 const dialogVisible = ref(false)
 const loading = ref(false)
+
+// 获取参数
+const route = useRoute()
+
+const examId = route.query.id || ''
 
 const form = ref<ExamType>({
   repoId: ''
@@ -175,8 +181,8 @@ const handleSave = async (formEl: FormInstance | undefined) => {
 }
 
 // 加载详情
-const loadData = (repoId: string) => {
-  detailApi({ id: repoId }).then(({ data }) => {
+const loadData = (examId: string) => {
+  detailApi({ id: examId }).then(({ data }) => {
     form.value = data
   })
 }
@@ -205,9 +211,9 @@ const dateRange = computed({
 
 // 加载第一页数据
 onMounted(() => {
-  // // 查询详情
-  // if (quId) {
-  //   loadData(props.quId)
-  // }
+  // 查询详情
+  if (examId) {
+    loadData(examId)
+  }
 })
 </script>

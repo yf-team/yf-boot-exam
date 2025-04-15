@@ -14,7 +14,7 @@ import java.util.Map;
  * @author bool
  */
 @Data
-@Schema(name="路由响应类", description="路由响应类")
+@Schema(name = "路由响应类", description = "路由响应类")
 public class RouteRespDTO implements Serializable {
 
 
@@ -22,75 +22,80 @@ public class RouteRespDTO implements Serializable {
 
 
     @JsonIgnore
-   @Schema(description = "ID")
+    @Schema(description = "ID")
     private String id;
 
     @JsonIgnore
-   @Schema(description = "上级菜单")
+    @Schema(description = "上级菜单")
     private String parentId;
 
-   @Schema(description = "菜单类型")
+    @Schema(description = "菜单类型")
     private Integer menuType;
 
-   @Schema(description = "访问路径")
+    @Schema(description = "访问路径")
     private String path;
 
-   @Schema(description = "视图或Layout")
+    @Schema(description = "视图或Layout")
     private String component;
 
-   @Schema(description = "跳转地址")
+    @Schema(description = "跳转地址")
     private String redirect;
 
-   @Schema(description = "名称")
+    @Schema(description = "名称")
     private String name;
 
-   @Schema(description = "路由标题")
+    @Schema(description = "路由标题")
     private String metaTitle;
 
-   @Schema(description = "路由标题")
+    @Schema(description = "路由标题")
     private String metaIcon;
 
-   @Schema(description = "高亮菜单")
+    @Schema(description = "高亮菜单")
     private String metaActiveMenu;
 
-   @Schema(description = "是否缓存")
+    @Schema(description = "是否缓存")
     private Boolean metaNoCache;
 
-   @Schema(description = "是否隐藏")
+    @Schema(description = "是否隐藏")
     private Boolean hidden;
 
-   @Schema(description = "子路由表")
+    @Schema(description = "子路由表")
     private List<RouteRespDTO> children;
 
-   @Schema(description = "路由属性")
-    private Map<String,Object> meta;
+    @Schema(description = "路由属性")
+    private Map<String, Object> meta;
 
 
     /**
-     * 获取属性
+     * 构建路由属性，用于前端展示
      * @return
      */
-    public Map<String,Object> getMeta(){
-        Map<String,Object> meta = new HashMap<>(16);
-        if(!StringUtils.isBlank(this.getMetaTitle())){
-            meta.put("title", this.getMetaTitle());
+    public Map<String, Object> getMeta() {
+        Map<String, Object> meta = new HashMap<>(16);
+        if (!StringUtils.isBlank(metaTitle)) {
+            meta.put("title", metaTitle);
         }
 
-        if(!StringUtils.isBlank(this.getMetaIcon())){
-            meta.put("icon", this.getMetaIcon());
+        if (!StringUtils.isBlank(metaIcon)) {
+            meta.put("icon", metaIcon);
         }
 
-//        if(this.getMetaNoCache()!=null){
-//            meta.put("noCache", this.getMetaNoCache());
-//        }
+        if(metaNoCache!=null){
+            meta.put("noCache", this.getMetaNoCache());
+        }
 
-//        if(!StringUtils.isBlank(this.getMetaActiveMenu())){
-//            meta.put("activeMenu", this.getMetaActiveMenu());
-//        }
+        if(!StringUtils.isBlank(metaActiveMenu)){
+            meta.put("activeMenu", metaActiveMenu);
+        }
 
-        if((hidden==null || !hidden) && menuType.equals(1)){
+        if(this.hidden!=null){
+            meta.put("hidden", this.hidden);
+        }
+
+        if ((hidden == null || !hidden) && menuType.equals(1)) {
             meta.put("alwaysShow", true);
         }
+
         return meta;
     }
 
