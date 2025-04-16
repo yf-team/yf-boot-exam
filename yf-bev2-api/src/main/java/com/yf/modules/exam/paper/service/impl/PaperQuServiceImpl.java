@@ -6,14 +6,24 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.utils.AbcTags;
 import com.yf.base.utils.BeanMapper;
+import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.paper.dto.PaperQuDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
+import com.yf.modules.exam.paper.entity.PaperQuAnswer;
 import com.yf.modules.exam.paper.mapper.PaperQuMapper;
+import com.yf.modules.exam.paper.service.PaperQuAnswerService;
 import com.yf.modules.exam.paper.service.PaperQuService;
+import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,8 +34,11 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2025-04-14 17:40
 */
+@RequiredArgsConstructor
 @Service
 public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> implements PaperQuService {
+
+    private final PaperQuAnswerService paperQuAnswerService;
 
     @Override
     public IPage<PaperQuDTO> paging(PagingReqDTO<PaperQuDTO> reqDTO) {
@@ -79,5 +92,47 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
         List<PaperQuDTO> dtoList = BeanMapper.mapList(list, PaperQuDTO.class);
 
         return dtoList;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList) {
+
+        List<PaperQu> paperQuList = new ArrayList<>();
+        List<PaperQuAnswer> answerList = new ArrayList<>();
+
+        for (RepoQuDetailDTO dto : quList) {
+            PaperQu entity = new PaperQu();
+            entity.setPaperId(paperId);
+            entity.setQuType(dto.getQuType());
+            entity.setActualScore(DecimalUtils.zero());
+            entity.setScore(perScore);
+            entity.setQuId(dto.getId());
+            entity.setAnswered(false);
+            paperQuList.add(entity);
+
+            List<RepoQuAnswerDTO> answers = dto.getAnswerList();
+
+            int i = 0;
+            for (RepoQuAnswerDTO answer : answers) {
+                PaperQuAnswer ae = new PaperQuAnswer();
+                ae.setPaperId(paperId);
+                ae.setQuId(dto.getId());
+                ae.setAnswerId(answer.getId());
+                ae.setChecked(false);
+                ae.setIsRight(false);
+                ae.setAbc(AbcTags.get(i));
+                ae.setSort(i);
+                answerList.add(ae);
+                i++;
+            }
+        }
+
+        // 保存题目
+        saveBatch(paperQuList);
+
+        // 保存选项
+        paperQuAnswerService.saveBatch(answerList);
+
     }
 }

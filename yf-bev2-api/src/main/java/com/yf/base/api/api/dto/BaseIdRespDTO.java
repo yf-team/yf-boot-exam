@@ -1,8 +1,10 @@
 package com.yf.base.api.api.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -14,6 +16,8 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(name="主键通用响应类", description="主键通用响应类")
 public class BaseIdRespDTO extends BaseDTO {
 

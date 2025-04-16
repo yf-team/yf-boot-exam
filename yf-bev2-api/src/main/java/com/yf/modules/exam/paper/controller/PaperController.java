@@ -4,17 +4,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yf.base.api.api.ApiRest;
 import com.yf.base.api.api.controller.BaseController;
 import com.yf.base.api.api.dto.BaseIdReqDTO;
+import com.yf.base.api.api.dto.BaseIdRespDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.service.PaperService;
+import com.yf.system.modules.user.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -86,16 +85,20 @@ public class PaperController extends BaseController {
         return super.success(page);
     }
 
+
     /**
-     * 查找列表，每次最多返回200条数据
+     * 分页查找
      * @param reqDTO
      * @return
      */
-    @Operation(summary = "查找列表")
-    @RequestMapping(value = "/list", method = { RequestMethod.POST})
-    public ApiRest<List<PaperDTO>> list(@RequestBody PaperDTO reqDTO) {
-        // 查找列表
-        List<PaperDTO> dtoList = baseService.list(reqDTO);
-        return super.success(dtoList);
+    @Operation(summary = "创建考试", description = "学员进入考试")
+    @PostMapping("/create")
+    public ApiRest<BaseIdRespDTO> create(@RequestBody BaseIdReqDTO reqDTO) {
+
+        //分页查询并转换
+        String paperId = baseService.createForExam(reqDTO.getId(), UserUtils.getUserId());
+
+        return super.success(new BaseIdRespDTO(paperId));
     }
+
 }

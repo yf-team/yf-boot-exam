@@ -90,4 +90,17 @@ public class ExamController extends BaseController {
 
         return super.success(page);
     }
+
+
+    /**
+     * 详情用于考试
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "详情用于考试")
+    @PostMapping("/detail-for-exam")
+    public ApiRest<ExamDetailDTO> detailForExam(@RequestBody BaseIdReqDTO reqDTO) {
+        ExamDetailDTO dto = baseService.detail(reqDTO.getId());
+        return super.success(dto);
+    }
 }

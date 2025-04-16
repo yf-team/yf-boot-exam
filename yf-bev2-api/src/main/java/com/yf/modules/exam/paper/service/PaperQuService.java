@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperQuDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
+import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -52,4 +54,12 @@ public interface PaperQuService extends IService<PaperQu> {
     * @return
     */
     List<PaperQuDTO> list(PaperQuDTO reqDTO);
+
+    /**
+     * 保存试卷题目，用于考试
+     * @param paperId
+     * @param perScore 每题的分数
+     * @param quList 试题列表
+     */
+    void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList);
 }

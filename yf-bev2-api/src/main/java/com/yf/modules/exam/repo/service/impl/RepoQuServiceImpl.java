@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
@@ -20,8 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.*;
 
 /**
 * <p>
@@ -104,5 +106,61 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
         List<RepoQuDTO> dtoList = BeanMapper.mapList(list, RepoQuDTO.class);
 
         return dtoList;
+    }
+
+    @Override
+    public List<RepoQuDetailDTO> listForPaper(String repoId, String quType, Integer quCount) {
+
+        Map<String,List<String>> map = this.typeQuIds(repoId);
+        if (!map.containsKey(quType)) {
+            throw new ServiceException("组卷失败，题型"+quType+"没有试题！");
+        }
+
+        List<String> ids = map.get(quType);
+        if (ids.size() < quCount ) {
+            throw new ServiceException("组卷失败，题型"+quType+"试题不足！");
+        }
+
+        // 随机排序
+        Collections.shuffle(ids);
+
+        // 逐个构建详情，注意效率问题
+        List<RepoQuDetailDTO> resultList = new ArrayList<>();
+        ids.subList(0, quCount).forEach(id-> resultList.add(this.detail(id)));
+
+        return resultList;
+    }
+
+
+    /**
+     * 把题库的全部ID找出来，组成一个题型--IDS列表的MAP
+     * @param repoId
+     * @return
+     */
+    private Map<String,List<String>> typeQuIds(String repoId){
+        Map<String,List<String>> map = new HashMap<>();
+
+        //分页查询并转换
+        QueryWrapper<RepoQu> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .select(RepoQu::getId, RepoQu::getQuType)
+                .eq(RepoQu::getRepoId, repoId);
+
+        List<RepoQu> list = this.list(wrapper);
+        if(CollectionUtils.isEmpty(list)){
+            return map;
+        }
+
+        for(RepoQu repoQu : list){
+            if(map.containsKey(repoQu.getQuType())){
+                map.get(repoQu.getQuType()).add(repoQu.getId());
+            }else {
+                List<String> ids = new ArrayList<>();
+                ids.add(repoQu.getId());
+                map.put(repoQu.getQuType(), ids);
+            }
+        }
+
+        return map;
     }
 }

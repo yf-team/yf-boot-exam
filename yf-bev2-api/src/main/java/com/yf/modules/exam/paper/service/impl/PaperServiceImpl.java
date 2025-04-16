@@ -6,18 +6,25 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
+import com.yf.modules.exam.exam.dto.ExamRuleDTO;
 import com.yf.modules.exam.exam.entity.Exam;
+import com.yf.modules.exam.exam.service.ExamRuleService;
 import com.yf.modules.exam.exam.service.ExamService;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 import com.yf.modules.exam.paper.mapper.PaperMapper;
+import com.yf.modules.exam.paper.service.PaperQuService;
 import com.yf.modules.exam.paper.service.PaperService;
+import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +43,9 @@ import java.util.List;
 public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements PaperService {
 
     private final ExamService examService;
+    private final ExamRuleService examRuleService;
+    private final RepoQuService repoQuService;
+    private final PaperQuService paperQuService;
 
     @Override
     public IPage<PaperDTO> paging(PagingReqDTO<PaperDTO> reqDTO) {
@@ -93,7 +103,7 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void createForExam(String examId, String userId) {
+    public String createForExam(String examId, String userId) {
 
         // 做基础校验
         Exam exam = examService.getById(examId);
@@ -129,6 +139,19 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         // 增加定时任务
         this.save(paper);
 
+        // 构建随机题目
+        List<ExamRuleDTO> ruleList = examRuleService.listByExam(examId);
 
+        if(CollectionUtils.isEmpty(ruleList)){
+            throw new ServiceException("考试进入失败，没有组卷规则！");
+        }
+
+        // 循环保存
+        for (ExamRuleDTO rule : ruleList) {
+            List<RepoQuDetailDTO> quList = repoQuService.listForPaper(rule.getRepoId(), rule.getQuType(), rule.getQuCount());
+            paperQuService.saveToPaper(paper.getId(), rule.getQuScore(), quList);
+        }
+
+        return paper.getId();
     }
 }

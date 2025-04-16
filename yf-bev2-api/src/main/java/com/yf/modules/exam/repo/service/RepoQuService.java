@@ -54,4 +54,13 @@ public interface RepoQuService extends IService<RepoQu> {
     * @return
     */
     List<RepoQuDTO> list(RepoQuDTO reqDTO);
+
+    /**
+     * 查找题目列表用于组卷
+     * @param repoId
+     * @param quType
+     * @param quCount
+     * @return
+     */
+    List<RepoQuDetailDTO> listForPaper(String repoId, String quType, Integer quCount);
 }

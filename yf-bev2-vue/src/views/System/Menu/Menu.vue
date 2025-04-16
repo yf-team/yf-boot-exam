@@ -119,23 +119,19 @@
           <el-input v-model="form.metaTitle" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item v-if="form.menuType === 2" label="英文名" prop="name">
+        <el-form-item label="英文名" prop="name">
           <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item v-if="form.menuType === 2" label="视图组件" prop="component">
+        <el-form-item label="视图组件" prop="component">
           <el-input v-model="form.component" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item
-          v-if="form.menuType === 1 || form.menuType === 2"
-          label="路由路径"
-          prop="path"
-        >
+        <el-form-item label="路由路径" prop="path">
           <el-input v-model="form.path" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item v-if="form.menuType === 3" label="权限标识" prop="permissionTag">
+        <el-form-item label="权限标识" prop="permissionTag">
           <el-input v-model="form.permissionTag" autocomplete="off" />
         </el-form-item>
 
@@ -156,11 +152,7 @@
           </small>
         </el-form-item>
 
-        <el-form-item
-          v-if="form.menuType === 1 || form.menuType === 2"
-          label="是否隐藏"
-          prop="hidden"
-        >
+        <el-form-item label="是否隐藏" prop="hidden">
           <el-switch
             v-model="form.hidden"
             inline-prompt
