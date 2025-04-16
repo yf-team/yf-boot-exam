@@ -7,13 +7,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.utils.BeanMapper;
+import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
+import com.yf.modules.exam.exam.entity.Exam;
+import com.yf.modules.exam.exam.service.ExamService;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 import com.yf.modules.exam.paper.mapper.PaperMapper;
 import com.yf.modules.exam.paper.service.PaperService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,8 +31,11 @@ import java.util.List;
 * @author 聪明笨狗
 * @since 2025-04-14 17:40
 */
+@RequiredArgsConstructor
 @Service
 public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements PaperService {
+
+    private final ExamService examService;
 
     @Override
     public IPage<PaperDTO> paging(PagingReqDTO<PaperDTO> reqDTO) {
@@ -79,5 +89,46 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         List<PaperDTO> dtoList = BeanMapper.mapList(list, PaperDTO.class);
 
         return dtoList;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void createForExam(String examId, String userId) {
+
+        // 做基础校验
+        Exam exam = examService.getById(examId);
+
+        // 复制数据
+        Paper paper = new Paper();
+        paper.setExamId(examId);
+        paper.setUserId(userId);
+        paper.setTotalScore(exam.getTotalScore());
+        paper.setQualifyScore(exam.getQualifyScore());
+        paper.setUserScore(DecimalUtils.zero());
+        paper.setUserTime(0);
+
+        // 计算交卷时间
+        Integer totalTime = exam.getTotalTime();
+        if (totalTime != null && totalTime > 0) {
+            Calendar cl = Calendar.getInstance();
+            cl.setTimeInMillis(System.currentTimeMillis());
+            cl.add(Calendar.MINUTE, totalTime);
+            Date limitTime = cl.getTime();
+
+            // 整个考试的时间
+            if (limitTime.before(exam.getEndTime())) {
+                paper.setLimitTime(limitTime);
+            }else{
+                paper.setLimitTime(exam.getEndTime());
+            }
+
+        }else{
+            paper.setLimitTime(exam.getEndTime());
+        }
+
+        // 增加定时任务
+        this.save(paper);
+
+
     }
 }

@@ -52,4 +52,12 @@ public interface PaperService extends IService<Paper> {
     * @return
     */
     List<PaperDTO> list(PaperDTO reqDTO);
+
+
+    /**
+     * 创建试卷，用于考试
+     * @param examId
+     * @param userId
+     */
+    void createForExam(String examId, String userId);
 }

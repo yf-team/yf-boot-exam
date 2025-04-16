@@ -8,7 +8,7 @@
             <el-input v-model="form.title" autocomplete="off" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" prop="endTime">
           <el-form-item label="考试时间">
             <el-date-picker
               v-model="dateRange"
@@ -19,38 +19,38 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="总分数">
+          <el-form-item label="总分数" prop="totalScore">
             <el-input-number v-model="form.totalScore" disabled /> 分
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
-          <el-form-item label="及格分">
+          <el-form-item label="及格分" prop="qualifyScore">
             <el-input-number v-model="form.qualifyScore" /> 分
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
-          <el-form-item label="考试时长">
-            <el-input-number v-model="form.totalTime" /> 分钟
+          <el-form-item label="考试时长" prop="totalTime">
+            <el-input-number v-model="form.totalTime" :min="1" /> 分钟
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
           <el-form-item label="考试机会">
-            <el-input-number v-model="form.chance" :min="1" /> 次
+            <el-input-number v-model="form.chance" :min="0" /> 次
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
           <el-form-item label="允许迟到时长">
-            <el-input-number v-model="form.lateMax" :min="1" /> 分钟
+            <el-input-number v-model="form.lateMax" :min="0" /> 分钟
           </el-form-item>
         </el-col>
 
         <el-col :span="12">
           <el-form-item label="最低交卷时间">
-            <el-input-number v-model="form.handMin" :min="1" /> 分钟
+            <el-input-number v-model="form.handMin" :min="0" /> 分钟
           </el-form-item>
         </el-col>
 
@@ -76,12 +76,19 @@
             <el-table-column label="总题数" prop="totalCount" />
             <el-table-column label="抽取题数">
               <template #default="{ row }">
-                <el-input-number v-model="row.quCount" :disabled="row.totalCount === 0" />
+                <el-input-number
+                  v-model="row.quCount"
+                  :disabled="row.totalCount === 0"
+                  :max="row.totalCount"
+                />
               </template>
             </el-table-column>
             <el-table-column label="每题分数">
               <template #default="{ row }">
-                <el-input-number v-model="row.quScore" :disabled="row.totalCount === 0" />
+                <el-input-number
+                  v-model="row.quScore"
+                  :disabled="row.totalCount === 0 || row.quCount === 0"
+                />
               </template>
             </el-table-column>
           </el-table>
@@ -89,7 +96,7 @@
       </el-row>
     </el-form>
 
-    <div>
+    <div style="padding-top: 20px">
       <el-button type="primary" @click="handleSave(formRef)" :loading="loading">保存</el-button>
     </div>
   </ContentWrap>
@@ -104,9 +111,9 @@ import { ExamType } from '@/views/Exam/Exam/types'
 import RepoSelect from '@/views/Exam/Repo/components/RepoSelect.vue'
 import { statApi } from '@/api/modules/exam/repo'
 import { saveApi, detailApi } from '@/api/modules/exam/exam'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+const { replace } = useRouter()
 
-const dialogVisible = ref(false)
 const loading = ref(false)
 
 // 获取参数
@@ -115,7 +122,13 @@ const route = useRoute()
 const examId = route.query.id || ''
 
 const form = ref<ExamType>({
-  repoId: ''
+  repoId: '',
+  chance: 0,
+  handMin: 0,
+  lateMax: 0,
+  totalTime: 5,
+  startTime: null,
+  endTime: null
 })
 const formRef = ref<FormInstance>()
 const rules = reactive<FormRules>({
@@ -126,11 +139,55 @@ const rules = reactive<FormRules>({
       trigger: 'blur'
     }
   ],
+  endTime: [
+    {
+      required: true,
+      message: '考试时间不能为空！',
+      trigger: 'blur'
+    }
+  ],
   repoId: [
     {
       required: true,
       message: '题库必须选择！',
       trigger: 'blur'
+    }
+  ],
+  totalTime: [
+    {
+      type: 'number',
+      required: true,
+      asyncValidator: (_rule, value) => {
+        return new Promise((resolve, reject) => {
+          if (value < 1) {
+            reject('考试时长必须大于1分钟！')
+          } else {
+            resolve()
+          }
+        })
+      }
+    }
+  ],
+  qualifyScore: [
+    {
+      required: true,
+      message: '及格分不能为空！',
+      trigger: 'blur'
+    }
+  ],
+  totalScore: [
+    {
+      type: 'number',
+      required: true,
+      asyncValidator: (_rule, value) => {
+        return new Promise((resolve, reject) => {
+          if (value < 1) {
+            reject('总分数不能等于0，请调整组卷策略！')
+          } else {
+            resolve()
+          }
+        })
+      }
     }
   ]
 })
@@ -138,21 +195,30 @@ const rules = reactive<FormRules>({
 // 监听数据变化
 watch(
   () => form.value.repoId,
-  (val) => {
+  (val, oldValue) => {
     statApi({ id: val }).then((res) => {
-      const list = res.data
-      form.value.ruleList = []
-      for (let i = 0; i < list.length; i++) {
-        form.value.ruleList.push({
-          totalCount: list[i].quCount,
-          quScore: 0,
-          quCount: 0,
-          quType: list[i].quType,
-          quType_dictText: list[i].quType_dictText
-        })
-      }
+      // 合并规则
+      mergeRule(res.data, !oldValue)
     })
   }
+)
+
+watch(
+  () => form.value.ruleList,
+  (val) => {
+    let total = 0
+    if (val && val.length > 0) {
+      for (let i = 0; i < val.length; i++) {
+        const rule = val[i]
+
+        console.log(rule)
+        total += rule.quCount * rule.quScore
+      }
+    }
+
+    form.value.totalScore = total
+  },
+  { deep: true }
 )
 
 // 保存题目
@@ -164,14 +230,12 @@ const handleSave = async (formEl: FormInstance | undefined) => {
       saveApi(form.value)
         .then(() => {
           ElMessage({
-            message: '考试添加成功！',
+            message: '考试保存成功！',
             type: 'success'
           })
-
-          dialogVisible.value = false
-          emit('update:visible', false)
-          emit('saved')
           loading.value = false
+
+          replace({ name: 'Exam' })
         })
         .catch(() => {
           loading.value = false
@@ -187,18 +251,38 @@ const loadData = (examId: string) => {
   })
 }
 
-// 添加一个选项
-const addRule = () => {
-  // if (!form.value.answerList) {
-  //   form.value.answerList = []
-  // }
-  //
-  // form.value.answerList.push({ content: '', isRight: false })
-}
+// 加载详情
+const mergeRule = (statList, null2: boolean) => {
+  const mixList = []
 
-// 移除选项
-const removeRule = (i: number) => {
-  //form.value.answerList?.splice(i, 1)
+  for (let i = 0; i < statList.length; i++) {
+    const item = statList[i]
+
+    let mix = {
+      totalCount: item.quCount,
+      quScore: 0,
+      quCount: 0,
+      quType: item.quType,
+      quType_dictText: item.quType_dictText
+    }
+
+    if (form.value.id && null2) {
+      const ruleList = form.value.ruleList
+      if (ruleList.length > 0) {
+        for (let j = 0; j < ruleList.length; j++) {
+          const rule = ruleList[j]
+          if (item.quType === rule.quType) {
+            mix.quCount = rule.quCount
+            mix.quScore = rule.quScore
+          }
+        }
+      }
+    }
+
+    mixList.push(mix)
+  }
+
+  form.value.ruleList = mixList
 }
 
 const dateRange = computed({

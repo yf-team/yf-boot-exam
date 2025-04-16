@@ -13,7 +13,7 @@
 
       <template #columns>
         <el-table-column type="selection" width="50px" />
-        <el-table-column prop="contentText" label="试题内容" />
+        <el-table-column prop="contentText" label="试题内容" show-overflow-tooltip />
         <el-table-column prop="repoId_dictText" label="所属题库" />
         <el-table-column prop="quType_dictText" label="题型" align="center" />
         <el-table-column prop="difficultyLevel_dictText" label="难度等级" align="center" />

@@ -21,7 +21,6 @@ export const hasOneShowingChild = (
 
   const showingChildren = children.filter((v) => {
     const meta = v.meta ?? {}
-    console.log('++++++++vmt:', JSON.stringify(v.meta))
     if (meta.hidden) {
       return false
     } else {

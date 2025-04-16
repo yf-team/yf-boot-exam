@@ -49,6 +49,156 @@ insert  into `el_cfg_switch`(`id`,`val`) values
 ('loginTick','1'),
 ('userReg','true');
 
+/*Table structure for table `el_exam` */
+
+DROP TABLE IF EXISTS `el_exam`;
+
+CREATE TABLE `el_exam` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试名称',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '考试描述',
+  `open_type` int NOT NULL DEFAULT '1' COMMENT '1公开2部门3定员',
+  `state` int NOT NULL DEFAULT '0' COMMENT '考试状态',
+  `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间',
+  `end_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
+  `total_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总分数',
+  `total_time` int NOT NULL DEFAULT '0' COMMENT '总时长（分钟）',
+  `qualify_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '及格分数',
+  `chance` int NOT NULL DEFAULT '0' COMMENT '考试机会',
+  `hand_min` int NOT NULL DEFAULT '0' COMMENT '最低交卷分钟',
+  `late_max` int NOT NULL DEFAULT '0' COMMENT '允许迟到分钟',
+  `thanks` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '感谢文字',
+  `repo_id` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '组卷题库ID',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='课程';
+
+/*Data for the table `el_exam` */
+
+insert  into `el_exam`(`id`,`title`,`content`,`open_type`,`state`,`start_time`,`end_time`,`total_score`,`total_time`,`qualify_score`,`chance`,`hand_min`,`late_max`,`thanks`,`repo_id`,`create_time`,`update_time`,`create_by`,`update_by`) values 
+('1912103485514850306','胡乱考试3','<p>2121</p>',1,0,'2025-04-01 00:00:00','2025-05-31 00:00:00',20.00,1,0.00,0,0,0,NULL,'1910524655864012801','2025-04-15 19:19:30','2025-04-16 11:38:24',NULL,'1000000000000000001'),
+('1912103518402387969','1212','<p>2121</p>',1,0,'2025-04-15 00:00:00','2025-05-21 00:00:00',0.00,0,0.00,0,0,0,NULL,'1910524655864012801','2025-04-15 19:19:38','2025-04-15 19:19:38',NULL,NULL),
+('1912319059444625409','111',NULL,1,0,'2025-04-16 09:36:07','2025-04-16 09:36:07',5.00,5,1.00,0,0,0,NULL,'1910524655864012801','2025-04-16 09:36:07','2025-04-16 09:36:07',NULL,NULL),
+('1912325593490780162','阿萨',NULL,1,0,'2025-04-16 10:02:05','2025-04-16 10:02:05',5.00,5,1.00,0,0,0,NULL,'1910524655864012801','2025-04-16 10:02:05','2025-04-16 10:02:05',NULL,NULL),
+('1912340293842530306','新建考试','<p>就这样考试啊！</p>',1,0,'2025-04-01 00:00:00','2025-05-31 00:00:00',100.00,5,60.00,0,0,0,NULL,'1910524655864012801','2025-04-16 11:00:30','2025-04-16 11:00:30','1000000000000000001',NULL);
+
+/*Table structure for table `el_exam_rule` */
+
+DROP TABLE IF EXISTS `el_exam_rule`;
+
+CREATE TABLE `el_exam_rule` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `exam_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试ID',
+  `repo_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '题库ID',
+  `qu_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '题型',
+  `qu_count` int DEFAULT NULL COMMENT '出题数量',
+  `qu_score` decimal(10,0) NOT NULL DEFAULT '1' COMMENT '每题分数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='考试规则';
+
+/*Data for the table `el_exam_rule` */
+
+insert  into `el_exam_rule`(`id`,`exam_id`,`repo_id`,`qu_type`,`qu_count`,`qu_score`) values 
+('1912103518419165186','1912103518402387969','1910524655864012801','radio',1,5),
+('1912103518419165187','1912103518402387969','1910524655864012801','multi',0,0),
+('1912103518419165188','1912103518402387969','1910524655864012801','judge',0,0),
+('1912103518419165189','1912103518402387969','1910524655864012801','multi2',0,0),
+('1912319059532705793','1912319059444625409','1910524655864012801','radio',1,5),
+('1912319059541094401','1912319059444625409','1910524655864012801','multi',0,0),
+('1912319059549483009','1912319059444625409','1910524655864012801','judge',0,0),
+('1912319059549483010','1912319059444625409','1910524655864012801','multi2',0,0),
+('1912325593490780163','1912325593490780162','1910524655864012801','radio',1,5),
+('1912325593490780164','1912325593490780162','1910524655864012801','multi',0,0),
+('1912325593490780165','1912325593490780162','1910524655864012801','judge',0,0),
+('1912325593490780166','1912325593490780162','1910524655864012801','multi2',0,0),
+('1912340293909639170','1912340293842530306','1910524655864012801','radio',2,50),
+('1912340293909639171','1912340293842530306','1910524655864012801','multi',0,0),
+('1912340293909639172','1912340293842530306','1910524655864012801','judge',0,0),
+('1912340293909639173','1912340293842530306','1910524655864012801','multi2',0,0),
+('1912349830368665602','1912103485514850306','1910524655864012801','radio',2,10),
+('1912349830372859906','1912103485514850306','1910524655864012801','multi',0,0),
+('1912349830372859907','1912103485514850306','1910524655864012801','judge',0,0),
+('1912349830372859908','1912103485514850306','1910524655864012801','multi2',0,0);
+
+/*Table structure for table `el_paper` */
+
+DROP TABLE IF EXISTS `el_paper`;
+
+CREATE TABLE `el_paper` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `user_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `exam_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试标题',
+  `total_time` int NOT NULL DEFAULT '0' COMMENT '考试时长',
+  `user_time` int NOT NULL DEFAULT '0' COMMENT '用户时长',
+  `total_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '试卷总分',
+  `qualify_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '试卷及格分',
+  `user_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '用户总得分',
+  `limit_time` datetime NOT NULL COMMENT '最后截止时间',
+  `hand_time` datetime DEFAULT NULL COMMENT '实际交卷时间',
+  `hand_state` int NOT NULL DEFAULT '0' COMMENT '交卷状态,0未交卷,1已交卷,2强制交卷',
+  `passed` tinyint NOT NULL DEFAULT '0' COMMENT '成绩是否合格',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `exam_id` (`exam_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷';
+
+/*Data for the table `el_paper` */
+
+/*Table structure for table `el_paper_qu` */
+
+DROP TABLE IF EXISTS `el_paper_qu`;
+
+CREATE TABLE `el_paper_qu` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `paper_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷ID',
+  `qu_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目ID',
+  `qu_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型',
+  `answered` tinyint NOT NULL DEFAULT '0' COMMENT '是否已答',
+  `mark` tinyint NOT NULL DEFAULT '0' COMMENT '是否标记',
+  `answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '主观答案',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '问题排序',
+  `score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '单题分分值',
+  `actual_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际得分(主观题)',
+  `is_right` tinyint NOT NULL DEFAULT '0' COMMENT '是否答对',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `paper_id` (`paper_id`) USING BTREE,
+  KEY `qu_id` (`qu_id`) USING BTREE,
+  KEY `sort` (`sort`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷考题';
+
+/*Data for the table `el_paper_qu` */
+
+/*Table structure for table `el_paper_qu_answer` */
+
+DROP TABLE IF EXISTS `el_paper_qu_answer`;
+
+CREATE TABLE `el_paper_qu_answer` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `paper_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷ID',
+  `answer_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回答项ID',
+  `qu_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目ID',
+  `is_right` tinyint NOT NULL DEFAULT '0' COMMENT '是否正确项',
+  `answer` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '填空题',
+  `checked` tinyint NOT NULL DEFAULT '0' COMMENT '是否选中',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
+  `abc` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '选项标签',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `paper_id` (`paper_id`) USING BTREE,
+  KEY `qu_id` (`qu_id`) USING BTREE,
+  KEY `paper_qu_id` (`paper_id`,`qu_id`) USING BTREE,
+  KEY `sort` (`sort`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷考题备选答案';
+
+/*Data for the table `el_paper_qu_answer` */
+
 /*Table structure for table `el_repo` */
 
 DROP TABLE IF EXISTS `el_repo`;
@@ -97,9 +247,8 @@ CREATE TABLE `el_repo_qu` (
 /*Data for the table `el_repo_qu` */
 
 insert  into `el_repo_qu`(`id`,`repo_id`,`chapter_id`,`qu_type`,`difficulty_level`,`content`,`analysis`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-('1910620469047234561','1910526864483852290',NULL,'radio','normal','<p>单选001</p>',NULL,'2025-04-11 17:06:32','2025-04-11 17:14:49',NULL,'1000000000000000001'),
-('1910623040327589890','1910526864483852290',NULL,'mutil','hard','<p>多选题啊</p>',NULL,'2025-04-11 17:16:45','2025-04-11 17:16:45','1000000000000000001','1000000000000000001'),
-('1910623330602786817','1910526864483852290',NULL,'judge','extreme','<p>212121</p>',NULL,'2025-04-11 17:17:54','2025-04-11 17:17:54','1000000000000000001','1000000000000000001');
+('1911685389859876866','1910524655864012801',NULL,'radio','easy','<p>中国最北边的城市是哪个？</p>','<p style=\"text-align: start;\">中国最北边的城市是<strong>漠河市</strong>，位于黑龙江省大兴安岭地区。</p><h3 style=\"text-align: start; line-height: 1.5;\">关键信息：</h3><ul><li style=\"text-align: start;\">地理位置：漠河市地处北纬52°10′至53°33′，是中国纬度最高的城市，素有“神州北极”之称。</li><li style=\"text-align: start;\">边界：北隔黑龙江与俄罗斯相望，是中国与俄罗斯边境的重要节点。</li><li style=\"text-align: start;\">极寒气候：冬季极端最低气温可达-50℃以下，是中国最冷的地方之一。</li><li style=\"text-align: start;\">旅游特色：以北极村（中国最北的村庄）、极光观测（罕见但偶有出现）和冰雪景观闻名。</li></ul><h3 style=\"text-align: start; line-height: 1.5;\">补充说明：</h3><p style=\"text-align: start;\">漠河市原名漠河县，2018年撤县设市。其下辖的<strong>北极村</strong>是中国境内唯一可观赏到北极光现象的地区（概率较低），因此成为热门旅游目的地。</p>','2025-04-14 15:38:09','2025-04-14 15:38:09','1000000000000000001','1000000000000000001'),
+('1912339000495435778','1910524655864012801',NULL,'radio','easy','<p>小客车在雾天行驶时，应当开启什么灯？</p>','<p>雾天能见度低时需开启雾灯和危险报警闪光灯以提高车辆辨识度。</p>','2025-04-16 10:55:22','2025-04-16 10:55:22','1000000000000000001','1000000000000000001');
 
 /*Table structure for table `el_repo_qu_answer` */
 
@@ -117,6 +266,22 @@ CREATE TABLE `el_repo_qu_answer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='候选答案';
 
 /*Data for the table `el_repo_qu_answer` */
+
+insert  into `el_repo_qu_answer`(`id`,`qu_id`,`is_right`,`content`,`image`,`tag`) values 
+('1911611345437388801','1911611345353502722',0,'111',NULL,'A'),
+('1911611345437388802','1911611345353502722',0,'333',NULL,'B'),
+('1911611345437388803','1911611345353502722',0,'444',NULL,'C'),
+('1911683311842291713','1911683311779377154',0,'111',NULL,'A'),
+('1911683311842291714','1911683311779377154',1,'222',NULL,'B'),
+('1911683311842291715','1911683311779377154',0,'333',NULL,'C'),
+('1911685389926985729','1911685389859876866',1,'漠河',NULL,'A'),
+('1911685389926985730','1911685389859876866',0,'新疆',NULL,'B'),
+('1911685389926985731','1911685389859876866',0,'四川',NULL,'C'),
+('1911685389926985732','1911685389859876866',0,'江西',NULL,'D'),
+('1912339000633847809','1912339000495435778',0,'近光灯',NULL,'A'),
+('1912339000638042114','1912339000495435778',0,'远光灯',NULL,'B'),
+('1912339000638042115','1912339000495435778',0,'危险报警闪光灯',NULL,'C'),
+('1912339000638042116','1912339000495435778',1,'雾灯和危险报警闪光灯',NULL,'D');
 
 /*Table structure for table `el_sys_depart` */
 
@@ -222,7 +387,7 @@ insert  into `el_sys_dic_value`(`id`,`dic_code`,`value`,`title`,`parent_id`,`rem
 ('1910524529837760513','repo_catalog','1910524529837760513','岗位晋升','0',NULL,'2025-04-11 10:45:18','2025-04-11 10:45:18','',''),
 ('1910524561106296834','repo_catalog','1910524561106296834','职业技能','0',NULL,'2025-04-11 10:45:25','2025-04-11 10:45:25','',''),
 ('1910602921656356865','qu_type','radio','单选题','0',NULL,'2025-04-11 15:56:48','2025-04-11 15:56:48','',''),
-('1910602957609930754','qu_type','mutil','多选题','0',NULL,'2025-04-11 15:56:57','2025-04-11 15:56:57','',''),
+('1910602957609930754','qu_type','multi','多选题','0',NULL,'2025-04-11 15:56:57','2025-04-11 15:56:57','',''),
 ('1910603005953478658','qu_type','judge','判断题','0',NULL,'2025-04-11 15:57:08','2025-04-11 15:57:08','',''),
 ('1910603102577659905','qu_type','multi2','不定项选择题','0',NULL,'2025-04-11 15:57:31','2025-04-11 15:57:31','',''),
 ('1910603594192031746','qu_difficulty_level','easy','简单','0',NULL,'2025-04-11 15:59:28','2025-04-11 15:59:28','',''),
@@ -264,7 +429,7 @@ CREATE TABLE `el_sys_menu` (
 /*Data for the table `el_sys_menu` */
 
 insert  into `el_sys_menu`(`id`,`parent_id`,`menu_type`,`permission_tag`,`path`,`component`,`redirect`,`name`,`meta_title`,`meta_icon`,`meta_active_menu`,`meta_no_cache`,`hidden`,`sort`,`create_time`,`update_time`,`create_by`,`update_by`) values 
-('1367010529435996174','0',1,NULL,'/admin/sys','#','/admin/sys/menu','Sys','系统设置','carbon:settings',NULL,1,0,15,'2021-03-07 11:08:18','2022-01-06 18:10:33','','10001'),
+('1367010529435996174','0',1,NULL,'/admin/sys','#','/admin/sys/menu','Sys','系统设置','carbon:settings',NULL,1,0,17,'2021-03-07 11:08:18','2022-01-06 18:10:33','','10001'),
 ('1367010529435996176','1367010529435996174',2,NULL,'/admin/sys/menu','views/System/Menu/Menu',NULL,'SysMenu','菜单管理','',NULL,1,0,2,'2021-03-07 11:08:18','2021-05-31 10:14:26','','10001'),
 ('1367010529435996178','1367010529435996174',2,NULL,'/admin/sys/role','views/System/Role/Role',NULL,'SysRole','角色管理','',NULL,1,0,3,'2021-03-07 11:08:18','2022-01-06 18:10:17','','10001'),
 ('1367010529435996179','1367010529435996174',2,NULL,'/admin/sys/dict','views/System/DataDict/DataDict',NULL,'SysDataDict','数据字典','',NULL,1,0,3,'2021-03-07 11:08:18','2022-01-06 18:10:17','','10001'),
@@ -272,11 +437,11 @@ insert  into `el_sys_menu`(`id`,`parent_id`,`menu_type`,`permission_tag`,`path`,
 ('1399266713060630529','1367010529435996176',3,'sys:menu:update',NULL,NULL,NULL,NULL,'修改',NULL,NULL,1,1,2,'2021-05-31 15:29:16','2021-05-31 15:29:16','10001',''),
 ('1399266787438223361','1367010529435996176',3,'sys:menu:delete',NULL,NULL,NULL,NULL,'删除',NULL,NULL,1,1,3,'2021-05-31 15:29:34','2021-05-31 15:29:33','10001',''),
 ('1399266868300210177','1367010529435996176',3,'sys:menu:sort',NULL,NULL,NULL,NULL,'排序',NULL,NULL,1,1,4,'2021-05-31 15:29:53','2021-05-31 15:29:53','10001',''),
-('1552509704679235586','1367010529435996178',3,'sys:role:paging','','',NULL,'','查看','',NULL,NULL,1,1,'2022-07-28 12:22:12','2022-07-28 12:22:12','',''),
+('1552509704679235586','1367010529435996178',3,'sys:role:paging',NULL,NULL,NULL,'','查看','',NULL,NULL,1,1,'2022-07-28 12:22:12','2022-07-28 12:22:12','',''),
 ('1552510807093321730','1367010529435996178',3,'sys:role:add',NULL,NULL,NULL,NULL,'添加',NULL,NULL,NULL,1,2,'2022-07-28 12:26:35','2022-07-28 12:26:35','',''),
 ('1552510872314748929','1367010529435996178',3,'sys:role:edit',NULL,NULL,NULL,NULL,'修改',NULL,NULL,NULL,1,3,'2022-07-28 12:26:50','2022-07-28 12:26:50','',''),
 ('1552510963301785601','1367010529435996178',3,'sys:role:delete',NULL,NULL,NULL,NULL,'删除',NULL,NULL,NULL,1,4,'2022-07-28 12:27:12','2022-07-28 12:27:12','',''),
-('1552547259067965442','0',1,NULL,'/admin/org','#',NULL,NULL,'组织架构','carbon:category',NULL,NULL,0,14,'2022-07-28 14:51:26','2022-07-28 14:51:26','',''),
+('1552547259067965442','0',1,NULL,'/admin/org','#',NULL,NULL,'组织架构','carbon:category',NULL,NULL,0,16,'2022-07-28 14:51:26','2022-07-28 14:51:26','',''),
 ('1552549085188235265','1367010529435996176',3,'sys:menu:paging',NULL,NULL,NULL,NULL,'查看',NULL,NULL,NULL,1,5,'2022-07-28 14:58:41','2022-07-28 14:58:41','',''),
 ('1552615713615716353','1367010529435996179',3,'sys:dict:add',NULL,NULL,NULL,NULL,'添加',NULL,NULL,NULL,NULL,1,'2022-07-28 19:23:26','2022-07-28 19:23:26','',''),
 ('1552615821107339266','1367010529435996179',3,'sys:dict:edit',NULL,NULL,NULL,NULL,'修改',NULL,NULL,NULL,NULL,2,'2022-07-28 19:23:52','2022-07-28 19:23:52','',''),
@@ -298,7 +463,7 @@ insert  into `el_sys_menu`(`id`,`parent_id`,`menu_type`,`permission_tag`,`path`,
 ('1566612797037527042','1367010529435996174',2,NULL,'/admin/sys/plugin','views/System/Plugin/Plugin',NULL,'Plugin','插件管理',NULL,NULL,NULL,NULL,5,'2022-09-05 10:22:51','2022-09-05 10:22:51','',''),
 ('1700043149512056834','0',1,NULL,'/','#','/admin/dashboard',NULL,'管理首页','ant-design:dashboard-outlined',NULL,NULL,NULL,12,'2023-09-08 15:07:27','2023-09-08 15:11:37','1000000000000000001','1000000000000000001'),
 ('1700044482038243330','1700043149512056834',2,NULL,'/admin/dashboard','views/Dashboard/Dashboard',NULL,'Dashboard','工作台','',NULL,NULL,NULL,1,'2023-09-08 15:12:44','2023-09-08 15:12:52','1000000000000000001','1000000000000000001'),
-('1910230973105442817','0',1,NULL,'/admin/repo','#',NULL,NULL,'题库管理','ant-design:product-outlined',NULL,NULL,NULL,13,'2025-04-10 15:18:49','2025-04-10 15:18:49','',''),
+('1910230973105442817','0',1,NULL,'/admin/repo','#',NULL,NULL,'题库管理','ant-design:product-outlined',NULL,NULL,NULL,14,'2025-04-10 15:18:49','2025-04-10 15:18:49','',''),
 ('1910231460139634690','1910230973105442817',2,NULL,'/admin/repo/repo','views/Exam/Repo/Repo',NULL,'Repo','题库管理',NULL,NULL,NULL,0,1,'2025-04-10 15:20:45','2025-04-10 15:20:45','',''),
 ('1910540102659358722','1910230973105442817',2,NULL,'/admin/repo/qu','views/Exam/Repo/Qu',NULL,'Qu','试题管理',NULL,NULL,NULL,NULL,2,'2025-04-11 11:47:11','2025-04-11 11:47:11','',''),
 ('1910584408183029762','1910231460139634690',3,'repo:repo:add',NULL,NULL,NULL,NULL,'添加',NULL,NULL,NULL,1,1,'2025-04-11 14:43:14','2025-04-11 14:43:14','',''),
@@ -308,7 +473,15 @@ insert  into `el_sys_menu`(`id`,`parent_id`,`menu_type`,`permission_tag`,`path`,
 ('1910640225917784066','1910540102659358722',3,'repo:qu:add',NULL,NULL,NULL,NULL,'添加',NULL,NULL,NULL,1,1,'2025-04-11 18:25:02','2025-04-11 18:25:02','',''),
 ('1910640675547172865','1910540102659358722',3,'repo:qu:delete',NULL,NULL,NULL,NULL,'删除',NULL,NULL,NULL,1,2,'2025-04-11 18:26:49','2025-04-11 18:26:49','',''),
 ('1910640779146481666','1910540102659358722',3,'repo:qu:edit',NULL,NULL,NULL,NULL,'修改',NULL,NULL,NULL,1,3,'2025-04-11 18:27:14','2025-04-11 18:27:14','',''),
-('1910640845336793090','1910540102659358722',3,'repo:qu:view',NULL,NULL,NULL,NULL,'查看',NULL,NULL,NULL,1,4,'2025-04-11 18:27:30','2025-04-11 18:27:30','','');
+('1910640845336793090','1910540102659358722',3,'repo:qu:view',NULL,NULL,NULL,NULL,'查看',NULL,NULL,NULL,1,4,'2025-04-11 18:27:30','2025-04-11 18:27:30','',''),
+('1911703533823365121','0',1,NULL,'/admin/admin','#',NULL,NULL,'考试管理','ant-design:file-text-outlined',NULL,NULL,NULL,15,'2025-04-14 16:50:14','2025-04-14 16:50:14','',''),
+('1911705220688547841','1911703533823365121',2,NULL,'/admin/exam/exam','views/Exam/Exam/Exam',NULL,'Exam','考试管理',NULL,NULL,NULL,NULL,1,'2025-04-14 16:56:57','2025-04-14 16:56:57','',''),
+('1911956917277069314','1911705220688547841',3,'exam:exam:add','/admin/exam/add','views/Exam/Exam/Form',NULL,'ExamAdd','添加',NULL,NULL,NULL,1,1,'2025-04-15 09:37:06','2025-04-15 09:37:06','',''),
+('1911956988110475266','1911705220688547841',3,'exam:exam:delete',NULL,NULL,NULL,NULL,'删除',NULL,NULL,NULL,1,2,'2025-04-15 09:37:23','2025-04-15 09:37:23','',''),
+('1911957176237592577','1911705220688547841',3,'exam:exam:edit','/admin/exam/edit','views/Exam/Exam/Form',NULL,'ExamEdit','修改',NULL,NULL,NULL,1,3,'2025-04-15 09:38:07','2025-04-15 09:38:07','',''),
+('1911957247897276417','1911705220688547841',3,'exam:exam:view',NULL,NULL,NULL,NULL,'查看',NULL,NULL,NULL,1,4,'2025-04-15 09:38:25','2025-04-15 09:38:25','',''),
+('1912388980346134529','0',1,NULL,'/client/exam',NULL,NULL,NULL,'考试中心','ant-design:credit-card-outlined',NULL,NULL,NULL,13,'2025-04-16 14:13:58','2025-04-16 14:13:58','',''),
+('1912389902866522113','1912388980346134529',2,NULL,'/client/exam/exam','views/Exam/Exam/Client/Exam',NULL,'ClientExamExam','在线考试',NULL,NULL,NULL,NULL,1,'2025-04-16 14:17:37','2025-04-16 14:17:37','','');
 
 /*Table structure for table `el_sys_role` */
 
@@ -421,7 +594,20 @@ insert  into `el_sys_role_menu`(`id`,`role_id`,`menu_id`,`create_time`,`update_t
 ('1910640225930366978','admin','1910640225917784066','2025-04-11 18:25:02','2025-04-11 18:25:02','','',0),
 ('1910640675614281729','admin','1910640675547172865','2025-04-11 18:26:49','2025-04-11 18:26:49','','',0),
 ('1910640779213590530','admin','1910640779146481666','2025-04-11 18:27:14','2025-04-11 18:27:14','','',0),
-('1910640845336793091','admin','1910640845336793090','2025-04-11 18:27:30','2025-04-11 18:27:30','','',0);
+('1910640845336793091','admin','1910640845336793090','2025-04-11 18:27:30','2025-04-11 18:27:30','','',0),
+('1911703533848530946','admin','1911703533823365121','2025-04-14 16:50:14','2025-04-14 16:50:14','','',0),
+('1911705220696936449','admin','1911705220688547841','2025-04-14 16:56:57','2025-04-14 16:56:57','','',0),
+('1911956917390315522','admin','1911956917277069314','2025-04-15 09:37:06','2025-04-15 09:37:06','','',0),
+('1911956988110475267','admin','1911956988110475266','2025-04-15 09:37:23','2025-04-15 09:37:23','','',0),
+('1911957176237592578','admin','1911957176237592577','2025-04-15 09:38:07','2025-04-15 09:38:07','','',0),
+('1911957247897276418','admin','1911957247897276417','2025-04-15 09:38:25','2025-04-15 09:38:25','','',0),
+('1911977821767897091','admin','1911977821767897090','2025-04-15 11:00:10','2025-04-15 11:00:10','','',0),
+('1911977970338533377','admin','1911977970275618817','2025-04-15 11:00:45','2025-04-15 11:00:45','','',0),
+('1911978018652721154','admin','1911978018652721153','2025-04-15 11:00:57','2025-04-15 11:00:57','','',0),
+('1911978069445742594','admin','1911978069445742593','2025-04-15 11:01:09','2025-04-15 11:01:09','','',0),
+('1911978106036850689','admin','1911978105973936130','2025-04-15 11:01:17','2025-04-15 11:01:17','','',0),
+('1912388980362911746','admin','1912388980346134529','2025-04-16 14:13:58','2025-04-16 14:13:58','','',0),
+('1912389902866522114','admin','1912389902866522113','2025-04-16 14:17:38','2025-04-16 14:17:38','','',0);
 
 /*Table structure for table `el_sys_user` */
 
@@ -502,6 +688,59 @@ insert  into `el_sys_user_role`(`id`,`user_id`,`role_id`) values
 ('1699964466159972353','1699964466151583745','user'),
 ('1699975662460235778','1699975662443458562','user'),
 ('1910217631959805953','1700049535004397569','user');
+
+/*Table structure for table `el_tmpl` */
+
+DROP TABLE IF EXISTS `el_tmpl`;
+
+CREATE TABLE `el_tmpl` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '试卷标题',
+  `cat_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '试卷分类',
+  `join_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '组卷方式',
+  `qu_count` int DEFAULT NULL COMMENT '题目数量',
+  `total_score` decimal(10,2) DEFAULT NULL COMMENT '总分数',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `join_type` (`join_type`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷';
+
+/*Data for the table `el_tmpl` */
+
+/*Table structure for table `el_tmpl_qu` */
+
+DROP TABLE IF EXISTS `el_tmpl_qu`;
+
+CREATE TABLE `el_tmpl_qu` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `tmpl_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '模板ID',
+  `qu_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '题目ID',
+  `qu_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型',
+  `qu_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '分数',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `tmpl_id` (`tmpl_id`) USING BTREE,
+  KEY `qu_id` (`qu_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷题目';
+
+/*Data for the table `el_tmpl_qu` */
+
+/*Table structure for table `el_tmpl_rule` */
+
+DROP TABLE IF EXISTS `el_tmpl_rule`;
+
+CREATE TABLE `el_tmpl_rule` (
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `tmpl_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组ID',
+  `repo_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '题库ID',
+  `qu_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '试题类型',
+  `qu_level` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '难度',
+  `qu_count` int DEFAULT NULL COMMENT '试题数量',
+  `per_score` decimal(10,0) DEFAULT '1' COMMENT '每题分数',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `group_id` (`tmpl_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='大题组卷规则';
+
+/*Data for the table `el_tmpl_rule` */
 
 /*Table structure for table `pl_plugin_data` */
 
@@ -696,7 +935,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 /*Data for the table `qrtz_scheduler_state` */
 
 insert  into `qrtz_scheduler_state`(`SCHED_NAME`,`INSTANCE_NAME`,`LAST_CHECKIN_TIME`,`CHECKIN_INTERVAL`) values 
-('examScheduler','Van1744365284349',1744369607497,10000);
+('examScheduler','Van1744772599898',1744786196681,10000);
 
 /*Table structure for table `qrtz_simple_triggers` */
 

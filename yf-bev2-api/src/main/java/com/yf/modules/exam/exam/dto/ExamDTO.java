@@ -1,5 +1,6 @@
 package com.yf.modules.exam.exam.dto;
 
+import com.yf.base.api.annon.Dict;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -75,9 +76,11 @@ public class ExamDTO implements Serializable {
     @Schema(description = "更新时间")
     private Date updateTime;
 
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
     @Schema(description = "创建人")
     private String createBy;
 
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
     @Schema(description = "修改人")
     private String updateBy;
     

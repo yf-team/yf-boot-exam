@@ -81,15 +81,15 @@ public class RouteRespDTO implements Serializable {
         }
 
         if(metaNoCache!=null){
-            meta.put("noCache", this.getMetaNoCache());
+            meta.put("noCache",metaNoCache);
         }
 
         if(!StringUtils.isBlank(metaActiveMenu)){
             meta.put("activeMenu", metaActiveMenu);
         }
 
-        if(this.hidden!=null){
-            meta.put("hidden", this.hidden);
+        if(hidden!=null){
+            meta.put("hidden", hidden);
         }
 
         if ((hidden == null || !hidden) && menuType.equals(1)) {
