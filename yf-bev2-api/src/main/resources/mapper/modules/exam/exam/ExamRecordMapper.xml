@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yf.modules.exam.exam.mapper.ExamRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yf.modules.exam.exam.dto.ExamRecordDTO">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="exam_id" property="examId" />
+        <result column="paper_id" property="paperId" />
+        <result column="try_count" property="tryCount" />
+        <result column="max_score" property="maxScore" />
+        <result column="last_score" property="lastScore" />
+        <result column="passed" property="passed" />
+    </resultMap>
+
+</mapper>

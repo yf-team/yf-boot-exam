@@ -22,3 +22,9 @@ export type ExamRuleType = {
   quCount?: number
   quScore?: number
 }
+
+export type QuCardType = {
+  quType?: string
+  quType_dictText?: string
+  quIdList?: String[]
+}

@@ -15,8 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
 * <p>
 * 试卷控制器
@@ -87,18 +85,28 @@ public class PaperController extends BaseController {
 
 
     /**
-     * 分页查找
+     * 创建考试
      * @param reqDTO
      * @return
      */
     @Operation(summary = "创建考试", description = "学员进入考试")
     @PostMapping("/create")
     public ApiRest<BaseIdRespDTO> create(@RequestBody BaseIdReqDTO reqDTO) {
-
         //分页查询并转换
-        String paperId = baseService.createForExam(reqDTO.getId(), UserUtils.getUserId());
-
+        String paperId = baseService.createPaper(reqDTO.getId(), UserUtils.getUserId());
         return super.success(new BaseIdRespDTO(paperId));
+    }
+
+    /**
+     * 学员交卷
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "学员交卷", description = "学员主动交卷")
+    @PostMapping("/hand")
+    public ApiRest<BaseIdRespDTO> hand(@RequestBody BaseIdReqDTO reqDTO) {
+        baseService.handPaper(reqDTO.getId());
+        return super.success();
     }
 
 }

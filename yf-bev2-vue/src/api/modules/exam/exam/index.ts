@@ -13,3 +13,10 @@ export const detailApi = (data: any) => {
     data
   })
 }
+
+export const detailForExamApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/exam/exam/detail-for-exam',
+    data
+  })
+}

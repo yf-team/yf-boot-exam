@@ -10,16 +10,10 @@
         <result column="qu_type" property="quType" />
         <result column="answered" property="answered" />
         <result column="mark" property="mark" />
-        <result column="answer" property="answer" />
         <result column="sort" property="sort" />
         <result column="score" property="score" />
         <result column="actual_score" property="actualScore" />
         <result column="is_right" property="isRight" />
     </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`paper_id`,`qu_id`,`qu_type`,`answered`,`mark`,`answer`,`sort`,`score`,`actual_score`,`is_right`
-    </sql>
 
 </mapper>

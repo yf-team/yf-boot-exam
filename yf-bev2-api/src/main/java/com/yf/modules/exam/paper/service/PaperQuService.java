@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperQuDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 
@@ -20,40 +23,6 @@ import java.util.List;
 */
 public interface PaperQuService extends IService<PaperQu> {
 
-    /**
-    * 分页查询数据
-    * @param reqDTO
-    * @return
-    */
-    IPage<PaperQuDTO> paging(PagingReqDTO<PaperQuDTO> reqDTO);
-
-    /**
-    * 添加或保存
-    * @param reqDTO
-    * @return
-    */
-    void save(PaperQuDTO reqDTO);
-
-    /**
-    * 批量删除
-    * @param ids
-    * @return
-    */
-    void delete(List<String> ids);
-
-    /**
-    * 查找详情
-    * @param id
-    * @return
-    */
-    PaperQuDTO detail(String id);
-
-    /**
-    * 查找列表
-    * @param reqDTO
-    * @return
-    */
-    List<PaperQuDTO> list(PaperQuDTO reqDTO);
 
     /**
      * 保存试卷题目，用于考试
@@ -62,4 +31,32 @@ public interface PaperQuService extends IService<PaperQu> {
      * @param quList 试题列表
      */
     void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList);
+
+    /**
+     * 查找答题卡列表，按题型进行分组
+     * @param paperId
+     * @return
+     */
+    List<PaperQuCardRespDTO> listQuCard(String paperId);
+
+    /**
+     * 查找详情用于答题
+     * @param quId
+     * @return
+     */
+    RepoQuDetailDTO detailForAnswer(String quId);
+
+    /**
+     * 考试过程填充答案
+     * @param reqDTO
+     * @return
+     */
+    PaperQuFillRespDTO fillAnswer(PaperQuFillReqDTO reqDTO);
+
+    /**
+     * 进行分数统计
+     * @param paperId
+     * @return
+     */
+    BigDecimal sumTotalScore(String paperId);
 }

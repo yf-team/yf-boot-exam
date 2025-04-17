@@ -60,11 +60,6 @@ public class PaperQu extends Model<PaperQu> {
     private Boolean mark;
     
     /**
-    * 主观答案
-    */
-    private String answer;
-    
-    /**
     * 问题排序
     */
     private Integer sort;

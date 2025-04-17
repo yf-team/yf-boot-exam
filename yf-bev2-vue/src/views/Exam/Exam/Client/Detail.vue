@@ -1,57 +1,40 @@
 <template>
-  <ContentWrap> 啊飒飒所 </ContentWrap>
+  <ContentWrap>
+    {{ detail.title }}
+    <el-button type="primary" @click="startExam" :loading="loading">开始考试</el-button>
+  </ContentWrap>
 </template>
 
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
-import { DataTable } from '@/components/DataTable'
-import { onActivated, ref } from 'vue'
-import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
-import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { detailForExamApi } from '@/api/modules/exam/exam'
+import { createApi } from '@/api/modules/exam/paper'
+
 const { push } = useRouter()
 
-// 表格查询参数
-let query = ref<TableQueryType>({
-  current: 1,
-  size: 10,
-  params: {
-    title: ''
-  }
-})
+const route = useRoute()
+const examId = route.query.id
+const loading = ref(false)
 
-// 表格默认参数
-let options = ref<OptionsType>({
-  listUrl: '/api/exam/exam/exam/paging',
-  delUrl: '/api/exam/exam/exam/delete',
-  add: {
-    enable: true,
-    permission: ['exam:exam:add']
-  },
-  edit: {
-    enable: true,
-    permission: ['exam:exam:edit']
-  },
-  del: {
-    enable: true,
-    permission: ['exam:exam:delete']
-  }
-})
+const detail = ref({})
 
-const table = ref()
-
-const handleAdd = () => {
-  push({ name: 'ExamAdd' })
-}
-const handleEdit = (row: any) => {
-  push({ name: 'ExamEdit', query: { id: row.id } })
+// 创建考试并进入
+const startExam = () => {
+  loading.value = true
+  createApi({ id: examId }).then((res) => {
+    const paperId = res.data.id
+    // 进入考试
+    push({ name: 'ExamClientEnter', query: { id: paperId } })
+    loading.value = false
+  })
 }
 
-const toRecord = (id: string) => {
-  push({ name: 'TmplAdd', query: { id: id } })
-}
-
-onActivated(() => {
-  // 刷新表格
-  table.value.reload()
+// 查找详情
+onMounted(() => {
+  detailForExamApi({ id: examId }).then((res) => {
+    detail.value = res.data
+  })
 })
 </script>

@@ -6,11 +6,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
+import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.AbcTags;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.paper.dto.PaperQuDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import com.yf.modules.exam.paper.entity.PaperQuAnswer;
 import com.yf.modules.exam.paper.mapper.PaperQuMapper;
@@ -18,81 +22,31 @@ import com.yf.modules.exam.paper.service.PaperQuAnswerService;
 import com.yf.modules.exam.paper.service.PaperQuService;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
-* <p>
-* 试卷考题业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:40
-*/
+ * <p>
+ * 试卷考题业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:40
+ */
 @RequiredArgsConstructor
 @Service
 public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> implements PaperQuService {
 
     private final PaperQuAnswerService paperQuAnswerService;
+    private final RepoQuService repoQuService;
 
-    @Override
-    public IPage<PaperQuDTO> paging(PagingReqDTO<PaperQuDTO> reqDTO) {
-
-        //查询条件
-        QueryWrapper<PaperQu> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        PaperQuDTO params = reqDTO.getParams();
-
-        //获得数据
-        IPage<PaperQu> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<PaperQuDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PaperQuDTO>>(){});
-        return pageData;
-    }
-
-
-    @Override
-    public void save(PaperQuDTO reqDTO){
-        //复制参数
-        PaperQu entity = new PaperQu();
-        BeanMapper.copy(reqDTO, entity);
-        this.saveOrUpdate(entity);
-    }
-
-    @Override
-    public void delete(List<String> ids){
-        //批量删除
-        this.removeByIds(ids);
-    }
-
-    @Override
-    public PaperQuDTO detail(String id){
-        PaperQu entity = this.getById(id);
-        PaperQuDTO dto = new PaperQuDTO();
-        BeanMapper.copy(entity, dto);
-        return dto;
-    }
-
-    @Override
-    public List<PaperQuDTO> list(PaperQuDTO reqDTO){
-
-        //分页查询并转换
-        QueryWrapper<PaperQu> wrapper = new QueryWrapper<>();
-
-        //转换并返回
-        List<PaperQu> list = this.list(wrapper);
-
-        //转换数据
-        List<PaperQuDTO> dtoList = BeanMapper.mapList(list, PaperQuDTO.class);
-
-        return dtoList;
-    }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -120,7 +74,7 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
                 ae.setQuId(dto.getId());
                 ae.setAnswerId(answer.getId());
                 ae.setChecked(false);
-                ae.setIsRight(false);
+                ae.setIsRight(answer.getIsRight());
                 ae.setAbc(AbcTags.get(i));
                 ae.setSort(i);
                 answerList.add(ae);
@@ -134,5 +88,126 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
         // 保存选项
         paperQuAnswerService.saveBatch(answerList);
 
+    }
+
+    @Override
+    public List<PaperQuCardRespDTO> listQuCard(String paperId) {
+
+
+        //查找全部题目
+        QueryWrapper<PaperQu> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .select(PaperQu::getQuId, PaperQu::getQuType)
+                .eq(PaperQu::getPaperId, paperId)
+                .orderByAsc(PaperQu::getScore);
+        List<PaperQu> paperQuList = this.list(wrapper);
+
+        // 使用程序转换成题型分组Map
+        Map<String, List<String>> map = new HashMap<>();
+        for (PaperQu paperQu : paperQuList) {
+            String key = paperQu.getQuType();
+            if (map.containsKey(key)) {
+                map.get(key).add(paperQu.getQuId());
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(paperQu.getQuId());
+                map.put(key, list);
+            }
+        }
+
+        // 转换为列表并返回
+        List<PaperQuCardRespDTO> dtoList = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            PaperQuCardRespDTO dto = new PaperQuCardRespDTO();
+            dto.setQuType(entry.getKey());
+            dto.setQuIdList(entry.getValue());
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
+
+    @Override
+    public RepoQuDetailDTO detailForAnswer(String quId) {
+        return repoQuService.detail(quId);
+    }
+
+    @Override
+    public PaperQuFillRespDTO fillAnswer(PaperQuFillReqDTO reqDTO) {
+
+        // 参数
+        String paperId = reqDTO.getPaperId();
+        String quId = reqDTO.getQuId();
+        List<String> checkedItems = reqDTO.getCheckedItems();
+
+        //查找全部题目
+        QueryWrapper<PaperQu> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .select(PaperQu::getId, PaperQu::getQuId, PaperQu::getQuType, PaperQu::getScore)
+                .eq(PaperQu::getPaperId, paperId)
+                .eq(PaperQu::getQuId, quId);
+
+        PaperQu paperQu = this.getOne(wrapper, false);
+        if (paperQu == null) {
+            throw new ServiceException("答题错误，题目不存在！");
+        }
+
+        // 标准答案列表
+        List<PaperQuAnswer> answerList = paperQuAnswerService.listForAnswer(paperId, quId);
+        List<String> rightList = new ArrayList<>();
+
+        // 正确列表
+        for (PaperQuAnswer answer : answerList) {
+            if (answer.getIsRight() != null && answer.getIsRight()) {
+                rightList.add(answer.getAnswerId());
+            }
+
+            // 是否勾选
+            answer.setChecked(checkedItems.contains(answer.getAnswerId()));
+        }
+
+        // 判断是否正确
+        boolean isRight = areListsEqualIgnoreOrder(rightList, checkedItems);
+
+        // 进行保存操作
+        paperQuAnswerService.updateBatchById(answerList);
+
+        // 更新结果
+        paperQu.setIsRight(isRight);
+        paperQu.setActualScore(isRight?paperQu.getScore():BigDecimal.ZERO);
+        paperQu.setAnswered(CollectionUtils.isNotEmpty(checkedItems));
+        this.updateById(paperQu);
+
+
+        PaperQuFillRespDTO respDTO = new PaperQuFillRespDTO();
+        respDTO.setFilled(paperQu.getAnswered());
+        return respDTO;
+    }
+
+    @Override
+    public BigDecimal sumTotalScore(String paperId) {
+        return baseMapper.sumTotalScore(paperId);
+    }
+
+    /**
+     * 两个List比较
+     * @param list1
+     * @param list2
+     * @return
+     */
+    private static boolean areListsEqualIgnoreOrder(List<String> list1, List<String> list2) {
+
+        // 快速校验
+        if (Objects.equals(list1, list2)) {
+            return true;
+        }  // 包括都为null的情况
+        if (list1 == null || list2 == null) {
+            return false;
+        }
+        if (list1.size() != list2.size()) {
+            return false;
+        }
+
+        // 直接转换为 HashSet 比较
+        return new HashSet<>(list1).equals(new HashSet<>(list2));
     }
 }

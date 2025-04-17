@@ -7,14 +7,15 @@ import com.yf.base.api.api.dto.BaseIdReqDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperQuDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.service.PaperQuService;
+import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,74 +29,49 @@ import java.util.List;
 */
 @Tag(name="试卷考题")
 @RestController
-@RequestMapping("/api/exam/paper/paper-qu")
+@RequestMapping("/api/exam/paper/qu")
 public class PaperQuController extends BaseController {
 
     @Autowired
     private PaperQuService baseService;
 
-    /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
-    @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
-    public ApiRest<?> save(@RequestBody PaperQuDTO reqDTO) {
-        baseService.save(reqDTO);
-        return super.success();
-    }
+
 
     /**
-    * 批量删除
+    * 试题详情
     * @param reqDTO
     * @return
     */
-    @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
-    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
-        //根据ID删除
-        baseService.delete(reqDTO.getIds());
-        return super.success();
-    }
-
-    /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
-    @Operation(summary = "查找详情")
-    @RequestMapping(value = "/detail", method = { RequestMethod.POST})
-    public ApiRest<PaperQuDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
-        PaperQuDTO dto = baseService.detail(reqDTO.getId());
+    @Operation(summary = "试题详情", description = "查找试题详情用于答题")
+    @PostMapping("/detail-for-answer")
+    public ApiRest<RepoQuDetailDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
+        RepoQuDetailDTO dto = baseService.detailForAnswer(reqDTO.getId());
         return super.success(dto);
     }
 
-    /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
-    @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
-    public ApiRest<IPage<PaperQuDTO>> paging(@RequestBody PagingReqDTO<PaperQuDTO> reqDTO) {
-
-        //分页查询并转换
-        IPage<PaperQuDTO> page = baseService.paging(reqDTO);
-
-        return super.success(page);
-    }
 
     /**
-     * 查找列表，每次最多返回200条数据
+     * 查找答题卡列表
      * @param reqDTO
      * @return
      */
-    @Operation(summary = "查找列表")
-    @RequestMapping(value = "/list", method = { RequestMethod.POST})
-    public ApiRest<List<PaperQuDTO>> list(@RequestBody PaperQuDTO reqDTO) {
+    @Operation(summary = "查找答题卡列表")
+    @PostMapping("/list-card")
+    public ApiRest<List<PaperQuCardRespDTO>> list(@RequestBody BaseIdReqDTO reqDTO) {
         // 查找列表
-        List<PaperQuDTO> dtoList = baseService.list(reqDTO);
+        List<PaperQuCardRespDTO> dtoList = baseService.listQuCard(reqDTO.getId());
         return super.success(dtoList);
+    }
+
+    /**
+     * 进行答题"
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "进行答题", description = "答题填充答案")
+    @PostMapping("/fill-answer")
+    public ApiRest<PaperQuFillRespDTO> fillAnswer(@RequestBody PaperQuFillReqDTO reqDTO) {
+        PaperQuFillRespDTO respDTO = baseService.fillAnswer(reqDTO);
+        return super.success(respDTO);
     }
 }

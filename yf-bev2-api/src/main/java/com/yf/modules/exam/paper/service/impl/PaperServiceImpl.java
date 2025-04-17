@@ -12,6 +12,7 @@ import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.exam.dto.ExamRuleDTO;
 import com.yf.modules.exam.exam.entity.Exam;
+import com.yf.modules.exam.exam.service.ExamRecordService;
 import com.yf.modules.exam.exam.service.ExamRuleService;
 import com.yf.modules.exam.exam.service.ExamService;
 import com.yf.modules.exam.paper.dto.PaperDTO;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,7 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
     private final ExamRuleService examRuleService;
     private final RepoQuService repoQuService;
     private final PaperQuService paperQuService;
+    private final ExamRecordService examRecordService;
 
     @Override
     public IPage<PaperDTO> paging(PagingReqDTO<PaperDTO> reqDTO) {
@@ -103,13 +106,14 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String createForExam(String examId, String userId) {
+    public String createPaper(String examId, String userId) {
 
         // 做基础校验
         Exam exam = examService.getById(examId);
 
         // 复制数据
         Paper paper = new Paper();
+        paper.setTitle(exam.getTitle());
         paper.setExamId(examId);
         paper.setUserId(userId);
         paper.setTotalScore(exam.getTotalScore());
@@ -148,10 +152,47 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
         // 循环保存
         for (ExamRuleDTO rule : ruleList) {
+            // 未抽题的
+            if(rule.getQuCount()==null || rule.getQuCount()==0){
+                continue;
+            }
             List<RepoQuDetailDTO> quList = repoQuService.listForPaper(rule.getRepoId(), rule.getQuType(), rule.getQuCount());
             paperQuService.saveToPaper(paper.getId(), rule.getQuScore(), quList);
         }
 
         return paper.getId();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void handPaper(String paperId) {
+
+        Paper paper = this.getById(paperId);
+
+        if(paper == null){
+            throw new ServiceException("试卷不存在或已被删除！");
+        }
+
+        if(paper.getHandState().equals(1)){
+            return;
+        }
+
+        // 统计分数
+        BigDecimal userScore = paperQuService.sumTotalScore(paperId);
+        paper.setUserScore(userScore);
+        paper.setHandState(1);
+        paper.setHandTime(new Date());
+        // 考试用时
+        long useTime = (System.currentTimeMillis() - paper.getCreateTime().getTime()) / 1000 / 60;
+        paper.setUserTime((int) useTime);
+
+        // 是否合格
+        boolean passed = DecimalUtils.ge(userScore, paper.getQualifyScore());
+        paper.setPassed(passed);
+        this.updateById(paper);
+
+        // 汇总表
+        examRecordService.joinRecord(paper.getExamId(), paper.getUserId(), paperId, userScore, passed);
+
     }
 }

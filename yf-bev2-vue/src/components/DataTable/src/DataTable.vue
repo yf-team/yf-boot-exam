@@ -12,7 +12,7 @@
     <div class="opt-box">
       <div class="opt-box-left">
         <el-button
-          v-if="add.enable"
+          v-if="add && add.enable"
           v-permission="add.permission"
           type="primary"
           icon="Plus"
@@ -21,7 +21,7 @@
           >添加</el-button
         >
         <el-button
-          v-if="edit.enable"
+          v-if="edit && edit.enable"
           v-permission="edit.permission"
           type="success"
           icon="Edit"
@@ -31,7 +31,7 @@
           >修改</el-button
         >
         <el-button
-          v-if="del.enable"
+          v-if="del && del.enable"
           v-permission="del.permission"
           type="danger"
           icon="Delete"

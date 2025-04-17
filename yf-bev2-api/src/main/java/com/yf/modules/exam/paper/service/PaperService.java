@@ -59,5 +59,13 @@ public interface PaperService extends IService<Paper> {
      * @param examId
      * @param userId
      */
-    String createForExam(String examId, String userId);
+    String createPaper(String examId, String userId);
+
+    /**
+     * 交卷
+     * @param paperId
+     * @return
+     */
+    void handPaper(String paperId);
+
 }

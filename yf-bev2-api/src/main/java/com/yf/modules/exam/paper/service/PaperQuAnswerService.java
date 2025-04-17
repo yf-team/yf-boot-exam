@@ -18,38 +18,13 @@ import java.util.List;
 */
 public interface PaperQuAnswerService extends IService<PaperQuAnswer> {
 
-    /**
-    * 分页查询数据
-    * @param reqDTO
-    * @return
-    */
-    IPage<PaperQuAnswerDTO> paging(PagingReqDTO<PaperQuAnswerDTO> reqDTO);
 
     /**
-    * 添加或保存
-    * @param reqDTO
-    * @return
-    */
-    void save(PaperQuAnswerDTO reqDTO);
+     * 根据试卷和ID查找选项列表，用于判题
+     * @param paperId
+     * @param quId
+     * @return
+     */
+    List<PaperQuAnswer> listForAnswer(String paperId, String quId);
 
-    /**
-    * 批量删除
-    * @param ids
-    * @return
-    */
-    void delete(List<String> ids);
-
-    /**
-    * 查找详情
-    * @param id
-    * @return
-    */
-    PaperQuAnswerDTO detail(String id);
-
-    /**
-    * 查找列表
-    * @param reqDTO
-    * @return
-    */
-    List<PaperQuAnswerDTO> list(PaperQuAnswerDTO reqDTO);
 }

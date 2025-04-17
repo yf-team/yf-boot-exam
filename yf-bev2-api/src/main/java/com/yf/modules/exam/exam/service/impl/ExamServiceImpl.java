@@ -70,7 +70,7 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
         this.removeByIds(ids);
 
         // 移除规则
-        examRuleService.removeByIds(ids);
+        examRuleService.deleteByExams(ids);
     }
 
     @Override
