@@ -16,6 +16,8 @@ import com.yf.modules.exam.exam.service.ExamRecordService;
 import com.yf.modules.exam.exam.service.ExamRuleService;
 import com.yf.modules.exam.exam.service.ExamService;
 import com.yf.modules.exam.paper.dto.PaperDTO;
+import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 import com.yf.modules.exam.paper.mapper.PaperMapper;
 import com.yf.modules.exam.paper.service.PaperQuService;
@@ -23,6 +25,7 @@ import com.yf.modules.exam.paper.service.PaperService;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -89,24 +92,71 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         return dto;
     }
 
+
     @Override
-    public List<PaperDTO> list(PaperDTO reqDTO){
+    public PaperCheckRespDTO preCheck(String examId, String userId) {
 
-        //分页查询并转换
-        QueryWrapper<Paper> wrapper = new QueryWrapper<>();
 
-        //转换并返回
-        List<Paper> list = this.list(wrapper);
+        PaperCheckRespDTO respDTO = new PaperCheckRespDTO();
+        respDTO.setValidated(false);
 
-        //转换数据
-        List<PaperDTO> dtoList = BeanMapper.mapList(list, PaperDTO.class);
 
-        return dtoList;
+        // 查找考试基本信息
+        Exam exam = examService.getById(examId);
+
+        if (exam.getStartTime().after(new Date())) {
+            respDTO.setMessage("考试尚未开始，请耐心等待！");
+            return respDTO;
+        }
+
+        if (exam.getEndTime().before(new Date())) {
+            respDTO.setMessage("来迟一步，考试已结束！");
+            return respDTO;
+        }
+
+        // 进行中的
+        String paperId = this.findProcess(examId, userId);
+        if (StringUtils.isNotBlank(paperId)) {
+            respDTO.setMessage("有正在进行中的考试！");
+            respDTO.setPaperId(paperId);
+            return respDTO;
+        }
+
+        // 校验迟到
+        if (exam.getLateMax()!=null && exam.getLateMax()>0){
+            Calendar cl = Calendar.getInstance();
+            cl.setTime(exam.getStartTime());
+            cl.add(Calendar.MINUTE, exam.getLateMax());
+
+            if (cl.getTime().before(new Date())){
+                respDTO.setMessage(String.format("迟到超过%s分钟，无法进入考试！", exam.getLateMax()));
+                return respDTO;
+            }
+        }
+
+        // 考试机会校验
+        if (exam.getChance()!=null && exam.getChance()>0){
+            int tryCount = examRecordService.findTryCount(examId, userId);
+            if (exam.getChance() <= tryCount){
+                respDTO.setMessage(String.format("考试机会已用完，最多允许考试%s次！", exam.getChance()));
+                return respDTO;
+            }
+        }
+
+        respDTO.setValidated(true);
+        return respDTO;
+
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String createPaper(String examId, String userId) {
+
+        // 校验
+        PaperCheckRespDTO checkDTO = this.preCheck(examId, userId);
+        if (!checkDTO.getValidated()){
+           throw new ServiceException(checkDTO.getMessage());
+        }
 
         // 做基础校验
         Exam exam = examService.getById(examId);
@@ -194,5 +244,41 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         // 汇总表
         examRecordService.joinRecord(paper.getExamId(), paper.getUserId(), paperId, userScore, passed);
 
+    }
+
+    @Override
+    public PaperRealTimeRespDTO realTimeState(String paperId) {
+
+        Paper paper = this.getById(paperId);
+
+        PaperRealTimeRespDTO respDTO = new PaperRealTimeRespDTO();
+
+        long limit = paper.getLimitTime().getTime();
+        long leftSeconds = (limit - System.currentTimeMillis()) / 1000;
+
+        respDTO.setLeftSeconds((int) leftSeconds);
+        respDTO.setHanded(paper.getHandState()!=null && paper.getHandState().equals(1));
+
+        return respDTO;
+    }
+
+    /**
+     * 查找是否有进行中的考试
+     * @param examId
+     * @param userId
+     * @return
+     */
+    private String findProcess(String examId, String userId) {
+        //查询条件
+        QueryWrapper<Paper> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(Paper::getExamId, examId)
+                .eq(Paper::getUserId, userId)
+                .eq(Paper::getHandState, 0);
+
+        Paper paper = this.getOne(wrapper, false);
+        if(paper != null){
+            return paper.getId();
+        }
+        return null;
     }
 }

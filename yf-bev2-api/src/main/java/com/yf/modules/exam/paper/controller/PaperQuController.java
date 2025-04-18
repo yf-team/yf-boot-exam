@@ -1,21 +1,21 @@
 package com.yf.modules.exam.paper.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.yf.base.api.api.ApiRest;
 import com.yf.base.api.api.controller.BaseController;
 import com.yf.base.api.api.dto.BaseIdReqDTO;
-import com.yf.base.api.api.dto.BaseIdsReqDTO;
-import com.yf.base.api.api.dto.PagingReqDTO;
-import com.yf.modules.exam.paper.dto.PaperQuDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.request.PaperDetailReqDTO;
 import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.service.PaperQuService;
-import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -44,8 +44,8 @@ public class PaperQuController extends BaseController {
     */
     @Operation(summary = "试题详情", description = "查找试题详情用于答题")
     @PostMapping("/detail-for-answer")
-    public ApiRest<RepoQuDetailDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
-        RepoQuDetailDTO dto = baseService.detailForAnswer(reqDTO.getId());
+    public ApiRest<PaperQuDetailDTO> detail(@RequestBody PaperDetailReqDTO reqDTO) {
+        PaperQuDetailDTO dto = baseService.detailForAnswer(reqDTO.getPaperId(), reqDTO.getQuId());
         return super.success(dto);
     }
 

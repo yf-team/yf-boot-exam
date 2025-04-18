@@ -1,6 +1,7 @@
 package com.yf.modules.exam.paper.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,12 @@ public interface PaperQuMapper extends BaseMapper<PaperQu> {
      * @return
      */
     BigDecimal sumTotalScore(@Param("paperId") String paperId);
+
+    /**
+     * 查找详情用于答题
+     * @param paperId
+     * @param quId
+     * @return
+     */
+    PaperQuDetailDTO detailForAnswer(@Param("paperId") String paperId, @Param("quId") String quId);
 }

@@ -1,13 +1,12 @@
 package com.yf.modules.exam.exam.service;
 
-import com.yf.base.api.api.dto.PagingReqDTO;
-import com.yf.modules.exam.exam.entity.ExamRecord;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamRecordDTO;
+import com.yf.modules.exam.exam.entity.ExamRecord;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
 * <p>
@@ -35,4 +34,12 @@ public interface ExamRecordService extends IService<ExamRecord> {
      * @param passed
      */
     void joinRecord(String examId, String userId, String paperId, BigDecimal score, Boolean passed);
+
+    /**
+     * 查找考试次数
+     * @param examId
+     * @param userId
+     * @return
+     */
+    int findTryCount(String examId, String userId);
 }

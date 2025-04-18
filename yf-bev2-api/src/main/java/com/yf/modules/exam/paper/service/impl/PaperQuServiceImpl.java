@@ -1,19 +1,15 @@
 package com.yf.modules.exam.paper.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.AbcTags;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DecimalUtils;
-import com.yf.base.utils.jackson.JsonHelper;
-import com.yf.modules.exam.paper.dto.PaperQuDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuCardItemRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuFillRespDTO;
 import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import com.yf.modules.exam.paper.entity.PaperQuAnswer;
@@ -25,7 +21,6 @@ import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
 import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,38 +92,43 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
         //查找全部题目
         QueryWrapper<PaperQu> wrapper = new QueryWrapper<>();
         wrapper.lambda()
-                .select(PaperQu::getQuId, PaperQu::getQuType)
+                .select(PaperQu::getQuId, PaperQu::getQuType, PaperQu::getAnswered, PaperQu::getMark)
                 .eq(PaperQu::getPaperId, paperId)
                 .orderByAsc(PaperQu::getScore);
         List<PaperQu> paperQuList = this.list(wrapper);
 
         // 使用程序转换成题型分组Map
-        Map<String, List<String>> map = new HashMap<>();
+        Map<String, List<PaperQuCardItemRespDTO>> map = new HashMap<>();
         for (PaperQu paperQu : paperQuList) {
             String key = paperQu.getQuType();
+
+            // 复制属性
+            PaperQuCardItemRespDTO item = new PaperQuCardItemRespDTO();
+            BeanMapper.copy(paperQu, item);
+
             if (map.containsKey(key)) {
-                map.get(key).add(paperQu.getQuId());
+                map.get(key).add(item);
             } else {
-                List<String> list = new ArrayList<>();
-                list.add(paperQu.getQuId());
+                List<PaperQuCardItemRespDTO> list = new ArrayList<>();
+                list.add(item);
                 map.put(key, list);
             }
         }
 
         // 转换为列表并返回
         List<PaperQuCardRespDTO> dtoList = new ArrayList<>();
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+        for (Map.Entry<String, List<PaperQuCardItemRespDTO>> entry : map.entrySet()) {
             PaperQuCardRespDTO dto = new PaperQuCardRespDTO();
             dto.setQuType(entry.getKey());
-            dto.setQuIdList(entry.getValue());
+            dto.setItemList(entry.getValue());
             dtoList.add(dto);
         }
         return dtoList;
     }
 
     @Override
-    public RepoQuDetailDTO detailForAnswer(String quId) {
-        return repoQuService.detail(quId);
+    public PaperQuDetailDTO detailForAnswer(String paperId, String quId) {
+        return baseMapper.detailForAnswer(paperId, quId);
     }
 
     @Override

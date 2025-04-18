@@ -8,6 +8,8 @@ import com.yf.base.api.api.dto.BaseIdRespDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperDTO;
+import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.service.PaperService;
 import com.yf.system.modules.user.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,6 +85,18 @@ public class PaperController extends BaseController {
         return super.success(page);
     }
 
+    /**
+     * 创建考试
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "考试校验", description = "学员进入考试")
+    @PostMapping("/pre-check")
+    public ApiRest<PaperCheckRespDTO> preCheck(@RequestBody BaseIdReqDTO reqDTO) {
+        PaperCheckRespDTO respDTO = baseService.preCheck(reqDTO.getId(), UserUtils.getUserId());
+        return super.success(respDTO);
+    }
+
 
     /**
      * 创建考试
@@ -109,4 +123,16 @@ public class PaperController extends BaseController {
         return super.success();
     }
 
+
+    /**
+     * 获取试卷的实时状态
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "获取试卷的实时状态", description = "获取试卷的实时状态，包含剩余时间、是否已交卷等")
+    @PostMapping("/real-time-state")
+    public ApiRest<PaperRealTimeRespDTO> realTimeState(@RequestBody BaseIdReqDTO reqDTO) {
+        PaperRealTimeRespDTO respDTO = baseService.realTimeState(reqDTO.getId());
+        return super.success(respDTO);
+    }
 }

@@ -13,9 +13,7 @@
         <el-table-column prop="createTime" label="创建时间" align="center" />
         <el-table-column label="操作" width="180px" :align="'center'">
           <template #default="{ row }">
-            <el-button icon="Position" type="primary" size="small" @click="toDetail(row.id)"
-              >进入考试</el-button
-            >
+            <el-button icon="Position" type="primary" @click="toDetail(row.id)">进入考试</el-button>
           </template>
         </el-table-column>
       </template>

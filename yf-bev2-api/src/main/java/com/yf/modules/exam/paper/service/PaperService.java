@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperDTO;
+import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 
 import java.util.List;
@@ -47,12 +49,11 @@ public interface PaperService extends IService<Paper> {
     PaperDTO detail(String id);
 
     /**
-    * 查找列表
-    * @param reqDTO
-    * @return
-    */
-    List<PaperDTO> list(PaperDTO reqDTO);
-
+     * 校验考试
+     * @param examId
+     * @param userId
+     */
+    PaperCheckRespDTO preCheck(String examId, String userId);
 
     /**
      * 创建试卷，用于考试
@@ -68,4 +69,11 @@ public interface PaperService extends IService<Paper> {
      */
     void handPaper(String paperId);
 
+
+    /**
+     * 获取实时状态
+     * @param paperId
+     * @return
+     */
+    PaperRealTimeRespDTO realTimeState(String paperId);
 }

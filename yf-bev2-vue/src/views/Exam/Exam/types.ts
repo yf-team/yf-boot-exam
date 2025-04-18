@@ -26,5 +26,5 @@ export type ExamRuleType = {
 export type QuCardType = {
   quType?: string
   quType_dictText?: string
-  quIdList?: String[]
+  itemList?: any[]
 }

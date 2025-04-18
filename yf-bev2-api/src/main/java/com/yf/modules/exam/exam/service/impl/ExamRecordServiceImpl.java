@@ -15,10 +15,6 @@ import com.yf.modules.exam.exam.service.ExamRecordService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Map;
-
-import java.util.List;
 
 /**
 * <p>
@@ -81,6 +77,24 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             record.setLastScore(score);
             this.updateById(record);
         }
+    }
+
+    @Override
+    public int findTryCount(String examId, String userId) {
+
+        //查询条件
+        QueryWrapper<ExamRecord> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .select(ExamRecord::getId, ExamRecord::getTryCount)
+                .eq(ExamRecord::getUserId, userId)
+                .eq(ExamRecord::getExamId, examId);
+
+        ExamRecord record = this.getOne(wrapper, false);
+        if(record != null){
+            return record.getTryCount();
+        }
+
+        return 0;
     }
 
 }

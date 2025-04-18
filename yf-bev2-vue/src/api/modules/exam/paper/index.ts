@@ -38,3 +38,26 @@ export const fillAnswerApi = (data: any) => {
     data
   })
 }
+
+// 考试校验
+export const preCheckApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/paper/paper/pre-check',
+    data
+  })
+}
+// 考试详情
+export const paperDetailApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/paper/paper/detail',
+    data
+  })
+}
+
+// 考试实时状态
+export const realTimeStateApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/paper/paper/real-time-state',
+    data
+  })
+}

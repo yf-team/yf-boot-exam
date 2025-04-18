@@ -59,6 +59,6 @@ springdoc:
 # 日志配置
 logging:
   level:
-    root: info
+    root: debug
   file:
     path: logs/

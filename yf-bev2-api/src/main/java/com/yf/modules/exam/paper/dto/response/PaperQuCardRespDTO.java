@@ -1,4 +1,4 @@
-package com.yf.modules.exam.paper.dto.reponse;
+package com.yf.modules.exam.paper.dto.response;
 
 import com.yf.base.api.annon.Dict;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,5 +28,6 @@ public class PaperQuCardRespDTO implements Serializable {
     private String quType;
 
     @Schema(description = "题目列表")
-    private List<String> quIdList;
+    private List<PaperQuCardItemRespDTO> itemList;
+
 }

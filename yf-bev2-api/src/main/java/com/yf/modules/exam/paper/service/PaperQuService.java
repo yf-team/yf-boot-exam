@@ -1,11 +1,9 @@
 package com.yf.modules.exam.paper.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yf.base.api.api.dto.PagingReqDTO;
-import com.yf.modules.exam.paper.dto.PaperQuDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuCardRespDTO;
-import com.yf.modules.exam.paper.dto.reponse.PaperQuFillRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuCardRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO;
+import com.yf.modules.exam.paper.dto.response.PaperQuFillRespDTO;
 import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
@@ -44,7 +42,7 @@ public interface PaperQuService extends IService<PaperQu> {
      * @param quId
      * @return
      */
-    RepoQuDetailDTO detailForAnswer(String quId);
+    PaperQuDetailDTO detailForAnswer(String paperId, String quId);
 
     /**
      * 考试过程填充答案

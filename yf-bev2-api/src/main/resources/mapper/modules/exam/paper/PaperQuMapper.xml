@@ -16,4 +16,37 @@
         <result column="is_right" property="isRight" />
     </resultMap>
 
+    <resultMap id="DetailResultMap" type="com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO">
+        <id column="id" property="id" />
+        <result column="qu_id" property="quId" />
+        <result column="qu_type" property="quType" />
+        <result column="content" property="content" />
+        <collection property="answerList" column="{paperId=paper_id,quId=qu_id}" select="selectAnswerList" />
+    </resultMap>
+
+
+    <resultMap id="AnswerResultMap" type="com.yf.modules.exam.paper.dto.response.PaperQuAnswerDetailDTO">
+        <id column="id" property="id" />
+        <result column="qu_id" property="quId" />
+        <result column="answer_id" property="answerId" />
+        <result column="content" property="content" />
+        <result column="checked" property="checked" />
+        <result column="sort" property="sort" />
+        <result column="abc" property="abc" />
+    </resultMap>
+
+    <select id="sumTotalScore" resultType="java.math.BigDecimal">
+        SELECT IFNULL(SUM(actual_score),0) FROM el_paper_qu WHERE paper_id=#{paperId}
+    </select>
+
+    <select id="detailForAnswer" resultMap="DetailResultMap">
+        SELECT pq.id,pq.paper_id,pq.qu_id,pq.qu_type,qu.content FROM el_paper_qu pq LEFT JOIN el_repo_qu qu ON pq.qu_id=qu.id
+        WHERE pq.paper_id=#{paperId} AND pq.qu_id=#{quId}
+    </select>
+
+    <select id="selectAnswerList" resultMap="AnswerResultMap">
+        SELECT pqa.id,qa.content,pqa.answer_id,pqa.qu_id,pqa.checked,pqa.sort,pqa.abc FROM el_paper_qu_answer pqa LEFT JOIN el_repo_qu_answer qa ON pqa.answer_id=qa.id
+        WHERE pqa.paper_id=#{paperId} AND pqa.qu_id=#{quId}
+    </select>
+
 </mapper>
