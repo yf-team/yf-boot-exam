@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia'
-import { store } from '../index'
-import { apiRegister, routesApi, apiLogin } from '@/api/login'
+import { store } from '@/store'
+import { apiLogin, apiRegister, routesApi } from '@/api/login'
 import { UserLoginType } from '@/api/login/types'
 import { useStorage } from '@/hooks/web/useStorage'
-import { usePermissionStore } from '@/store/modules/permission'
-import { RouteRecordRaw } from 'vue-router'
-import router from '@/router'
-const { getStorage, setStorage, removeStorage } = useStorage()
 
-const permissionStore = usePermissionStore()
+const { getStorage, setStorage, removeStorage } = useStorage()
 
 export interface UserState {
   userInfo: UserInfoTypes
@@ -70,17 +66,9 @@ export const useUserStore = defineStore('userInfo', {
     async generateRoutes() {
       const res = await routesApi({})
       if (res) {
+        // 将路由存入缓存，交由权限构建
         const routers = res.data || []
         setStorage('roleRouters', routers)
-
-        // 固定使用服务端方式
-        await permissionStore.generateRoutes(routers).catch(() => {})
-
-        permissionStore.getAddRouters.forEach((route) => {
-          // 动态添加可访问路由表
-          router.addRoute(route as RouteRecordRaw)
-        })
-        permissionStore.setIsAddRouters(true)
       }
     }
   }

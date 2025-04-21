@@ -13,3 +13,19 @@ export const detailApi = (data: any) => {
     data
   })
 }
+
+// 获取当前用户信息
+export const infoApi = (data: any) => {
+  return request.post({
+    url: '/api/sys/user/info',
+    data
+  })
+}
+
+// 用户修改信息
+export const updateApi = (data: any) => {
+  return request.post({
+    url: '/api/sys/user/update',
+    data
+  })
+}

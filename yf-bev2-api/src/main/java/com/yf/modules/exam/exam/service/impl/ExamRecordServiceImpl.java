@@ -2,13 +2,11 @@ package com.yf.modules.exam.exam.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.utils.DecimalUtils;
-import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.exam.dto.ExamRecordDTO;
+import com.yf.modules.exam.exam.dto.request.ExamRecordListReqDTO;
 import com.yf.modules.exam.exam.entity.ExamRecord;
 import com.yf.modules.exam.exam.mapper.ExamRecordMapper;
 import com.yf.modules.exam.exam.service.ExamRecordService;
@@ -28,19 +26,8 @@ import java.math.BigDecimal;
 public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRecord> implements ExamRecordService {
 
     @Override
-    public IPage<ExamRecordDTO> paging(PagingReqDTO<ExamRecordDTO> reqDTO) {
-
-        //查询条件
-        QueryWrapper<ExamRecord> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        ExamRecordDTO params = reqDTO.getParams();
-
-        //获得数据
-        IPage<ExamRecord> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<ExamRecordDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<ExamRecordDTO>>(){});
-        return pageData;
+    public IPage<ExamRecordDTO> paging(PagingReqDTO<ExamRecordListReqDTO> reqDTO) {
+        return baseMapper.paging(reqDTO.toPage(), reqDTO.getParams());
     }
 
     @Override
@@ -95,6 +82,11 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         }
 
         return 0;
+    }
+
+    @Override
+    public IPage<ExamRecordDTO> clientPaging(PagingReqDTO<ExamRecordListReqDTO> reqDTO) {
+        return baseMapper.clientPaging(reqDTO.toPage(), reqDTO.getParams());
     }
 
 }

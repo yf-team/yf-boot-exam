@@ -18,7 +18,7 @@ import java.util.Date;
 * @since 2025-04-14 17:29
 */
 @Data
-@Schema(description="课程")
+@Schema(description="考试")
 public class ExamDTO implements Serializable {
 
     @Serial

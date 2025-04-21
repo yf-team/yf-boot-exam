@@ -1,39 +1,39 @@
 <template>
   <ContentWrap>
-    <data-table
+    <DataTable
+      ref="table"
       :options="options"
       :query="query"
       @on-add="handleAdd(formRef)"
       @on-edit="handleEdit"
-      ref="table"
     >
       <template #search>
         <DepartSelect v-model="query.params.deptCode" class="filter-item" />
         <el-input
-          class="filter-item"
           v-model="query.params['roleName']"
+          class="filter-item"
           placeholder="搜索角色名称"
         />
       </template>
 
       <template #columns>
         <el-table-column type="selection" width="50px" />
-        <el-table-column prop="userName" label="用户名" />
-        <el-table-column prop="realName" label="姓名" />
-        <el-table-column prop="deptCode_dictText" label="所属部门" />
-        <el-table-column prop="roleNames" label="角色" />
+        <el-table-column label="用户名" prop="userName" />
+        <el-table-column label="姓名" prop="realName" />
+        <el-table-column label="所属部门" prop="deptCode_dictText" />
+        <el-table-column label="角色" prop="roleNames" />
 
-        <el-table-column label="状态" width="180px" :align="'center'">
+        <el-table-column :align="'center'" label="状态" width="180px">
           <template #default="scope">
-            <el-tag type="success" v-if="scope.row.state === 0">正常</el-tag>
-            <el-tag type="danger" v-else>禁用</el-tag>
+            <el-tag v-if="scope.row.state === 0" type="success">正常</el-tag>
+            <el-tag v-else type="danger">禁用</el-tag>
           </template>
         </el-table-column>
       </template>
-    </data-table>
+    </DataTable>
 
-    <el-dialog v-model="dialogVisible" title="用户管理" width="50%" :before-close="handleClose">
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="120px">
+    <el-dialog v-model="dialogVisible" :before-close="handleClose" title="用户管理" width="50%">
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item label="登录账号" prop="userName">
@@ -71,6 +71,12 @@
               <el-input v-model="form.avatar" autocomplete="off" />
             </el-form-item>
           </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="登录密码" prop="password">
+              <el-input v-model="form.password" autocomplete="off" type="password" />
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -87,11 +93,11 @@
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
-import { ref, reactive, unref } from 'vue'
+import { reactive, ref, unref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import { saveApi, detailApi } from '@/api/sys/user'
+import { detailApi, saveApi } from '@/api/sys/user'
 import RoleSelect from '../Role/components/RoleSelect.vue'
 import DepartSelect from '../Depart/components/DepartSelect.vue'
 import type { UserDataType } from './types'

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
 * <p>
-* 课程业务接口类
+* 考试业务接口类
 * </p>
 *
 * @author 聪明笨狗

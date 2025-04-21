@@ -3,11 +3,11 @@
     ref="formRef"
     :model="form"
     :rules="rules"
+    class="dark:(border-1 border-[var(--el-border-color)] border-solid); w-[100%]"
+    hide-required-asterisk
     label-position="left"
     label-width="70px"
     size="large"
-    class="dark:(border-1 border-[var(--el-border-color)] border-solid); w-[100%]"
-    hide-required-asterisk
   >
     <el-form-item>
       <h2 class="text-2xl font-bold text-center w-[100%]">{{ t('login.registerTitle') }}</h2>
@@ -34,39 +34,39 @@
     <el-form-item :label="t('login.password')" prop="password">
       <input-password
         v-model="form.password"
+        :placeholder="t('login.passwordPlaceholder')"
         :strength="true"
         style="width: 100%"
-        :placeholder="t('login.passwordPlaceholder')"
       />
     </el-form-item>
 
     <el-form-item :label="t('login.checkPassword')" prop="checkPassword">
       <input-password
         v-model="form.checkPassword"
+        :placeholder="t('login.passwordPlaceholder')"
         :strength="true"
         style="width: 100%"
-        :placeholder="t('login.passwordPlaceholder')"
       />
     </el-form-item>
 
     <el-form-item :label="t('login.code')" prop="captchaValue">
-      <input-captcha v-model="form" style="width: 100%" :placeholder="t('login.codePlaceholder')" />
+      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" style="width: 100%" />
     </el-form-item>
 
     <el-form-item>
       <div class="w-[100%]">
-        <el-button :loading="loading" type="primary" class="w-[100%]" @click="register(formRef)">
+        <el-button :loading="loading" class="w-[100%]" type="primary" @click="register(formRef)">
           {{ t('login.register') }}
         </el-button>
       </div>
       <div class="w-[100%] mt-15px">
-        <el-button class="w-[100%]" @click="toLogin"> {{ t('login.hasUser') }} </el-button>
+        <el-button class="w-[100%]" @click="toLogin"> {{ t('login.hasUser') }}</el-button>
       </div>
     </el-form-item>
   </el-form>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, unref } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useValidator } from '@/hooks/web/useValidator'
@@ -74,12 +74,13 @@ import { UserLoginType } from '@/api/login/types'
 import { FormInstance } from 'element-plus'
 import InputPassword from '@/components/InputPassword/src/InputPassword.vue'
 import InputCaptcha from '@/components/InputCaptcha/src/InputCaptcha.vue'
-const { required } = useValidator()
 import { useRouter } from 'vue-router'
+import { useUserStoreWithOut } from '@/store/modules/user'
+
+const { required } = useValidator()
+
 const { replace } = useRouter()
 const emit = defineEmits(['to-login'])
-
-import { useUserStoreWithOut } from '@/store/modules/user'
 
 const userStore = useUserStoreWithOut()
 
@@ -94,7 +95,7 @@ const form = ref<UserLoginType>({
 const formRef = ref<FormInstance>()
 
 // 密码校验
-const checkPass = (rule: any, value: any, callback: any) => {
+const checkPass = (_rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error('请输入确认密码！'))
   } else if (value !== form.value.password) {
@@ -124,7 +125,7 @@ const register = async (formEl: FormInstance | undefined) => {
       userStore
         .register(formData)
         .then(() => {
-          replace('/admin/dashboard')
+          replace('/')
           loading.value = false
         })
         .catch(() => {

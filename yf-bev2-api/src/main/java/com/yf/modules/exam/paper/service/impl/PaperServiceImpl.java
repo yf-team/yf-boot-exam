@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.yf.ability.task.service.JobService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.BeanMapper;
+import com.yf.base.utils.CronUtils;
 import com.yf.base.utils.DecimalUtils;
 import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.exam.dto.ExamRuleDTO;
@@ -15,6 +17,7 @@ import com.yf.modules.exam.exam.entity.Exam;
 import com.yf.modules.exam.exam.service.ExamRecordService;
 import com.yf.modules.exam.exam.service.ExamRuleService;
 import com.yf.modules.exam.exam.service.ExamService;
+import com.yf.modules.exam.jobs.HandPaperJob;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
@@ -52,6 +55,7 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
     private final RepoQuService repoQuService;
     private final PaperQuService paperQuService;
     private final ExamRecordService examRecordService;
+    private final JobService jobService;
 
     @Override
     public IPage<PaperDTO> paging(PagingReqDTO<PaperDTO> reqDTO) {
@@ -154,7 +158,7 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
         // 校验
         PaperCheckRespDTO checkDTO = this.preCheck(examId, userId);
-        if (!checkDTO.getValidated()){
+        if (Boolean.FALSE.equals(checkDTO.getValidated())){
            throw new ServiceException(checkDTO.getMessage());
         }
 
@@ -210,7 +214,16 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
             paperQuService.saveToPaper(paper.getId(), rule.getQuScore(), quList);
         }
 
-        return paper.getId();
+
+
+        // 到期执行任务
+        String paperId = paper.getId();
+
+        // 执行阅卷或完成
+        String jobName = "force:hand:paper:"+paperId;
+        jobService.addCronJob(HandPaperJob.class, jobName, CronUtils.dateToCron(paper.getLimitTime()), paperId);
+
+        return paperId;
     }
 
     @Transactional(rollbackFor = Exception.class)

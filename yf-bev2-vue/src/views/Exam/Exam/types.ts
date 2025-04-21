@@ -26,5 +26,10 @@ export type ExamRuleType = {
 export type QuCardType = {
   quType?: string
   quType_dictText?: string
-  itemList?: any[]
+  itemList?: QuCardItemType[]
+}
+export type QuCardItemType = {
+  quId?: string
+  checked?: boolean
+  mark?: boolean
 }

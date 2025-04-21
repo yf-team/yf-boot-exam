@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
 * <p>
-* 课程业务实现类
+* 考试业务实现类
 * </p>
 *
 * @author 聪明笨狗

@@ -54,7 +54,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 			response.setStatus(HttpStatus.SC_NO_CONTENT);
 			response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
 			response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-			response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "*");
+			response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "POST, GET, OPTIONS");
 			response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "*");
 			log.info("++++++++++放行options请求");
 			return true;

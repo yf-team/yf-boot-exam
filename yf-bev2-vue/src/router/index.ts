@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import type { App } from 'vue'
 import { Layout } from '@/utils/routerHelper'
 import { useI18n } from '@/hooks/web/useI18n'
@@ -41,6 +41,15 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     meta: {
       hidden: true,
       title: '404',
+      noTagsView: true
+    }
+  },
+  {
+    path: '/',
+    name: 'Home',
+    meta: {
+      hidden: true,
+      title: '首页',
       noTagsView: true
     }
   }

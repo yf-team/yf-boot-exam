@@ -14,4 +14,38 @@
         <result column="passed" property="passed" />
     </resultMap>
 
+    <select id="clientPaging" resultMap="BaseResultMap">
+        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_exam ex ON rc.exam_id=ex.id WHERE user_id=#{query.userId}
+        <if test="query!=null">
+            <if test="query.title!=null and query.title!=''">
+                AND ex.title LIKE CONCAT('%', #{query.title} '%')
+            </if>
+            <if test="query.passed!=null">
+                AND rc.passed=#{query.passed}
+            </if>
+        </if>
+        ORDER BY rc.id DESC
+    </select>
+
+    <select id="paging" resultMap="BaseResultMap">
+        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_sys_user uc ON rc.user_id=uc.id
+        <where>
+            <if test="query!=null">
+                <if test="query.userName!=null and query.userName!=''">
+                    AND (uc.real_name LIKE CONCAT('%', #{query.userName} '%') OR uc.user_name LIKE CONCAT('%', #{query.userName} '%'))
+                </if>
+                <if test="query.passed!=null">
+                    AND rc.passed=#{query.passed}
+                </if>
+                <if test="query.scoreMin!=null and query.scoreMin>0 ">
+                    AND rc.max_score >= #{query.scoreMin}
+                </if>
+                <if test="query.scoreMax!=null and query.scoreMax>0 ">
+                    AND rc.max_score &lt;= #{query.scoreMax}
+                </if>
+            </if>
+        </where>
+        ORDER BY rc.id DESC
+    </select>
+
 </mapper>

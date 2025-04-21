@@ -11,7 +11,7 @@
  Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 17/04/2025 17:17:18
+ Date: 21/04/2025 19:07:20
 */
 
 SET NAMES utf8mb4;
@@ -87,11 +87,7 @@ CREATE TABLE `el_exam` (
 -- Records of el_exam
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912103485514850306', '胡乱考试3', '<p>2121</p>', 1, 0, '2025-04-01 00:00:00', '2025-05-31 00:00:00', 20.00, 1, 0.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-15 19:19:30', '2025-04-16 11:38:24', NULL, '1000000000000000001');
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912103518402387969', '1212', '<p>2121</p>', 1, 0, '2025-04-15 00:00:00', '2025-05-21 00:00:00', 0.00, 0, 0.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-15 19:19:38', '2025-04-15 19:19:38', NULL, NULL);
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912319059444625409', '111', NULL, 1, 0, '2025-04-16 09:36:07', '2025-04-16 09:36:07', 5.00, 5, 1.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-16 09:36:07', '2025-04-16 09:36:07', NULL, NULL);
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912325593490780162', '阿萨', NULL, 1, 0, '2025-04-16 10:02:05', '2025-04-16 10:02:05', 5.00, 5, 1.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-16 10:02:05', '2025-04-16 10:02:05', NULL, NULL);
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912340293842530306', '新建考试', '<p>就这样考试啊！</p>', 1, 0, '2025-04-01 00:00:00', '2025-05-31 00:00:00', 100.00, 5, 60.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-16 11:00:30', '2025-04-16 11:00:30', '1000000000000000001', NULL);
+INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1913063229371195394', '新建考试', '<p>1.考生应认真核实准考证所列各项信息是否准确,如有问题,应在考试之前向考点确认。</p><p> 2.考生须持准考证和报名时使用的身份证件进入考场。 </p><p>3.考试当天,考生应依照准考证表明时间</p>', 1, 0, '2025-04-01 00:00:00', '2025-04-30 00:00:00', 100.00, 3, 60.00, 10, 0, 0, NULL, '1910524655864012801', '2025-04-18 10:53:12', '2025-04-21 09:45:12', '1000000000000000001', '1000000000000000001');
 COMMIT;
 
 -- ----------------------------
@@ -115,7 +111,7 @@ CREATE TABLE `el_exam_record` (
 -- Records of el_exam_record
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1912795425707479041', '1000000000000000001', '1912103485514850306', '1912795287484190722', 1, 20.00, 20.00, 1);
+INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1914133469835468801', '1000000000000000001', '1913063229371195394', '1914133345289805826', 1, 100.00, 100.00, 1);
 COMMIT;
 
 -- ----------------------------
@@ -136,26 +132,10 @@ CREATE TABLE `el_exam_rule` (
 -- Records of el_exam_rule
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912103518419165186', '1912103518402387969', '1910524655864012801', 'radio', 1, 5);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912103518419165187', '1912103518402387969', '1910524655864012801', 'multi', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912103518419165188', '1912103518402387969', '1910524655864012801', 'judge', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912103518419165189', '1912103518402387969', '1910524655864012801', 'multi2', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912319059532705793', '1912319059444625409', '1910524655864012801', 'radio', 1, 5);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912319059541094401', '1912319059444625409', '1910524655864012801', 'multi', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912319059549483009', '1912319059444625409', '1910524655864012801', 'judge', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912319059549483010', '1912319059444625409', '1910524655864012801', 'multi2', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912325593490780163', '1912325593490780162', '1910524655864012801', 'radio', 1, 5);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912325593490780164', '1912325593490780162', '1910524655864012801', 'multi', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912325593490780165', '1912325593490780162', '1910524655864012801', 'judge', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912325593490780166', '1912325593490780162', '1910524655864012801', 'multi2', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912340293909639170', '1912340293842530306', '1910524655864012801', 'radio', 2, 50);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912340293909639171', '1912340293842530306', '1910524655864012801', 'multi', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912340293909639172', '1912340293842530306', '1910524655864012801', 'judge', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912340293909639173', '1912340293842530306', '1910524655864012801', 'multi2', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912349830368665602', '1912103485514850306', '1910524655864012801', 'radio', 2, 10);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912349830372859906', '1912103485514850306', '1910524655864012801', 'multi', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912349830372859907', '1912103485514850306', '1910524655864012801', 'judge', 0, 0);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1912349830372859908', '1912103485514850306', '1910524655864012801', 'multi2', 0, 0);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1914133283260243970', '1913063229371195394', '1910524655864012801', 'radio', 2, 25);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1914133283264438274', '1913063229371195394', '1910524655864012801', 'multi', 2, 25);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1914133283268632578', '1913063229371195394', '1910524655864012801', 'judge', 0, 0);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1914133283268632579', '1913063229371195394', '1910524655864012801', 'multi2', 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -189,7 +169,7 @@ CREATE TABLE `el_paper` (
 -- Records of el_paper
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912795287484190722', '1000000000000000001', '1912103485514850306', '胡乱考试3', 0, 0, 20.00, 0.00, 20.00, '2025-04-17 17:09:29', '2025-04-17 17:09:02', 1, 1, '2025-04-17 17:08:29', '2025-04-17 17:08:29', NULL, NULL);
+INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914133345289805826', '1000000000000000001', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 100.00, '2025-04-21 09:48:27', '2025-04-21 09:45:57', 1, 1, '2025-04-21 09:45:27', '2025-04-21 09:45:27', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -217,8 +197,10 @@ CREATE TABLE `el_paper_qu` (
 -- Records of el_paper_qu
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1912795287626797057', '1912795287484190722', '1911685389859876866', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1912795287630991361', '1912795287484190722', '1912339000495435778', 'radio', 1, 0, 0, 10.00, 10.00, 1);
+INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345482743810', '1914133345289805826', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
+INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345486938114', '1914133345289805826', '1912339000495435778', 'radio', 1, 0, 0, 25.00, 25.00, 1);
+INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345625350146', '1914133345289805826', '1913062532164624386', 'multi', 1, 0, 0, 25.00, 25.00, 1);
+INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345625350147', '1914133345289805826', '1913062799203377153', 'multi', 1, 0, 0, 25.00, 25.00, 1);
 COMMIT;
 
 -- ----------------------------
@@ -246,14 +228,22 @@ CREATE TABLE `el_paper_qu_answer` (
 -- Records of el_paper_qu_answer
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287647768578', '1912795287484190722', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287656157185', '1912795287484190722', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287656157186', '1912795287484190722', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287656157187', '1912795287484190722', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287656157188', '1912795287484190722', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287656157189', '1912795287484190722', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287660351489', '1912795287484190722', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1912795287660351490', '1912795287484190722', '1912339000638042116', '1912339000495435778', 1, NULL, 1, 3, 'D');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715330', '1914133345289805826', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715331', '1914133345289805826', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715332', '1914133345289805826', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345507909634', '1914133345289805826', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345507909635', '1914133345289805826', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103938', '1914133345289805826', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103939', '1914133345289805826', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103940', '1914133345289805826', '1912339000638042116', '1912339000495435778', 1, NULL, 1, 3, 'D');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345633738754', '1914133345289805826', '1913062532181401602', '1913062532164624386', 1, NULL, 1, 0, 'A');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933058', '1914133345289805826', '1913062532181401603', '1913062532164624386', 1, NULL, 1, 1, 'B');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933059', '1914133345289805826', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933060', '1914133345289805826', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127361', '1914133345289805826', '1913062799232737282', '1913062799203377153', 1, NULL, 1, 0, 'A');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127362', '1914133345289805826', '1913062799232737283', '1913062799203377153', 1, NULL, 1, 1, 'B');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127363', '1914133345289805826', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
+INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345646321665', '1914133345289805826', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
 COMMIT;
 
 -- ----------------------------
@@ -277,7 +267,6 @@ CREATE TABLE `el_repo` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `el_repo` (`id`, `title`, `cat_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910524655864012801', '测试题库', '1910524409985523713', NULL, '2025-04-11 10:45:48', '2025-04-11 10:45:48', NULL, NULL);
-INSERT INTO `el_repo` (`id`, `title`, `cat_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910526864483852290', '测试题库2', '1910524529837760513', NULL, '2025-04-11 10:54:35', '2025-04-11 10:54:35', '1000000000000000001', '1000000000000000001');
 COMMIT;
 
 -- ----------------------------
@@ -309,6 +298,8 @@ CREATE TABLE `el_repo_qu` (
 BEGIN;
 INSERT INTO `el_repo_qu` (`id`, `repo_id`, `chapter_id`, `qu_type`, `difficulty_level`, `content`, `analysis`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1911685389859876866', '1910524655864012801', NULL, 'radio', 'easy', '<p>中国最北边的城市是哪个？</p>', '<p style=\"text-align: start;\">中国最北边的城市是<strong>漠河市</strong>，位于黑龙江省大兴安岭地区。</p><h3 style=\"text-align: start; line-height: 1.5;\">关键信息：</h3><ul><li style=\"text-align: start;\">地理位置：漠河市地处北纬52°10′至53°33′，是中国纬度最高的城市，素有“神州北极”之称。</li><li style=\"text-align: start;\">边界：北隔黑龙江与俄罗斯相望，是中国与俄罗斯边境的重要节点。</li><li style=\"text-align: start;\">极寒气候：冬季极端最低气温可达-50℃以下，是中国最冷的地方之一。</li><li style=\"text-align: start;\">旅游特色：以北极村（中国最北的村庄）、极光观测（罕见但偶有出现）和冰雪景观闻名。</li></ul><h3 style=\"text-align: start; line-height: 1.5;\">补充说明：</h3><p style=\"text-align: start;\">漠河市原名漠河县，2018年撤县设市。其下辖的<strong>北极村</strong>是中国境内唯一可观赏到北极光现象的地区（概率较低），因此成为热门旅游目的地。</p>', '2025-04-14 15:38:09', '2025-04-14 15:38:09', '1000000000000000001', '1000000000000000001');
 INSERT INTO `el_repo_qu` (`id`, `repo_id`, `chapter_id`, `qu_type`, `difficulty_level`, `content`, `analysis`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912339000495435778', '1910524655864012801', NULL, 'radio', 'easy', '<p>小客车在雾天行驶时，应当开启什么灯？</p>', '<p>雾天能见度低时需开启雾灯和危险报警闪光灯以提高车辆辨识度。</p>', '2025-04-16 10:55:22', '2025-04-16 10:55:22', '1000000000000000001', '1000000000000000001');
+INSERT INTO `el_repo_qu` (`id`, `repo_id`, `chapter_id`, `qu_type`, `difficulty_level`, `content`, `analysis`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1913062532164624386', '1910524655864012801', NULL, 'multi', 'easy', '<p>以下关于等腰三角形的描述，哪些是正确的？</p>', '<p>等腰三角形至少有两条边相等（A正确），且等边对等角（B正确）；但可能是锐角、直角或钝角三角形（C错误）；等边三角形作为特殊等腰三角形有三条对称轴（D错误）。</p>', '2025-04-18 10:50:25', '2025-04-18 10:50:25', '1000000000000000001', '1000000000000000001');
+INSERT INTO `el_repo_qu` (`id`, `repo_id`, `chapter_id`, `qu_type`, `difficulty_level`, `content`, `analysis`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1913062799203377153', '1910524655864012801', NULL, 'multi', 'easy', '<p>小客车驾驶人哪些证件必须随车携带？（多选）</p>', '<p>行驶证和交强险标志为必带证件。</p>', '2025-04-18 10:51:29', '2025-04-18 10:51:29', '1000000000000000001', '1000000000000000001');
 COMMIT;
 
 -- ----------------------------
@@ -344,6 +335,14 @@ INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, 
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1912339000638042114', '1912339000495435778', 0, '远光灯', NULL, 'B');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1912339000638042115', '1912339000495435778', 0, '危险报警闪光灯', NULL, 'C');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1912339000638042116', '1912339000495435778', 1, '雾灯和危险报警闪光灯', NULL, 'D');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062532181401602', '1913062532164624386', 1, '至少有两条边相等', NULL, 'A');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062532181401603', '1913062532164624386', 1, '两个底角相等', NULL, 'B');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062532181401604', '1913062532164624386', 0, '一定是锐角三角形', NULL, 'C');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062532181401605', '1913062532164624386', 0, '对称轴只有一条', NULL, 'D');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062799232737282', '1913062799203377153', 1, '行驶证', NULL, 'A');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062799232737283', '1913062799203377153', 1, '交强险标志', NULL, 'B');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062799241125890', '1913062799203377153', 0, '身份证', NULL, 'C');
+INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1913062799241125891', '1913062799203377153', 0, '车辆购置税证明', NULL, 'D');
 COMMIT;
 
 -- ----------------------------
@@ -411,6 +410,7 @@ INSERT INTO `el_sys_dic` (`id`, `code`, `type`, `title`, `remark`, `create_time`
 INSERT INTO `el_sys_dic` (`id`, `code`, `type`, `title`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910524211750133761', 'repo_catalog', 2, '题库分类', '题库分类', '2025-04-11 10:44:02', '2025-04-11 10:44:02', '', '');
 INSERT INTO `el_sys_dic` (`id`, `code`, `type`, `title`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910602708967395330', 'qu_type', 1, '试题题型', '试题题型', '2025-04-11 15:55:57', '2025-04-11 15:55:57', '', '');
 INSERT INTO `el_sys_dic` (`id`, `code`, `type`, `title`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910603515049709569', 'qu_difficulty_level', 1, '试题难度', '试题难度', '2025-04-11 15:59:09', '2025-04-11 15:59:09', '', '');
+INSERT INTO `el_sys_dic` (`id`, `code`, `type`, `title`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914160770006573057', 'yes_no', 1, '是否', '通用是否选项', '2025-04-21 11:34:25', '2025-04-21 11:34:25', '', '');
 COMMIT;
 
 -- ----------------------------
@@ -462,6 +462,8 @@ INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`,
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910603630212714498', 'qu_difficulty_level', 'normal', '一般', '0', NULL, '2025-04-11 15:59:37', '2025-04-11 15:59:37', '', '');
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910604188910784514', 'qu_difficulty_level', 'hard', '较难', '0', NULL, '2025-04-11 16:01:50', '2025-04-11 16:01:50', '', '');
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910604353570770946', 'qu_difficulty_level', 'extreme', '极难', '0', NULL, '2025-04-11 16:02:29', '2025-04-11 16:02:29', '', '');
+INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914160827720196097', 'yes_no', '1', '是', '0', NULL, '2025-04-21 11:34:39', '2025-04-21 11:34:39', '', '');
+INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914160855650066434', 'yes_no', '0', '否', '0', NULL, '2025-04-21 11:34:46', '2025-04-21 11:34:46', '', '');
 COMMIT;
 
 -- ----------------------------
@@ -531,7 +533,7 @@ INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `pa
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1557200122416930817', '1552842968174489602', 3, 'sys:depart:delete', NULL, NULL, NULL, NULL, '删除', NULL, NULL, NULL, 1, 2, '2022-08-10 11:00:15', '2022-08-10 11:00:15', '', '');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1564510476430225410', '1367010529435996174', 2, NULL, '/admin/sys/config', 'views/System/Config/Config', NULL, 'SysConfig', '个性配置', NULL, NULL, NULL, NULL, 4, '2022-08-30 15:08:59', '2022-08-30 15:08:59', '', '');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1566612797037527042', '1367010529435996174', 2, NULL, '/admin/sys/plugin', 'views/System/Plugin/Plugin', NULL, 'Plugin', '插件管理', NULL, NULL, NULL, NULL, 5, '2022-09-05 10:22:51', '2022-09-05 10:22:51', '', '');
-INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1700043149512056834', '0', 1, NULL, '/', '#', '/admin/dashboard', NULL, '管理首页', 'ant-design:dashboard-outlined', NULL, NULL, NULL, 12, '2023-09-08 15:07:27', '2023-09-08 15:11:37', '1000000000000000001', '1000000000000000001');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1700043149512056834', '0', 1, NULL, '/admin', '#', '/admin/dashboard', NULL, '管理首页', 'ant-design:dashboard-outlined', NULL, NULL, NULL, 12, '2023-09-08 15:07:27', '2023-09-08 15:11:37', '1000000000000000001', '1000000000000000001');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1700044482038243330', '1700043149512056834', 2, NULL, '/admin/dashboard', 'views/Dashboard/Dashboard', NULL, 'Dashboard', '工作台', '', NULL, NULL, NULL, 1, '2023-09-08 15:12:44', '2023-09-08 15:12:52', '1000000000000000001', '1000000000000000001');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910230973105442817', '0', 1, NULL, '/admin/repo', '#', NULL, NULL, '题库管理', 'ant-design:product-outlined', NULL, NULL, NULL, 14, '2025-04-10 15:18:49', '2025-04-10 15:18:49', '', '');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910231460139634690', '1910230973105442817', 2, NULL, '/admin/repo/repo', 'views/Exam/Repo/Repo', NULL, 'Repo', '题库管理', NULL, NULL, NULL, 0, 1, '2025-04-10 15:20:45', '2025-04-10 15:20:45', '', '');
@@ -555,6 +557,11 @@ INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `pa
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912445044980776961', '1912389902866522113', 3, 'exam:client:detail', '/client/exam/detail', 'views/Exam/Exam/Client/Detail', NULL, 'ExamClientDetail', '考试详情', NULL, NULL, NULL, 1, 1, '2025-04-16 17:56:44', '2025-04-16 17:56:44', '', '');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912452280306171906', '1912389902866522113', 3, 'exam:client:enter', '/client/exam/enter', 'views/Exam/Exam/Client/Enter', NULL, 'ExamClientEnter', '进入考试', NULL, NULL, NULL, 1, 2, '2025-04-16 18:25:29', '2025-04-16 18:25:29', '', '');
 INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1912766674995073025', '1912389902866522113', 3, 'exam:client:result', '/client/exam/result', 'views/Exam/Exam/Client/Result', NULL, 'ExamClientResult', '考试结果', NULL, NULL, NULL, 1, 3, '2025-04-17 15:14:47', '2025-04-17 15:14:47', '', '');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914135464021499905', '1911705220688547841', 3, 'exam:record:list', '/admin/exam/record', 'views/Exam/Exam/Record', NULL, 'ExamRecord', '考试记录', NULL, NULL, NULL, 1, 5, '2025-04-21 09:53:52', '2025-04-21 09:53:52', '', '');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914145046580039681', '1912388980346134529', 2, 'exam:client:record', '/client/exam/record', 'views/Exam/Exam/Client/Record', NULL, 'ClientExamRecord', '考试记录', NULL, NULL, NULL, 0, 2, '2025-04-21 10:31:56', '2025-04-21 10:31:56', '', '');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914244224937299969', '0', 1, 'user', '/client/uc', '#', NULL, 'UCenter', '用户设置', 'ant-design:user-outlined', NULL, NULL, NULL, 18, '2025-04-21 17:06:02', '2025-04-21 17:06:02', '', '');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914244884357386242', '1914244224937299969', 2, 'client:user:info', '/client/user/info', 'views/System/User/Client/Info', NULL, 'UserInfoUpdate', '资料修改', NULL, NULL, NULL, NULL, 1, '2025-04-21 17:08:40', '2025-04-21 17:08:40', '', '');
+INSERT INTO `el_sys_menu` (`id`, `parent_id`, `menu_type`, `permission_tag`, `path`, `component`, `redirect`, `name`, `meta_title`, `meta_icon`, `meta_active_menu`, `meta_no_cache`, `hidden`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914245167460323330', '1914244224937299969', 2, 'client:user:passwd', '/client/user/passwd', 'views/System/User/Client/Passwd', NULL, 'UserPassUpdate', '密码安全', NULL, NULL, NULL, NULL, 2, '2025-04-21 17:09:47', '2025-04-21 17:09:47', '', '');
 COMMIT;
 
 -- ----------------------------
@@ -579,7 +586,7 @@ CREATE TABLE `el_sys_role` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('admin', '超级管理员', 4, 999, '', '2020-12-03 16:52:16', '', '2022-06-15 15:47:31', '10001');
-INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('user', '注册用户', 1, 1, '注册用户', '2022-07-29 12:24:34', '', '2022-07-29 12:24:34', '10001');
+INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('user', '学员', 1, 1, '注册用户', '2022-07-29 12:24:34', '', '2022-07-29 12:24:34', '10001');
 COMMIT;
 
 -- ----------------------------
@@ -659,8 +666,6 @@ INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `upda
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1566612797104635906', 'admin', '1566612797037527042', '2022-09-05 10:22:51', '2022-09-05 10:22:51', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1700043149553999873', 'admin', '1700043149512056834', '2023-09-08 15:07:26', '2023-09-08 15:07:26', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1700044482067603457', 'admin', '1700044482038243330', '2023-09-08 15:12:44', '2023-09-08 15:12:44', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1700052878330273793', 'user', '1700043149512056834', '2023-09-08 15:46:06', '2023-09-08 15:46:06', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1700052878330273794', 'user', '1700044482038243330', '2023-09-08 15:46:06', '2023-09-08 15:46:06', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1910230973126414338', 'admin', '1910230973105442817', '2025-04-10 15:18:49', '2025-04-10 15:18:49', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1910231460148023298', 'admin', '1910231460139634690', '2025-04-10 15:20:45', '2025-04-10 15:20:45', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1910540102688718850', 'admin', '1910540102659358722', '2025-04-11 11:47:11', '2025-04-11 11:47:11', '', '', 0);
@@ -688,6 +693,20 @@ INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `upda
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1912445044997554177', 'admin', '1912445044980776961', '2025-04-16 17:56:44', '2025-04-16 17:56:44', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1912452280331337729', 'admin', '1912452280306171906', '2025-04-16 18:25:29', '2025-04-16 18:25:29', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1912766675016044545', 'admin', '1912766674995073025', '2025-04-17 15:14:47', '2025-04-17 15:14:47', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914135464034082818', 'admin', '1914135464021499905', '2025-04-21 09:53:52', '2025-04-21 09:53:52', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914145046596816897', 'admin', '1914145046580039681', '2025-04-21 10:31:56', '2025-04-21 10:31:56', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914244224962465794', 'admin', '1914244224937299969', '2025-04-21 17:06:02', '2025-04-21 17:06:02', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914244884382552065', 'admin', '1914244884357386242', '2025-04-21 17:08:40', '2025-04-21 17:08:40', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914245167472906241', 'admin', '1914245167460323330', '2025-04-21 17:09:47', '2025-04-21 17:09:47', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392065', 'user', '1912388980346134529', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392066', 'user', '1912389902866522113', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392067', 'user', '1912445044980776961', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392068', 'user', '1912452280306171906', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392069', 'user', '1912766674995073025', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054342586369', 'user', '1914145046580039681', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054342586370', 'user', '1914244224937299969', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054342586371', 'user', '1914244884357386242', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
+INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054342586372', 'user', '1914245167460323330', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
 COMMIT;
 
 -- ----------------------------
@@ -723,6 +742,7 @@ INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`,
 INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1557544252961996802', 'sasa', '张三', '', '', '', 0, '360782198910105217', '18682216559', NULL, 'A01A03', '2022-08-11 09:47:42', '', '2022-08-11 09:47:42', '');
 INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1557552992415170561', 'dora', '郭银花', '', '', '', 0, '368782199006162228', '18603038204', NULL, 'A01A02', '2022-08-11 10:22:26', '', '2022-08-11 10:22:26', '');
 INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1700049535004397569', 'zhangbaobao', '张保保', '', '69196a000befb4b1f1f57d1e1b59af7b', 'Pedbda', 0, '', NULL, NULL, 'A01A02', '2023-09-08 15:32:49', '', '2023-09-08 15:32:49', '');
+INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1914226980618383361', 'student', 'student', 'wakaka', '9d7e76957008faa4f63d85e10ea17cc4', 'maTlER', 0, '360782198910105217', '18682216559', NULL, 'A01', '2025-04-21 15:57:31', '1000000000000000001', '2025-04-21 17:49:31', '1914226980618383361');
 COMMIT;
 
 -- ----------------------------
@@ -774,6 +794,7 @@ INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('16999599289
 INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699964466159972353', '1699964466151583745', 'user');
 INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699975662460235778', '1699975662443458562', 'user');
 INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1910217631959805953', '1700049535004397569', 'user');
+INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1914227526792261633', '1914226980618383361', 'user');
 COMMIT;
 
 -- ----------------------------
@@ -1067,7 +1088,7 @@ CREATE TABLE `qrtz_scheduler_state` (
 -- Records of qrtz_scheduler_state
 -- ----------------------------
 BEGIN;
-INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES ('examScheduler', 'MacBook-Pro-16.local1744881035929', 1744881437631, 10000);
+INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES ('examScheduler', 'MacBook-Pro-16.local1745223797860', 1745233636941, 10000);
 COMMIT;
 
 -- ----------------------------

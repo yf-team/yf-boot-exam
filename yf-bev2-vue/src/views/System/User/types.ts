@@ -12,8 +12,18 @@ export type UserDataType = {
   userName?: string
   realName?: string
   deptCode?: string
+  deptCode_dictText?: string
   roles?: string[]
   mobile?: string
   idCard?: string
   avatar?: string
+  password?: string
+  email?: string
+}
+
+// 改密对象
+export type PassDataType = {
+  oldPass?: string
+  newPass?: string
+  confirmPass?: string
 }

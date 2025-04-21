@@ -1,38 +1,38 @@
 <template>
   <ContentWrap>
-    <data-table
+    <DataTable
+      ref="tableRef"
       :options="options"
       :query="query"
       @on-add="handleAdd(formRef)"
       @on-edit="handleEdit"
-      ref="tableRef"
     >
       <template #search>
-        <DictListSelect v-model="query.params.type" dic-code="dic_type" class="filter-item" />
-        <el-input v-model="query.params.title" placeholder="搜名称或编码" class="filter-item" />
+        <DictListSelect v-model="query.params.type" class="filter-item" dic-code="dic_type" />
+        <el-input v-model="query.params.title" class="filter-item" placeholder="搜名称或编码" />
       </template>
 
       <template #columns>
         <el-table-column type="selection" width="50px" />
 
-        <el-table-column prop="title" label="名称" sortable />
+        <el-table-column label="名称" prop="title" sortable />
 
-        <el-table-column prop="type_dictText" label="类型" sortable />
+        <el-table-column label="类型" prop="type_dictText" sortable />
 
-        <el-table-column prop="code" label="编码" sortable />
+        <el-table-column label="编码" prop="code" sortable />
 
-        <el-table-column prop="remark" label="备注信息" />
+        <el-table-column label="备注信息" prop="remark" />
 
-        <el-table-column label="操作" width="180px" :align="'center'">
+        <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="scope">
-            <el-button type="primary" size="small" @click="showItem(scope.row)">字典项</el-button>
+            <el-button size="small" type="primary" @click="showItem(scope.row)">字典项</el-button>
           </template>
         </el-table-column>
       </template>
-    </data-table>
+    </DataTable>
 
-    <el-dialog v-model="dialogVisible" title="保存数据字典" width="30%" :before-close="handleClose">
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="120px">
+    <el-dialog v-model="dialogVisible" :before-close="handleClose" title="保存数据字典" width="30%">
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="类型" prop="type">
           <DictListSelect v-model="form.type" dic-code="dic_type" />
         </el-form-item>
@@ -59,11 +59,11 @@
 
     <el-drawer
       v-model="drawerVisible"
-      title="配置字典项"
-      direction="rtl"
-      :close-on-click-modal="false"
-      size="50%"
       :before-close="handleClose"
+      :close-on-click-modal="false"
+      direction="rtl"
+      size="50%"
+      title="配置字典项"
     >
       <DictValue :dic-code="dicCode" :dict-type="dictType" />
     </el-drawer>
@@ -73,13 +73,13 @@
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
-import { ref, unref, reactive } from 'vue'
+import { reactive, ref, unref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
 import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { saveApi } from '@/api/sys/dict'
 import DictValue from './DictValue.vue'
 import DictListSelect from '@/components/DictListSelect/src/DictListSelect.vue'
-import { ElMessage } from 'element-plus'
 import type { DictDataType } from './types'
 // 表格查询参数
 let query = ref<TableQueryType>({

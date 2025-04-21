@@ -34,14 +34,8 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (userStore.getUserInfo && userStore.getUserInfo.token) {
-    if (to.path === '/login') {
-      next({ path: '/' })
-    } else {
-      if (permissionStore.getIsAddRouters) {
-        next()
-        return
-      }
-
+    // 初始化菜单路由
+    if (!permissionStore.getIsAddRouters) {
       // 构建路由
       const roleRouters = getStorage('roleRouters') || []
       await permissionStore.generateRoutes(roleRouters as AppCustomRouteRecordRaw[])
@@ -54,7 +48,19 @@ router.beforeEach(async (to, from, next) => {
       const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
       permissionStore.setIsAddRouters(true)
       next(nextData)
+      return
     }
+
+    // 跳转到用户的首页，首个有权限的菜单
+    if (to.path === '/' || to.path === '' || to.path === '/login') {
+      const firstPath = await getFirstMenu()
+      if (firstPath) {
+        next(firstPath)
+        return
+      }
+    }
+    // 跳转到菜单
+    next()
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
@@ -63,6 +69,27 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 })
+
+// 获取用户权限内的第一个菜单
+const getFirstMenu = async () => {
+  // 获取本地缓存
+  const roleRouters = getStorage('roleRouters') || []
+  if (roleRouters.length === 0) {
+    return null
+  }
+
+  for (const roleRouter of roleRouters) {
+    console.log('roleRouter', roleRouter)
+    if (roleRouter.menuType === 1) {
+      const children = roleRouter.children
+      for (const item of children) {
+        if (item.menuType === 2 && item.path) {
+          return item.path
+        }
+      }
+    }
+  }
+}
 
 router.afterEach((to) => {
   useTitle(to?.meta?.title as string)

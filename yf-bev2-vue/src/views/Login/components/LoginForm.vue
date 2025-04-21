@@ -3,10 +3,10 @@
     ref="formRef"
     :model="form"
     :rules="rules"
-    label-position="top"
-    size="large"
     class="dark:(border-1 border-[var(--el-border-color)] border-solid); w-[100%]"
     hide-required-asterisk
+    label-position="top"
+    size="large"
   >
     <el-form-item>
       <h2 class="text-2xl font-bold text-center w-[100%]">{{ t('login.loginTitle') }} </h2>
@@ -25,31 +25,31 @@
       <el-input
         v-model="form.password"
         :placeholder="t('login.passwordPlaceholder')"
-        type="password"
-        clearable
         :show-password="true"
+        clearable
+        type="password"
       />
     </el-form-item>
 
     <el-form-item :label="t('login.code')" prop="captchaValue">
-      <input-captcha v-model="form" style="width: 100%" :placeholder="t('login.codePlaceholder')" />
+      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" style="width: 100%" />
     </el-form-item>
 
     <el-form-item>
       <div class="flex justify-between items-center w-[100%]">
         <el-checkbox v-model="remember" :label="t('login.remember')" size="small" />
-        <el-link type="primary" :underline="false"> {{ t('login.forgetPassword') }} </el-link>
+        <el-link :underline="false" type="primary"> {{ t('login.forgetPassword') }}</el-link>
       </div>
     </el-form-item>
 
     <el-form-item>
       <div class="w-[100%]">
-        <el-button :loading="loading" type="primary" class="w-[100%]" @click="signIn(formRef)">
+        <el-button :loading="loading" class="w-[100%]" type="primary" @click="signIn(formRef)">
           {{ t('login.login') }}
         </el-button>
       </div>
-      <div class="w-[100%] mt-15px" v-if="siteInfo?.props?.userReg">
-        <el-button class="w-[100%]" @click="toRegister"> {{ t('login.noUser') }} </el-button>
+      <div v-if="siteInfo?.props?.userReg" class="w-[100%] mt-15px">
+        <el-button class="w-[100%]" @click="toRegister"> {{ t('login.noUser') }}</el-button>
       </div>
     </el-form-item>
 
@@ -58,45 +58,45 @@
 
       <div class="flex justify-between w-[100%]">
         <Icon
+          :color="iconColor"
+          :hoverColor="hoverColor"
+          :size="iconSize"
+          class="cursor-pointer ant-icon"
           icon="ant-design:github-filled"
-          :size="iconSize"
-          :color="iconColor"
-          :hoverColor="hoverColor"
-          class="cursor-pointer ant-icon"
         />
         <Icon
+          :color="iconColor"
+          :hoverColor="hoverColor"
+          :size="iconSize"
+          class="cursor-pointer ant-icon"
           icon="ant-design:wechat-filled"
-          :size="iconSize"
-          :color="iconColor"
-          :hoverColor="hoverColor"
-          class="cursor-pointer ant-icon"
         />
         <Icon
+          :color="iconColor"
+          :hoverColor="hoverColor"
+          :size="iconSize"
+          class="cursor-pointer ant-icon"
           icon="ant-design:alipay-circle-filled"
-          :size="iconSize"
-          :color="iconColor"
-          :hoverColor="hoverColor"
-          class="cursor-pointer ant-icon"
         />
         <Icon
-          icon="ant-design:weibo-circle-filled"
-          :size="iconSize"
           :color="iconColor"
           :hoverColor="hoverColor"
+          :size="iconSize"
           class="cursor-pointer ant-icon"
+          icon="ant-design:weibo-circle-filled"
         />
       </div>
     </el-form-item>
   </el-form>
 </template>
 
-<script setup lang="tsx">
+<script lang="tsx" setup>
 import { computed, ref, unref, watch } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
-import { useRouter } from 'vue-router'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useValidator } from '@/hooks/web/useValidator'
 import { Icon } from '@/components/Icon'
 import { UserLoginType } from '@/api/login/types'
@@ -155,8 +155,11 @@ const signIn = async (formEl: FormInstance | undefined) => {
         .login(formData)
         .then(() => {
           loading.value = false
+
+          console.log('登录了？')
+
           // 跳转到记录页面或首页
-          replace(redirect.value || '/admin/dashboard')
+          replace(redirect.value || '/')
         })
         .catch(() => {
           loading.value = false

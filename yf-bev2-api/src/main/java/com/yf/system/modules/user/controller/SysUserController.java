@@ -72,8 +72,6 @@ public class SysUserController extends BaseController {
     }
 
 
-
-
     /**
      * 用户登录
      *

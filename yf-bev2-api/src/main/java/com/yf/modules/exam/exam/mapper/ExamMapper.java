@@ -5,7 +5,7 @@ import com.yf.modules.exam.exam.entity.Exam;
 
 /**
 * <p>
-* 课程Mapper
+* 考试Mapper
 * </p>
 *
 * @author 聪明笨狗

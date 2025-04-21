@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
 * <p>
-* 课程实体类
+* 考试实体类
 * </p>
 *
 * @author 聪明笨狗

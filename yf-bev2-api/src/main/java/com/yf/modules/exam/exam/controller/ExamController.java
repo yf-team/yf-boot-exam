@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
 * <p>
-* 课程控制器
+* 考试控制器
 * </p>
 *
 * @author 聪明笨狗
 * @since 2025-04-14 17:29
 */
-@Tag(name="课程")
+@Tag(name="考试")
 @RestController
 @RequestMapping("/api/exam/exam/exam")
 public class ExamController extends BaseController {
@@ -102,5 +102,26 @@ public class ExamController extends BaseController {
     public ApiRest<ExamDetailDTO> detailForExam(@RequestBody BaseIdReqDTO reqDTO) {
         ExamDetailDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
+    }
+
+    /**
+     * 分页查找
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "分页查找")
+    @PostMapping("/client-paging")
+    public ApiRest<IPage<ExamDTO>> clientPaging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
+
+        ExamDTO params = reqDTO.getParams();
+        if (params == null) {
+            params = new ExamDTO();
+        }
+
+
+        //分页查询并转换
+        IPage<ExamDTO> page = baseService.paging(reqDTO);
+
+        return super.success(page);
     }
 }

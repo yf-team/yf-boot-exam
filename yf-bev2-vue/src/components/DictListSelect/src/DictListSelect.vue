@@ -1,16 +1,17 @@
 <template>
   <el-select
+    v-model="value"
+    :disabled="disabled"
+    :loading="loading"
+    :placeholder="title"
+    :remote-method="handlerSearch"
+    class="filter-item"
+    clearable
     filterable
     remote
-    clearable
-    :disabled="disabled"
     remote-show-suffix
-    v-model="value"
-    :remote-method="handlerSearch"
     @change="handleChange"
     @clear="handleClear"
-    :loading="loading"
-    class="filter-item"
   >
     <el-option v-for="item in listData" :key="item.value" :label="item.title" :value="item.value" />
   </el-select>
@@ -36,6 +37,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  title: {
+    type: String,
+    default: '请选择'
   }
 })
 

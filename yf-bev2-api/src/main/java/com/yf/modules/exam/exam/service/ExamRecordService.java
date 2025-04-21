@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamRecordDTO;
+import com.yf.modules.exam.exam.dto.request.ExamRecordListReqDTO;
 import com.yf.modules.exam.exam.entity.ExamRecord;
 
 import java.math.BigDecimal;
@@ -23,7 +24,7 @@ public interface ExamRecordService extends IService<ExamRecord> {
     * @param reqDTO
     * @return
     */
-    IPage<ExamRecordDTO> paging(PagingReqDTO<ExamRecordDTO> reqDTO);
+    IPage<ExamRecordDTO> paging(PagingReqDTO<ExamRecordListReqDTO> reqDTO);
 
     /**
      * 加入考试记录
@@ -42,4 +43,11 @@ public interface ExamRecordService extends IService<ExamRecord> {
      * @return
      */
     int findTryCount(String examId, String userId);
+
+    /**
+     * 学员端考试记录列表
+     * @param reqDTO
+     * @return
+     */
+    IPage<ExamRecordDTO> clientPaging(PagingReqDTO<ExamRecordListReqDTO> reqDTO);
 }

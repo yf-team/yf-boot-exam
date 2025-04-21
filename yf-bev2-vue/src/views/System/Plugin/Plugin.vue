@@ -1,45 +1,45 @@
 <template>
   <ContentWrap>
-    <data-table :options="options" :query="query" ref="table">
+    <DataTable ref="table" :options="options" :query="query">
       <template #search>
         <DictListSelect
           v-model="query.params.groupId"
-          dic-code="plugin_group"
           class="filter-item"
+          dic-code="plugin_group"
         />
 
-        <el-input class="filter-item" v-model="query.params.title" placeholder="插件名称" />
+        <el-input v-model="query.params.title" class="filter-item" placeholder="插件名称" />
       </template>
 
       <template #columns>
         <el-table-column type="selection" width="50px" />
-        <el-table-column prop="code" label="插件编号" />
-        <el-table-column prop="title" label="插件名称" />
-        <el-table-column prop="groupId_dictText" label="插件类型" />
+        <el-table-column label="插件编号" prop="code" />
+        <el-table-column label="插件名称" prop="title" />
+        <el-table-column label="插件类型" prop="groupId_dictText" />
 
-        <el-table-column label="使用状态" width="180px" :align="'center'">
+        <el-table-column :align="'center'" label="使用状态" width="180px">
           <template #default="scope">
-            <el-tag type="success" v-if="scope.row.inUse">使用中</el-tag>
-            <el-tag type="danger" v-else>未使用</el-tag>
+            <el-tag v-if="scope.row.inUse" type="success">使用中</el-tag>
+            <el-tag v-else type="danger">未使用</el-tag>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作项" width="180px" :align="'center'">
+        <el-table-column :align="'center'" label="操作项" width="180px">
           <template #default="scope">
             <el-button
+              circle
+              icon="Setting"
               size="small"
               type="primary"
-              icon="Setting"
               @click="showConfig(scope.row)"
-              circle
             />
           </template>
         </el-table-column>
       </template>
-    </data-table>
+    </DataTable>
 
-    <ElDialog v-model="dialogVisible" title="配置插件" width="40%" :before-close="handleClose">
-      <el-form :model="form" ref="formRef" label-width="150px">
+    <ElDialog v-model="dialogVisible" :before-close="handleClose" title="配置插件" width="40%">
+      <el-form ref="formRef" :model="form" label-width="150px">
         <template v-for="item in configItems" :key="item.name">
           <el-form-item :label="item.title" :prop="item.name">
             <el-input v-model="form[item.name || 'none']" autocomplete="off" />

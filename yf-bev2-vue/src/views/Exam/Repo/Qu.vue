@@ -1,31 +1,31 @@
 <template>
   <ContentWrap>
-    <data-table
+    <DataTable
+      ref="table"
       :options="options"
       :query="query"
       @on-add="handleAdd"
       @on-edit="handleEdit"
-      ref="table"
     >
       <template #search>
-        <el-input class="filter-item" v-model="query.params.content" placeholder="搜索题目" />
+        <el-input v-model="query.params.content" class="filter-item" placeholder="搜索题目" />
       </template>
 
       <template #columns>
         <el-table-column type="selection" width="50px" />
-        <el-table-column prop="contentText" label="试题内容" show-overflow-tooltip />
-        <el-table-column prop="repoId_dictText" label="所属题库" />
-        <el-table-column prop="quType_dictText" label="题型" align="center" />
-        <el-table-column prop="difficultyLevel_dictText" label="难度等级" align="center" />
-        <el-table-column prop="createBy_dictText" label="创建人" align="center" />
-        <el-table-column prop="createTime" label="创建时间" align="center" />
+        <el-table-column label="试题内容" prop="contentText" show-overflow-tooltip />
+        <el-table-column label="所属题库" prop="repoId_dictText" />
+        <el-table-column align="center" label="题型" prop="quType_dictText" />
+        <el-table-column align="center" label="难度等级" prop="difficultyLevel_dictText" />
+        <el-table-column align="center" label="创建人" prop="createBy_dictText" />
+        <el-table-column align="center" label="创建时间" prop="createTime" />
       </template>
-    </data-table>
+    </DataTable>
 
     <QuFormDialog
       v-model:visible="dialogVisible"
-      :repo-id="repoId"
       :qu-id="quId"
+      :repo-id="repoId"
       @saved="handleRefresh"
     />
   </ContentWrap>

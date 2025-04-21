@@ -3,17 +3,7 @@
     <el-col :span="24">
       <el-card>
         <div class="top-opt-box">
-          <div class="count-box">
-            <span style="">剩余考试时间：</span>
-            <span style="color: #409eff"
-              ><CountDown
-                ref="countdownRef"
-                :left-seconds="999999999"
-                @overdue="examTimeout"
-                @warn="showWarn"
-              />
-            </span>
-          </div>
+          <ExamTimer :paperId="paperId" />
 
           <el-button icon="Select" size="large" type="primary" @click="handPaper"
             >立即交卷
@@ -67,28 +57,18 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
-  fillAnswerApi,
-  handApi,
-  quCardApi,
-  quDetailApi,
-  realTimeStateApi
-} from '@/api/modules/exam/paper'
+import { fillAnswerApi, handApi, quCardApi, quDetailApi } from '@/api/modules/exam/paper'
 import { QuCardType } from '@/views/Exam/Exam/types'
-import { CountDown } from '@/components/CountDown'
-import { ElMessage } from 'element-plus'
+import ExamTimer from '@/views/Exam/Exam/Client/components/ExamTimer.vue'
 
 const { push } = useRouter()
 
 const route = useRoute()
-const paperId = route.query.id
-
+const paperId = route.query.id as string
 const detail = ref({})
 let cardList = ref<QuCardType>()
-
-const countdownRef = ref<InstanceType<typeof CountDown>>()
 
 // 查找答题卡
 const listCard = () => {
@@ -96,8 +76,6 @@ const listCard = () => {
     cardList.value = res.data
     // 加载第一个题目
     loadFirst()
-    // 获取实时状态
-    initTimer()
   })
 }
 
@@ -170,66 +148,11 @@ const saveAnswer = () => {
     // 标记为已答或未答
     markAnswered(detail.value.quId, res.data.filled)
   })
-
-  console.log(checkedItems)
-}
-
-// 强制交卷
-const examTimeout = () => {
-  console.log('examTimeout')
-  handPaper()
-}
-
-const showWarn = () => {
-  ElMessage.error('剩余考试时间已不足5分钟，请合理安排时间！')
-}
-
-// 定时任务方法
-const executeTask = () => {
-  realTimeStateApi({ id: paperId }).then((res) => {
-    const data = res.data
-    if (data.handed) {
-      ElMessage.error('当前试卷已被提交、无法继续答题！')
-      setTimeout(() => {
-        push({ name: 'ExamClientResult', query: { id: paperId } })
-      }, 2000)
-      return
-    }
-    countdownRef.value?.setLeftSeconds(data.leftSeconds)
-  })
-}
-
-// 定时器引用
-const timer = ref<NodeJS.Timeout | null>(null)
-
-// 初始化定时器
-const initTimer = () => {
-  // 先立即执行一次
-  executeTask()
-
-  // 设置每分钟(60000毫秒)执行的定时器
-  timer.value = setInterval(() => {
-    executeTask()
-  }, 60000)
-}
-
-// 清理定时器
-const clearTimer = () => {
-  if (timer.value) {
-    clearInterval(timer.value)
-    timer.value = null
-    console.log('定时器已清理')
-  }
 }
 
 // 查找详情
 onMounted(() => {
   listCard()
-})
-
-// 组件卸载时清理
-onUnmounted(() => {
-  clearTimer()
 })
 </script>
 
@@ -238,14 +161,6 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.count-box {
-  font-size: 18px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .tag-item {

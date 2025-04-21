@@ -1,17 +1,17 @@
 <template>
   <ContentWrap>
-    <data-table
+    <DataTable
+      ref="tableRef"
       :options="options"
       :query="query"
       @on-add="handleAdd(formRef)"
       @on-edit="handleEdit"
-      ref="tableRef"
     >
       <template #search>
         <el-input
+          v-model="query.params['roleName']"
           class="filter-item"
           clearable
-          v-model="query.params['roleName']"
           placeholder="搜索角色名称"
         />
       </template>
@@ -19,34 +19,34 @@
       <template #columns>
         <el-table-column type="selection" width="50px" />
 
-        <el-table-column prop="roleName" label="角色名称" />
+        <el-table-column label="角色名称" prop="roleName" />
 
-        <el-table-column prop="roleLevel" label="角色级别" />
+        <el-table-column label="角色级别" prop="roleLevel" />
 
-        <el-table-column prop="dataScope_dictText" label="数据权限" />
+        <el-table-column label="数据权限" prop="dataScope_dictText" />
 
-        <el-table-column label="操作" width="180px" :align="'center'">
+        <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="scope">
-            <el-button icon="Setting" type="primary" size="small" @click="showGrant(scope.row)"
-              >角色授权</el-button
-            >
+            <el-button icon="Setting" size="small" type="primary" @click="showGrant(scope.row)"
+              >角色授权
+            </el-button>
           </template>
         </el-table-column>
       </template>
-    </data-table>
+    </DataTable>
 
-    <el-dialog v-model="dialogVisible" title="角色管理" width="30%" :before-close="handleClose">
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="120px">
+    <el-dialog v-model="dialogVisible" :before-close="handleClose" title="角色管理" width="30%">
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="角色名称" prop="roleName">
           <el-input v-model="form.roleName" autocomplete="off" />
         </el-form-item>
 
         <el-form-item label="数据权限" prop="dataScope">
-          <DictListSelect dic-code="data_scope" v-model="form.dataScope" />
+          <DictListSelect v-model="form.dataScope" dic-code="data_scope" />
         </el-form-item>
 
         <el-form-item label="角色级别" prop="roleLevel">
-          <el-input-number v-model="form.roleLevel" autocomplete="off" :min="0" :max="999" />
+          <el-input-number v-model="form.roleLevel" :max="999" :min="0" autocomplete="off" />
           <div><small>数字越大级别越大，数字小的角色不能修改数字高角色的数据</small></div>
         </el-form-item>
       </el-form>
@@ -59,19 +59,19 @@
       </template>
     </el-dialog>
 
-    <Grant :role-id="grantRoleId" v-model="grantVisible" />
+    <Grant v-model="grantVisible" :role-id="grantRoleId" />
   </ContentWrap>
 </template>
 
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
-import { ref, reactive, unref } from 'vue'
+import { reactive, ref, unref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
 import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import DictListSelect from '@/components/DictListSelect/src/DictListSelect.vue'
 import type { RoleDataType } from './types'
-import { ElMessage } from 'element-plus'
 import { saveApi } from '@/api/sys/role'
 import Grant from './components/Grant.vue'
 
