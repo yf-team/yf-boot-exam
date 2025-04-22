@@ -1,33 +1,25 @@
-<script setup lang="ts">
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElMessageBox } from 'element-plus'
+<script lang="ts" setup>
+import { ElDropdown, ElDropdownItem, ElDropdownMenu, ElMessageBox } from 'element-plus'
 import { useI18n } from '@/hooks/web/useI18n'
-import { useStorage } from '@/hooks/web/useStorage'
-import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
-import { loginOutApi } from '@/api/login'
 import { useDesign } from '@/hooks/web/useDesign'
-import { useTagsViewStore } from '@/store/modules/tagsView'
 import LockDialog from './components/LockDialog.vue'
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import LockPage from './components/LockPage.vue'
 import { useLockStore } from '@/store/modules/lock'
 import { useUserStore } from '@/store/modules/user'
+import { useTagsViewStore } from '@/store/modules/tagsView'
+
 const userStore = useUserStore()
-
 const lockStore = useLockStore()
-
-const getIsLock = computed(() => lockStore.getLockInfo?.isLock ?? false)
-
 const tagsViewStore = useTagsViewStore()
 
+const getIsLock = computed(() => lockStore.getLockInfo?.isLock ?? false)
 const { getPrefixCls } = useDesign()
 
 const prefixCls = getPrefixCls('user-info')
 
 const { t } = useI18n()
-
-const { clear } = useStorage()
-
 const { replace } = useRouter()
 
 const loginOut = () => {
@@ -35,20 +27,17 @@ const loginOut = () => {
     confirmButtonText: t('common.ok'),
     cancelButtonText: t('common.cancel'),
     type: 'warning'
-  })
-    .then(async () => {
-      const res = await loginOutApi().catch(() => {})
-      if (res) {
-        clear()
+  }).then(async () => {
+    userStore
+      .logout()
+      .then(() => {
+        // 清理标签页
         tagsViewStore.delAllViews()
-        // 重置静态路由表
-        resetRouter()
-        // 清理数据
-        userStore.setUserInfo({})
-        await replace('/login')
-      }
-    })
-    .catch(() => {})
+        // 去登录页
+        replace({ name: 'Login' })
+      })
+      .catch(() => {})
+  })
 }
 
 const dialogVisible = ref<boolean>(false)
@@ -62,7 +51,7 @@ const userInfo = computed(() => userStore.getUserInfo)
 </script>
 
 <template>
-  <ElDropdown class="custom-hover" :class="prefixCls" trigger="click">
+  <ElDropdown :class="prefixCls" class="custom-hover" trigger="click">
     <div class="flex items-center">
       <img :src="userInfo.avatar" alt="" class="w-[calc(var(--logo-height)-25px)] rounded-[50%]" />
       <span class="<lg:hidden text-14px pl-[5px] text-[var(--top-header-text-color)]">{{
@@ -83,13 +72,13 @@ const userInfo = computed(() => userStore.getUserInfo)
 
   <LockDialog v-if="dialogVisible" v-model="dialogVisible" />
   <teleport to="body">
-    <transition name="fade-bottom" mode="out-in">
+    <transition mode="out-in" name="fade-bottom">
       <LockPage v-if="getIsLock" />
     </transition>
   </teleport>
 </template>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .fade-bottom-enter-active,
 .fade-bottom-leave-active {
   transition:

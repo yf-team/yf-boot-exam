@@ -33,16 +33,12 @@ import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { PassDataType } from '../types'
 import { updateApi } from '@/api/sys/user'
-import { loginOutApi } from '@/api/login'
-import { resetRouter } from '@/router'
 import { useUserStore } from '@/store/modules/user'
 import { useTagsViewStore } from '@/store/modules/tagsView'
-import { useStorage } from '@/hooks/web/useStorage'
 import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
 const tagsViewStore = useTagsViewStore()
-const { clear } = useStorage()
 const { replace } = useRouter()
 
 // 密码校验
@@ -97,15 +93,13 @@ const handleSave = (formEl: FormInstance | undefined) => {
 }
 
 const reLogin = async () => {
-  const res = await loginOutApi().catch(() => {})
-  if (res) {
-    clear()
-    tagsViewStore.delAllViews()
-    // 重置静态路由表
-    resetRouter()
-    // 清理数据
-    userStore.setUserInfo({})
-    await replace({ name: 'Login' })
-  }
+  userStore
+    .logout()
+    .then(() => {
+      // 清理标签页
+      tagsViewStore.delAllViews()
+      replace({ name: 'Login' })
+    })
+    .catch(() => {})
 }
 </script>

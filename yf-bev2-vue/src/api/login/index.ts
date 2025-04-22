@@ -15,7 +15,7 @@ export const apiRegister = (data) => {
   })
 }
 
-export const loginOutApi = () => {
+export const logoutApi = () => {
   return request.post({ url: '/api/sys/user/logout' })
 }
 

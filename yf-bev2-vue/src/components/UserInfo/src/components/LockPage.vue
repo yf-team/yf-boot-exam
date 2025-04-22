@@ -1,23 +1,17 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { ElInput, ElButton } from 'element-plus'
-import { resetRouter } from '@/router'
+import { ElButton, ElInput } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { useStorage } from '@/hooks/web/useStorage'
 import { useLockStore } from '@/store/modules/lock'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useNow } from '@/hooks/web/useNow'
 import { useDesign } from '@/hooks/web/useDesign'
 import { Icon } from '@/components/Icon'
-import { loginOutApi } from '@/api/login'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import { useUserStore } from '@/store/modules/user'
+
 const userStore = useUserStore()
-
 const tagsViewStore = useTagsViewStore()
-
-const { clear } = useStorage()
-
 const { replace } = useRouter()
 
 const password = ref('')
@@ -51,14 +45,16 @@ async function unLock() {
 
 // 返回登录
 async function goLogin() {
-  const res = await loginOutApi().catch(() => {})
-  if (res) {
-    clear()
-    tagsViewStore.delAllViews()
-    resetRouter() // 重置静态路由表
-    lockStore.resetLockInfo()
-    replace('/login')
-  }
+  userStore
+    .logout()
+    .then(() => {
+      // 清理标签页
+      tagsViewStore.delAllViews()
+      // 重置锁定状态
+      lockStore.resetLockInfo()
+      replace({ name: 'Login' })
+    })
+    .catch(() => {})
 }
 
 function handleShowForm(show = false) {
@@ -74,10 +70,10 @@ const userInfo = computed(() => userStore.getUserInfo)
     class="fixed inset-0 flex h-screen w-screen bg-black items-center justify-center"
   >
     <div
+      v-show="showDate"
       :class="`${prefixCls}__unlock`"
       class="absolute top-0 left-1/2 flex pt-5 h-16 items-center justify-center sm:text-md xl:text-xl text-white flex-col cursor-pointer transform translate-x-1/2"
       @click="handleShowForm(false)"
-      v-show="showDate"
     >
       <Icon icon="ep:lock" />
       <span>{{ t('lock.unlock') }}</span>
@@ -86,7 +82,7 @@ const userInfo = computed(() => userStore.getUserInfo)
     <div class="flex w-screen h-screen justify-center items-center">
       <div :class="`${prefixCls}__hour`" class="relative mr-5 md:mr-20 w-2/5 h-2/5 md:h-4/5">
         <span>{{ hour }}</span>
-        <span class="meridiem absolute left-5 top-5 text-md xl:text-xl" v-show="showDate">
+        <span v-show="showDate" class="meridiem absolute left-5 top-5 text-md xl:text-xl">
           {{ meridiem }}
         </span>
       </div>
@@ -95,7 +91,7 @@ const userInfo = computed(() => userStore.getUserInfo)
       </div>
     </div>
     <transition name="fade-slide">
-      <div :class="`${prefixCls}-entry`" v-show="!showDate">
+      <div v-show="!showDate" :class="`${prefixCls}-entry`">
         <div :class="`${prefixCls}-entry-content`">
           <div class="flex flex-col items-center">
             <img :src="userInfo.avatar" alt="" class="w-70px h-70px rounded-[50%]" />
@@ -104,42 +100,42 @@ const userInfo = computed(() => userStore.getUserInfo)
             }}</span>
           </div>
           <ElInput
-            type="password"
+            v-model="password"
             :placeholder="t('lock.placeholder')"
             class="enter-x"
-            v-model="password"
+            type="password"
           />
-          <span :class="`text-14px ${prefixCls}-entry__err-msg enter-x`" v-if="errMsg">
+          <span v-if="errMsg" :class="`text-14px ${prefixCls}-entry__err-msg enter-x`">
             {{ t('lock.message') }}
           </span>
           <div :class="`${prefixCls}-entry__footer enter-x`">
             <ElButton
-              type="primary"
-              size="small"
+              :disabled="loading"
               class="mt-2 mr-2 enter-x"
               link
-              :disabled="loading"
+              size="small"
+              type="primary"
               @click="handleShowForm(true)"
             >
               {{ t('common.back') }}
             </ElButton>
             <ElButton
-              type="primary"
-              size="small"
+              :disabled="loading"
               class="mt-2 mr-2 enter-x"
               link
-              :disabled="loading"
+              size="small"
+              type="primary"
               @click="goLogin"
             >
               {{ t('lock.backToLogin') }}
             </ElButton>
             <ElButton
-              type="primary"
-              class="mt-2"
-              size="small"
-              link
-              @click="unLock()"
               :disabled="loading"
+              class="mt-2"
+              link
+              size="small"
+              type="primary"
+              @click="unLock()"
             >
               {{ t('lock.entrySystem') }}
             </ElButton>
@@ -149,7 +145,7 @@ const userInfo = computed(() => userStore.getUserInfo)
     </transition>
 
     <div class="absolute bottom-5 w-full text-gray-300 xl:text-xl 2xl:text-3xl text-center enter-y">
-      <div class="text-5xl mb-4 enter-x" v-show="!showDate">
+      <div v-show="!showDate" class="text-5xl mb-4 enter-x">
         {{ hour }}:{{ minute }} <span class="text-3xl">{{ meridiem }}</span>
       </div>
       <div class="text-2xl">{{ year }}/{{ month }}/{{ day }} {{ week }}</div>

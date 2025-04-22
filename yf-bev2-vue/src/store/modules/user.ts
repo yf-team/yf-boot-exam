@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import { apiLogin, apiRegister, routesApi } from '@/api/login'
+import { apiLogin, apiRegister, logoutApi, routesApi } from '@/api/login'
 import { UserLoginType } from '@/api/login/types'
 import { useStorage } from '@/hooks/web/useStorage'
+import { resetRouter } from '@/router'
+import { usePermissionStoreWithOut } from '@/store/modules/permission'
 
-const { getStorage, setStorage, removeStorage } = useStorage()
+const permissionStore = usePermissionStoreWithOut()
+
+const { getStorage, setStorage, removeStorage, clear } = useStorage()
 
 export interface UserState {
   userInfo: UserInfoTypes
@@ -26,7 +30,7 @@ export const useUserStore = defineStore('userInfo', {
         // 注册用户
         apiLogin(data)
           .then(async (res) => {
-            await this.setUserInfo(res.data)
+            this.setUserInfo(res.data)
             await this.generateRoutes()
             resolve(res.data)
           })
@@ -42,7 +46,7 @@ export const useUserStore = defineStore('userInfo', {
         // 注册用户
         apiRegister(data)
           .then(async (res) => {
-            await this.setUserInfo(res.data)
+            this.setUserInfo(res.data)
             await this.generateRoutes()
             resolve(res.data)
           })
@@ -51,6 +55,27 @@ export const useUserStore = defineStore('userInfo', {
           })
       })
     },
+    // 用户登录
+    logout(): Promise<unknown> {
+      return new Promise<void>((resolve, reject) => {
+        // 注册用户
+        logoutApi()
+          .then(async () => {
+            // 清理站点存储
+            clear()
+            // 重置静态路由表
+            resetRouter()
+            permissionStore.setIsAddRouters(false)
+            // 清理数据
+            this.setUserInfo({})
+            resolve()
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
+    },
+
     // 保存用户状态
     setUserInfo(data?: UserInfoTypes) {
       if (data && data.token) {

@@ -64,13 +64,17 @@ const router = createRouter({
 
 export const resetRouter = (): void => {
   // Home和Dashboard后续放到后端路由
-  const resetWhiteNameList = ['Redirect', 'Login', 'NoFind', 'Root']
+  const resetWhiteNameList = ['Redirect', 'Login', 'NoFind', 'Root', 'Home']
   router.getRoutes().forEach((route) => {
+    console.log('++++++route', route)
+
     const { name } = route
     if (name && !resetWhiteNameList.includes(name as string)) {
       router.hasRoute(name) && router.removeRoute(name)
     }
   })
+
+  console.log('++++++++最后剩下的', router.getRoutes())
 }
 
 export const setupRouter = (app: App<Element>) => {

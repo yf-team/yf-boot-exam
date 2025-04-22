@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
       if (to.path === '/' || to.path === '' || to.path === '/login') {
         const firstPath = await getFirstMenu()
         if (firstPath) {
-          next(firstPath)
+          next({ path: firstPath, replace: true })
           return
         }
       }
