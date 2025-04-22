@@ -21,13 +21,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* <p>
-* 语言设置 服务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 语言设置 服务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
 
@@ -43,16 +43,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
 
         SysRoleDTO params = reqDTO.getParams();
-        if(params!=null && StringUtils.isNotBlank(params.getRoleName())){
+        if (params != null && StringUtils.isNotBlank(params.getRoleName())) {
             wrapper.lambda().like(SysRole::getRoleName, params.getRoleName());
         }
 
         //获得数据
         IPage<SysRole> page = this.page(query, wrapper);
         //转换结果
-        IPage<SysRoleDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysRoleDTO>>(){});
+        IPage<SysRoleDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysRoleDTO>>() {
+        });
         return pageData;
-     }
+    }
 
 
     @Override
@@ -64,8 +65,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         List<SysRole> list = this.list(wrapper);
         int level = 0;
 
-        for (SysRole role: list){
-            if(level < role.getRoleLevel()){
+        for (SysRole role : list) {
+            if (level < role.getRoleLevel()) {
                 level = role.getRoleLevel();
             }
         }
@@ -78,20 +79,20 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         int myLevel = UserUtils.getRoleLevel();
 
-        if(reqDTO.getRoleLevel() >= myLevel){
-            throw new ServiceException("只能添加或修改角色级别小于"+myLevel+"的角色！");
+        if (reqDTO.getRoleLevel() >= myLevel) {
+            throw new ServiceException("只能添加或修改角色级别小于" + myLevel + "的角色！");
         }
 
         //复制参数
         SysRole entity = new SysRole();
 
-        if(!StringUtils.isBlank(reqDTO.getId())){
+        if (!StringUtils.isBlank(reqDTO.getId())) {
             // 查找原有的，如果原来的数据高于当前，则不能做任何操作
             SysRole ori = this.getById(reqDTO.getId());
-            if(ori!=null){
+            if (ori != null) {
                 int level = ori.getRoleLevel();
-                if(myLevel <= level){
-                    throw new ServiceException("您不能修改级别高于"+myLevel+"的角色！");
+                if (myLevel <= level) {
+                    throw new ServiceException("您不能修改级别高于" + myLevel + "的角色！");
                 }
             }
         }
@@ -109,8 +110,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .lt(SysRole::getRoleLevel, UserUtils.getRoleLevel());
 
         long count = this.count(wrapper);
-        if(count < ids.size()){
-            throw new ServiceException("被删除的角色级别必须小于"+UserUtils.getRoleLevel());
+        if (count < ids.size()) {
+            throw new ServiceException("被删除的角色级别必须小于" + UserUtils.getRoleLevel());
         }
 
         this.removeByIds(ids);

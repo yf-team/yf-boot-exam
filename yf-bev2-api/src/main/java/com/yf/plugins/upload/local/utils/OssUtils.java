@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * 文件上传工具
+ *
  * @author bool
  * @date 2019-07-30 21:00
  */
@@ -22,6 +23,7 @@ public class OssUtils {
 
     /**
      * 重命名文件
+     *
      * @param fileName
      * @return
      */
@@ -43,10 +45,11 @@ public class OssUtils {
 
     /**
      * 处理新的文件路径，为上传文件预设目录，如：2021/01/01/xxx.jpg，要注意的是，前面没有斜杠
+     *
      * @param file 文件
      * @return
      */
-    public static String processPath(MultipartFile file){
+    public static String processPath(MultipartFile file) {
 
         // 创建OSSClient实例。
         String fileName = file.getOriginalFilename();
@@ -63,10 +66,11 @@ public class OssUtils {
 
     /**
      * 处理新的文件路径，为上传文件预设目录，如：2021/01/01/xxx.jpg，要注意的是，前面没有斜杠
+     *
      * @param fileName 文件
      * @return
      */
-    public static String processPath(String fileName){
+    public static String processPath(String fileName) {
 
         // 需要重命名
         fileName = OssUtils.renameFile(fileName);
@@ -80,17 +84,18 @@ public class OssUtils {
 
     /**
      * 检查文件夹是否存在，不存在则创建
+     *
      * @param fileName
      * @return
      */
-    public static void checkDir(String fileName){
+    public static void checkDir(String fileName) {
         int index = fileName.lastIndexOf("/");
-        if(index == -1){
+        if (index == -1) {
             return;
         }
 
-        File file = new File(fileName.substring(0,index));
-        if(!file.exists()){
+        File file = new File(fileName.substring(0, index));
+        if (!file.exists()) {
             file.mkdirs();
         }
     }

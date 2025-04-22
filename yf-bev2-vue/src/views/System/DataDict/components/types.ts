@@ -2,7 +2,7 @@
 export type DictDataType = {
   id?: string
   type?: string
-  code?: string
+  dicCode?: string
   title?: string
   remark?: string
 }

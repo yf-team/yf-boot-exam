@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 考试规则业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
+ * <p>
+ * 考试规则业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
 @Service
 public class ExamRuleServiceImpl extends ServiceImpl<ExamRuleMapper, ExamRule> implements ExamRuleService {
 
@@ -63,7 +63,7 @@ public class ExamRuleServiceImpl extends ServiceImpl<ExamRuleMapper, ExamRule> i
 
         //转换并返回
         List<ExamRule> list = this.list(wrapper);
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return List.of();
         }
 

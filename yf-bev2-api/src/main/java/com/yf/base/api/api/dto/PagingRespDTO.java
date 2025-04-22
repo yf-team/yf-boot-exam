@@ -4,14 +4,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
  * 分页响应类
+ *
+ * @param <T>
  * @author bool
  * @date 2019-07-20 15:17
- * @param <T>
  */
 public class PagingRespDTO<T> extends Page<T> {
 
     /**
      * 获取页面总数量
+     *
      * @return
      */
     @Override

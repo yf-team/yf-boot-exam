@@ -33,5 +33,4 @@ public interface FuncSwitch {
     String WECHAT_LOGIN = "wechatLogin";
 
 
-
 }

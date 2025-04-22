@@ -26,13 +26,13 @@ import org.springframework.util.CollectionUtils;
 import java.util.*;
 
 /**
-* <p>
-* 问题题目业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 问题题目业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @RequiredArgsConstructor
 @Service
 public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> implements RepoQuService {
@@ -49,8 +49,8 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
         // 请求参数
         RepoQuDTO params = reqDTO.getParams();
 
-        if (params!=null) {
-            if (StringUtils.isNotBlank(params.getContent())){
+        if (params != null) {
+            if (StringUtils.isNotBlank(params.getContent())) {
                 wrapper.lambda().like(RepoQu::getContent, params.getContent());
             }
         }
@@ -59,13 +59,14 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
 
         //获得数据
         IPage<RepoQu> page = this.page(reqDTO.toPage(), wrapper);
-        return JsonHelper.parseObject(page, new TypeReference<Page<RepoQuDTO>>(){});
+        return JsonHelper.parseObject(page, new TypeReference<Page<RepoQuDTO>>() {
+        });
     }
 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(RepoQuDetailDTO reqDTO){
+    public void save(RepoQuDetailDTO reqDTO) {
         //复制参数
         RepoQu entity = new RepoQu();
         BeanMapper.copy(reqDTO, entity);
@@ -76,13 +77,13 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public RepoQuDetailDTO detail(String id){
+    public RepoQuDetailDTO detail(String id) {
         // 基本信息
         RepoQu entity = this.getById(id);
         RepoQuDetailDTO dto = new RepoQuDetailDTO();
@@ -94,7 +95,7 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     }
 
     @Override
-    public List<RepoQuDTO> list(RepoQuDTO reqDTO){
+    public List<RepoQuDTO> list(RepoQuDTO reqDTO) {
 
         //分页查询并转换
         QueryWrapper<RepoQu> wrapper = new QueryWrapper<>();
@@ -111,14 +112,14 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     @Override
     public List<RepoQuDetailDTO> listForPaper(String repoId, String quType, Integer quCount) {
 
-        Map<String,List<String>> map = this.typeQuIds(repoId);
+        Map<String, List<String>> map = this.typeQuIds(repoId);
         if (!map.containsKey(quType)) {
-            throw new ServiceException("组卷失败，题型"+quType+"没有试题！");
+            throw new ServiceException("组卷失败，题型" + quType + "没有试题！");
         }
 
         List<String> ids = map.get(quType);
-        if (ids.size() < quCount ) {
-            throw new ServiceException("组卷失败，题型"+quType+"试题不足！");
+        if (ids.size() < quCount) {
+            throw new ServiceException("组卷失败，题型" + quType + "试题不足！");
         }
 
         // 随机排序
@@ -126,7 +127,7 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
 
         // 逐个构建详情，注意效率问题
         List<RepoQuDetailDTO> resultList = new ArrayList<>();
-        ids.subList(0, quCount).forEach(id-> resultList.add(this.detail(id)));
+        ids.subList(0, quCount).forEach(id -> resultList.add(this.detail(id)));
 
         return resultList;
     }
@@ -134,11 +135,12 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
 
     /**
      * 把题库的全部ID找出来，组成一个题型--IDS列表的MAP
+     *
      * @param repoId
      * @return
      */
-    private Map<String,List<String>> typeQuIds(String repoId){
-        Map<String,List<String>> map = new HashMap<>();
+    private Map<String, List<String>> typeQuIds(String repoId) {
+        Map<String, List<String>> map = new HashMap<>();
 
         //分页查询并转换
         QueryWrapper<RepoQu> wrapper = new QueryWrapper<>();
@@ -147,14 +149,14 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
                 .eq(RepoQu::getRepoId, repoId);
 
         List<RepoQu> list = this.list(wrapper);
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return map;
         }
 
-        for(RepoQu repoQu : list){
-            if(map.containsKey(repoQu.getQuType())){
+        for (RepoQu repoQu : list) {
+            if (map.containsKey(repoQu.getQuType())) {
                 map.get(repoQu.getQuType()).add(repoQu.getId());
-            }else {
+            } else {
                 List<String> ids = new ArrayList<>();
                 ids.add(repoQu.getId());
                 map.put(repoQu.getQuType(), ids);

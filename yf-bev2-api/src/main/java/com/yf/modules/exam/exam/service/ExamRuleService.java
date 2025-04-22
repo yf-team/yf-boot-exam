@@ -18,6 +18,7 @@ public interface ExamRuleService extends IService<ExamRule> {
 
     /**
      * 保存全部规则列表
+     *
      * @param examId
      * @param repoId
      * @param ruleList
@@ -34,6 +35,7 @@ public interface ExamRuleService extends IService<ExamRule> {
 
     /**
      * 根据考试删除规则
+     *
      * @param examIds
      */
     void deleteByExams(List<String> examIds);

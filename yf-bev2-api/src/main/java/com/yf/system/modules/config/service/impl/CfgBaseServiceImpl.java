@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* <p>
-* 语言设置 服务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-17 09:12
-*/
+ * <p>
+ * 语言设置 服务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-17 09:12
+ */
 @Service
 public class CfgBaseServiceImpl extends ServiceImpl<CfgBaseMapper, CfgBase> implements CfgBaseService {
 
@@ -39,7 +39,7 @@ public class CfgBaseServiceImpl extends ServiceImpl<CfgBaseMapper, CfgBase> impl
         return dto;
     }
 
-    @CacheEvict(value = CacheKey.SITE, allEntries=true)
+    @CacheEvict(value = CacheKey.SITE, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(CfgBaseDTO reqDTO) {

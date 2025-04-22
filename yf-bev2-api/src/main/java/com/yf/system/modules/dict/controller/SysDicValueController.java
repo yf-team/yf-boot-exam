@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
-* <p>
-* 分类字典控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
-@Tag(name="字典值管理")
+ * <p>
+ * 分类字典控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
+@Tag(name = "字典值管理")
 @RestController
 @RequestMapping("/api/sys/dic/value")
 public class SysDicValueController extends BaseController {
@@ -37,26 +37,28 @@ public class SysDicValueController extends BaseController {
     private SysDicValueService baseService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:dict:add", "sys:dict:edit"}, logical = Logical.OR)
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<BaseIdRespDTO> save(@RequestBody SysDicValueDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:dict:delete"})
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
     public ApiRest<?> edit(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.removeByIds(reqDTO.getIds());
@@ -65,10 +67,11 @@ public class SysDicValueController extends BaseController {
 
     /**
      * 分类树列表
+     *
      * @return
      */
     @Operation(summary = "分类树列表")
-    @RequestMapping(value = "/tree", method = { RequestMethod.POST})
+    @RequestMapping(value = "/tree", method = {RequestMethod.POST})
     public ApiRest<List<DicValueTreeDTO>> tree(@RequestBody SysDicValueReqDTO reqDTO) {
         List<DicValueTreeDTO> dtoList = baseService.findTree(reqDTO);
         return super.success(dtoList);

@@ -84,7 +84,7 @@ public class JobServiceImpl implements JobService {
             scheduler.pauseTrigger(triggerKey);
             log.info("++++++++++暂停任务：{}", jobName);
         } catch (SchedulerException e) {
-           log.error(e);
+            log.error(e);
         }
     }
 
@@ -102,7 +102,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public void deleteJob(String jobName, String jobGroup) {
         try {
-            JobKey jobKey = JobKey.jobKey(jobName,jobGroup);
+            JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
             scheduler.deleteJob(jobKey);
             log.info("++++++++++删除任务：{}", jobKey);
         } catch (SchedulerException e) {

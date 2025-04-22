@@ -39,16 +39,16 @@ import java.util.Date;
 import java.util.List;
 
 /**
-* <p>
-* 试卷业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:40
-*/
+ * <p>
+ * 试卷业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:40
+ */
 @RequiredArgsConstructor
 @Service
-public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements PaperService {
+public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements PaperService {
 
     private final ExamService examService;
     private final ExamRuleService examRuleService;
@@ -69,13 +69,14 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         //获得数据
         IPage<Paper> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<PaperDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PaperDTO>>(){});
+        IPage<PaperDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PaperDTO>>() {
+        });
         return pageData;
     }
 
 
     @Override
-    public void save(PaperDTO reqDTO){
+    public void save(PaperDTO reqDTO) {
         //复制参数
         Paper entity = new Paper();
         BeanMapper.copy(reqDTO, entity);
@@ -83,13 +84,13 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public PaperDTO detail(String id){
+    public PaperDTO detail(String id) {
         Paper entity = this.getById(id);
         PaperDTO dto = new PaperDTO();
         BeanMapper.copy(entity, dto);
@@ -127,21 +128,21 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         }
 
         // 校验迟到
-        if (exam.getLateMax()!=null && exam.getLateMax()>0){
+        if (exam.getLateMax() != null && exam.getLateMax() > 0) {
             Calendar cl = Calendar.getInstance();
             cl.setTime(exam.getStartTime());
             cl.add(Calendar.MINUTE, exam.getLateMax());
 
-            if (cl.getTime().before(new Date())){
+            if (cl.getTime().before(new Date())) {
                 respDTO.setMessage(String.format("迟到超过%s分钟，无法进入考试！", exam.getLateMax()));
                 return respDTO;
             }
         }
 
         // 考试机会校验
-        if (exam.getChance()!=null && exam.getChance()>0){
+        if (exam.getChance() != null && exam.getChance() > 0) {
             int tryCount = examRecordService.findTryCount(examId, userId);
-            if (exam.getChance() <= tryCount){
+            if (exam.getChance() <= tryCount) {
                 respDTO.setMessage(String.format("考试机会已用完，最多允许考试%s次！", exam.getChance()));
                 return respDTO;
             }
@@ -158,8 +159,8 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
         // 校验
         PaperCheckRespDTO checkDTO = this.preCheck(examId, userId);
-        if (Boolean.FALSE.equals(checkDTO.getValidated())){
-           throw new ServiceException(checkDTO.getMessage());
+        if (Boolean.FALSE.equals(checkDTO.getValidated())) {
+            throw new ServiceException(checkDTO.getMessage());
         }
 
         // 做基础校验
@@ -186,11 +187,11 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
             // 整个考试的时间
             if (limitTime.before(exam.getEndTime())) {
                 paper.setLimitTime(limitTime);
-            }else{
+            } else {
                 paper.setLimitTime(exam.getEndTime());
             }
 
-        }else{
+        } else {
             paper.setLimitTime(exam.getEndTime());
         }
 
@@ -200,14 +201,14 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         // 构建随机题目
         List<ExamRuleDTO> ruleList = examRuleService.listByExam(examId);
 
-        if(CollectionUtils.isEmpty(ruleList)){
+        if (CollectionUtils.isEmpty(ruleList)) {
             throw new ServiceException("考试进入失败，没有组卷规则！");
         }
 
         // 循环保存
         for (ExamRuleDTO rule : ruleList) {
             // 未抽题的
-            if(rule.getQuCount()==null || rule.getQuCount()==0){
+            if (rule.getQuCount() == null || rule.getQuCount() == 0) {
                 continue;
             }
             List<RepoQuDetailDTO> quList = repoQuService.listForPaper(rule.getRepoId(), rule.getQuType(), rule.getQuCount());
@@ -215,12 +216,11 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         }
 
 
-
         // 到期执行任务
         String paperId = paper.getId();
 
         // 执行阅卷或完成
-        String jobName = "force:hand:paper:"+paperId;
+        String jobName = "force:hand:paper:" + paperId;
         jobService.addCronJob(HandPaperJob.class, jobName, CronUtils.dateToCron(paper.getLimitTime()), paperId);
 
         return paperId;
@@ -232,11 +232,11 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
 
         Paper paper = this.getById(paperId);
 
-        if(paper == null){
+        if (paper == null) {
             throw new ServiceException("试卷不存在或已被删除！");
         }
 
-        if(paper.getHandState().equals(1)){
+        if (paper.getHandState().equals(1)) {
             return;
         }
 
@@ -270,13 +270,14 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
         long leftSeconds = (limit - System.currentTimeMillis()) / 1000;
 
         respDTO.setLeftSeconds((int) leftSeconds);
-        respDTO.setHanded(paper.getHandState()!=null && paper.getHandState().equals(1));
+        respDTO.setHanded(paper.getHandState() != null && paper.getHandState().equals(1));
 
         return respDTO;
     }
 
     /**
      * 查找是否有进行中的考试
+     *
      * @param examId
      * @param userId
      * @return
@@ -289,7 +290,7 @@ public class  PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implement
                 .eq(Paper::getHandState, 0);
 
         Paper paper = this.getOne(wrapper, false);
-        if(paper != null){
+        if (paper != null) {
             return paper.getId();
         }
         return null;

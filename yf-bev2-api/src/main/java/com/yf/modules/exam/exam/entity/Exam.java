@@ -10,13 +10,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
-* <p>
-* 考试实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
+ * <p>
+ * 考试实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_exam")
@@ -133,5 +133,5 @@ public class Exam extends Model<Exam> {
      */
     @TableField(value = "update_by", fill = FieldFill.UPDATE)
     private String updateBy;
-    
+
 }

@@ -2,6 +2,7 @@ package com.yf.base.utils.download.temp;
 
 /**
  * 下载线程信息，临时文件的一部分，用于保存各个线程的下载情况。
+ *
  * @author bool
  * @date 2018/8/24 09:03
  */

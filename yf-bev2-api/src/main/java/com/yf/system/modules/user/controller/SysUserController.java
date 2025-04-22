@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 聪明笨狗
  * @since 2020-04-13 16:57
  */
-@Tag(name="用户管理")
+@Tag(name = "用户管理")
 @RestController
 @Log4j2
 @RequestMapping("/api/sys/user")
@@ -111,8 +111,6 @@ public class SysUserController extends BaseController {
     }
 
 
-
-
     /**
      * 保存或修改系统用户
      *
@@ -185,6 +183,7 @@ public class SysUserController extends BaseController {
 
     /**
      * 用户注册
+     *
      * @return
      */
     @Operation(summary = "用户注册", description = "通过账号密码注册")
@@ -193,7 +192,7 @@ public class SysUserController extends BaseController {
         SysUserLoginDTO respDTO = baseService.reg(reqDTO);
 
         // 待审核的状态
-        if(UserState.AUDIT.equals(respDTO.getState())){
+        if (UserState.AUDIT.equals(respDTO.getState())) {
             throw new ServiceException("注册成功，管理员审核后方可登录！");
         }
         return success(respDTO);

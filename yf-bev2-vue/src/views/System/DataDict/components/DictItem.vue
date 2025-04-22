@@ -19,7 +19,7 @@
 
         <el-table-column label="类型" prop="type_dictText" sortable />
 
-        <el-table-column label="编码" prop="code" sortable />
+        <el-table-column label="编码" prop="dicCode" sortable />
 
         <el-table-column label="备注信息" prop="remark" />
 
@@ -41,8 +41,8 @@
           <el-input v-model="form.title" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item label="编码" prop="code">
-          <el-input v-model="form.code" autocomplete="off" />
+        <el-form-item label="编码" prop="dicCode">
+          <el-input v-model="form.dicCode" autocomplete="off" />
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="form.remark" autocomplete="off" />
@@ -119,7 +119,7 @@ const rules = reactive<FormRules>({
       trigger: 'blur'
     }
   ],
-  code: [
+  dicCode: [
     {
       required: true,
       validator: checkCode,

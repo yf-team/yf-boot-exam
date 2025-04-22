@@ -4,23 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.modules.exam.paper.dto.PaperDTO">
-        <id column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="exam_id" property="examId" />
-        <result column="title" property="title" />
-        <result column="total_time" property="totalTime" />
-        <result column="user_time" property="userTime" />
-        <result column="total_score" property="totalScore" />
-        <result column="qualify_score" property="qualifyScore" />
-        <result column="user_score" property="userScore" />
-        <result column="limit_time" property="limitTime" />
-        <result column="hand_time" property="handTime" />
-        <result column="hand_state" property="handState" />
-        <result column="passed" property="passed" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="exam_id" property="examId"/>
+        <result column="title" property="title"/>
+        <result column="total_time" property="totalTime"/>
+        <result column="user_time" property="userTime"/>
+        <result column="total_score" property="totalScore"/>
+        <result column="qualify_score" property="qualifyScore"/>
+        <result column="user_score" property="userScore"/>
+        <result column="limit_time" property="limitTime"/>
+        <result column="hand_time" property="handTime"/>
+        <result column="hand_state" property="handState"/>
+        <result column="passed" property="passed"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

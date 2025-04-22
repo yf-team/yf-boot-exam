@@ -17,13 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 候选答案业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 候选答案业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Service
 public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, RepoQuAnswer> implements RepoQuAnswerService {
 
@@ -38,18 +38,18 @@ public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, Rep
         //已存在的标签列表
         List<String> ids = this.findExistsList(quId);
 
-        if(!CollectionUtils.isEmpty(dtoList)){
+        if (!CollectionUtils.isEmpty(dtoList)) {
 
             int i = 0;
 
-            for(RepoQuAnswerDTO item: dtoList){
+            for (RepoQuAnswerDTO item : dtoList) {
 
                 //标签ID
                 String id = item.getId();
                 RepoQuAnswer answer = new RepoQuAnswer();
                 BeanMapper.copy(item, answer);
                 answer.setQuId(quId);
-                if(StringUtils.isBlank(answer.getTag())) {
+                if (StringUtils.isBlank(answer.getTag())) {
                     answer.setTag(AbcTags.get(i));
                 }
 
@@ -63,10 +63,10 @@ public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, Rep
             this.saveOrUpdateBatch(saveList);
 
             //删除已移除
-            if(!ids.isEmpty()){
+            if (!ids.isEmpty()) {
                 this.removeByIds(ids);
             }
-        }else{
+        } else {
 
             QueryWrapper<RepoQuAnswer> wrapper = new QueryWrapper<>();
             wrapper.lambda().eq(RepoQuAnswer::getQuId, quId);
@@ -82,7 +82,7 @@ public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, Rep
         List<RepoQuAnswer> list = this.list(wrapper);
 
         if (!CollectionUtils.isEmpty(list)) {
-           return BeanMapper.mapList(list, RepoQuAnswerDTO.class);
+            return BeanMapper.mapList(list, RepoQuAnswerDTO.class);
         }
 
         return List.of();
@@ -90,6 +90,7 @@ public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, Rep
 
     /**
      * 查找已存在的列表
+     *
      * @param quId
      * @return
      */

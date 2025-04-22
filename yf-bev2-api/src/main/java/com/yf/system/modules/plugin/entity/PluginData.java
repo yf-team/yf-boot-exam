@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 插件信息实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件信息实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("pl_plugin_data")
@@ -27,8 +27,8 @@ public class PluginData extends Model<PluginData> {
     private static final long serialVersionUID = 1L;
 
     /**
-    * ID
-    */
+     * ID
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
@@ -38,25 +38,25 @@ public class PluginData extends Model<PluginData> {
     private String code;
 
     /**
-    * 插件名称
-    */
+     * 插件名称
+     */
     private String title;
 
     /**
-    * 元数据ID
-    */
+     * 元数据ID
+     */
     @TableField("schema_id")
     private String schemaId;
 
     /**
-    * 分组ID
-    */
+     * 分组ID
+     */
     @TableField("group_id")
     private String groupId;
 
     /**
-    * 配置数据
-    */
+     * 配置数据
+     */
     @TableField("config_data")
     private String configData;
 
@@ -67,19 +67,19 @@ public class PluginData extends Model<PluginData> {
     private String serviceClazz;
 
     /**
-    * 前端页面
-    */
+     * 前端页面
+     */
     private String component;
 
     /**
-    * 是否使用
-    */
+     * 是否使用
+     */
     @TableField("in_use")
     private Boolean inUse;
 
     /**
-    * 插件状态
-    */
+     * 插件状态
+     */
     private String state;
 
 }

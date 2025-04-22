@@ -7,15 +7,15 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
-* <p>
-* 考试题目详情类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 考试题目详情类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Data
-@Schema(description="考试校验响应类")
+@Schema(description = "考试校验响应类")
 public class PaperCheckRespDTO implements Serializable {
 
     @Serial

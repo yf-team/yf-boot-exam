@@ -2,6 +2,7 @@ package com.yf.ability.upload.enums;
 
 /**
  * 上传服务商枚举
+ *
  * @author bool
  */
 public interface UploadProvider {

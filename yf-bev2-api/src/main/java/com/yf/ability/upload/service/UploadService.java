@@ -5,16 +5,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 /**
  * 服务器端上传文件方法
+ *
  * @author van
  */
 public interface UploadService {
 
     /**
      * 上传文件
+     *
      * @param multipartFile
      * @return
      */
@@ -22,6 +25,7 @@ public interface UploadService {
 
     /**
      * 本地上传
+     *
      * @param localFile
      * @return
      */
@@ -29,6 +33,7 @@ public interface UploadService {
 
     /**
      * 下载文件
+     *
      * @param request
      * @param response
      */

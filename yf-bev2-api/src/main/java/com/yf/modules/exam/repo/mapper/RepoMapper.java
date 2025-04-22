@@ -12,17 +12,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* <p>
-* 题库Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 题库Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 public interface RepoMapper extends BaseMapper<Repo> {
 
     /**
      * 分页查找数据
+     *
      * @param page
      * @param query
      * @return
@@ -32,6 +33,7 @@ public interface RepoMapper extends BaseMapper<Repo> {
 
     /**
      * 题库统计，用于考试组卷
+     *
      * @param repoId
      * @return
      */

@@ -8,18 +8,18 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 
 /**
-* <p>
-* 管理员登录请求类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 管理员登录请求类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name="管理员保存请求类", description="管理员保存请求类")
+@Schema(name = "管理员保存请求类", description = "管理员保存请求类")
 public class SysUserSaveReqDTO extends SysUserDTO {
 
-   @Schema(description = "角色列表")
+    @Schema(description = "角色列表")
     private List<String> roles;
 }

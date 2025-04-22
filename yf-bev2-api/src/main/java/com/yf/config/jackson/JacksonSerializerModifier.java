@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * JSON序列化处理器
+ *
  * @author van
  */
 public class JacksonSerializerModifier extends BeanSerializerModifier {
@@ -21,7 +22,7 @@ public class JacksonSerializerModifier extends BeanSerializerModifier {
 
             // 数据字典翻译
             Dict dict = beanProperty.getAnnotation(Dict.class);
-            if (dict != null){
+            if (dict != null) {
                 DataDictFilter dictFieldSerializer = new DataDictFilter(beanProperty.getName(), dict.dicCode(), dict.dictTable(), dict.dicText());
                 beanProperty.assignSerializer(dictFieldSerializer);
             }

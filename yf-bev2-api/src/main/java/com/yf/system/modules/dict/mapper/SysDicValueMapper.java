@@ -5,17 +5,18 @@ import com.yf.system.modules.dict.entity.SysDicValue;
 import org.apache.ibatis.annotations.Param;
 
 /**
-* <p>
-* 分类字典值Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
+ * <p>
+ * 分类字典值Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
 public interface SysDicValueMapper extends BaseMapper<SysDicValue> {
 
     /**
      * 查找数据字典
+     *
      * @param dicCode
      * @param value
      * @return
@@ -24,6 +25,7 @@ public interface SysDicValueMapper extends BaseMapper<SysDicValue> {
 
     /**
      * 查找数据字典
+     *
      * @param dicTable
      * @param dicText
      * @param dicCode
@@ -31,7 +33,7 @@ public interface SysDicValueMapper extends BaseMapper<SysDicValue> {
      * @return
      */
     String findTableText(@Param("dicTable") String dicTable,
-                        @Param("dicText") String dicText,
-                        @Param("dicCode") String dicCode,
-                        @Param("value") String value);
+                         @Param("dicText") String dicText,
+                         @Param("dicCode") String dicCode,
+                         @Param("value") String value);
 }

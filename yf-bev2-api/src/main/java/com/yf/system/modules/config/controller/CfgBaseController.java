@@ -18,14 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
-* <p>
-* 通用配置控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-17 09:12
-*/
-@Tag(name="通用配置")
+ * <p>
+ * 通用配置控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-17 09:12
+ */
+@Tag(name = "通用配置")
 @RestController
 @RequestMapping("/api/sys/config")
 public class CfgBaseController extends BaseController {
@@ -37,35 +37,36 @@ public class CfgBaseController extends BaseController {
     private CfgSwitchService cfgSwitchService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "保存基础配置")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<?> save(@RequestBody CfgBaseDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 查找详情
-    * @return
-    */
+     * 查找详情
+     *
+     * @return
+     */
     @Operation(summary = "简略详情")
-    @RequestMapping(value = "/detail", method = { RequestMethod.POST})
-    public ApiRest<Map<String,Object>> detail() {
+    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    public ApiRest<Map<String, Object>> detail() {
 
         // 返回数据
-        Map<String,Object> resMap = new HashMap<>(16);
+        Map<String, Object> resMap = new HashMap<>(16);
 
         // 网站设置
         CfgBaseDTO dto = baseService.findSimple();
         BeanMapper.copy(dto, resMap);
 
         // 功能开关封装到props属性中
-        Map<String,Object> props = cfgSwitchService.allMap();
-        resMap.putAll(props);
+        Map<String, Object> props = cfgSwitchService.allMap();
         resMap.put("props", props);
         return super.success(resMap);
     }

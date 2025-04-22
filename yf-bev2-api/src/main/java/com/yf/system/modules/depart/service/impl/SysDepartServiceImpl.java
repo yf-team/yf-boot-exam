@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 部门信息业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-09-02 17:25
-*/
+ * <p>
+ * 部门信息业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-09-02 17:25
+ */
 @Service
 public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart> implements SysDepartService {
 
@@ -51,7 +51,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
         // 定时锁
         boolean lock = redisService.tryLock(LOCK_DEPT, 60000L);
-        if(!lock){
+        if (!lock) {
             throw new ServiceException("系统正忙，请稍候...");
         }
 
@@ -69,7 +69,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
             this.saveOrUpdate(entity);
 
-        }finally {
+        } finally {
             // 移除缓存
             redisService.del(LOCK_DEPT);
         }
@@ -84,7 +84,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         DepartQueryReqDTO reqDTO = new DepartQueryReqDTO();
 
         // 构建权限
-        if(self) {
+        if (self) {
             this.appendDeptQuery(reqDTO);
         }
 
@@ -113,7 +113,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     @Override
     public String syncDepart(String str) {
 
-        String [] arr = str.split(",");
+        String[] arr = str.split(",");
 
 
         // 如：云帆互联,产品研发部,技术部
@@ -123,7 +123,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         String parentId = ROOT_TAG;
         String deptCode = null;
 
-        for(int i=0; i<arr.length; i++){
+        for (int i = 0; i < arr.length; i++) {
 
             // 自上往下搜索
             subs.add(arr[i]);
@@ -131,16 +131,16 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
             SysDepart depart = this.findLastChild(subs);
 
-            if(depart!=null){
+            if (depart != null) {
                 parentId = depart.getId();
                 deptCode = depart.getDeptCode();
-            }else{
+            } else {
 
                 // 循环剩下的
                 List<String> left = new ArrayList<>();
 
                 // 剩余要添加的子部门
-                for(int j=i;j<arr.length;j++){
+                for (int j = i; j < arr.length; j++) {
                     left.add(arr[j]);
                 }
 
@@ -160,7 +160,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         QueryWrapper<SysDepart> wrapper = new QueryWrapper<>();
         wrapper.lambda().in(SysDepart::getParentId, ids);
         long count = this.count(wrapper);
-        if(count > 0){
+        if (count > 0) {
             throw new ServiceException("请先删除下级部门！");
         }
 
@@ -169,25 +169,26 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
     /**
      * 从上往下查找部门子节点
+     *
      * @param list
      * @return
      */
-    private SysDepart findLastChild(List<String> list){
+    private SysDepart findLastChild(List<String> list) {
 
         String parentId = ROOT_TAG;
 
-        for(int i=0;i<list.size();i++){
+        for (int i = 0; i < list.size(); i++) {
             SysDepart depart = this.findDeptByName(parentId, list.get(i));
 
             // 找不到返回空
-            if(depart == null){
+            if (depart == null) {
                 return null;
             }
 
             parentId = depart.getId();
 
             // 找到了最底级
-            if(i>=list.size()-1){
+            if (i >= list.size() - 1) {
                 return depart;
             }
         }
@@ -197,16 +198,17 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
     /**
      * 创建下级并返回部门ID
+     *
      * @param parentId
      * @param list
      * @return
      */
-    private String createSubs(String parentId, List<String> list){
+    private String createSubs(String parentId, List<String> list) {
 
 
         String deptCode = null;
 
-        for (String name: list){
+        for (String name : list) {
 
             SysDepart entity = new SysDepart();
             entity.setDeptName(name);
@@ -224,6 +226,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
     /**
      * 根据名称查找部门
+     *
      * @param name
      * @return
      */
@@ -241,15 +244,16 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
     /**
      * 填充部门编号
+     *
      * @param depart
      */
-    private void fillCode(SysDepart depart){
+    private void fillCode(SysDepart depart) {
 
         // 前缀
         String code = "";
 
-        if(StringUtils.isNotBlank(depart.getParentId())
-                && !ROOT_TAG.equals(depart.getParentId())){
+        if (StringUtils.isNotBlank(depart.getParentId())
+                && !ROOT_TAG.equals(depart.getParentId())) {
             SysDepart parent = this.getById(depart.getParentId());
             code = parent.getDeptCode();
         }
@@ -263,10 +267,10 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         wrapper.last("LIMIT 1");
         SysDepart max = this.getOne(wrapper, false);
 
-        if(max !=null){
-            code += DeptCodeGen.gen(max.getSort()+1);
-            depart.setSort(max.getSort()+1);
-        }else{
+        if (max != null) {
+            code += DeptCodeGen.gen(max.getSort() + 1);
+            depart.setSort(max.getSort() + 1);
+        } else {
             code += DeptCodeGen.gen(1);
             depart.setSort(1);
         }
@@ -276,33 +280,34 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
 
     /**
      * 构建特有的部门查看权限
+     *
      * @param params
      */
-    private void appendDeptQuery(DepartQueryReqDTO params){
+    private void appendDeptQuery(DepartQueryReqDTO params) {
 
         // 用户部门
         String code = UserUtils.departCode();
         Integer scope = UserUtils.getDataScope();
 
         // 非全部权限，只过滤自己部门
-        if(!DataScope.SCOPE_ALL.equals(scope)){
+        if (!DataScope.SCOPE_ALL.equals(scope)) {
 
             int length = code.length() / 3;
             StringBuffer sb = null;
-            for(int i=0;i<length;i++){
-                String sub = code.substring(0,(i+1)*3);
-                if(sb == null){
+            for (int i = 0; i < length; i++) {
+                String sub = code.substring(0, (i + 1) * 3);
+                if (sb == null) {
                     sb = new StringBuffer();
-                }else{
+                } else {
                     sb.append(",");
                 }
-                sb.append("'"+sub+"'");
+                sb.append("'" + sub + "'");
             }
 
             params.setDeptCodes(sb.toString());
 
             // 本部门及以下
-            if(DataScope.SCOPE_DEPT_DOWN.equals(scope)){
+            if (DataScope.SCOPE_DEPT_DOWN.equals(scope)) {
                 params.setLikeCode(code);
             }
         }

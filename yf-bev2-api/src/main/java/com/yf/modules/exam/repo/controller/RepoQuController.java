@@ -17,14 +17,14 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 
 /**
-* <p>
-* 问题题目控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
-@Tag(name="问题题目")
+ * <p>
+ * 问题题目控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
+@Tag(name = "问题题目")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/exam/repo/qu")
@@ -33,23 +33,25 @@ public class RepoQuController extends BaseController {
     private final RepoQuService repoQuService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "添加或修改")
     @RequiresPermissions(value = {"repo:qu:add", "repo:qu:edit"}, logical = Logical.OR)
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<?> save(@RequestBody RepoQuDetailDTO reqDTO) {
         repoQuService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "批量删除")
     @RequiresPermissions("repo:qu:delete")
     @PostMapping("/delete")
@@ -60,10 +62,11 @@ public class RepoQuController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "查找详情")
     @RequiresPermissions("repo:qu:view")
     @PostMapping("/detail")
@@ -73,10 +76,11 @@ public class RepoQuController extends BaseController {
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
     @RequiresPermissions("repo:qu:view")
     @PostMapping("/paging")

@@ -22,10 +22,11 @@ import java.io.IOException;
 
 /**
  * 本地文件上传下载请求类
+ *
  * @author bool
  */
 @Log4j2
-@Tag(name="文件上传")
+@Tag(name = "文件上传")
 @RestController
 public class UploadController extends BaseController {
 
@@ -34,6 +35,7 @@ public class UploadController extends BaseController {
 
     /**
      * 文件上传
+     *
      * @param reqDTO
      * @return
      */
@@ -47,10 +49,11 @@ public class UploadController extends BaseController {
 
     /**
      * 独立文件下载
+     *
      * @param request
      * @param response
      */
-    @GetMapping(Constant.FILE_PREFIX+"**")
+    @GetMapping(Constant.FILE_PREFIX + "**")
     @Operation(summary = "文件下载", description = "文件下载")
     public void download(HttpServletRequest request, HttpServletResponse response) throws IOException {
         uploadFactory.getService().download(request, response);

@@ -9,18 +9,19 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* <p>
-* 系统菜单Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-03-02 13:09
-*/
+ * <p>
+ * 系统菜单Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-03-02 13:09
+ */
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
 
     /**
      * 列出菜单树结构
+     *
      * @return
      */
     List<MenuTreeRespDTO> listTree();
@@ -28,6 +29,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 获得管理路由表
+     *
      * @param roleIds
      * @return
      */
@@ -36,6 +38,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 获得全部功能权限表
+     *
      * @param roleIds
      * @return
      */
@@ -44,6 +47,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 查找某个目标下最大的序号
+     *
      * @param parentId
      * @return
      */
@@ -51,6 +55,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 批量加大排序
+     *
      * @param parentId
      * @return
      */

@@ -68,6 +68,7 @@ public class RouteRespDTO implements Serializable {
 
     /**
      * 构建路由属性，用于前端展示
+     *
      * @return
      */
     public Map<String, Object> getMeta() {
@@ -80,15 +81,15 @@ public class RouteRespDTO implements Serializable {
             meta.put("icon", metaIcon);
         }
 
-        if(metaNoCache!=null){
-            meta.put("noCache",metaNoCache);
+        if (metaNoCache != null) {
+            meta.put("noCache", metaNoCache);
         }
 
-        if(!StringUtils.isBlank(metaActiveMenu)){
+        if (!StringUtils.isBlank(metaActiveMenu)) {
             meta.put("activeMenu", metaActiveMenu);
         }
 
-        if(hidden!=null){
+        if (hidden != null) {
             meta.put("hidden", hidden);
         }
 

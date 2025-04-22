@@ -2,6 +2,7 @@ package com.yf.base.utils;
 
 /**
  * 根据索引获取ABC
+ *
  * @author bool
  */
 public class AbcTags {
@@ -18,11 +19,12 @@ public class AbcTags {
 
     /**
      * 获得ABC字符
+     *
      * @param index
      * @return
      */
-    public static String get(int index){
-        if(index > tags.length){
+    public static String get(int index) {
+        if (index > tags.length) {
             return "";
         }
         return tags[index];

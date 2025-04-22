@@ -2,6 +2,7 @@ package com.yf.system.modules.menu.eums;
 
 /**
  * 菜单类型
+ *
  * @author bool
  */
 public interface MenuType {

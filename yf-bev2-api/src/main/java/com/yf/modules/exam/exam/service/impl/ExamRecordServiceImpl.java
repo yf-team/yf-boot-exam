@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 /**
-* <p>
-* 考试记录业务实现类
-* </p>
-*
-* @author 沉醉寒风
-* @since 2025-04-17 14:59
-*/
+ * <p>
+ * 考试记录业务实现类
+ * </p>
+ *
+ * @author 沉醉寒风
+ * @since 2025-04-17 14:59
+ */
 @Service
 public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRecord> implements ExamRecordService {
 
@@ -42,7 +42,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
 
         ExamRecord record = this.getOne(wrapper, false);
 
-        if(record == null){
+        if (record == null) {
             record = new ExamRecord();
             record.setUserId(userId);
             record.setExamId(examId);
@@ -52,7 +52,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
             record.setPassed(passed);
             record.setTryCount(1);
             this.save(record);
-        }else {
+        } else {
 
             // 更新最高分数
             BigDecimal maxScore = record.getMaxScore();
@@ -77,7 +77,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                 .eq(ExamRecord::getExamId, examId);
 
         ExamRecord record = this.getOne(wrapper, false);
-        if(record != null){
+        if (record != null) {
             return record.getTryCount();
         }
 

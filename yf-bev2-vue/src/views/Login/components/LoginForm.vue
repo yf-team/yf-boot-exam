@@ -155,9 +155,6 @@ const signIn = async (formEl: FormInstance | undefined) => {
         .login(formData)
         .then(() => {
           loading.value = false
-
-          console.log('登录了？')
-
           // 跳转到记录页面或首页
           replace(redirect.value || '/')
         })

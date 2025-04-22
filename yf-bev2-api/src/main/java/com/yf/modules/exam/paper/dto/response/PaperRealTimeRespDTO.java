@@ -7,15 +7,15 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
-* <p>
-* 试卷实时状态
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 试卷实时状态
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Data
-@Schema(description="试卷实时状态")
+@Schema(description = "试卷实时状态")
 public class PaperRealTimeRespDTO implements Serializable {
 
     @Serial

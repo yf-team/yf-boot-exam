@@ -34,7 +34,7 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2020-04-13 16:57
  */
-@Tag(name="角色管理")
+@Tag(name = "角色管理")
 @RestController
 @RequestMapping("/api/sys/role")
 public class SysRoleController extends BaseController {
@@ -48,6 +48,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 添加或修改
+     *
      * @param reqDTO
      * @return
      */
@@ -62,6 +63,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 批量删除
+     *
      * @param reqDTO
      * @return
      */
@@ -78,6 +80,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 查找详情
+     *
      * @param reqDTO
      * @return
      */
@@ -94,6 +97,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 分页查找
+     *
      * @param reqDTO
      * @return
      */
@@ -109,6 +113,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 查找角色菜单授权
+     *
      * @return
      */
     @RequiresPermissions(value = {"sys:role:grant"})
@@ -123,6 +128,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 保存角色菜单授权
+     *
      * @return
      */
     @DataProtect(clazz = SysRole.class, update = true)

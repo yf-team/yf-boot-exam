@@ -67,7 +67,7 @@ public class ImportExcel {
             // 对应数据成名称-值
             Map<String, Object> map = new HashMap<>();
             for (int i = 0; i < rowList.size(); i++) {
-                if(i >= headerList.size()){
+                if (i >= headerList.size()) {
                     break;
                 }
                 map.put(headerList.get(i), rowList.get(i));
@@ -82,44 +82,47 @@ public class ImportExcel {
 
     /**
      * 将Map放入List
+     *
      * @param map
      */
-    private void addToList(Map<String, Object> map){
+    private void addToList(Map<String, Object> map) {
         boolean empty = true;
 
         // 全部key值为空，则可能是表格某个格子
-        if(map == null || map.isEmpty()){
+        if (map == null || map.isEmpty()) {
             return;
         }
 
         // 循环值
-        for(String key: map.keySet()){
+        for (String key : map.keySet()) {
             Object val = map.get(key);
-            if(val!=null && !StringUtils.isEmpty(val.toString())){
+            if (val != null && !StringUtils.isEmpty(val.toString())) {
                 empty = false;
             }
         }
 
-        if(!empty){
+        if (!empty) {
             dataList.add(map);
         }
     }
 
-	/**
-	 * 读取文件，默认第二行为表头
-	 * @param file
-	 */
-	public ImportExcel(MultipartFile file){
-		// 默认从第二行开始读表头
-		this(file, 1);
-	}
+    /**
+     * 读取文件，默认第二行为表头
+     *
+     * @param file
+     */
+    public ImportExcel(MultipartFile file) {
+        // 默认从第二行开始读表头
+        this(file, 1);
+    }
 
 
-	/**
-	 * 读取文件，表头行号索引从0开始，即excel行号-1
-	 * @param file
-	 * @param headerNum
-	 */
+    /**
+     * 读取文件，表头行号索引从0开始，即excel行号-1
+     *
+     * @param file
+     * @param headerNum
+     */
     public ImportExcel(MultipartFile file, int headerNum) {
 
         // 头部行货
@@ -130,21 +133,22 @@ public class ImportExcel {
             throw new ServiceException("导入的文件格式错误，必须为.xls或.xlsx");
         }
 
-		try {
-			ExcelUtil.readBySax(file.getInputStream(), -1, createRowHandler());
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new ServiceException("数据流读取失败！");
-		}
-	}
+        try {
+            ExcelUtil.readBySax(file.getInputStream(), -1, createRowHandler());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ServiceException("数据流读取失败！");
+        }
+    }
 
 
-	/**
-	 * 反射java类，形成一个表头名称<-->java字段的Map
-	 * @param clazz
-	 * @return
-	 */
-	private Map<String, Field> processFields(Class clazz) {
+    /**
+     * 反射java类，形成一个表头名称<-->java字段的Map
+     *
+     * @param clazz
+     * @return
+     */
+    private Map<String, Field> processFields(Class clazz) {
 
         // 获取当前类字段
         Field[] fields = clazz.getDeclaredFields();
@@ -176,6 +180,7 @@ public class ImportExcel {
 
     /**
      * 返回对应实体列表数据
+     *
      * @param cls
      * @param <E>
      * @return
@@ -190,7 +195,7 @@ public class ImportExcel {
         for (Map<String, Object> map : dataList) {
 
             // 使用JSON对象进行数据接收
-            Map<String,Object> json = new HashMap<>(16);
+            Map<String, Object> json = new HashMap<>(16);
 
             for (String key : map.keySet()) {
 
@@ -225,28 +230,29 @@ public class ImportExcel {
 
     /**
      * 数据字典转换
+     *
      * @param ann
      * @param val
      * @return
      */
-    private Object transFilter(ExcelField ann, Object val){
+    private Object transFilter(ExcelField ann, Object val) {
 
         String filter = ann.filter();
 
         // 不需要处理
-        if(StringUtils.isEmpty(filter)){
+        if (StringUtils.isEmpty(filter)) {
             return val;
         }
 
-        String [] arr = filter.split(",");
+        String[] arr = filter.split(",");
 
-        if(arr.length == 0){
+        if (arr.length == 0) {
             return val;
         }
 
-        for(String item: arr){
-            String [] arr1 = item.split("=");
-            if(String.valueOf(val).equals(arr1[0])){
+        for (String item : arr) {
+            String[] arr1 = item.split("=");
+            if (String.valueOf(val).equals(arr1[0])) {
                 return arr1[1];
             }
         }

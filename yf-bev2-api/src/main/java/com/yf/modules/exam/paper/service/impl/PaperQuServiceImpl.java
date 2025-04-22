@@ -173,7 +173,7 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
 
         // 更新结果
         paperQu.setIsRight(isRight);
-        paperQu.setActualScore(isRight?paperQu.getScore():BigDecimal.ZERO);
+        paperQu.setActualScore(isRight ? paperQu.getScore() : BigDecimal.ZERO);
         paperQu.setAnswered(CollectionUtils.isNotEmpty(checkedItems));
         this.updateById(paperQu);
 
@@ -190,6 +190,7 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
 
     /**
      * 两个List比较
+     *
      * @param list1
      * @param list2
      * @return

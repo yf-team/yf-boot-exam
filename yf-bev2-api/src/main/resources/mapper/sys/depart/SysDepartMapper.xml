@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.depart.entity.SysDepart">
-        <id column="id" property="id" />
-        <result column="dept_type" property="deptType" />
-        <result column="parent_id" property="parentId" />
-        <result column="dept_name" property="deptName" />
-        <result column="dept_code" property="deptCode" />
-        <result column="dept_level" property="deptLevel" />
-        <result column="sort" property="sort" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
+        <id column="id" property="id"/>
+        <result column="dept_type" property="deptType"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="dept_level" property="deptLevel"/>
+        <result column="sort" property="sort"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -26,7 +26,8 @@
     <resultMap id="TreeResultMap"
                type="com.yf.system.modules.depart.dto.response.SysDepartTreeDTO"
                extends="BaseResultMap">
-        <collection property="children" column="{id=id,deptCodes=deptCodes,likeCode=likeCode}" select="findChildren" ></collection>
+        <collection property="children" column="{id=id,deptCodes=deptCodes,likeCode=likeCode}"
+                    select="findChildren"></collection>
     </resultMap>
 
 
@@ -34,10 +35,10 @@
         SELECT dp.*,"${deptCodes}" AS deptCodes,"${likeCode}" AS likeCode FROM el_sys_depart dp WHERE parent_id=#{id}
         <if test="deptCodes!=null and deptCodes!=''">
             AND (
-             dept_code IN (${deptCodes})
-             <if test="likeCode!=null and likeCode!=''">
-                 OR dept_code LIKE CONCAT(#{likeCode}, '%')
-             </if>
+            dept_code IN (${deptCodes})
+            <if test="likeCode!=null and likeCode!=''">
+                OR dept_code LIKE CONCAT(#{likeCode}, '%')
+            </if>
             )
         </if>
 
@@ -52,10 +53,10 @@
 
             <if test="query.deptCodes!=null">
                 AND (
-                 dp.dept_code IN (${query.deptCodes})
-                 <if test="query.likeCode!=null and query.likeCode!=''">
-                     OR dp.dept_code LIKE CONCAT(#{query.likeCode}, '%')
-                 </if>
+                dp.dept_code IN (${query.deptCodes})
+                <if test="query.likeCode!=null and query.likeCode!=''">
+                    OR dp.dept_code LIKE CONCAT(#{query.likeCode}, '%')
+                </if>
                 )
             </if>
 

@@ -21,8 +21,6 @@
     "lint:eslint": "eslint --fix --ext .js,.ts,.vue ./src",
     "lint:format": "prettier --write --loglevel warn \"src/**/*.{js,ts,json,tsx,css,less,vue,html,md}\"",
     "lint:style": "stylelint --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
-    "prepare": "husky install",
     "p": "plop"
   },
   "dependencies": {
@@ -59,8 +57,6 @@
     "vue-types": "^5.1.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.7.1",
-    "@commitlint/config-conventional": "^17.7.0",
     "@iconify/json": "^2.2.101",
     "@intlify/unplugin-vue-i18n": "^0.12.2",
     "@purge-icons/generated": "^0.9.0",
@@ -83,7 +79,6 @@
     "eslint-define-config": "^1.23.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
-    "husky": "^8.0.3",
     "less": "^4.2.0",
     "lint-staged": "^13.2.3",
     "plop": "^3.1.2",

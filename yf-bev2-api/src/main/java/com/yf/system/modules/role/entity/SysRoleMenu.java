@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 角色菜单授权实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-03-02 15:44
-*/
+ * <p>
+ * 角色菜单授权实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-03-02 15:44
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_role_menu")
@@ -27,20 +27,20 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
     private static final long serialVersionUID = 1L;
 
     /**
-    * ID
-    */
+     * ID
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**
-    * 角色ID
-    */
+     * 角色ID
+     */
     @TableField("role_id")
     private String roleId;
 
     /**
-    * 菜单ID
-    */
+     * 菜单ID
+     */
     @TableField("menu_id")
     private String menuId;
 

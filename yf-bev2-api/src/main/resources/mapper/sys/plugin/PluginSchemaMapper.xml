@@ -4,9 +4,9 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.plugin.dto.PluginSchemaDTO">
-        <id column="id" property="id" />
-        <result column="schemaData" property="schemaData" />
-        <result column="group_id" property="groupId" />
+        <id column="id" property="id"/>
+        <result column="schemaData" property="schemaData"/>
+        <result column="group_id" property="groupId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

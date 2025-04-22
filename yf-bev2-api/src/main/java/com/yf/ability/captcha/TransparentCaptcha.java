@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 改写验证码，实现透明效果
+ *
  * @author 18365
  * @since 2025-04-10
  */
@@ -47,7 +48,7 @@ public class TransparentCaptcha extends CircleCaptcha {
     private void drawInterfere(Graphics2D g) {
         ThreadLocalRandom random = RandomUtil.getRandom();
 
-        for(int i = 0; i < this.interfereCount; ++i) {
+        for (int i = 0; i < this.interfereCount; ++i) {
             g.setColor(ImgUtil.randomColor(random));
             g.drawOval(random.nextInt(this.width), random.nextInt(this.height), random.nextInt(this.height >> 1), random.nextInt(this.height >> 1));
         }

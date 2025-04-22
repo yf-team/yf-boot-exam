@@ -3,6 +3,7 @@ package com.yf.ability;
 
 /**
  * 通用常量
+ *
  * @author bool
  */
 public class Constant {

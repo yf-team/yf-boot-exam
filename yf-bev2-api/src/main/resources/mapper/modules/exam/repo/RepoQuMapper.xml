@@ -4,17 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.modules.exam.repo.dto.RepoQuDTO">
-        <id column="id" property="id" />
-        <result column="repo_id" property="repoId" />
-        <result column="chapter_id" property="chapterId" />
-        <result column="qu_type" property="quType" />
-        <result column="difficulty_level" property="difficultyLevel" />
-        <result column="content" property="content" />
-        <result column="analysis" property="analysis" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
+        <id column="id" property="id"/>
+        <result column="repo_id" property="repoId"/>
+        <result column="chapter_id" property="chapterId"/>
+        <result column="qu_type" property="quType"/>
+        <result column="difficulty_level" property="difficultyLevel"/>
+        <result column="content" property="content"/>
+        <result column="analysis" property="analysis"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
 </mapper>

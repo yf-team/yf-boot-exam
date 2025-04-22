@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 全局静态配置
+ *
  * @author bool
  */
 @Data
@@ -43,10 +44,11 @@ public class BaseConfig {
 
     /**
      * 是否演示模式
+     *
      * @return
      */
-    public boolean isDemo(){
-        return this.demo!=null && this.demo;
+    public boolean isDemo() {
+        return this.demo != null && this.demo;
     }
 
 }

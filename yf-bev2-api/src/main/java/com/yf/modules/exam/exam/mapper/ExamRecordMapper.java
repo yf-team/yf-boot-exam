@@ -8,17 +8,18 @@ import com.yf.modules.exam.exam.entity.ExamRecord;
 import org.apache.ibatis.annotations.Param;
 
 /**
-* <p>
-* 考试记录Mapper
-* </p>
-*
-* @author 沉醉寒风
-* @since 2025-04-17 14:59
-*/
+ * <p>
+ * 考试记录Mapper
+ * </p>
+ *
+ * @author 沉醉寒风
+ * @since 2025-04-17 14:59
+ */
 public interface ExamRecordMapper extends BaseMapper<ExamRecord> {
 
     /**
      * 学员端考试记录列表
+     *
      * @param page
      * @param query
      * @return
@@ -27,6 +28,7 @@ public interface ExamRecordMapper extends BaseMapper<ExamRecord> {
 
     /**
      * 管理端考试列表
+     *
      * @param page
      * @param query
      * @return

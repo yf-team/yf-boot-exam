@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.modules.exam.exam.dto.ExamRecordDTO">
-        <id column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="exam_id" property="examId" />
-        <result column="paper_id" property="paperId" />
-        <result column="try_count" property="tryCount" />
-        <result column="max_score" property="maxScore" />
-        <result column="last_score" property="lastScore" />
-        <result column="passed" property="passed" />
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="exam_id" property="examId"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="try_count" property="tryCount"/>
+        <result column="max_score" property="maxScore"/>
+        <result column="last_score" property="lastScore"/>
+        <result column="passed" property="passed"/>
     </resultMap>
 
     <select id="clientPaging" resultMap="BaseResultMap">
@@ -32,7 +32,8 @@
         <where>
             <if test="query!=null">
                 <if test="query.userName!=null and query.userName!=''">
-                    AND (uc.real_name LIKE CONCAT('%', #{query.userName} '%') OR uc.user_name LIKE CONCAT('%', #{query.userName} '%'))
+                    AND (uc.real_name LIKE CONCAT('%', #{query.userName} '%') OR uc.user_name LIKE CONCAT('%',
+                    #{query.userName} '%'))
                 </if>
                 <if test="query.passed!=null">
                     AND rc.passed=#{query.passed}

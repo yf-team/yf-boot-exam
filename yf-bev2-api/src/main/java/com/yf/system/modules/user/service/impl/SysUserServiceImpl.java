@@ -83,7 +83,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 角色是要
         List<SysRole> roleList = sysUserRoleService.listRoles(user.getId());
         List<String> roles = new ArrayList<>();
-        for(SysRole role: roleList){
+        for (SysRole role : roleList) {
             roles.add(role.getId());
         }
         respDTO.setRoles(roles);
@@ -107,11 +107,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         int count = sysUserRoleService.countWithLevel(ids, UserUtils.getRoleLevel());
 
-        if(count < ids.size()){
+        if (count < ids.size()) {
             throw new ServiceException("删除错误，可能存在越权操作！");
         }
 
-        if(ids.contains(UserUtils.getUserId())){
+        if (ids.contains(UserUtils.getUserId())) {
             throw new ServiceException("您不可以删除自己的账号！");
         }
 
@@ -191,38 +191,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException("会话失效，请重新登录！");
         }
 
-        Map<String,Object> json = redisService.getJson(Constant.USER_NAME_KEY + username);
+        log.error("++++++++用户名：{}", username);
+
+        Map<String, Object> json = redisService.getJson(Constant.USER_NAME_KEY + username);
         if (json == null) {
             throw new ServiceException(ApiError.ERROR_10010002);
         }
 
-        SysUserLoginDTO respDTO = JsonHelper.parseObject(json, SysUserLoginDTO.class);
-
-//        // 是否T下线
-//        boolean tick = cfgSwitchService.isOn(FuncSwitch.LOGIN_TICK);
-//        if (tick) {
-//            if (!token.equals(respDTO.getToken())) {
-//                throw new ServiceException("您的账号在其他地方登录了！");
-//            }
-//        }
-
-//        // 填充积分信息
-//        SysUser user = this.getById(respDTO.getId());
-//
-//        if (user == null) {
-//            // 可能是脏的用户数据
-//            throw new ServiceException(ApiError.ERROR_10010002);
-//        }
-//
-//
-//        respDTO.setPoints(user.getPoints());
-//        respDTO.setRealName(user.getRealName());
-//        respDTO.setIdCard(user.getIdCard());
-//        respDTO.setEmail(user.getEmail());
-//        respDTO.setMobile(user.getMobile());
-//        respDTO.setAvatar(user.getAvatar());
-//        respDTO.setFace(user.getFace());
-        return respDTO;
+       return JsonHelper.parseObject(json, SysUserLoginDTO.class);
     }
 
     @CacheEvict(value = CacheKey.TOKEN, key = "#token")
@@ -234,7 +210,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (tick) {
             try {
                 String username = JwtUtils.getUsername(token);
-                String [] keys = new String[]{Constant.USER_NAME_KEY + username};
+                String[] keys = new String[]{Constant.USER_NAME_KEY + username};
                 redisService.del(keys);
             } catch (Exception e) {
                 log.error(e);
@@ -243,16 +219,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
 
-
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(SysUserUpdateReqDTO reqDTO) {
 
-        // 查找旧的用户信息
-        SysUser u1 = this.getById(UserUtils.getUserId());
 
-        SysUser user = new SysUser();
-        user.setId(UserUtils.getUserId());
+        // 更新用户资料
+        SysUser user = this.getById(UserUtils.getUserId());
         BeanMapper.copy(reqDTO, user);
 
         // 修改标识
@@ -267,8 +240,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             reLogin = true;
         }
 
-
-
         // 重新登录
         if (reLogin) {
             // 退出登录
@@ -276,10 +247,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             redisService.del(keys);
         }
 
+        // 更新信息
         this.updateById(user);
+
         this.setToken(user);
     }
-
 
 
     @CacheEvict(value = CacheKey.MENU, allEntries = true)
@@ -321,7 +293,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 级别
         int level = sysUserRoleService.findMaxLevel(reqDTO.getId());
-        if(level > UserUtils.getRoleLevel()){
+        if (level > UserUtils.getRoleLevel()) {
             throw new ServiceException("越级操作，不能操作等级高的用户！");
         }
 
@@ -340,7 +312,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.saveOrUpdate(user);
 
         // 更新手机绑定
-        if(!StringUtils.isBlank(user.getMobile())){
+        if (!StringUtils.isBlank(user.getMobile())) {
             sysUserBindService.save(true, user.getId(), LoginType.MOBILE, user.getMobile());
         }
 
@@ -360,7 +332,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 功能开关
         boolean on = cfgSwitchService.isOn(FuncSwitch.USER_REG);
-        if(!on){
+        if (!on) {
             throw new ServiceException("管理员未开启用户注册！");
         }
 
@@ -413,15 +385,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 指定部门
         boolean on = cfgSwitchService.isOn(FuncSwitch.USER_DEPT_TYPE);
-        if(on){
+        if (on) {
             deptCode = cfgSwitchService.val(FuncSwitch.USER_DEPT_CODE);
         }
 
         // 需要审核
         boolean audit = cfgSwitchService.isOn(FuncSwitch.USER_AUDIT);
-        if(audit){
+        if (audit) {
             user.setState(UserState.AUDIT);
-        }else {
+        } else {
             user.setState(UserState.NORMAL);
         }
 
@@ -451,13 +423,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.save(user);
 
         // 有手机自动添加绑定关系
-        if(!StringUtils.isBlank(mobile)){
+        if (!StringUtils.isBlank(mobile)) {
             sysUserBindService.save(false, user.getId(), LoginType.MOBILE, mobile);
         }
 
         return this.setToken(user);
     }
-
 
 
     /**
@@ -480,7 +451,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanMapper.copy(user, respDTO);
 
         // 正常状态才登录
-        if(UserState.NORMAL.equals(user.getState())){
+        if (UserState.NORMAL.equals(user.getState())) {
 
             // 根据用户生成Token
             String token = JwtUtils.sign(user.getUserName());

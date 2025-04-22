@@ -10,28 +10,28 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* <p>
-* 问题题目数据传输类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 问题题目数据传输类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Data
-@Schema(description="问题保存&详情类")
+@Schema(description = "问题保存&详情类")
 public class RepoQuDetailDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
-    
+
+
     @Schema(description = "ID")
     private String id;
 
     @Dict(dictTable = "el_repo", dicText = "title", dicCode = "id")
     @Schema(description = "所属题库")
     private String repoId;
-    
+
     @Schema(description = "所属章节")
     private String chapterId;
 
@@ -42,14 +42,14 @@ public class RepoQuDetailDTO implements Serializable {
     @Dict(dicCode = "qu_difficulty_level")
     @Schema(description = "难度等级")
     private String difficultyLevel;
-    
+
     @Schema(description = "题目内容")
     private String content;
-    
+
     @Schema(description = "整题解析")
     private String analysis;
 
     @Schema(description = "选项列表")
     private List<RepoQuAnswerDTO> answerList;
-    
+
 }

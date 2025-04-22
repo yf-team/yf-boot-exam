@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 验证码业务类
+ *
  * @author bool
  * @date 2020-02-21 10:05
  */
@@ -40,7 +41,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         boolean result = StringUtils.isNotBlank(value) && value.equalsIgnoreCase(input);
 
         // 验证正确就清除
-        if(result) {
+        if (result) {
             redisService.del(fullKey);
         }
 
@@ -49,10 +50,11 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     /**
      * 组合KEY
+     *
      * @param key
      * @return
      */
-    private String appendKey(String key){
+    private String appendKey(String key) {
         return new StringBuffer(CAPTCHA_PREFIX).append(key).toString();
     }
 }

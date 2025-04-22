@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 角色菜单授权业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-03-02 15:44
-*/
+ * <p>
+ * 角色菜单授权业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-03-02 15:44
+ */
 @Service
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 
@@ -38,7 +38,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     /**
      * 默认后台首页
      */
-    private static final String [] DASH_MENUS = {"1367010529427607568", "1367010529427607569"};
+    private static final String[] DASH_MENUS = {"1367010529427607568", "1367010529427607569"};
 
     @Override
     public List<String> findRoleMenus(String roleId) {
@@ -48,8 +48,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         List<SysRoleMenu> list = this.list(wrapper);
 
         List<String> ids = new ArrayList<>();
-        if(!CollectionUtils.isEmpty(list)){
-            for (SysRoleMenu item: list){
+        if (!CollectionUtils.isEmpty(list)) {
+            for (SysRoleMenu item : list) {
                 ids.add(item.getMenuId());
             }
         }
@@ -59,6 +59,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     /**
      * 保存授权
+     *
      * @param roleId
      * @param ids
      */
@@ -76,9 +77,9 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         this.remove(wrapper);
 
         // 再保存
-        if(!CollectionUtils.isEmpty(ids)){
+        if (!CollectionUtils.isEmpty(ids)) {
             List<SysRoleMenu> list = new ArrayList<>();
-            for (String id: ids){
+            for (String id : ids) {
                 SysRoleMenu item = new SysRoleMenu();
                 item.setMenuId(id);
                 item.setRoleId(roleId);

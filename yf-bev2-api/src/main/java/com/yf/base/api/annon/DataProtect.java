@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * 保护某些数据不被删除或更新
+ *
  * @author bool
  */
 @Documented
@@ -18,24 +19,28 @@ public @interface DataProtect {
 
     /**
      * 更新保护
+     *
      * @return
      */
     boolean update() default false;
 
     /**
      * 删除保护
+     *
      * @return
      */
     boolean delete() default false;
 
     /**
      * 当前用户ID
+     *
      * @return
      */
     boolean currUsr() default false;
 
     /**
      * 实体类名，获取表名
+     *
      * @return
      */
     Class clazz();

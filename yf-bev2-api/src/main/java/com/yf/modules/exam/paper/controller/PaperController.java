@@ -18,14 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
-* <p>
-* 试卷控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:40
-*/
-@Tag(name="试卷")
+ * <p>
+ * 试卷控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:40
+ */
+@Tag(name = "试卷")
 @RestController
 @RequestMapping("/api/exam/paper/paper")
 public class PaperController extends BaseController {
@@ -34,24 +34,26 @@ public class PaperController extends BaseController {
     private PaperService baseService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<?> save(@RequestBody PaperDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -59,24 +61,26 @@ public class PaperController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "查找详情")
-    @RequestMapping(value = "/detail", method = { RequestMethod.POST})
+    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
     public ApiRest<PaperDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
         PaperDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
+    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
     public ApiRest<IPage<PaperDTO>> paging(@RequestBody PagingReqDTO<PaperDTO> reqDTO) {
 
         //分页查询并转换
@@ -87,6 +91,7 @@ public class PaperController extends BaseController {
 
     /**
      * 创建考试
+     *
      * @param reqDTO
      * @return
      */
@@ -100,6 +105,7 @@ public class PaperController extends BaseController {
 
     /**
      * 创建考试
+     *
      * @param reqDTO
      * @return
      */
@@ -113,6 +119,7 @@ public class PaperController extends BaseController {
 
     /**
      * 学员交卷
+     *
      * @param reqDTO
      * @return
      */
@@ -126,6 +133,7 @@ public class PaperController extends BaseController {
 
     /**
      * 获取试卷的实时状态
+     *
      * @param reqDTO
      * @return
      */

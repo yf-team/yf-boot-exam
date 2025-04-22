@@ -18,16 +18,16 @@ public class MyExcelWriter extends BigExcelWriter {
 
     @Override
     public BigExcelWriter autoSizeColumnAll() {
-        final SXSSFSheet sheet = (SXSSFSheet)this.sheet;
+        final SXSSFSheet sheet = (SXSSFSheet) this.sheet;
         sheet.trackAllColumnsForAutoSizing();
         super.autoSizeColumnAll();
-        for (int i = 0; i <sheet.getRow(sheet.getLastRowNum()).getPhysicalNumberOfCells(); i++) {
+        for (int i = 0; i < sheet.getRow(sheet.getLastRowNum()).getPhysicalNumberOfCells(); i++) {
             // 解决自动设置列宽中文失效的问题
             int colWidth = sheet.getColumnWidth(i);
-            if(colWidth<255*256){
+            if (colWidth < 255 * 256) {
                 sheet.setColumnWidth(i, Math.max(colWidth, 3000));
-            }else{
-                sheet.setColumnWidth(i,6000 );
+            } else {
+                sheet.setColumnWidth(i, 6000);
             }
         }
         sheet.untrackAllColumnsForAutoSizing();

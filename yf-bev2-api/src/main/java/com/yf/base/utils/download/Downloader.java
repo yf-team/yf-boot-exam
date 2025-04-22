@@ -181,6 +181,7 @@ public class Downloader {
 
     /**
      * 检测是否需要断点下载
+     *
      * @return
      */
     public boolean checkNeedContinue() {
@@ -202,7 +203,7 @@ public class Downloader {
         this.fileLength = info.getFileLength();
 
         //如果信息读取不正确或者没有要下载的线程，直接返回
-        if (info == null || info.getThreads()!=null || info.getThreads().size()==0) {
+        if (info == null || info.getThreads() != null || info.getThreads().size() == 0) {
             return;
         }
 
@@ -252,6 +253,7 @@ public class Downloader {
 
     /**
      * 获取文件的大小
+     *
      * @return
      */
     public long getFileLength() {
@@ -260,6 +262,7 @@ public class Downloader {
 
     /**
      * 获取已下载的大小
+     *
      * @return
      */
     public long getDownloaded() {
@@ -269,6 +272,7 @@ public class Downloader {
 
     /**
      * 测试方法，用于测试下载
+     *
      * @param args
      * @throws Exception
      */

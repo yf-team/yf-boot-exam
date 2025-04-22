@@ -20,6 +20,7 @@ import static java.util.regex.Pattern.compile;
 
 /**
  * 统一异常处理类
+ *
  * @author bool
  * @date 2019-06-21 19:27
  */
@@ -29,15 +30,17 @@ public class ServiceExceptionHandler {
 
     /**
      * 应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器
+     *
      * @param binder
      */
     @InitBinder
-    public void initWebBinder(WebDataBinder binder){
+    public void initWebBinder(WebDataBinder binder) {
 
     }
 
     /**
      * 把值绑定到Model中，使全局@RequestMapping可以获取到该值
+     *
      * @param model
      */
     @ModelAttribute
@@ -47,6 +50,7 @@ public class ServiceExceptionHandler {
 
     /**
      * 捕获ServiceException
+     *
      * @param e
      * @return
      */
@@ -60,6 +64,7 @@ public class ServiceExceptionHandler {
 
     /**
      * Shiro异常
+     *
      * @param e
      * @return
      */
@@ -76,6 +81,7 @@ public class ServiceExceptionHandler {
 
     /**
      * 处理数据校验返回
+     *
      * @param e
      * @return
      */
@@ -92,6 +98,7 @@ public class ServiceExceptionHandler {
 
     /**
      * 处理数据校验返回
+     *
      * @param e
      * @return
      */
@@ -108,7 +115,7 @@ public class ServiceExceptionHandler {
 
         // 长度超限提示优化
         Matcher m = compile("Data too long for column '(.*?)' at row").matcher(msg);
-        while (m.find()){
+        while (m.find()) {
             msg = MessageFormat.format("字段`{0}`超出长度限制！", m.group(1));
         }
 
@@ -119,6 +126,7 @@ public class ServiceExceptionHandler {
 
     /**
      * 处理数据校验返回
+     *
      * @param e
      * @return
      */

@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* <p>
-* 题库控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
-@Tag(name="题库")
+ * <p>
+ * 题库控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
+@Tag(name = "题库")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/exam/repo/repo")
@@ -36,10 +36,11 @@ public class RepoController extends BaseController {
     private final RepoService repoService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"repo:repo:edit", "repo:repo:add"}, logical = Logical.OR)
     @Operation(summary = "添加或修改")
     @PostMapping("/save")
@@ -49,10 +50,11 @@ public class RepoController extends BaseController {
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions("repo:repo:delete")
     @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
@@ -62,10 +64,11 @@ public class RepoController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "查找详情")
     @RequiresPermissions("repo:repo:view")
     @PostMapping("/detail")
@@ -75,10 +78,11 @@ public class RepoController extends BaseController {
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
     @RequiresPermissions("repo:repo:view")
     @PostMapping("/paging")
@@ -92,6 +96,7 @@ public class RepoController extends BaseController {
 
     /**
      * 查找列表，每次最多返回200条数据
+     *
      * @param reqDTO
      * @return
      */

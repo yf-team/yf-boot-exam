@@ -12,6 +12,7 @@ import static java.util.regex.Pattern.compile;
 
 /**
  * HTML相关工具类
+ *
  * @author bool
  */
 public class HtmlUtils {
@@ -20,6 +21,7 @@ public class HtmlUtils {
 
     /**
      * 正则替换内容
+     *
      * @param regx
      * @param input
      * @return
@@ -33,7 +35,8 @@ public class HtmlUtils {
 
     /**
      * 去除文本中的HTML标签，并返回指定长度的文字内容
-     * @param input 原始字符串
+     *
+     * @param input  原始字符串
      * @param length 要截取的长度
      * @return 处理后的字符串（无HTML标签，且不超过指定长度，超出部分用"..."表示）
      */
@@ -74,6 +77,7 @@ public class HtmlUtils {
 
     /**
      * 获取第一个图片URL
+     *
      * @param html
      * @return
      */
@@ -88,11 +92,12 @@ public class HtmlUtils {
 
     /**
      * 移除第一个图片标签
+     *
      * @param html
      * @return
      */
     public static String removeFirstImage(String html) {
-        if(StringUtils.isBlank(html)){
+        if (StringUtils.isBlank(html)) {
             return html;
         }
         return html.replaceFirst("<img[^>]+>", "");
@@ -100,6 +105,7 @@ public class HtmlUtils {
 
     /**
      * 提取HTML的全部
+     *
      * @param html
      * @return
      */
@@ -108,7 +114,7 @@ public class HtmlUtils {
         Matcher matcher = pattern.matcher(html);
         List<String> list = new ArrayList<>();
         while (matcher.find()) {
-           String img = matcher.group(1);
+            String img = matcher.group(1);
             list.add(img);
         }
         return list;

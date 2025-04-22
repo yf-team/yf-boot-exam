@@ -2,6 +2,7 @@ package com.yf.base.enums;
 
 /**
  * 数据权限枚举
+ *
  * @author bool
  */
 public interface DataScope {

@@ -4,16 +4,11 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.dict.entity.SysDic">
-        <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="type" property="type" />
-        <result column="title" property="title" />
-        <result column="remark" property="remark" />
+        <id column="id" property="id"/>
+        <result column="dic_code" property="dicCode"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="remark" property="remark"/>
     </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`code`,`type`,`title`,`remark`
-    </sql>
 
 </mapper>

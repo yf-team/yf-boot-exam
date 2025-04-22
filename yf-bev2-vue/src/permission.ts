@@ -26,6 +26,8 @@ router.beforeEach(async (to, from, next) => {
   start()
   loadStart()
 
+  console.log('++++to', to)
+
   // 获取网站基本信息
   if (!appStore.getSiteInfo || !appStore.getSiteInfo.id) {
     await fetchSteInfo({}).then((res) => {
@@ -34,33 +36,33 @@ router.beforeEach(async (to, from, next) => {
   }
 
   if (userStore.getUserInfo && userStore.getUserInfo.token) {
-    // 初始化菜单路由
-    if (!permissionStore.getIsAddRouters) {
-      // 构建路由
-      const roleRouters = getStorage('roleRouters') || []
-      await permissionStore.generateRoutes(roleRouters as AppCustomRouteRecordRaw[])
+    if (permissionStore.getIsAddRouters) {
+      // 跳转到用户的首页，首个有权限的菜单
+      if (to.path === '/' || to.path === '' || to.path === '/login') {
+        const firstPath = await getFirstMenu()
+        if (firstPath) {
+          next(firstPath)
+          return
+        }
+      }
 
-      permissionStore.getAddRouters.forEach((route) => {
-        router.addRoute(route as unknown as RouteRecordRaw) // 动态添加可访问路由表
-      })
-      const redirectPath = from.query.redirect || to.path
-      const redirect = decodeURIComponent(redirectPath as string)
-      const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
-      permissionStore.setIsAddRouters(true)
-      next(nextData)
+      next()
       return
     }
 
-    // 跳转到用户的首页，首个有权限的菜单
-    if (to.path === '/' || to.path === '' || to.path === '/login') {
-      const firstPath = await getFirstMenu()
-      if (firstPath) {
-        next(firstPath)
-        return
-      }
-    }
-    // 跳转到菜单
-    next()
+    // 构建路由
+    const roleRouters = getStorage('roleRouters') || []
+    await permissionStore.generateRoutes(roleRouters as AppCustomRouteRecordRaw[])
+    permissionStore.getAddRouters.forEach((route) => {
+      router.addRoute(route as unknown as RouteRecordRaw) // 动态添加可访问路由表
+    })
+
+    const redirectPath = from.query.redirect || to.path
+    const redirect = decodeURIComponent(redirectPath as string)
+    const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
+
+    permissionStore.setIsAddRouters(true)
+    next(nextData)
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
       next()

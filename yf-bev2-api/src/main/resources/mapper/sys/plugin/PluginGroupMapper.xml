@@ -4,9 +4,9 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.plugin.dto.PluginGroupDTO">
-        <id column="id" property="id" />
-        <result column="title" property="title" />
-        <result column="single" property="single" />
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="single" property="single"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

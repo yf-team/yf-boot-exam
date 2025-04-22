@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name="主键通用响应类", description="主键通用响应类")
+@Schema(name = "主键通用响应类", description = "主键通用响应类")
 public class BaseIdRespDTO extends BaseDTO {
 
-   @Schema(description = "主键ID")
+    @Schema(description = "主键ID")
     private String id;
 }

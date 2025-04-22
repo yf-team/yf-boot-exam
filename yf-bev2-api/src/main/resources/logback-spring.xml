@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="false">
-    <property name="log.path" value="${LOG_PATH:-.}" />
-    <property name="LOG_CHARSET" value="UTF-8" />
+    <property name="log.path" value="${LOG_PATH:-.}"/>
+    <property name="LOG_CHARSET" value="UTF-8"/>
 
     <!-- 控制台输出 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 语言设置 服务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 语言设置 服务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 
@@ -51,9 +51,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         //获得数据
         IPage<SysUserRole> page = this.page(query, wrapper);
         //转换结果
-        IPage<SysUserRoleDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysUserRoleDTO>>(){});
+        IPage<SysUserRoleDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysUserRoleDTO>>() {
+        });
         return pageData;
-     }
+    }
 
     @Override
     public List<SysRole> listRoles(String userId) {
@@ -66,7 +67,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public void saveRoles(String userId, List<String> ids, boolean check) {
 
 
-        if(check) {
+        if (check) {
             this.checkRoles(ids);
         }
 
@@ -75,11 +76,11 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         wrapper.lambda().eq(SysUserRole::getUserId, userId);
         this.remove(wrapper);
 
-        if(!CollectionUtils.isEmpty(ids)){
+        if (!CollectionUtils.isEmpty(ids)) {
 
             List<SysUserRole> list = new ArrayList<>();
 
-            for(String item: ids){
+            for (String item : ids) {
                 SysUserRole role = new SysUserRole();
                 role.setRoleId(item);
                 role.setUserId(userId);
@@ -95,8 +96,8 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public void batchRole(UserRoleReqDTO reqDTO) {
 
         // 先清理
-        for(String userId: reqDTO.getUserIds()){
-            for(String roleId: reqDTO.getRoleIds()){
+        for (String userId : reqDTO.getUserIds()) {
+            for (String roleId : reqDTO.getRoleIds()) {
                 QueryWrapper<SysUserRole> wrapper = new QueryWrapper<>();
                 wrapper.lambda()
                         .eq(SysUserRole::getUserId, userId)
@@ -107,11 +108,11 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
 
         // 添加角色
-        if(reqDTO.getFlag().equals(1)){
+        if (reqDTO.getFlag().equals(1)) {
             List<SysUserRole> list = new ArrayList<>();
             // 再增加
-            for(String userId: reqDTO.getUserIds()){
-                for(String roleId: reqDTO.getRoleIds()){
+            for (String userId : reqDTO.getUserIds()) {
+                for (String roleId : reqDTO.getRoleIds()) {
                     SysUserRole item = new SysUserRole();
                     item.setUserId(userId);
                     item.setRoleId(roleId);
@@ -156,7 +157,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         // 角色是要
         List<SysRole> roles = this.listRoles(userId);
         List<String> ids = new ArrayList<>();
-        for(SysRole role: roles){
+        for (SysRole role : roles) {
             // 角色ID
             ids.add(role.getId());
         }
@@ -170,9 +171,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
      */
     /**
      * 校验角色
+     *
      * @param ids
      */
-    private void checkRoles(List<String> ids){
+    private void checkRoles(List<String> ids) {
 
         // 权限级别
         Integer level = UserUtils.getRoleLevel();
@@ -185,7 +187,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         long count = sysRoleService.count(wrapper);
 
 
-        if(count !=ids.size()){
+        if (count != ids.size()) {
             throw new ServiceException("角色不存在或者存在越级授权！");
         }
     }

@@ -29,7 +29,7 @@ public class DataDictFilter extends JsonSerializer<Object> {
     private String dictTable;
     private String dicText;
 
-    public DataDictFilter(String fieldName, String dicCode, String dictTable, String dicText){
+    public DataDictFilter(String fieldName, String dicCode, String dictTable, String dicText) {
         this.fieldName = fieldName;
         this.dicCode = dicCode;
         this.dictTable = dictTable;
@@ -51,12 +51,12 @@ public class DataDictFilter extends JsonSerializer<Object> {
         // 原字段值不变
         gen.writeObject(o);
 
-        if(StringUtils.isNotBlank(value)){
+        if (StringUtils.isNotBlank(value)) {
             // 原字段加上后缀
             String newField = fieldName + DICT_APPEND;
             String trans = this.translate(value);
             // 写入新的字段
-            if(StringUtils.isNotBlank(trans)) {
+            if (StringUtils.isNotBlank(trans)) {
                 gen.writeObjectField(newField, trans);
             }
         }
@@ -65,6 +65,7 @@ public class DataDictFilter extends JsonSerializer<Object> {
 
     /**
      * 进行数据字典的翻译
+     *
      * @return 翻译后的值
      */
     private String translate(String fieldValue) {

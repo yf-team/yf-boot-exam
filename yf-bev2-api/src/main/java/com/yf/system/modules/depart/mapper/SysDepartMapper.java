@@ -9,17 +9,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* <p>
-* 部门信息Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-09-02 17:25
-*/
+ * <p>
+ * 部门信息Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-09-02 17:25
+ */
 public interface SysDepartMapper extends BaseMapper<SysDepart> {
 
     /**
      * 部门树结构
+     *
      * @param query
      * @return
      */

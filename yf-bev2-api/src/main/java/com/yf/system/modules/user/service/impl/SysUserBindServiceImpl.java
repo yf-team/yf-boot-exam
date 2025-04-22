@@ -20,13 +20,13 @@ import java.text.MessageFormat;
 import java.util.List;
 
 /**
-* <p>
-* 登录绑定业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-08-02 14:49
-*/
+ * <p>
+ * 登录绑定业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-08-02 14:49
+ */
 @Service
 public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUserBind> implements SysUserBindService {
 
@@ -43,7 +43,8 @@ public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUs
         //获得数据
         IPage<SysUserBind> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<SysUserBindDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysUserBindDTO>>(){});
+        IPage<SysUserBindDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysUserBindDTO>>() {
+        });
         return pageData;
     }
 
@@ -51,9 +52,8 @@ public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUs
     public void save(boolean clear, String userId, String loginType, String openId) {
 
 
-
         // 先移除
-        if(clear){
+        if (clear) {
             QueryWrapper<SysUserBind> wrapper = new QueryWrapper<>();
             wrapper.lambda()
                     .eq(SysUserBind::getUserId, userId)
@@ -64,10 +64,10 @@ public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUs
         // 查找绑定信息
         String currentId = this.findBind(loginType, openId);
 
-        if(!StringUtils.isBlank(currentId)){
-            if(LoginType.MOBILE.equals(loginType)){
+        if (!StringUtils.isBlank(currentId)) {
+            if (LoginType.MOBILE.equals(loginType)) {
                 throw new ServiceException(MessageFormat.format("手机号码{0}已绑定用户！", openId));
-            }else{
+            } else {
                 throw new ServiceException(MessageFormat.format("{0}已绑定用户！", openId));
             }
         }
@@ -80,7 +80,7 @@ public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUs
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
@@ -94,7 +94,7 @@ public class SysUserBindServiceImpl extends ServiceImpl<SysUserBindMapper, SysUs
                 .eq(SysUserBind::getLoginType, loginType)
                 .eq(SysUserBind::getOpenId, openId);
         SysUserBind bind = this.getOne(wrapper, false);
-        if(bind!=null){
+        if (bind != null) {
             return bind.getUserId();
         }
 

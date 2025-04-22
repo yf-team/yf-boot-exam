@@ -7,6 +7,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
  * JSON序列化配置
+ *
  * @author van
  */
 @Configuration

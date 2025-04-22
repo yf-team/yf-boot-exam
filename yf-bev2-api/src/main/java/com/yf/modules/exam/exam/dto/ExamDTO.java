@@ -10,15 +10,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
-* <p>
-* 考试数据传输类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
+ * <p>
+ * 考试数据传输类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
 @Data
-@Schema(description="考试")
+@Schema(description = "考试")
 public class ExamDTO implements Serializable {
 
     @Serial
@@ -83,5 +83,5 @@ public class ExamDTO implements Serializable {
     @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
     @Schema(description = "修改人")
     private String updateBy;
-    
+
 }

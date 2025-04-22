@@ -9,40 +9,37 @@ import java.io.Serial;
 import java.util.List;
 
 /**
-* <p>
-* 部门树结构响应类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-09-02 17:25
-*/
+ * <p>
+ * 部门树结构响应类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-09-02 17:25
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name="部门树结构响应类", description="部门树结构响应类")
+@Schema(name = "部门树结构响应类", description = "部门树结构响应类")
 public class SysDepartTreeDTO extends SysDepartDTO {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-   @Schema(description = "子列表")
+    @Schema(description = "子列表")
     private List<SysDepartTreeDTO> children;
 
-   @Schema(description = "前端显示用")
+    @Schema(description = "前端显示用")
     private String text;
 
-   @Schema(description = "前端显示用")
+    @Schema(description = "前端显示用")
     private String value;
 
-    public String getText(){
+    public String getText() {
         return this.getDeptName();
     }
 
-    public String getValue(){
+    public String getValue() {
         return this.getDeptCode();
     }
-
-
-
 
 
 }

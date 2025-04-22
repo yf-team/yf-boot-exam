@@ -3,6 +3,7 @@ package com.yf.system.modules.user.enums;
 
 /**
  * 用户待审核状态
+ *
  * @author bool
  * @date 2019-10-30 13:11
  */

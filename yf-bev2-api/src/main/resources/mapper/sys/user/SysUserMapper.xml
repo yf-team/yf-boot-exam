@@ -4,21 +4,21 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.user.entity.SysUser">
-        <id column="id" property="id" />
-        <result column="user_name" property="userName" />
-        <result column="avatar" property="avatar" />
-        <result column="real_name" property="realName" />
-        <result column="password" property="password" />
-        <result column="salt" property="salt" />
-        <result column="state" property="state" />
-        <result column="id_card" property="idCard" />
-        <result column="mobile" property="mobile" />
-        <result column="email" property="email" />
-        <result column="dept_code" property="deptCode" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="real_name" property="realName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="state" property="state"/>
+        <result column="id_card" property="idCard"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -29,28 +29,28 @@
     <resultMap id="ListResultMap"
                type="com.yf.system.modules.user.dto.response.UserListRespDTO">
 
-        <id column="id" property="id" />
-        <result column="user_name" property="userName" />
-        <result column="avatar" property="avatar" />
-        <result column="real_name" property="realName" />
-        <result column="state" property="state" />
-        <result column="id_card" property="idCard" />
-        <result column="mobile" property="mobile" />
-        <result column="email" property="email" />
-        <result column="dept_code" property="deptCode" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="roleNames" property="roleNames" />
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="avatar" property="avatar"/>
+        <result column="real_name" property="realName"/>
+        <result column="state" property="state"/>
+        <result column="id_card" property="idCard"/>
+        <result column="mobile" property="mobile"/>
+        <result column="email" property="email"/>
+        <result column="dept_code" property="deptCode"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="roleNames" property="roleNames"/>
     </resultMap>
 
     <resultMap id="ExportResultMap" type="com.yf.system.modules.user.dto.response.UserExportDTO">
-        <result column="user_name" property="userName" />
-        <result column="role_ids" property="roleIds" />
-        <result column="real_name" property="realName" />
-        <result column="email" property="email" />
-        <result column="mobile" property="mobile" />
-        <result column="id_card" property="idCard" />
-        <result column="dept_code" property="deptCode" />
+        <result column="user_name" property="userName"/>
+        <result column="role_ids" property="roleIds"/>
+        <result column="real_name" property="realName"/>
+        <result column="email" property="email"/>
+        <result column="mobile" property="mobile"/>
+        <result column="id_card" property="idCard"/>
+        <result column="dept_code" property="deptCode"/>
     </resultMap>
 
     <select id="listForExport" resultMap="ExportResultMap">
@@ -58,17 +58,18 @@
         (SELECT GROUP_CONCAT(role_id SEPARATOR ',') FROM el_sys_user_role WHERE user_id=uc.id) AS role_ids
         FROM el_sys_user uc
         LEFT JOIN el_sys_user_role ur ON ur.user_id=uc.id
-        <include refid="pagingQuery" />
+        <include refid="pagingQuery"/>
         GROUP BY uc.id
     </select>
 
 
     <select id="paging" resultMap="ListResultMap">
         SELECT uc.*,
-        (SELECT GROUP_CONCAT(b.role_name) FROM el_sys_user_role a LEFT JOIN el_sys_role b ON a.role_id=b.id WHERE a.user_id=uc.id) as roleNames
+        (SELECT GROUP_CONCAT(b.role_name) FROM el_sys_user_role a LEFT JOIN el_sys_role b ON a.role_id=b.id WHERE
+        a.user_id=uc.id) as roleNames
         FROM el_sys_user uc
         LEFT JOIN el_sys_user_role ur ON ur.user_id=uc.id
-        <include refid="pagingQuery" />
+        <include refid="pagingQuery"/>
         GROUP BY uc.id
         <if test="page.orders!=null and page.orders.size() > 0">
             ORDER BY
@@ -86,11 +87,13 @@
                     AND uc.dept_code LIKE CONCAT(#{query.deptCode},'%')
                 </if>
                 <if test="query.userName!=null and query.userName!=''">
-                    AND (uc.user_name LIKE CONCAT('%',#{query.userName},'%') OR uc.real_name LIKE CONCAT('%',#{query.userName},'%'))
+                    AND (uc.user_name LIKE CONCAT('%',#{query.userName},'%') OR uc.real_name LIKE
+                    CONCAT('%',#{query.userName},'%'))
                 </if>
                 <if test="query.roleIds!=null and query.roleIds.size >0 ">
                     AND ur.role_id IN
-                    <foreach collection="query.roleIds" open="(" close=")" separator="," item="roleId">#{roleId}</foreach>
+                    <foreach collection="query.roleIds" open="(" close=")" separator="," item="roleId">#{roleId}
+                    </foreach>
                 </if>
                 <if test="query.excludes!=null and query.excludes.size >0 ">
                     AND uc.id NOT IN

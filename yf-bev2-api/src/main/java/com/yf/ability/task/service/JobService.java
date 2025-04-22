@@ -4,6 +4,7 @@ import org.quartz.Job;
 
 /**
  * 任务业务类，用于动态处理任务信息
+ *
  * @author bool
  * @date 2020/11/29 下午2:17
  */
@@ -17,6 +18,7 @@ public interface JobService {
 
     /**
      * 添加定时任务
+     *
      * @param jobClass
      * @param jobName
      * @param jobGroup
@@ -27,6 +29,7 @@ public interface JobService {
 
     /**
      * 添加立即执行的任务
+     *
      * @param jobClass
      * @param jobName
      * @param jobGroup
@@ -36,6 +39,7 @@ public interface JobService {
 
     /**
      * 暂停任务
+     *
      * @param jobName
      * @param jobGroup
      */
@@ -43,6 +47,7 @@ public interface JobService {
 
     /**
      * 恢复任务
+     *
      * @param triggerName
      * @param triggerGroup
      */
@@ -50,6 +55,7 @@ public interface JobService {
 
     /**
      * 删除job
+     *
      * @param jobName
      * @param jobGroup
      */

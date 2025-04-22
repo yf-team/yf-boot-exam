@@ -6,22 +6,22 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
-* <p>
-* 管理员登录请求类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 管理员登录请求类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 @Data
-@Schema(name="密码修改请求类", description="密码修改请求类")
+@Schema(name = "密码修改请求类", description = "密码修改请求类")
 public class SysUserPassReqDTO implements Serializable {
 
 
-   @Schema(description = "旧密码")
+    @Schema(description = "旧密码")
     private String oldPassword;
 
-   @Schema(description = "新密码")
+    @Schema(description = "新密码")
     private String password;
 
 }

@@ -8,17 +8,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* <p>
-* 用户角色Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 用户角色Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 查找用户的角色列表
+     *
      * @param userId
      * @return
      */
@@ -26,6 +27,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 查找用户的权限标签
+     *
      * @param userId
      * @return
      */
@@ -33,6 +35,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 查找权限最大的一个角色
+     *
      * @param userId
      * @return
      */
@@ -40,6 +43,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 统计数量
+     *
      * @param userIds
      * @param roleLevel
      * @return
@@ -49,6 +53,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 查找最大的角色级别
+     *
      * @param userId
      * @return
      */

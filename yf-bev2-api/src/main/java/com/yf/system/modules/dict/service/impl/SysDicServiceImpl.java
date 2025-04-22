@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* <p>
-* 分类字典业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
+ * <p>
+ * 分类字典业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
 @Service
 public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> implements SysDicService {
 
@@ -47,16 +47,16 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> impleme
         // 请求参数
         SysDicDTO params = reqDTO.getParams();
 
-        if(params!=null){
+        if (params != null) {
 
-            if(!StringUtils.isBlank(params.getTitle())){
+            if (!StringUtils.isBlank(params.getTitle())) {
 
-                wrapper.lambda().and(obj -> obj.like(SysDic::getCode, params.getTitle())
+                wrapper.lambda().and(obj -> obj.like(SysDic::getDicCode, params.getTitle())
                         .or()
                         .like(SysDic::getTitle, params.getTitle()));
             }
 
-            if(params.getType()!=null){
+            if (params.getType() != null) {
                 wrapper.lambda()
                         .eq(SysDic::getType, params.getType());
             }
@@ -68,23 +68,24 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> impleme
         //获得数据
         IPage<SysDic> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<SysDicDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysDicDTO>>(){});
+        IPage<SysDicDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysDicDTO>>() {
+        });
         return pageData;
-     }
+    }
 
     @Override
     public void save(SysDicDTO reqDTO) {
 
         QueryWrapper<SysDic> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(SysDic::getCode, reqDTO.getCode());
+        wrapper.lambda().eq(SysDic::getDicCode, reqDTO.getDicCode());
 
-        if(!StringUtils.isBlank(reqDTO.getId())){
+        if (!StringUtils.isBlank(reqDTO.getId())) {
             wrapper.lambda().ne(SysDic::getId, reqDTO.getId());
         }
 
         long count = this.count(wrapper);
 
-        if(count > 0){
+        if (count > 0) {
             throw new ServiceException("分类编码不可以重复！");
         }
 
@@ -98,12 +99,12 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> impleme
     @Override
     public void delete(List<String> ids) {
         List<String> codes = new ArrayList<>();
-        for(String id: ids){
+        for (String id : ids) {
             SysDic dic = this.getById(id);
-            if(dic == null){
+            if (dic == null) {
                 continue;
             }
-            codes.add(dic.getCode());
+            codes.add(dic.getDicCode());
         }
 
         // 移除主表内容

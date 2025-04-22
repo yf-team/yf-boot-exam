@@ -12,26 +12,28 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
-* <p>
-* 试卷考题业务接口类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:40
-*/
+ * <p>
+ * 试卷考题业务接口类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:40
+ */
 public interface PaperQuService extends IService<PaperQu> {
 
 
     /**
      * 保存试卷题目，用于考试
+     *
      * @param paperId
      * @param perScore 每题的分数
-     * @param quList 试题列表
+     * @param quList   试题列表
      */
     void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList);
 
     /**
      * 查找答题卡列表，按题型进行分组
+     *
      * @param paperId
      * @return
      */
@@ -39,6 +41,7 @@ public interface PaperQuService extends IService<PaperQu> {
 
     /**
      * 查找详情用于答题
+     *
      * @param quId
      * @return
      */
@@ -46,6 +49,7 @@ public interface PaperQuService extends IService<PaperQu> {
 
     /**
      * 考试过程填充答案
+     *
      * @param reqDTO
      * @return
      */
@@ -53,6 +57,7 @@ public interface PaperQuService extends IService<PaperQu> {
 
     /**
      * 进行分数统计
+     *
      * @param paperId
      * @return
      */

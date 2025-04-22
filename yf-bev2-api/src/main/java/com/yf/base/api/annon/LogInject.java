@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 /**
  * 系统日志注入类
+ *
  * @author bool
  */
 @Documented
@@ -18,12 +19,14 @@ public @interface LogInject {
 
     /**
      * 日志类型
+     *
      * @return
      */
     String logType() default "日志类型";
 
     /**
      * 日志标题
+     *
      * @return
      */
     String title() default "系统日志";

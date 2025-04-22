@@ -22,13 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
-* <p>
-* 考试业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
+ * <p>
+ * 考试业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
 @RequiredArgsConstructor
 @Service
 public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements ExamService {
@@ -47,14 +47,15 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
         //获得数据
         IPage<Exam> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<ExamDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<ExamDTO>>(){});
+        IPage<ExamDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<ExamDTO>>() {
+        });
         return pageData;
     }
 
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void save(ExamDetailDTO reqDTO){
+    public void save(ExamDetailDTO reqDTO) {
         // 保存基本信息
         Exam entity = new Exam();
         BeanMapper.copy(reqDTO, entity);
@@ -65,7 +66,7 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
 
@@ -74,7 +75,7 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
     }
 
     @Override
-    public ExamDetailDTO detail(String id){
+    public ExamDetailDTO detail(String id) {
         // 基本信息
         Exam entity = this.getById(id);
         ExamDetailDTO dto = new ExamDetailDTO();

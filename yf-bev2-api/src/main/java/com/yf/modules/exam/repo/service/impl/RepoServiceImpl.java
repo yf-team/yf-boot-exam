@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* <p>
-* 题库业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 题库业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Service
 public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements RepoService {
 
@@ -33,7 +33,7 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements Re
 
 
     @Override
-    public void save(RepoDTO reqDTO){
+    public void save(RepoDTO reqDTO) {
         //复制参数
         Repo entity = new Repo();
         BeanMapper.copy(reqDTO, entity);
@@ -41,13 +41,13 @@ public class RepoServiceImpl extends ServiceImpl<RepoMapper, Repo> implements Re
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public RepoDTO detail(String id){
+    public RepoDTO detail(String id) {
         Repo entity = this.getById(id);
         RepoDTO dto = new RepoDTO();
         BeanMapper.copy(entity, dto);

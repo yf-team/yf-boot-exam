@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* <p>
-* 登录绑定控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-08-02 14:49
-*/
-@Tag(name="登录绑定")
+ * <p>
+ * 登录绑定控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-08-02 14:49
+ */
+@Tag(name = "登录绑定")
 @RestController
 @RequestMapping("/api/sys/user/bind")
 @RequiredArgsConstructor
@@ -32,12 +32,13 @@ public class SysUserBindController extends BaseController {
 
 
     /**
-    * 绑定列表
-    * @param reqDTO
-    * @return
-    */
+     * 绑定列表
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "绑定列表")
-    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
+    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
     public ApiRest<IPage<SysUserBindDTO>> paging(@RequestBody PagingReqDTO<SysUserBindDTO> reqDTO) {
 
         //分页查询并转换
@@ -48,11 +49,12 @@ public class SysUserBindController extends BaseController {
 
     /**
      * 绑定列表
+     *
      * @param reqDTO
      * @return
      */
     @Operation(summary = "绑定列表", description = "前端查询绑定列表")
-    @RequestMapping(value = "/bind-list", method = { RequestMethod.POST})
+    @RequestMapping(value = "/bind-list", method = {RequestMethod.POST})
     public ApiRest<IPage<SysUserBindDTO>> bindList(@RequestBody PagingReqDTO<SysUserBindDTO> reqDTO) {
 
         //分页查询并转换

@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
-* <p>
-* 部门信息控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-09-02 17:25
-*/
-@Tag(name="部门信息")
+ * <p>
+ * 部门信息控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-09-02 17:25
+ */
+@Tag(name = "部门信息")
 @RestController
 @RequestMapping("/api/sys/depart")
 public class SysDepartController extends BaseController {
@@ -39,10 +39,11 @@ public class SysDepartController extends BaseController {
     private SysDepartService baseService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:depart:add", "sys:depart:edit"}, logical = Logical.OR)
     @Operation(summary = "添加或修改")
     @PostMapping("/save")
@@ -52,10 +53,11 @@ public class SysDepartController extends BaseController {
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:depart:delete"})
     @Operation(summary = "批量删除")
     @PostMapping("/delete")
@@ -66,10 +68,11 @@ public class SysDepartController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:depart:list"})
     @Operation(summary = "查找详情")
     @PostMapping("/detail")
@@ -83,6 +86,7 @@ public class SysDepartController extends BaseController {
 
     /**
      * 树列表
+     *
      * @return
      */
     @Operation(summary = "部门树列表")
@@ -95,10 +99,11 @@ public class SysDepartController extends BaseController {
 
     /**
      * 部门树-注册用
+     *
      * @return
      */
     @Operation(summary = "部门树-用于用户注册", description = "部门树权限为公开的，需求登录即可访问")
-    @PostMapping( "/tree-select")
+    @PostMapping("/tree-select")
     public ApiRest<List<SysDepartTreeDTO>> treeSelect() {
         List<SysDepartTreeDTO> dtoList = baseService.findTree(false);
         return super.success(dtoList);
@@ -106,12 +111,13 @@ public class SysDepartController extends BaseController {
 
     /**
      * 分类排序
+     *
      * @param reqDTO
      * @return
      */
     @RequiresPermissions(value = {"sys:depart:edit"}, logical = Logical.OR)
     @Operation(summary = "调整部门排序")
-    @PostMapping( "/sort")
+    @PostMapping("/sort")
     public ApiRest<?> sort(@RequestBody DepartSortReqDTO reqDTO) {
         baseService.sort(reqDTO);
         return super.success();

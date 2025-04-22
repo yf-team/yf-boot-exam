@@ -14,12 +14,14 @@ import org.springframework.util.StringUtils;
 
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 
 /**
  * excel导出工具类
+ *
  * @author bool
  */
 @Component
@@ -31,15 +33,16 @@ public class ExportExcel {
 
     /**
      * 导出数据
+     *
      * @param response
-     * @param clazz 数据类型
-     * @param title 表头名称
-     * @param list 列表数据
+     * @param clazz    数据类型
+     * @param title    表头名称
+     * @param list     列表数据
      */
-    public void export(HttpServletResponse response, Class clazz, String title, List list){
+    public void export(HttpServletResponse response, Class clazz, String title, List list) {
 
 
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             throw new ServiceException("没有可导出的数据，请确认！");
         }
 
@@ -57,7 +60,7 @@ public class ExportExcel {
 
             // 只导出有注解的字段
             boolean export = field.isAnnotationPresent(ExcelField.class);
-            if(!export){
+            if (!export) {
                 continue;
             }
 
@@ -84,16 +87,17 @@ public class ExportExcel {
 
     /**
      * 导出数据
+     *
      * @param response
      * @param list
      * @throws Exception
      */
     private void write(HttpServletResponse response, List<Field> fieldList, String title, List list) throws IOException {
 
-        MyExcelWriter writer= MyExcelWriter.getBigWriter();
+        MyExcelWriter writer = MyExcelWriter.getBigWriter();
 
         // 处理内容
-        List<Map<String,Object>> rows = this.processRows(fieldList, list);
+        List<Map<String, Object>> rows = this.processRows(fieldList, list);
 
         writer.merge(rows.get(0).size() - 1, title);
         writer.write(rows, true);
@@ -109,14 +113,15 @@ public class ExportExcel {
 
     /**
      * 添加数据（通过annotation.ExportField添加数据）
+     *
      * @return list 数据列表
      */
-    public List<Map<String,Object>> processRows(List<Field> fieldList, List list){
+    public List<Map<String, Object>> processRows(List<Field> fieldList, List list) {
 
-        List<Map<String,Object>> all = new ArrayList<>();
-        for(Object data: list){
+        List<Map<String, Object>> all = new ArrayList<>();
+        for (Object data : list) {
             Map<String, Object> row = new LinkedHashMap<>();
-            for(Field field: fieldList){
+            for (Field field : fieldList) {
                 ExcelField ann = field.getAnnotation(ExcelField.class);
                 Object val = Reflections.invokeGetter(data, field.getName());
 
@@ -133,18 +138,19 @@ public class ExportExcel {
 
     /**
      * 数据字典转换
+     *
      * @param ann
      * @param val
      * @return
      */
-    private String transDict(ExcelField ann, Object val){
+    private String transDict(ExcelField ann, Object val) {
 
         String table = ann.dictTable();
         String code = ann.dictCode();
         String text = ann.dicText();
 
         String key = String.valueOf(val);
-        if(StringUtils.isEmpty(key)){
+        if (StringUtils.isEmpty(key)) {
             return key;
         }
 
@@ -166,39 +172,40 @@ public class ExportExcel {
 
     /**
      * 数据处理、转换、格式化等
+     *
      * @param ann
      * @param val
      * @return
      */
-    private String transData(ExcelField ann, Object val){
+    private String transData(ExcelField ann, Object val) {
 
         // 为空直接返回空数据
-        if(val == null){
+        if (val == null) {
             return "";
         }
 
         // 时间格式化
-        if(val instanceof Date){
+        if (val instanceof Date) {
 
             String pattern = ann.pattern();
             // 默认日期格式
-            if(StringUtils.isEmpty(pattern)){
+            if (StringUtils.isEmpty(pattern)) {
                 pattern = "yyyy-MM-dd HH:mm:ss";
             }
-            return DateUtils.formatDate((Date)val, pattern);
+            return DateUtils.formatDate((Date) val, pattern);
         }
 
         // 静态过滤
         String filter = ann.filter();
 
         // 处理静态映射
-        if(!StringUtils.isEmpty(filter)){
+        if (!StringUtils.isEmpty(filter)) {
             return this.transFilter(val, filter);
         }
 
         // 处理数据字典
         String dic = ann.dictCode();
-        if(!StringUtils.isEmpty(dic)){
+        if (!StringUtils.isEmpty(dic)) {
             return this.transDict(ann, val);
         }
 
@@ -208,15 +215,16 @@ public class ExportExcel {
 
     /**
      * 静态数据转换，如：1=男,0=女
+     *
      * @param val
      * @param filter
      * @return
      */
-    private String transFilter(Object val, String filter){
+    private String transFilter(Object val, String filter) {
 
-        String [] arr = filter.split(",");
+        String[] arr = filter.split(",");
 
-        if(arr.length > 0) {
+        if (arr.length > 0) {
 
             for (String item : arr) {
                 String[] arr1 = item.split("=");

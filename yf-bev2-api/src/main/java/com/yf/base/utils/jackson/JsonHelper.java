@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * JSON工具类
+ *
  * @author van
  */
 @Log4j2
@@ -20,6 +21,7 @@ public class JsonHelper {
 
     /**
      * 转换为字符串
+     *
      * @param obj
      * @return
      */
@@ -36,6 +38,7 @@ public class JsonHelper {
 
     /**
      * 将字符转换为java对象
+     *
      * @param json
      * @param clazz
      * @return
@@ -51,6 +54,7 @@ public class JsonHelper {
 
     /**
      * 将对象转换为另外一个对象
+     *
      * @param object
      * @param clazz
      * @return
@@ -66,10 +70,11 @@ public class JsonHelper {
 
     /**
      * 复杂对象的转换
+     *
      * @param object
      * @param typeReference
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> T parseObject(Object object, TypeReference<T> typeReference) {
         ObjectMapper mapper = getMapper();
@@ -82,10 +87,11 @@ public class JsonHelper {
 
     /**
      * 复杂对象的转换
+     *
      * @param json
      * @param typeReference
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> T parseObject(String json, TypeReference<T> typeReference) {
         ObjectMapper mapper = getMapper();
@@ -98,11 +104,12 @@ public class JsonHelper {
 
     /**
      * 获取转换配置
+     *
      * @return
      */
-    public static ObjectMapper getMapper(){
+    public static ObjectMapper getMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true) ;
+        objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

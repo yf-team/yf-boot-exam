@@ -14,6 +14,7 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * 压缩文件工具类
+ *
  * @author Dav
  */
 @Log4j2
@@ -27,7 +28,8 @@ public class ZipUtils {
 
     /**
      * 压缩文件
-     * @param srcFilePath 输入文件或文件夹
+     *
+     * @param srcFilePath  输入文件或文件夹
      * @param destFilePath 目标文件
      */
     public static void compress(String srcFilePath, String destFilePath) {
@@ -52,6 +54,7 @@ public class ZipUtils {
 
     /**
      * 根据类型压缩文件
+     *
      * @param src
      * @param zos
      * @param baseDir
@@ -71,6 +74,7 @@ public class ZipUtils {
 
     /**
      * 压缩文件
+     *
      * @param file
      * @param zos
      * @param baseDir
@@ -96,6 +100,7 @@ public class ZipUtils {
 
     /**
      * 压缩文件夹
+     *
      * @param dir
      * @param zos
      * @param baseDir

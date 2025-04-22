@@ -2,6 +2,7 @@ package com.yf.ability.task.enums;
 
 /**
  * 任务前缀
+ *
  * @author bool
  */
 public interface JobPrefix {

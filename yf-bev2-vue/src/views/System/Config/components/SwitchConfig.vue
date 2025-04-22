@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" :rules="rules" ref="formRef" label-width="120px" label-position="left">
+  <el-form ref="formRef" :model="form" :rules="rules" label-position="left" label-width="120px">
     <el-form-item label="新用户注册">
       <el-switch
         v-model="form.userReg"
@@ -21,10 +21,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, unref, onMounted } from 'vue'
+import { onMounted, reactive, ref, unref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { apiDetail, apiSave } from '@/api/sys/config/switch'
+import { detailApi as fetchSteInfo } from '@/api/sys/config'
+
+import { useAppStoreWithOut } from '@/store/modules/app'
+
+const appStore = useAppStoreWithOut()
 
 const form = ref({ userReg: false, loginTick: 0 })
 const formRef = ref<FormInstance>()
@@ -44,6 +49,13 @@ const fetchDetail = () => {
   })
 }
 
+const refreshSite = async () => {
+  // 获取网站基本信息
+  await fetchSteInfo({}).then((res) => {
+    appStore.setSiteInfo(res.data)
+  })
+}
+
 const onSubmit = (formEl: FormInstance | undefined) => {
   if (!formEl) return
 
@@ -56,6 +68,9 @@ const onSubmit = (formEl: FormInstance | undefined) => {
           message: '保存成功！',
           type: 'success'
         })
+
+        // 刷新网站数据
+        refreshSite()
       })
     }
   })

@@ -4,15 +4,15 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.modules.exam.paper.dto.PaperQuAnswerDTO">
-        <id column="id" property="id" />
-        <result column="paper_id" property="paperId" />
-        <result column="answer_id" property="answerId" />
-        <result column="qu_id" property="quId" />
-        <result column="is_right" property="isRight" />
-        <result column="answer" property="answer" />
-        <result column="checked" property="checked" />
-        <result column="sort" property="sort" />
-        <result column="abc" property="abc" />
+        <id column="id" property="id"/>
+        <result column="paper_id" property="paperId"/>
+        <result column="answer_id" property="answerId"/>
+        <result column="qu_id" property="quId"/>
+        <result column="is_right" property="isRight"/>
+        <result column="answer" property="answer"/>
+        <result column="checked" property="checked"/>
+        <result column="sort" property="sort"/>
+        <result column="abc" property="abc"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

@@ -10,9 +10,9 @@ import java.io.File;
 @Log4j2
 public class FileUtils {
 
-    public static boolean checkDelete(String path){
+    public static boolean checkDelete(String path) {
 
-        if(path.contains("/.git/") || path.contains("/target/") || path.contains("/.idea/")){
+        if (path.contains("/.git/") || path.contains("/target/") || path.contains("/.idea/")) {
             return true;
         }
 
@@ -20,35 +20,35 @@ public class FileUtils {
     }
 
 
-    public static void deleteDir(File file){
+    public static void deleteDir(File file) {
 
         // 文件夹不存在
-        if(!file.exists() || !file.isDirectory()){
+        if (!file.exists() || !file.isDirectory()) {
             return;
         }
 
 
-        File [] files = file.listFiles();
-        if(files == null || files.length==0){
+        File[] files = file.listFiles();
+        if (files == null || files.length == 0) {
             return;
         }
 
-        for(File item: files){
-            if(file.isDirectory()){
+        for (File item : files) {
+            if (file.isDirectory()) {
                 deleteDir(item);
                 continue;
             }
 
 
-            if(checkDelete(item.getAbsolutePath())){
-                log.info("+++++++++删除文件："+item.getAbsolutePath());
+            if (checkDelete(item.getAbsolutePath())) {
+                log.info("+++++++++删除文件：" + item.getAbsolutePath());
                 item.delete();
             }
         }
 
         // 删除大文件夹
-        if(checkDelete(file.getAbsolutePath())){
-            log.info("+++++++++删除文件："+file.getAbsolutePath());
+        if (checkDelete(file.getAbsolutePath())) {
+            log.info("+++++++++删除文件：" + file.getAbsolutePath());
             file.delete();
         }
     }

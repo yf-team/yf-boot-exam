@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 功能配置实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-11-06 12:02
-*/
+ * <p>
+ * 功能配置实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-11-06 12:02
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_cfg_switch")
@@ -27,14 +27,14 @@ public class CfgSwitch extends Model<CfgSwitch> {
     private static final long serialVersionUID = 1L;
 
     /**
-    * 功能名称
-    */
+     * 功能名称
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**
-    * 开关或值
-    */
+     * 开关或值
+     */
     @TableField("val")
     private String val;
 

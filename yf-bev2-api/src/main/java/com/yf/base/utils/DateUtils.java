@@ -34,7 +34,7 @@ public class DateUtils {
         now.setTime(new Date());
 
         long l = now.getTimeInMillis() - start.getTimeInMillis();
-        return (int)(l / (1000 * 60 * 60 * 24));
+        return (int) (l / (1000 * 60 * 60 * 24));
     }
 
 

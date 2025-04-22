@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
-* <p>
-* 插件元数据控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
-@Tag(name="插件元数据")
+ * <p>
+ * 插件元数据控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
+@Tag(name = "插件元数据")
 @RestController
 @RequestMapping("/api/sys/plugin/schema")
 public class PluginSchemaController extends BaseController {
@@ -35,24 +35,26 @@ public class PluginSchemaController extends BaseController {
     private PluginSchemaService baseService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<?> save(@RequestBody PluginSchemaDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -60,24 +62,26 @@ public class PluginSchemaController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "查找详情")
-    @RequestMapping(value = "/detail", method = { RequestMethod.POST})
+    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
     public ApiRest<PluginSchemaDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
         PluginSchemaDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
+    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
     public ApiRest<IPage<PluginSchemaDTO>> paging(@RequestBody PagingReqDTO<PluginSchemaDTO> reqDTO) {
 
         //分页查询并转换
@@ -88,11 +92,12 @@ public class PluginSchemaController extends BaseController {
 
     /**
      * 查找列表，每次最多返回200条数据
+     *
      * @param reqDTO
      * @return
      */
     @Operation(summary = "查找列表")
-    @RequestMapping(value = "/list", method = { RequestMethod.POST})
+    @RequestMapping(value = "/list", method = {RequestMethod.POST})
     public ApiRest<List<PluginSchemaDTO>> list(@RequestBody PluginSchemaDTO reqDTO) {
         // 查找列表
         List<PluginSchemaDTO> dtoList = baseService.list(reqDTO);

@@ -9,13 +9,13 @@ import java.io.Serial;
 import java.util.Date;
 
 /**
-* <p>
-* 管理用户实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 管理用户实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_user")

@@ -13,7 +13,12 @@
     @change="handleChange"
     @clear="handleClear"
   >
-    <el-option v-for="item in listData" :key="item.value" :label="item.title" :value="item.value" />
+    <el-option
+      v-for="item in listData"
+      :key="item.dicValue"
+      :label="item.title"
+      :value="item.dicValue"
+    />
   </el-select>
 </template>
 

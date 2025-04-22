@@ -176,7 +176,7 @@ public class DecimalUtils {
             warnNull("divide", "arg1");
             return arg0;
         }
-        return arg0.divide(arg1,10 ,RoundingMode.DOWN);
+        return arg0.divide(arg1, 10, RoundingMode.DOWN);
     }
 
     /**

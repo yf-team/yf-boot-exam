@@ -8,15 +8,15 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
-* <p>
-* 题库统计响应类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 题库统计响应类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Data
-@Schema(description="题库统计响应类")
+@Schema(description = "题库统计响应类")
 public class RepoStatRespDTO implements Serializable {
 
     @Serial
@@ -25,10 +25,9 @@ public class RepoStatRespDTO implements Serializable {
     @Dict(dicCode = "qu_type")
     @Schema(description = "题型")
     private String quType;
-    
+
     @Schema(description = "题目数量")
     private Integer quCount;
 
 
-    
 }

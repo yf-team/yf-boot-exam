@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 计算工具类
+ *
  * @author van
  */
 @Log4j2
@@ -17,11 +18,12 @@ public class CalcUtils {
     /**
      * 将一个浮点数字相除，得到一个精准的数组，最后一项进行补充
      * 如：10 / 3 划分成：3.3 | 3.3 | 3.4
+     *
      * @param input 确保是证书或者一位小数的
      * @param size
      * @return
      */
-    public static List<BigDecimal> avgSplit(BigDecimal input, int size){
+    public static List<BigDecimal> avgSplit(BigDecimal input, int size) {
 
         // 放大10倍
         int x10 = DecimalUtils.multiply(input, 10).intValue();
@@ -32,9 +34,9 @@ public class CalcUtils {
 
         List<BigDecimal> list = new ArrayList<>();
 
-        for(int i=0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             int num = per;
-            if(i == size -1){
+            if (i == size - 1) {
                 num = left;
             }
 

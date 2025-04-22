@@ -12,17 +12,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* <p>
-* 管理用户Mapper
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-13 16:57
-*/
+ * <p>
+ * 管理用户Mapper
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-13 16:57
+ */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 查找数据用于导出
+     *
      * @param reqDTO
      * @return
      */
@@ -30,6 +31,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 查找用户分页
+     *
      * @param page
      * @param reqDTO
      * @return

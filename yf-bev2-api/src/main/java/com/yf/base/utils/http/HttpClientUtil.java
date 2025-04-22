@@ -25,162 +25,166 @@ import java.util.Map;
 
 /**
  * HTTP请求工具类
+ *
  * @author bool
  * @date 2016-07-20 15:31
  */
 @Log4j2
 public class HttpClientUtil {
 
-	/**
-	 * 常规URL的连接符号
-	 */
-	private static final String PARAM_STARTER = "?";
-	private static final String PARAM_CONCAT = "&";
-	private static final String ENCODING = "UTF-8";
+    /**
+     * 常规URL的连接符号
+     */
+    private static final String PARAM_STARTER = "?";
+    private static final String PARAM_CONCAT = "&";
+    private static final String ENCODING = "UTF-8";
 
 
-	/**
-	 * 使用POST方式提交数据并获得JSON
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public static String postRestJson(String url, Map<String,String> params) {
+    /**
+     * 使用POST方式提交数据并获得JSON
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static String postRestJson(String url, Map<String, String> params) {
 
-		CloseableHttpClient client = HttpClients.createDefault();
-		try {
+        CloseableHttpClient client = HttpClients.createDefault();
+        try {
 
-			HttpPost httpPost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(url);
 
-			// 构造参数
-			List<NameValuePair> list = new ArrayList<>();
-			for (String key : params.keySet()) {
-				BasicNameValuePair vp = new BasicNameValuePair(key, params.get(key));
-				list.add(vp);
-			}
+            // 构造参数
+            List<NameValuePair> list = new ArrayList<>();
+            for (String key : params.keySet()) {
+                BasicNameValuePair vp = new BasicNameValuePair(key, params.get(key));
+                list.add(vp);
+            }
 
-			// 转换并传入参数
-			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(list);
-			httpPost.setEntity(formEntity);
+            // 转换并传入参数
+            UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(list);
+            httpPost.setEntity(formEntity);
 
-			CloseableHttpResponse response = client.execute(httpPost);
-			HttpEntity entity = response.getEntity();
-			String str = EntityUtils.toString(entity, "UTF-8");
-			// 关闭
-			response.close();
-			return str;
+            CloseableHttpResponse response = client.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            String str = EntityUtils.toString(entity, "UTF-8");
+            // 关闭
+            response.close();
+            return str;
 
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return null;
-	}
-
-
-	/**
-	 * GET方法返回JSON数据
-	 *
-	 * @param url
-	 * @return
-	 */
-	public static String getJson(String url, Map<String, String> headers, Map<String, String> params) {
-		CloseableHttpClient client = HttpClients.createDefault();
-		try {
-
-			String fullUrl = buildParamsUrl(url, params);
-			HttpGet httpGet = new HttpGet(fullUrl);
-
-			// 循环加入文件头
-			if (headers != null && !headers.isEmpty()) {
-				for (String key : headers.keySet()) {
-					httpGet.addHeader(key, headers.get(key));
-				}
-			}
-
-			CloseableHttpResponse response = client.execute(httpGet);
-			HttpEntity entity = response.getEntity();
-			String body = EntityUtils.toString(entity, ENCODING);
-			return body;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+        return null;
+    }
 
 
-	/**
-	 * 构造一个带参数的GET形式URL
-	 * @param url
-	 * @param params
-	 * @return
-	 */
-	public static String buildParamsUrl(String url, Map<String, String> params) {
+    /**
+     * GET方法返回JSON数据
+     *
+     * @param url
+     * @return
+     */
+    public static String getJson(String url, Map<String, String> headers, Map<String, String> params) {
+        CloseableHttpClient client = HttpClients.createDefault();
+        try {
 
-		// 拼接参数
-		if (params != null && !params.isEmpty()) {
+            String fullUrl = buildParamsUrl(url, params);
+            HttpGet httpGet = new HttpGet(fullUrl);
 
-			StringBuffer sb = new StringBuffer(url);
+            // 循环加入文件头
+            if (headers != null && !headers.isEmpty()) {
+                for (String key : headers.keySet()) {
+                    httpGet.addHeader(key, headers.get(key));
+                }
+            }
 
-			//判断URL是否已经有问题号了
-			if (url.indexOf(PARAM_STARTER) == -1) {
-				sb.append(PARAM_STARTER);
-			}
+            CloseableHttpResponse response = client.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            String body = EntityUtils.toString(entity, ENCODING);
+            return body;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-			for (String key : params.keySet()) {
+        return null;
+    }
 
-				if(!sb.toString().endsWith(PARAM_STARTER)) {
-					sb.append(PARAM_CONCAT);
-				}
 
-				String value = params.get(key);
-				if (StringUtils.isBlank(value)) {
-					value = "";
-				} else {
-					// 值做一下URL转码
-					try {
-						value = URLEncoder.encode(value, ENCODING);
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-						continue;
-					}
-				}
-				sb.append(key).append("=").append(value);
-			}
+    /**
+     * 构造一个带参数的GET形式URL
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static String buildParamsUrl(String url, Map<String, String> params) {
 
-			return sb.toString();
-		}
+        // 拼接参数
+        if (params != null && !params.isEmpty()) {
 
-		return url;
-	}
+            StringBuffer sb = new StringBuffer(url);
 
-	/**
-	 * 判断URL资源是否存在
-	 * @param input
-	 * @return
-	 */
-	public static boolean exist(String input, String type) {
-		try {
-			URL url = new URL(input);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			int code = conn.getResponseCode();
-			log.info("++++++检测URL："+input+"\n响应代码："+code);
-			if(code == 200){
-				String contentType = conn.getContentType();
-				log.info("++++数据类型："+contentType);
-				return contentType.contains(type);
-			}
-			return code==200;
-		}catch (Exception e){
-			e.printStackTrace();
-			return false;
-		}
-	}
+            //判断URL是否已经有问题号了
+            if (url.indexOf(PARAM_STARTER) == -1) {
+                sb.append(PARAM_STARTER);
+            }
 
-	public static void main(String[] args) {
-		boolean sss = exist("https://cdn.jeegen.com/2022/6/17/1655436586635-3aeecedc.jpg", "image");
-		log.info(sss);
-	}
+            for (String key : params.keySet()) {
+
+                if (!sb.toString().endsWith(PARAM_STARTER)) {
+                    sb.append(PARAM_CONCAT);
+                }
+
+                String value = params.get(key);
+                if (StringUtils.isBlank(value)) {
+                    value = "";
+                } else {
+                    // 值做一下URL转码
+                    try {
+                        value = URLEncoder.encode(value, ENCODING);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        continue;
+                    }
+                }
+                sb.append(key).append("=").append(value);
+            }
+
+            return sb.toString();
+        }
+
+        return url;
+    }
+
+    /**
+     * 判断URL资源是否存在
+     *
+     * @param input
+     * @return
+     */
+    public static boolean exist(String input, String type) {
+        try {
+            URL url = new URL(input);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            int code = conn.getResponseCode();
+            log.info("++++++检测URL：" + input + "\n响应代码：" + code);
+            if (code == 200) {
+                String contentType = conn.getContentType();
+                log.info("++++数据类型：" + contentType);
+                return contentType.contains(type);
+            }
+            return code == 200;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        boolean sss = exist("https://cdn.jeegen.com/2022/6/17/1655436586635-3aeecedc.jpg", "image");
+        log.info(sss);
+    }
 
 }

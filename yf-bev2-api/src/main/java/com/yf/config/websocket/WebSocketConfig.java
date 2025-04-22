@@ -8,6 +8,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
  * Webscoket配置文件
+ *
  * @author bool
  * @date 2019-09-26 09:39
  */

@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* <p>
-* 插件信息业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件信息业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @Log4j2
 @Service
 public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginData> implements PluginDataService {
@@ -43,13 +43,14 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
         IPage<PluginData> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
         log.info("++++++service转换了。。。");
-        IPage<PluginDataDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginDataDTO>>(){});
+        IPage<PluginDataDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginDataDTO>>() {
+        });
         return pageData;
     }
 
 
     @Override
-    public void save(PluginDataDTO reqDTO){
+    public void save(PluginDataDTO reqDTO) {
         //复制参数
         PluginData entity = new PluginData();
         BeanMapper.copy(reqDTO, entity);
@@ -57,13 +58,13 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public PluginDataDTO detail(String id){
+    public PluginDataDTO detail(String id) {
         PluginData entity = this.getById(id);
         PluginDataDTO dto = new PluginDataDTO();
         BeanMapper.copy(entity, dto);
@@ -71,7 +72,7 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
     }
 
     @Override
-    public List<PluginDataDTO> list(PluginDataDTO reqDTO){
+    public List<PluginDataDTO> list(PluginDataDTO reqDTO) {
 
         //分页查询并转换
         QueryWrapper<PluginData> wrapper = new QueryWrapper<>();
@@ -92,7 +93,7 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
         wrapper.lambda().eq(PluginData::getCode, code);
 
         PluginData data = this.getOne(wrapper, false);
-        if(data == null){
+        if (data == null) {
             throw new ServiceException("插件配置不存在！");
         }
 
@@ -108,7 +109,7 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
                 .orderByDesc(PluginData::getInUse);
 
         PluginData data = this.getOne(wrapper, false);
-        if(data == null){
+        if (data == null) {
             throw new ServiceException("插件配置不存在！");
         }
 

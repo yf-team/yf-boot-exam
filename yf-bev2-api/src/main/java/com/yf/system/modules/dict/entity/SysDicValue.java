@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 分类字典值实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
+ * <p>
+ * 分类字典值实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_dic_value")
@@ -41,8 +41,8 @@ public class SysDicValue extends Model<SysDicValue> {
     /**
      * 子项编码
      */
-    @TableField("`value`")
-    private String value;
+    @TableField("dic_value")
+    private String dicValue;
 
     /**
      * 分类名称

@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 /**
  * MD5签名验证工具
+ *
  * @author bool
  */
 @Log4j2
@@ -18,12 +19,13 @@ public class SignUtils {
 
     /**
      * 校验token是否正确
+     *
      * @param userName
      * @param timestamp
      * @param sign
      * @return
      */
-    public static boolean checkToken(String userName, Long timestamp, String sign){
+    public static boolean checkToken(String userName, Long timestamp, String sign) {
 
         // 拼字符
         String str = String.format("%s-%s-%s", userName, timestamp, SECRET);
@@ -36,11 +38,12 @@ public class SignUtils {
 
     /**
      * 生成Token
+     *
      * @param userName
      * @param timestamp
      * @return
      */
-    public static String generateToken(String userName, Long timestamp){
+    public static String generateToken(String userName, Long timestamp) {
 
         // 拼接字符串
         String str = String.format("%s-%s-%s", userName, timestamp, SECRET);
@@ -54,13 +57,14 @@ public class SignUtils {
 
     /**
      * 构建跳转URL
+     *
      * @param host
      * @param userName
      * @param realName
      * @param role
      * @return
      */
-    public static String generateUrl(String host, String userName, String realName, String role, String departs){
+    public static String generateUrl(String host, String userName, String realName, String role, String departs) {
 
         // 获得当前timestamp
         Long timestamp = System.currentTimeMillis() / 1000;
@@ -78,9 +82,9 @@ public class SignUtils {
         return url;
     }
 
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         // 构建跳转地址
         String url = generateUrl("http://120.211.98.242:18088", "zhangsan202204143", "可能乱码04143", "student", "北京云帆,技术部");
-        log.info("跳转地址："+url);
+        log.info("跳转地址：" + url);
     }
 }

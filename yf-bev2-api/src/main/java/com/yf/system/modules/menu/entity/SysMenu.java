@@ -12,13 +12,13 @@ import java.io.Serial;
 import java.util.Date;
 
 /**
-* <p>
-* 系统菜单实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2021-03-02 13:09
-*/
+ * <p>
+ * 系统菜单实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2021-03-02 13:09
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_sys_menu")
@@ -28,8 +28,8 @@ public class SysMenu extends Model<SysMenu> {
     private static final long serialVersionUID = 1L;
 
     /**
-    * ID
-    */
+     * ID
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 

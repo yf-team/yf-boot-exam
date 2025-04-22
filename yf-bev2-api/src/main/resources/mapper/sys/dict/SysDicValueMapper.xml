@@ -4,25 +4,28 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.dict.entity.SysDicValue">
-        <id column="id" property="id" />
-        <result column="dic_code" property="dicCode" />
-        <result column="value" property="value" />
-        <result column="title" property="title" />
-        <result column="parent_id" property="parentId" />
-        <result column="remark" property="remark" />
+        <id column="id" property="id"/>
+        <result column="dic_code" property="dicCode"/>
+        <result column="dic_value" property="dicValue"/>
+        <result column="title" property="title"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`dic_code`,`value`,`title`,`parent_id`,`remark`
-    </sql>
 
     <select id="findDictText" resultType="String">
-        SELECT `title` FROM el_sys_dic_value WHERE `dic_code`=#{dicCode} AND `value`=#{value}  LIMIT 1
+        SELECT `title`
+        FROM el_sys_dic_value
+        WHERE `dic_code` = #{dicCode}
+          AND `dic_value` = #{value}
+        LIMIT 1
     </select>
 
     <select id="findTableText" resultType="String">
-        SELECT `${dicText}` FROM ${dicTable} WHERE `${dicCode}`=#{value} LIMIT 1
+        SELECT `${dicText}`
+        FROM ${dicTable}
+        WHERE `${dicCode}` = #{value}
+        LIMIT 1
     </select>
 
 </mapper>

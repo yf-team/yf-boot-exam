@@ -7,6 +7,7 @@ import com.yf.base.api.api.ApiRest;
 
 /**
  * 基础控制器
+ *
  * @author Dav
  */
 public class BaseController {
@@ -26,17 +27,18 @@ public class BaseController {
 
     /**
      * 完成消息构造
+     *
      * @param code
      * @param message
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> message(Integer code, String message, T data){
+    protected <T> ApiRest<T> message(Integer code, String message, T data) {
         ApiRest<T> response = new ApiRest<>();
         response.setCode(code);
         response.setMsg(message);
-        if(data!=null) {
+        if (data != null) {
             response.setData(data);
         }
         return response;
@@ -44,110 +46,117 @@ public class BaseController {
 
     /**
      * 请求成功空数据
+     *
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> success(){
+    protected <T> ApiRest<T> success() {
         return message(0, "请求成功！", null);
     }
 
 
-
     /**
      * 请求成功，通用代码
+     *
      * @param message
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> success(String message, T data){
+    protected <T> ApiRest<T> success(String message, T data) {
         return message(CODE_SUCCESS, message, data);
     }
 
 
     /**
      * 请求成功，仅内容
+     *
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> success(T data){
+    protected <T> ApiRest<T> success(T data) {
         return message(CODE_SUCCESS, MSG_SUCCESS, data);
     }
 
 
     /**
      * 请求失败，完整构造
+     *
      * @param code
      * @param message
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(Integer code, String message, T data){
+    protected <T> ApiRest<T> failure(Integer code, String message, T data) {
         return message(code, message, data);
     }
 
     /**
      * 请求失败，消息和内容
+     *
      * @param message
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(String message, T data){
+    protected <T> ApiRest<T> failure(String message, T data) {
         return message(CODE_FAILURE, message, data);
     }
 
     /**
      * 请求失败，消息
+     *
      * @param message
      * @return
      */
-    protected <T> ApiRest<T> failure(String message){
+    protected <T> ApiRest<T> failure(String message) {
         return message(CODE_FAILURE, message, null);
     }
 
     /**
      * 请求失败，仅内容
+     *
      * @param data
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(T data){
+    protected <T> ApiRest<T> failure(T data) {
         return message(CODE_FAILURE, MSG_FAILURE, data);
     }
 
 
     /**
      * 请求失败，仅内容
+     *
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(){
+    protected <T> ApiRest<T> failure() {
         return message(CODE_FAILURE, MSG_FAILURE, null);
     }
 
 
-
     /**
      * 请求失败，仅内容
+     *
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(ApiError error, T data){
+    protected <T> ApiRest<T> failure(ApiError error, T data) {
         return message(error.getCode(), error.msg, data);
     }
 
 
-
     /**
      * 请求失败，仅内容
+     *
      * @param ex
      * @param <T>
      * @return
      */
-    protected <T> ApiRest<T> failure(ServiceException ex){
+    protected <T> ApiRest<T> failure(ServiceException ex) {
         ApiRest<T> apiRest = message(ex.getCode(), ex.getMsg(), null);
         return apiRest;
     }

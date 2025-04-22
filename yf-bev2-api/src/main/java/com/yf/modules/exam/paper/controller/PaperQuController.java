@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
-* <p>
-* 试卷考题控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:40
-*/
-@Tag(name="试卷考题")
+ * <p>
+ * 试卷考题控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:40
+ */
+@Tag(name = "试卷考题")
 @RestController
 @RequestMapping("/api/exam/paper/qu")
 public class PaperQuController extends BaseController {
@@ -36,12 +36,12 @@ public class PaperQuController extends BaseController {
     private PaperQuService baseService;
 
 
-
     /**
-    * 试题详情
-    * @param reqDTO
-    * @return
-    */
+     * 试题详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "试题详情", description = "查找试题详情用于答题")
     @PostMapping("/detail-for-answer")
     public ApiRest<PaperQuDetailDTO> detail(@RequestBody PaperDetailReqDTO reqDTO) {
@@ -52,6 +52,7 @@ public class PaperQuController extends BaseController {
 
     /**
      * 查找答题卡列表
+     *
      * @param reqDTO
      * @return
      */
@@ -65,6 +66,7 @@ public class PaperQuController extends BaseController {
 
     /**
      * 进行答题"
+     *
      * @param reqDTO
      * @return
      */

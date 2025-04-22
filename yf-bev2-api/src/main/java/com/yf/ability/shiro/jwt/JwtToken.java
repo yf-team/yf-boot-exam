@@ -11,13 +11,13 @@ import java.io.Serial;
 @Data
 public class JwtToken implements AuthenticationToken {
 
-	@Serial
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
      * JWT的字符token
      */
-	private String token;
+    private String token;
 
 
     public JwtToken(String token) {

@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * 配置json脱敏相关
+ *
  * @author van
  */
 @Log4j2
@@ -29,24 +30,25 @@ public class DesensitizeSerializer extends JsonSerializer<String> {
     @Override
     public void serialize(String json, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
 
-        Map<String,Object> map = new HashMap<>(16);
+        Map<String, Object> map = new HashMap<>(16);
 
-        if(StringUtils.isBlank(json)){
+        if (StringUtils.isBlank(json)) {
             jsonGenerator.writeObject(map);
             return;
         }
 
         // 进行数据转换
         try {
-            map = JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {});
-        }catch (Exception e){
+            map = JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (Exception e) {
             jsonGenerator.writeObject(map);
             log.error(e);
             return;
         }
 
-        if(!map.isEmpty()){
-            for(String key: map.keySet()){
+        if (!map.isEmpty()) {
+            for (String key : map.keySet()) {
                 Object val = map.get(key);
                 Object enc = this.encrypt(key, val);
                 map.put(key, enc);
@@ -61,13 +63,14 @@ public class DesensitizeSerializer extends JsonSerializer<String> {
     /**
      * 对字符串进行脱敏，在字符串中间用*号代替，字符串中间有一般的长度会被替代
      * 收尾留下一半，值得注意的是，如果长度小于4，则全部显示为字符串***
+     *
      * @param val
      * @return
      */
     public Object encrypt(String key, Object val) {
 
         // 只过滤String类型
-        if(!(val instanceof String)){
+        if (!(val instanceof String)) {
             return val;
         }
 
@@ -78,7 +81,7 @@ public class DesensitizeSerializer extends JsonSerializer<String> {
         }
 
         // 不需要脱敏
-        if(!keys.contains(key)){
+        if (!keys.contains(key)) {
             return text;
         }
 
@@ -107,7 +110,8 @@ public class DesensitizeSerializer extends JsonSerializer<String> {
         String json = "\"{\\\"localDir\\\":\\\"/Users/van/work/yf-boot/\\\",\\\"visitUrl\\\":\\\"http://localhost:8080\\\"}\"";
 
         json = json.replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
-       Map<String,Object> map = JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {});
-       log.info(map.toString());
+        Map<String, Object> map = JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {
+        });
+        log.info(map.toString());
     }
 }

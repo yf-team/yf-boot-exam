@@ -14,11 +14,11 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name="token通用请求类", description="token通用请求类")
+@Schema(name = "token通用请求类", description = "token通用请求类")
 public class BaseTokenReqDTO extends BaseDTO {
 
 
-   @Schema(description = "令牌")
+    @Schema(description = "令牌")
     private String token;
 
 }

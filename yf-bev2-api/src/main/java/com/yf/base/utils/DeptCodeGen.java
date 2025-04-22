@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 
 /**
  * 部门编码生成器，用于生成每个级别的部门，每个同级部门最多支持2573个，超出会异常
+ *
  * @author Van
  */
 @Log4j2
@@ -13,12 +14,13 @@ public class DeptCodeGen {
 
     /**
      * 产生部门编号
+     *
      * @param num
      * @return
      */
-    public static String gen(int num){
+    public static String gen(int num) {
 
-        if(num > 2573){
+        if (num > 2573) {
             throw new ServiceException("每级最大支持2573个部门！");
         }
 
@@ -27,7 +29,7 @@ public class DeptCodeGen {
         int left = num % 99;
         String tag = AbcTags.get(index);
         StringBuffer sb = new StringBuffer(tag);
-        if(left < 10){
+        if (left < 10) {
             sb.append("0");
         }
 
@@ -36,7 +38,7 @@ public class DeptCodeGen {
     }
 
     public static void main(String[] args) {
-        for(int i=0;i<=2573;i++){
+        for (int i = 0; i <= 2573; i++) {
             log.info(gen(i));
         }
     }

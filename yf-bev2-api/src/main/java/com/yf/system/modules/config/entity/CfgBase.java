@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 通用配置实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-04-17 09:12
-*/
+ * <p>
+ * 通用配置实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-04-17 09:12
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_cfg_base")

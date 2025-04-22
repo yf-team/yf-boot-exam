@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  * 全局错误码定义，用于定义接口的响应数据，
  * 枚举名称全部使用代码命名，在系统中调用，免去取名难的问题。
+ *
  * @author bool
  * @date 2019-06-14 21:15
  */
@@ -51,19 +52,21 @@ public enum ApiError implements Serializable {
 
     /**
      * 生成Markdown格式文档，用于更新文档用的
+     *
      * @param args
      */
     public static void main(String[] args) {
         for (ApiError e : ApiError.values()) {
-            log.info("'"+e.name().replace("ERROR_", "")+"':'"+e.msg+"',");
+            log.info("'" + e.name().replace("ERROR_", "") + "':'" + e.msg + "',");
         }
     }
 
     /**
      * 获取错误码
+     *
      * @return
      */
-    public Integer getCode(){
+    public Integer getCode() {
         return Integer.parseInt(this.name().replace("ERROR_", ""));
     }
 }

@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 数据字典注解
+ *
  * @author bool
  */
 @Target(ElementType.FIELD)

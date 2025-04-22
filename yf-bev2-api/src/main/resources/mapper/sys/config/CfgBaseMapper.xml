@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.system.modules.config.entity.CfgBase">
-        <id column="id" property="id" />
-        <result column="site_name" property="siteName" />
-        <result column="login_logo" property="loginLogo" />
-        <result column="login_bg" property="loginBg" />
-        <result column="back_logo" property="backLogo" />
-        <result column="copy_right" property="copyRight" />
+        <id column="id" property="id"/>
+        <result column="site_name" property="siteName"/>
+        <result column="login_logo" property="loginLogo"/>
+        <result column="login_bg" property="loginBg"/>
+        <result column="back_logo" property="backLogo"/>
+        <result column="copy_right" property="copyRight"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

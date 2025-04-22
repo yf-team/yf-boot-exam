@@ -16,6 +16,7 @@ import java.io.RandomAccessFile;
 
 /**
  * 文件下载线程，用于多线程下载文件。
+ *
  * @author bool
  * @date 2018/8/24 09:20
  */
@@ -60,6 +61,7 @@ public class DownloadThread extends Thread {
 
     /**
      * 构造方法，输入分段信息
+     *
      * @param skip
      * @param pos
      */
@@ -81,7 +83,7 @@ public class DownloadThread extends Thread {
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet get = new HttpGet(this.url);
         //获取指定的文件段
-        get.setHeader("RANGE", "bytes="+this.skip+"-"+this.pos);
+        get.setHeader("RANGE", "bytes=" + this.skip + "-" + this.pos);
 
         try {
             raf = new RandomAccessFile(this.dist, "rw");
@@ -109,9 +111,10 @@ public class DownloadThread extends Thread {
 
     /**
      * 将当前的线程装换成可存储的临时对象，用于临时文件保存。
+     *
      * @return
      */
-    public DownloadTempThread toTemp(){
+    public DownloadTempThread toTemp() {
 
         //保存线程加载信息
         DownloadTempThread t = new DownloadTempThread();
@@ -124,11 +127,12 @@ public class DownloadThread extends Thread {
 
     /**
      * 从临时文件中初始化线程，用于从临时文件恢复下载
+     *
      * @param url
      * @param dist
      * @param t
      */
-    public void fromTemp(String url, String dist, DownloadTempThread t){
+    public void fromTemp(String url, String dist, DownloadTempThread t) {
         this.url = url;
         this.dist = dist;
         this.skip = t.getSkip() + t.getLoaded();

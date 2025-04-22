@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  * 用于获取Spring容器
+ *
  * @author bool
  */
 public class CustomSpringConfigurator extends ServerEndpointConfig.Configurator implements ApplicationContextAware {

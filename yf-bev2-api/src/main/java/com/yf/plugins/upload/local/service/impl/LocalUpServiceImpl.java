@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
 
 /**
  * 本地上传插件
+ *
  * @author van
  */
 @Log4j2
@@ -71,7 +73,7 @@ public class LocalUpServiceImpl implements UploadService {
 
         } catch (IOException e) {
             log.error(e);
-            throw new ServiceException("文件上传失败："+e.getMessage());
+            throw new ServiceException("文件上传失败：" + e.getMessage());
         }
     }
 
@@ -104,7 +106,7 @@ public class LocalUpServiceImpl implements UploadService {
 
         } catch (IOException e) {
             log.error(e);
-            throw new ServiceException("文件上传失败："+e.getMessage());
+            throw new ServiceException("文件上传失败：" + e.getMessage());
         }
     }
 
@@ -119,7 +121,7 @@ public class LocalUpServiceImpl implements UploadService {
         String filePath = this.getRealPath(conf, request.getRequestURI());
         File file = new File(filePath);
 
-        if(!file.exists()){
+        if (!file.exists()) {
             throw new ServiceException("文件不存在！");
         }
 
@@ -132,7 +134,7 @@ public class LocalUpServiceImpl implements UploadService {
             Tika tika = new Tika();
             String mimeType = tika.detect(file);
             response.setContentType(mimeType);
-            response.setContentLength((int)file.length());
+            response.setContentLength((int) file.length());
 
             is = new FileInputStream(filePath);
             int len = 0;
@@ -141,13 +143,13 @@ public class LocalUpServiceImpl implements UploadService {
             while ((len = is.read(buffer)) > 0) {
                 os.write(buffer, 0, len);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error(e);
         } finally {
-            if(is!=null){
+            if (is != null) {
                 is.close();
             }
-            if(os!=null){
+            if (os != null) {
                 os.close();
             }
         }
@@ -155,9 +157,10 @@ public class LocalUpServiceImpl implements UploadService {
 
     /**
      * 获取配置文件
+     *
      * @return
      */
-    private LocalConfig getConfig(){
+    private LocalConfig getConfig() {
         String str = pluginDataService.findConfig(PLUGIN_CODE);
         return JsonHelper.parseObject(str, LocalConfig.class);
     }
@@ -165,6 +168,7 @@ public class LocalUpServiceImpl implements UploadService {
 
     /**
      * 构造返回
+     *
      * @param fileName
      * @return
      */
@@ -180,12 +184,13 @@ public class LocalUpServiceImpl implements UploadService {
 
     /**
      * 获取真实物理文件地址
+     *
      * @param uri
      * @return
      */
-    public String getRealPath(LocalConfig conf, String uri){
+    public String getRealPath(LocalConfig conf, String uri) {
 
-        String regx = Constant.FILE_PREFIX+"(.*)";
+        String regx = Constant.FILE_PREFIX + "(.*)";
 
         // 查找全部变量
         Pattern pattern = Pattern.compile(regx);

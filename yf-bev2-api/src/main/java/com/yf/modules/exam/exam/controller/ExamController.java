@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* <p>
-* 考试控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
-@Tag(name="考试")
+ * <p>
+ * 考试控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
+@Tag(name = "考试")
 @RestController
 @RequestMapping("/api/exam/exam/exam")
 public class ExamController extends BaseController {
@@ -36,10 +36,11 @@ public class ExamController extends BaseController {
     private ExamService baseService;
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "添加或修改")
     @RequiresPermissions(value = {"exam:exam:add", "exam:exam:edit"}, logical = Logical.OR)
     @PostMapping("/save")
@@ -49,10 +50,11 @@ public class ExamController extends BaseController {
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "批量删除")
     @RequiresPermissions("exam:exam:delete")
     @PostMapping("/delete")
@@ -63,10 +65,11 @@ public class ExamController extends BaseController {
     }
 
     /**
-    * 查找详情
-    * @param reqDTO
-    * @return
-    */
+     * 查找详情
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "查找详情")
     @RequiresPermissions("exam:exam:view")
     @PostMapping("/detail")
@@ -76,10 +79,11 @@ public class ExamController extends BaseController {
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
     @RequiresPermissions("exam:exam:view")
     @PostMapping("/paging")
@@ -94,6 +98,7 @@ public class ExamController extends BaseController {
 
     /**
      * 详情用于考试
+     *
      * @param reqDTO
      * @return
      */
@@ -106,6 +111,7 @@ public class ExamController extends BaseController {
 
     /**
      * 分页查找
+     *
      * @param reqDTO
      * @return
      */

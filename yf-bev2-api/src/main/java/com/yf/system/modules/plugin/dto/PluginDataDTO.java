@@ -13,53 +13,53 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
-* <p>
-* 插件信息数据传输类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件信息数据传输类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Schema(name="插件信息", description="插件信息")
+@Schema(name = "插件信息", description = "插件信息")
 public class PluginDataDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 
-   @Schema(description = "ID")
+    @Schema(description = "ID")
     private String id;
 
-   @Schema(description = "插件编号")
+    @Schema(description = "插件编号")
     private String code;
 
-   @Schema(description = "插件名称")
+    @Schema(description = "插件名称")
     private String title;
 
-   @Schema(description = "元数据ID")
+    @Schema(description = "元数据ID")
     private String schemaId;
 
     @Dict(dicCode = "plugin_group")
-   @Schema(description = "分组ID")
+    @Schema(description = "分组ID")
     private String groupId;
 
     @JsonSerialize(using = DesensitizeSerializer.class)
     @JsonDeserialize(using = RawJsonDeserializer.class)
-   @Schema(description = "配置数据")
+    @Schema(description = "配置数据")
     private String configData;
 
-   @Schema(description = "后端服务类")
+    @Schema(description = "后端服务类")
     private String serviceClazz;
 
-   @Schema(description = "前端页面")
+    @Schema(description = "前端页面")
     private String component;
 
-   @Schema(description = "是否使用")
+    @Schema(description = "是否使用")
     private Boolean inUse;
 
-   @Schema(description = "插件状态")
+    @Schema(description = "插件状态")
     private String state;
 
 }

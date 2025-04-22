@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 用户静态工具类
+ *
  * @author bool
  */
 public class UserUtils {
@@ -17,14 +18,15 @@ public class UserUtils {
 
     /**
      * 获取用户信息
+     *
      * @param throwable
      * @return
      */
-    public static SysUserLoginDTO getUser(boolean throwable){
+    public static SysUserLoginDTO getUser(boolean throwable) {
         try {
             return ((SysUserLoginDTO) SecurityUtils.getSubject().getPrincipal());
-        }catch (Exception e){
-            if(throwable){
+        } catch (Exception e) {
+            if (throwable) {
                 throw new ServiceException(ApiError.ERROR_10010002);
             }
             return null;
@@ -33,12 +35,13 @@ public class UserUtils {
 
     /**
      * 获取当前登录用户的ID
+     *
      * @param throwable
      * @return
      */
-    public static String getUserId(boolean throwable){
+    public static String getUserId(boolean throwable) {
         SysUserLoginDTO user = getUser(throwable);
-        if(user!=null){
+        if (user != null) {
             return user.getId();
         }
         return null;
@@ -46,11 +49,12 @@ public class UserUtils {
 
     /**
      * 是否管理员
+     *
      * @return
      */
-    public static String departCode(){
+    public static String departCode() {
         SysUserLoginDTO user = getUser(false);
-        if(user!=null){
+        if (user != null) {
             return user.getDeptCode();
         }
         return null;
@@ -59,11 +63,12 @@ public class UserUtils {
 
     /**
      * 获取用户的角色列表
+     *
      * @return
      */
-    public static List<String> getRoles(){
+    public static List<String> getRoles() {
         SysUserLoginDTO user = getUser(false);
-        if(user!=null){
+        if (user != null) {
             return user.getRoles();
         }
         return null;
@@ -71,11 +76,12 @@ public class UserUtils {
 
     /**
      * 权限类型
+     *
      * @return
      */
-    public static Integer getDataScope(){
+    public static Integer getDataScope() {
         SysUserLoginDTO user = getUser(false);
-        if(user!=null){
+        if (user != null) {
             return user.getDataScope();
         }
         return null;
@@ -83,11 +89,12 @@ public class UserUtils {
 
     /**
      * 角色级别
+     *
      * @return
      */
-    public static Integer getRoleLevel(){
+    public static Integer getRoleLevel() {
         SysUserLoginDTO user = getUser(false);
-        if(user!=null){
+        if (user != null) {
             return user.getRoleLevel();
         }
         return 0;
@@ -95,9 +102,10 @@ public class UserUtils {
 
     /**
      * 获取当前登录用户的ID，默认是会抛异常的
+     *
      * @return
      */
-    public static String getUserId(){
+    public static String getUserId() {
         return getUserId(true);
     }
 }

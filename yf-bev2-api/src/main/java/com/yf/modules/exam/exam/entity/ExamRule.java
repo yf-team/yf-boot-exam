@@ -12,13 +12,13 @@ import java.io.Serial;
 import java.math.BigDecimal;
 
 /**
-* <p>
-* 考试规则实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
+ * <p>
+ * 考试规则实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("el_exam_rule")
@@ -26,41 +26,41 @@ public class ExamRule extends Model<ExamRule> {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
+
     /**
-    * ID
-    */
+     * ID
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
-    
+
     /**
-    * 考试ID
-    */
+     * 考试ID
+     */
     @TableField("exam_id")
     private String examId;
-    
+
     /**
-    * 题库ID
-    */
+     * 题库ID
+     */
     @TableField("repo_id")
     private String repoId;
-    
+
     /**
-    * 题型
-    */
+     * 题型
+     */
     @TableField("qu_type")
     private String quType;
-    
+
     /**
-    * 出题数量
-    */
+     * 出题数量
+     */
     @TableField("qu_count")
     private Integer quCount;
-    
+
     /**
-    * 每题分数
-    */
+     * 每题分数
+     */
     @TableField("qu_score")
     private BigDecimal quScore;
-    
+
 }

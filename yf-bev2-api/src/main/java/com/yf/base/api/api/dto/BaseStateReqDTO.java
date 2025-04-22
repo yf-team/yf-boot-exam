@@ -16,13 +16,13 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name="通用状态请求类", description="通用状态请求类")
+@Schema(name = "通用状态请求类", description = "通用状态请求类")
 public class BaseStateReqDTO extends BaseDTO {
 
 
-   @Schema(description = "要修改对象的ID列表")
+    @Schema(description = "要修改对象的ID列表")
     private List<String> ids;
 
-   @Schema(description = "通用状态，0为正常，1为禁用")
+    @Schema(description = "通用状态，0为正常，1为禁用")
     private Integer state;
 }

@@ -27,13 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* <p>
-* 分类字典值业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
+ * <p>
+ * 分类字典值业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
 @Service
 public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDicValue> implements SysDicValueService {
 
@@ -55,8 +55,8 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
         wrapper.lambda().eq(SysDicValue::getDicCode, dicCode);
 
         // 排除不查询的
-        if(!CollectionUtils.isEmpty(reqDTO.getExcludes())){
-            wrapper.lambda().notIn(SysDicValue::getValue, reqDTO.getExcludes());
+        if (!CollectionUtils.isEmpty(reqDTO.getExcludes())) {
+            wrapper.lambda().notIn(SysDicValue::getDicValue, reqDTO.getExcludes());
         }
 
         //全部列表
@@ -64,12 +64,12 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
         List<DicValueTreeDTO> dtoList = BeanMapper.mapList(list, DicValueTreeDTO.class);
 
         //子结构的列表
-        Map<String,List<DicValueTreeDTO>> map = new HashMap<>(16);
+        Map<String, List<DicValueTreeDTO>> map = new HashMap<>(16);
 
-        for(DicValueTreeDTO item: dtoList){
+        for (DicValueTreeDTO item : dtoList) {
 
             //如果存在
-            if(map.containsKey(item.getParentId())){
+            if (map.containsKey(item.getParentId())) {
                 map.get(item.getParentId()).add(item);
                 continue;
             }
@@ -82,8 +82,8 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
 
         //注意，第0级为顶级的
         List<DicValueTreeDTO> topList = map.get(ROOT_TAG);
-        if(!CollectionUtils.isEmpty(topList)){
-            for(DicValueTreeDTO item: topList){
+        if (!CollectionUtils.isEmpty(topList)) {
+            for (DicValueTreeDTO item : topList) {
                 this.fillChildren(map, item);
             }
         }
@@ -92,16 +92,16 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
     }
 
 
-    @CacheEvict(value = CacheKey.DICT, key = "#reqDTO.dicCode + '-' + #reqDTO.value")
+    @CacheEvict(value = CacheKey.DICT, key = "#reqDTO.dicCode + '-' + #reqDTO.dicValue")
     @Override
     public void save(SysDicValueDTO reqDTO) {
 
-        if(!StringUtils.isBlank(reqDTO.getValue())) {
+        if (!StringUtils.isBlank(reqDTO.getDicValue())) {
 
             QueryWrapper<SysDicValue> wrapper = new QueryWrapper<>();
             wrapper.lambda()
                     .eq(SysDicValue::getDicCode, reqDTO.getDicCode())
-                    .eq(SysDicValue::getValue, reqDTO.getValue());
+                    .eq(SysDicValue::getDicValue, reqDTO.getDicValue());
 
             if (!StringUtils.isBlank(reqDTO.getId())) {
                 wrapper.lambda().ne(SysDicValue::getId, reqDTO.getId());
@@ -111,10 +111,10 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
             if (count > 0) {
                 throw new ServiceException("字典值不可以重复！");
             }
-        }else{
+        } else {
             // 分类字典ID和值一样
             reqDTO.setId(IdWorker.getIdStr());
-            reqDTO.setValue(reqDTO.getId());
+            reqDTO.setDicValue(reqDTO.getId());
         }
 
         //复制参数
@@ -133,9 +133,9 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
 
         Map<String, String> map = new HashMap<>(16);
 
-        if(!CollectionUtils.isEmpty(list)){
-            for(SysDicValue item: list){
-                map.put(item.getTitle(), item.getValue());
+        if (!CollectionUtils.isEmpty(list)) {
+            for (SysDicValue item : list) {
+                map.put(item.getTitle(), item.getDicValue());
             }
         }
         return map;
@@ -151,17 +151,18 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
 
     /**
      * 递归去做填充数据
+     *
      * @param map
      * @param item
      */
-    private void fillChildren(Map<String,List<DicValueTreeDTO>> map, DicValueTreeDTO item){
+    private void fillChildren(Map<String, List<DicValueTreeDTO>> map, DicValueTreeDTO item) {
 
         //设置子类
-        if(map.containsKey(item.getId())){
+        if (map.containsKey(item.getId())) {
 
             List<DicValueTreeDTO> children = map.get(item.getId());
-            if(!CollectionUtils.isEmpty(children)){
-                for(DicValueTreeDTO sub: children){
+            if (!CollectionUtils.isEmpty(children)) {
+                for (DicValueTreeDTO sub : children) {
                     this.fillChildren(map, sub);
                 }
             }
@@ -170,29 +171,28 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
     }
 
 
-
     @Override
     @Cacheable(value = CacheKey.DICT, key = "#dicCode + '-' + #value")
-    public String findDictText(String dicCode, String value){
+    public String findDictText(String dicCode, String value) {
         String text = baseMapper.findDictText(dicCode, value);
-        return StringUtils.isBlank(text)?"":text;
+        return StringUtils.isBlank(text) ? "" : text;
     }
 
 
     @Override
-    public String findTableText(String dicTable, String dicText, String dicCode, String value){
+    public String findTableText(String dicTable, String dicText, String dicCode, String value) {
 
         // 手动缓存，提高短时效率
         String key = MessageFormat.format("{0}-{1}-{2}-{3}-{4}", CacheKey.DICT, dicTable, dicText, dicCode, value);
 
         String result = redisService.getString(key);
-        if(result!=null){
+        if (result != null) {
             return result;
         }
 
         // 查询新数据
         String text = baseMapper.findTableText(dicTable, dicText, dicCode, value);
-        if(StringUtils.isBlank(text)){
+        if (StringUtils.isBlank(text)) {
             text = "";
         }
 

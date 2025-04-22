@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* <p>
-* 考试控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-14 17:29
-*/
-@Tag(name="考试记录")
+ * <p>
+ * 考试控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-14 17:29
+ */
+@Tag(name = "考试记录")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/exam/exam/record")
@@ -35,10 +35,11 @@ public class ExamRecordController extends BaseController {
 
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
     @RequiresPermissions("exam:record:list")
     @PostMapping("/paging")
@@ -53,6 +54,7 @@ public class ExamRecordController extends BaseController {
 
     /**
      * 分页查找
+     *
      * @param reqDTO
      * @return
      */

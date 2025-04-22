@@ -169,7 +169,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
 
         // 跨级别拖拽
-        if (!form.getParentId().equals(to.getParentId()) || (to.getParentId().equals("0") &&  form.getParentId().equals("0"))) {
+        if (!form.getParentId().equals(to.getParentId()) || (to.getParentId().equals("0") && form.getParentId().equals("0"))) {
 
             // 只允许：目录-->目录 | 菜单-->目录 | 菜单-->菜单(旁边)
             if (!(form.getMenuType().equals(MenuType.DIR) && to.getMenuType().equals(MenuType.DIR))
@@ -233,7 +233,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private void fillChildren(Map<String, List<RouteRespDTO>> map, RouteRespDTO item) {
 
         // 隐藏属性无需出现
-        if(item.getHidden()!=null && !item.getHidden()){
+        if (item.getHidden() != null && !item.getHidden()) {
             item.setHidden(null);
         }
 

@@ -44,6 +44,7 @@ public class FillMetaObjectHandler implements MetaObjectHandler {
 
     /**
      * 重写不管原值是否为null，都进行填充
+     *
      * @param metaObject
      * @param fieldName
      * @param fieldVal
@@ -75,11 +76,12 @@ public class FillMetaObjectHandler implements MetaObjectHandler {
 
     /**
      * 获得用户ID
+     *
      * @return
      */
-    private String userId(){
+    private String userId() {
         String userId = UserUtils.getUserId(false);
-        if(userId == null){
+        if (userId == null) {
             return "";
         }
         return userId;

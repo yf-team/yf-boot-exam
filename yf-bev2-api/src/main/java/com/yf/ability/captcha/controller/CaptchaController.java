@@ -26,7 +26,6 @@ import java.util.UUID;
  * </p>
  *
  * @author 聪明笨狗
- *
  * @since 2019-04-16 10:14
  */
 @Log4j2
@@ -38,7 +37,7 @@ public class CaptchaController extends BaseController {
 
     private final CaptchaService captchaService;
 
-    @RequestMapping(value="/gen", method = RequestMethod.GET)
+    @RequestMapping(value = "/gen", method = RequestMethod.GET)
     @Operation(summary = "验证码图片")
     @Parameters({
             @Parameter(name = "key", description = "验证码ID,前端自行使用UUID生成，务必确保整个系统不重复",
@@ -53,7 +52,7 @@ public class CaptchaController extends BaseController {
 
         TransparentCaptcha captcha = new TransparentCaptcha(130, 48, 4, 20);
         String code = captcha.getCode();
-        BufferedImage image = (BufferedImage)captcha.createImage(code);
+        BufferedImage image = (BufferedImage) captcha.createImage(code);
         ImageIO.write(image, "png", response.getOutputStream());
 
         // 存入REDIS

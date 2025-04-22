@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* <p>
-* 插件分组业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件分组业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @Service
 public class PluginGroupServiceImpl extends ServiceImpl<PluginGroupMapper, PluginGroup> implements PluginGroupService {
 
@@ -39,13 +39,14 @@ public class PluginGroupServiceImpl extends ServiceImpl<PluginGroupMapper, Plugi
         //获得数据
         IPage<PluginGroup> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<PluginGroupDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginGroupDTO>>(){});
+        IPage<PluginGroupDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginGroupDTO>>() {
+        });
         return pageData;
     }
 
 
     @Override
-    public void save(PluginGroupDTO reqDTO){
+    public void save(PluginGroupDTO reqDTO) {
         //复制参数
         PluginGroup entity = new PluginGroup();
         BeanMapper.copy(reqDTO, entity);
@@ -53,13 +54,13 @@ public class PluginGroupServiceImpl extends ServiceImpl<PluginGroupMapper, Plugi
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public PluginGroupDTO detail(String id){
+    public PluginGroupDTO detail(String id) {
         PluginGroup entity = this.getById(id);
         PluginGroupDTO dto = new PluginGroupDTO();
         BeanMapper.copy(entity, dto);
@@ -67,7 +68,7 @@ public class PluginGroupServiceImpl extends ServiceImpl<PluginGroupMapper, Plugi
     }
 
     @Override
-    public List<PluginGroupDTO> list(PluginGroupDTO reqDTO){
+    public List<PluginGroupDTO> list(PluginGroupDTO reqDTO) {
 
         //分页查询并转换
         QueryWrapper<PluginGroup> wrapper = new QueryWrapper<>();

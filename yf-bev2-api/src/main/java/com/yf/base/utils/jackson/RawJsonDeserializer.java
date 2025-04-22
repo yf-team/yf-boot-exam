@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * JSON序列化，从前端接收的对象转换成字符
+ *
  * @author van
  */
 public class RawJsonDeserializer extends JsonDeserializer<String> {
@@ -25,7 +26,7 @@ public class RawJsonDeserializer extends JsonDeserializer<String> {
         JsonNode node = mapper.readTree(jp);
 
         // 如果本身就是String类型，直接返回
-        if(TYPE_STRING.equals(node.getNodeType().name())){
+        if (TYPE_STRING.equals(node.getNodeType().name())) {
             return node.textValue();
         }
 

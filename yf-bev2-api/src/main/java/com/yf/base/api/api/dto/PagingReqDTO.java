@@ -10,37 +10,39 @@ import java.util.List;
 
 /**
  * 分页查询类
+ *
  * @param <T>
  * @author bool
  */
-@Schema(name="分页参数", description="分页参数")
+@Schema(name = "分页参数", description = "分页参数")
 @Data
 public class PagingReqDTO<T> {
 
 
-   @Schema(description = "当前页码", example = "1")
+    @Schema(description = "当前页码", example = "1")
     private Integer current;
 
-   @Schema(description = "每页数量", example = "10")
+    @Schema(description = "每页数量", example = "10")
     private Integer size;
 
-   @Schema(description = "查询参数")
+    @Schema(description = "查询参数")
     private T params;
 
-   @Schema(description = "排序方式")
+    @Schema(description = "排序方式")
     private List<OrderItem> orders;
 
     @JsonIgnore
-   @Schema(description = "当前用户的ID")
+    @Schema(description = "当前用户的ID")
     private String userId;
 
 
     /**
      * 转换成MyBatis的简单分页对象
-     * @return
+     *
      * @param <E> 实现类
+     * @return
      */
-    public <E> Page<E> toPage(){
+    public <E> Page<E> toPage() {
         Page<E> page = new Page<>();
         page.setCurrent(this.current);
         page.setSize(this.size);

@@ -4,20 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.yf.modules.exam.repo.dto.RepoDTO">
-        <id column="id" property="id" />
-        <result column="title" property="title" />
-        <result column="cat_id" property="catId" />
-        <result column="remark" property="remark" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="cat_id" property="catId"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
     </resultMap>
 
     <resultMap id="ListResultMap"
                type="com.yf.modules.exam.repo.dto.response.RepoListRespDTO"
                extends="BaseResultMap">
-        <result column="quCount" property="quCount" />
+        <result column="quCount" property="quCount"/>
     </resultMap>
 
     <select id="paging" resultMap="ListResultMap">
@@ -32,8 +32,10 @@
     </select>
 
     <select id="listStat" resultType="com.yf.modules.exam.repo.dto.response.RepoStatRespDTO">
-        SELECT dv.value AS quType,(SELECT COUNT(0) FROM el_repo_qu WHERE repo_id=#{repoId} AND qu_type=dv.value) AS quCount
-        FROM el_sys_dic_value dv WHERE dv.dic_code='qu_type'
+        SELECT dv.value                                                                           AS quType,
+               (SELECT COUNT(0) FROM el_repo_qu WHERE repo_id = #{repoId} AND qu_type = dv.value) AS quCount
+        FROM el_sys_dic_value dv
+        WHERE dv.dic_code = 'qu_type'
     </select>
 
 </mapper>

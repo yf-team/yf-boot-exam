@@ -35,7 +35,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="用户头像" prop="avatar">
-            <el-input v-model="form.avatar" autocomplete="off" />
+            <file-uploader v-model="form.avatar" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -55,6 +55,7 @@ import { ElMessage } from 'element-plus'
 import { infoApi, updateApi } from '@/api/sys/user'
 import type { UserDataType } from '../types'
 import { useUserStoreWithOut } from '@/store/modules/user'
+import { FileUploader } from '@/plugins/uploader'
 
 const userInfo = useUserStoreWithOut().getUserInfo
 

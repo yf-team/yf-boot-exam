@@ -29,6 +29,7 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 删除一个或多个缓存
+     *
      * @param keys
      */
     @Override
@@ -44,11 +45,12 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Map<String,Object> getJson(String key) {
+    public Map<String, Object> getJson(String key) {
         String json = this.get(key);
 
-        if(!StringUtils.isBlank(json)){
-            return JsonHelper.parseObject(json, new TypeReference<Map<String,Object>>(){});
+        if (!StringUtils.isBlank(json)) {
+            return JsonHelper.parseObject(json, new TypeReference<Map<String, Object>>() {
+            });
         }
 
         return null;
@@ -61,10 +63,11 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 获得锁
-     * @param key 锁key
-     * @param ms 失效时间：毫秒
+     *
+     * @param key      锁key
+     * @param ms       失效时间：毫秒
      * @param tryCount 尝试次数
-     * @param tryWait 尝试间隔：毫秒
+     * @param tryWait  尝试间隔：毫秒
      * @return
      */
     @Override
@@ -76,10 +79,10 @@ public class RedisServiceImpl implements RedisService {
         Boolean hasGet = null;
 
         // 获得一个锁
-        while ((hasGet==null || !hasGet) && hasTry<=tryCount){
+        while ((hasGet == null || !hasGet) && hasTry <= tryCount) {
 
             // 第二次以后进行等待
-            if(hasTry > 0 ){
+            if (hasTry > 0) {
                 try {
                     Thread.sleep(tryWait);
                 } catch (InterruptedException e) {
@@ -91,7 +94,7 @@ public class RedisServiceImpl implements RedisService {
             hasTry++;
         }
 
-        return hasGet!=null && hasGet;
+        return hasGet != null && hasGet;
     }
 
 
@@ -108,12 +111,13 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 释放锁
+     *
      * @param key
      * @return
      */
     @Override
     public void unlock(String key) {
-          redisTemplate.delete(key);
+        redisTemplate.delete(key);
     }
 
     /**
@@ -148,9 +152,10 @@ public class RedisServiceImpl implements RedisService {
 
     /**
      * 设置缓存
+     *
      * @param key
      * @param value
-     * @param time 过期秒数
+     * @param time  过期秒数
      * @return
      */
     @Override
@@ -184,12 +189,12 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public List<String> findList(String key) {
-        return  redisTemplate.opsForList().range(key, 0, -1);
+        return redisTemplate.opsForList().range(key, 0, -1);
     }
 
     @Override
     public boolean hasKey(String key) {
         Boolean has = redisTemplate.hasKey(key);
-        return has!=null && has;
+        return has != null && has;
     }
 }

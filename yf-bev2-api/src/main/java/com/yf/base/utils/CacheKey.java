@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 
 /**
  * 缓存Key定义
+ *
  * @author bool
  */
 public interface CacheKey {
@@ -38,11 +39,12 @@ public interface CacheKey {
 
     /**
      * 课件解锁，用于在解锁下一个课件时写入缓存
+     *
      * @param userId
      * @param courseId
      * @return
      */
-    static String unlockKey(String userId, String courseId){
+    static String unlockKey(String userId, String courseId) {
         return MessageFormat.format("sys:file:unlock:{0}-{1}", userId, courseId);
     }
 }

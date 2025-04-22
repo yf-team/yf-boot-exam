@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* <p>
-* 插件元数据业务实现类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件元数据业务实现类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @Service
 public class PluginSchemaServiceImpl extends ServiceImpl<PluginSchemaMapper, PluginSchema> implements PluginSchemaService {
 
@@ -39,13 +39,14 @@ public class PluginSchemaServiceImpl extends ServiceImpl<PluginSchemaMapper, Plu
         //获得数据
         IPage<PluginSchema> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<PluginSchemaDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginSchemaDTO>>(){});
+        IPage<PluginSchemaDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginSchemaDTO>>() {
+        });
         return pageData;
     }
 
 
     @Override
-    public void save(PluginSchemaDTO reqDTO){
+    public void save(PluginSchemaDTO reqDTO) {
         //复制参数
         PluginSchema entity = new PluginSchema();
         BeanMapper.copy(reqDTO, entity);
@@ -53,13 +54,13 @@ public class PluginSchemaServiceImpl extends ServiceImpl<PluginSchemaMapper, Plu
     }
 
     @Override
-    public void delete(List<String> ids){
+    public void delete(List<String> ids) {
         //批量删除
         this.removeByIds(ids);
     }
 
     @Override
-    public PluginSchemaDTO detail(String id){
+    public PluginSchemaDTO detail(String id) {
         PluginSchema entity = this.getById(id);
         PluginSchemaDTO dto = new PluginSchemaDTO();
         BeanMapper.copy(entity, dto);
@@ -67,7 +68,7 @@ public class PluginSchemaServiceImpl extends ServiceImpl<PluginSchemaMapper, Plu
     }
 
     @Override
-    public List<PluginSchemaDTO> list(PluginSchemaDTO reqDTO){
+    public List<PluginSchemaDTO> list(PluginSchemaDTO reqDTO) {
 
         //分页查询并转换
         QueryWrapper<PluginSchema> wrapper = new QueryWrapper<>();

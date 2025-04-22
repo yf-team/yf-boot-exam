@@ -11,13 +11,13 @@ import lombok.EqualsAndHashCode;
 import java.io.Serial;
 
 /**
-* <p>
-* 插件元数据实体类
-* </p>
-*
-* @author 聪明笨狗
-* @since 2022-09-05 10:05
-*/
+ * <p>
+ * 插件元数据实体类
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2022-09-05 10:05
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("pl_plugin_schema")
@@ -27,19 +27,19 @@ public class PluginSchema extends Model<PluginSchema> {
     private static final long serialVersionUID = 1L;
 
     /**
-    * ID
-    */
+     * ID
+     */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**
-    * 元数据
-    */
+     * 元数据
+     */
     private String schemaData;
 
     /**
-    * 分组
-    */
+     * 分组
+     */
     @TableField("group_id")
     private String groupId;
 

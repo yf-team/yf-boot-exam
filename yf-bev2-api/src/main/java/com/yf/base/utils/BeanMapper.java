@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Dozer工具类，用于实体参数之间的转换和复制
+ *
  * @author Van
  * @since 2025-04-09 16:00:00
  */
@@ -42,7 +43,8 @@ public class BeanMapper {
 
     /**
      * 基于Dozer转换对象的类型.
-     * @param source 源对象
+     *
+     * @param source           源对象
      * @param destinationClass 目标类型
      * @return 目标对象
      */
@@ -55,7 +57,8 @@ public class BeanMapper {
 
     /**
      * 基于Dozer转换Collection中对象的类型.
-     * @param sourceList 源集合
+     *
+     * @param sourceList       源集合
      * @param destinationClass 目标类型
      * @return 目标对象列表
      */
@@ -75,7 +78,8 @@ public class BeanMapper {
 
     /**
      * 基于Dozer将对象A的值拷贝到对象B中.
-     * @param source 源对象
+     *
+     * @param source            源对象
      * @param destinationObject 目标对象
      */
     public static void copy(Object source, Object destinationObject) {

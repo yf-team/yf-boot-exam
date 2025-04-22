@@ -15,6 +15,7 @@ import java.io.InputStream;
 
 /**
  * 下载工具类，用于将网络文件本地化，简单的下载，没有断点下载和重试机制；
+ *
  * @author bool
  * @date 2018/7/30 09:16
  */
@@ -27,6 +28,7 @@ public class DownloadUtil {
 
     /**
      * 将Nginx配置文件本地化
+     *
      * @param url
      * @param dir
      * @return
@@ -37,12 +39,12 @@ public class DownloadUtil {
         CloseableHttpClient client = HttpClients.createDefault();
 
         File dirFile = new File(dir);
-        if(!dirFile.exists()){
+        if (!dirFile.exists()) {
             dirFile.mkdirs();
         }
 
         //获得文件名
-        if(StringUtils.isEmpty(fileName)){
+        if (StringUtils.isEmpty(fileName)) {
             fileName = extractUrlFileName(url);
         }
         try {
@@ -50,7 +52,7 @@ public class DownloadUtil {
             logger.info("executing request: " + httpGet.getURI());
             HttpResponse response = client.execute(httpGet);
             File targetFile = new File(dir, fileName);
-            if(targetFile.exists()){
+            if (targetFile.exists()) {
                 targetFile.delete();
             }
             FileOutputStream fos = new FileOutputStream(targetFile);
@@ -86,13 +88,14 @@ public class DownloadUtil {
 
     /**
      * 从URL中提取文件名称
+     *
      * @param url
      * @return
      */
     private static String extractUrlFileName(String url) {
         int index = url.lastIndexOf("/");
         if (index != -1) {
-            return url.substring(index+1);
+            return url.substring(index + 1);
         }
         return null;
     }

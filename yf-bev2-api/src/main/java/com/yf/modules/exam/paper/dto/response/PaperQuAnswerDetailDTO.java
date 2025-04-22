@@ -7,21 +7,21 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
-* <p>
-* 试卷候选答案
-* </p>
-*
-* @author 聪明笨狗
-* @since 2025-04-11 09:42
-*/
+ * <p>
+ * 试卷候选答案
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2025-04-11 09:42
+ */
 @Data
-@Schema(description="试卷候选答案")
+@Schema(description = "试卷候选答案")
 public class PaperQuAnswerDetailDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
-    
+
+
     @Schema(description = "ID")
     private String id;
 
@@ -45,5 +45,5 @@ public class PaperQuAnswerDetailDTO implements Serializable {
 
     @Schema(description = "选项标签")
     private String abc;
-    
+
 }

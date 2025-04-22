@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* <p>
-* 分类字典控制器
-* </p>
-*
-* @author 聪明笨狗
-* @since 2020-12-01 14:00
-*/
-@Tag(name="字典项管理", description = "数据字典项管理，也就是一级目录")
+ * <p>
+ * 分类字典控制器
+ * </p>
+ *
+ * @author 聪明笨狗
+ * @since 2020-12-01 14:00
+ */
+@Tag(name = "字典项管理", description = "数据字典项管理，也就是一级目录")
 @RestController
 @RequestMapping("/api/sys/dic")
 public class SysDicController extends BaseController {
@@ -37,28 +37,30 @@ public class SysDicController extends BaseController {
 
 
     /**
-    * 添加或修改
-    * @param reqDTO
-    * @return
-    */
+     * 添加或修改
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:dict:add", "sys:dict:edit"}, logical = Logical.OR)
     @DataProtect(clazz = SysDic.class, update = true)
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = { RequestMethod.POST})
+    @RequestMapping(value = "/save", method = {RequestMethod.POST})
     public ApiRest<?> save(@RequestBody SysDicDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
     }
 
     /**
-    * 批量删除
-    * @param reqDTO
-    * @return
-    */
+     * 批量删除
+     *
+     * @param reqDTO
+     * @return
+     */
     @RequiresPermissions(value = {"sys:dict:delete"})
     @DataProtect(clazz = SysDic.class, delete = true)
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST})
+    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -66,12 +68,13 @@ public class SysDicController extends BaseController {
     }
 
     /**
-    * 分页查找
-    * @param reqDTO
-    * @return
-    */
+     * 分页查找
+     *
+     * @param reqDTO
+     * @return
+     */
     @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = { RequestMethod.POST})
+    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
     public ApiRest<IPage<SysDicDTO>> paging(@RequestBody PagingReqDTO<SysDicDTO> reqDTO) {
         //分页查询并转换
         IPage<SysDicDTO> page = baseService.paging(reqDTO);
