@@ -75,6 +75,12 @@ public interface SysUserService extends IService<SysUser> {
     void update(SysUserUpdateReqDTO reqDTO);
 
     /**
+     * 修改密码
+     * @param reqDTO
+     */
+    void pass(SysUserPassReqDTO reqDTO);
+
+    /**
      * 保存添加系统用户
      *
      * @param reqDTO

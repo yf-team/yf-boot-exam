@@ -8,7 +8,16 @@
       @on-edit="handleEdit"
     >
       <template #search>
-        <el-input v-model="query.params.title" class="filter-item" placeholder="搜索题库" />
+        <el-input v-model="query.params.title" class="filter-item" placeholder="搜索考试" />
+        <el-date-picker
+          v-model="dateRange"
+          class="filter-item"
+          end-placeholder="截止"
+          range-separator="到"
+          start-placeholder="考试时间"
+          type="datetimerange"
+          value-format="YYYY-MM-DD HH:mm:ss"
+        />
       </template>
 
       <template #columns>
@@ -31,7 +40,7 @@
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
-import { onActivated, ref } from 'vue'
+import { computed, onActivated, ref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
 import { useRouter } from 'vue-router'
 
@@ -42,7 +51,9 @@ let query = ref<TableQueryType>({
   current: 1,
   size: 10,
   params: {
-    title: ''
+    title: '',
+    startTime: null,
+    endTime: null
   }
 })
 
@@ -76,6 +87,14 @@ const handleEdit = (row: any) => {
 const toRecord = (id: string) => {
   push({ name: 'ExamRecord', query: { id: id } })
 }
+
+const dateRange = computed({
+  get: () => [query.value.params.startTimeL, query.value.params.startTimeR],
+  set: (val) => {
+    query.value.params.startTimeL = val?.[0] || ''
+    query.value.params.startTimeR = val?.[1] || ''
+  }
+})
 
 onActivated(() => {
   // 刷新表格

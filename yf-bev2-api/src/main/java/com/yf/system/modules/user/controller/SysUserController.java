@@ -21,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -110,6 +107,19 @@ public class SysUserController extends BaseController {
         return success();
     }
 
+
+    /**
+     * 修改密码
+     *
+     * @return
+     */
+    @DataProtect(clazz = SysUser.class, update = true, currUsr = true)
+    @Operation(summary = "修改密码")
+    @PostMapping("/update-pass")
+    public ApiRest<?> updatePass(@RequestBody SysUserPassReqDTO reqDTO) {
+        baseService.pass(reqDTO);
+        return success();
+    }
 
     /**
      * 保存或修改系统用户

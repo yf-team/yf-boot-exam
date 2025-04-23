@@ -29,3 +29,11 @@ export const updateApi = (data: any) => {
     data
   })
 }
+
+// 修改密码
+export const passApi = (data: any) => {
+  return request.post({
+    url: '/api/sys/user/update-pass',
+    data
+  })
+}

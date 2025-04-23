@@ -19,9 +19,9 @@ public class SysUserPassReqDTO implements Serializable {
 
 
     @Schema(description = "旧密码")
-    private String oldPassword;
+    private String oldPass;
 
     @Schema(description = "新密码")
-    private String password;
+    private String newPass;
 
 }

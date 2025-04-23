@@ -1,19 +1,20 @@
 import axios from 'axios'
 import config from './config'
 
-import { AxiosInstance, InternalAxiosRequestConfig, RequestConfig, AxiosResponse } from './types'
+import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, RequestConfig } from './types'
 import { ElMessage } from 'element-plus'
 import { useStorage } from '@/hooks/web/useStorage'
 import { useTagsViewStore } from '@/store/modules/tagsView'
-import router, { resetRouter } from '@/router'
+import router from '@/router'
 import { useUserStoreWithOut } from '@/store/modules/user'
+
 const { clear } = useStorage()
 const userStore = useUserStoreWithOut()
 const tagsViewStore = useTagsViewStore()
 
 export const PATH_URL = import.meta.env.VITE_API_HOST || ''
-const code_success = 0
-const code_overdue = 10010002
+const codeSuccess = 0
+const codeOverdue = 10010002
 const abortControllerMap: Map<string, AbortController> = new Map()
 const axiosInstance: AxiosInstance = axios.create({
   ...config,
@@ -37,29 +38,29 @@ axiosInstance.interceptors.response.use(
   (res: AxiosResponse) => {
     console.log('响应结果', res)
 
-    if (res.data.code === code_success) {
+    const resCode = res.data.code
+
+    // 正确响应
+    if (resCode === codeSuccess) {
+      const url = res.config.url || ''
+      abortControllerMap.delete(url)
       return res.data
     }
 
-    if (res.data.code === code_overdue) {
-      ElMessage.error(res.data.msg)
-      // 置空残留会话
-      userStore.setUserInfo({})
-      // 清除缓存数据等
-      clear()
-      // 重置静态路由表
-      tagsViewStore.delAllViews()
-      // 重置静态路由表
-      resetRouter()
-      // 跳转到登录页面
-      router.replace('/login')
-    } else {
-      ElMessage.error(res.data.msg)
+    // 会话超时
+    if (resCode === codeOverdue) {
+      userStore.logout().then(() => {
+        // 清理标签页
+        tagsViewStore.delAllViews()
+        // 去登录页
+        router.replace({ name: 'Login' })
+      })
     }
 
-    const url = res.config.url || ''
-    abortControllerMap.delete(url)
-    return res.data
+    // 响应错误
+    const resMsg = res.data.msg || '请求出现错误！'
+    ElMessage.error(resMsg)
+    return Promise.reject(new Error(resMsg))
   },
   (err: any) => {
     ElMessage.error('糟糕，服务器开小差了！' + err)

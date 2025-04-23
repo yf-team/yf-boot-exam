@@ -13,7 +13,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="确认密码" prop="newPass">
+          <el-form-item label="确认密码" prop="confirmPass">
             <el-input v-model="form.confirmPass" autocomplete="off" type="password" />
           </el-form-item>
         </el-col>
@@ -29,13 +29,12 @@
 <script lang="ts" setup>
 import { ContentWrap } from '@/components/ContentWrap'
 import { reactive, ref, unref } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
+import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { PassDataType } from '../types'
-import { updateApi } from '@/api/sys/user'
 import { useUserStore } from '@/store/modules/user'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import { useRouter } from 'vue-router'
+import { passApi } from '@/api/sys/user'
 
 const userStore = useUserStore()
 const tagsViewStore = useTagsViewStore()
@@ -69,7 +68,7 @@ const rules = reactive<FormRules>({
       trigger: 'blur'
     }
   ],
-  confirmPass: [{ validator: checkPass, trigger: 'blur' }]
+  confirmPass: [{ validator: checkPass, required: true, trigger: 'blur' }]
 })
 
 const handleSave = (formEl: FormInstance | undefined) => {
@@ -78,15 +77,16 @@ const handleSave = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       const formData = unref(form)
-      updateApi(formData).then(() => {
-        ElMessage({
-          showClose: true,
-          message: '修改成功，即将重新登录！',
-          type: 'success'
-        })
-
-        // 重新登录
-        setTimeout(reLogin, 2000)
+      passApi(formData).then((res) => {
+        if (res.success) {
+          ElMessage({
+            showClose: true,
+            message: '修改成功，即将重新登录！',
+            type: 'success'
+          })
+          // 重新登录
+          setTimeout(reLogin, 2000)
+        }
       })
     }
   })

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamDTO;
+import com.yf.modules.exam.exam.dto.request.ExamListReqDTO;
 import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.entity.Exam;
 
@@ -25,7 +26,7 @@ public interface ExamService extends IService<Exam> {
      * @param reqDTO
      * @return
      */
-    IPage<ExamDTO> paging(PagingReqDTO<ExamDTO> reqDTO);
+    IPage<ExamDTO> paging(PagingReqDTO<ExamListReqDTO> reqDTO);
 
     /**
      * 添加或保存

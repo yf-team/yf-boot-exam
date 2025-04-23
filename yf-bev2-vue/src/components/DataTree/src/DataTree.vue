@@ -2,38 +2,38 @@
   <div v-loading="loading" element-loading-text="加载中...">
     <div class="search-box">
       <div class="search-items">
-        <el-input class="filter-item" v-model="filterText" placeholder="搜索关键字" />
+        <el-input v-model="filterText" class="filter-item" placeholder="搜索关键字" />
       </div>
 
-      <el-button type="primary" icon="Search" @click="search()">搜索</el-button>
+      <el-button icon="Search" type="primary" @click="search()">搜索</el-button>
       <el-button icon="RefreshLeft" @click="reset()">重置</el-button>
     </div>
 
     <div class="opt-box">
       <div class="opt-box-left">
-        <el-button v-if="props.add" type="primary" icon="Plus" @click="handleAddRoot()"
-          >添加</el-button
-        >
-        <el-button v-if="props.edit" type="success" icon="Edit" @click="batchEdit()"
-          >修改</el-button
-        >
-        <el-button v-if="props.delete" type="danger" icon="Delete" @click="batchDelete()"
-          >删除</el-button
-        >
+        <el-button v-if="props.add" icon="Plus" type="primary" @click="handleAddRoot()"
+          >添加
+        </el-button>
+        <el-button v-if="props.edit" icon="Edit" type="success" @click="batchEdit()"
+          >修改
+        </el-button>
+        <el-button v-if="props.delete" icon="Delete" type="danger" @click="batchDelete()"
+          >删除
+        </el-button>
       </div>
 
       <div class="opt-box-right">
-        <el-button icon="Refresh" size="small" circle @click="loadData" />
+        <el-button circle icon="Refresh" size="small" @click="loadData" />
       </div>
     </div>
 
-    <div class="header-box" ref="treeHeader">
+    <div ref="treeHeader" class="header-box">
       <!-- 表头-->
       <div
-        :key="index"
         v-for="(item, index) in props.columns"
-        class="tree-header"
+        :key="index"
         :style="calcWidth(index, item.center || false)"
+        class="tree-header"
       >
         {{ item.title }}
       </div>
@@ -41,32 +41,32 @@
       <!-- 操作项列-->
       <div
         v-if="props.add || props.edit || props.delete"
-        class="tree-header"
         :style="calcWidth(props.columns.length, true)"
-        >操作项</div
-      >
+        class="tree-header"
+        >操作项
+      </div>
     </div>
 
     <el-tree
       ref="treeRef"
-      :data="records"
       :allow-drop="props.allowDrop"
-      show-checkbox
-      draggable
-      node-key="id"
-      default-expand-all
+      :data="records"
       :expand-on-click-node="false"
       :filter-node-method="filterNode"
+      default-expand-all
+      draggable
       highlight-current
+      node-key="id"
+      show-checkbox
       @node-drop="handleDrag"
     >
       <template #default="{ data }">
         <div class="tree-box">
           <div
-            :key="index"
             v-for="(item, index) in props.columns"
-            class="tree-item"
+            :key="index"
             :style="calcWidth(index, item.center || false)"
+            class="tree-item"
           >
             <Icon v-if="item.icon" :icon="data[item.icon]" />
             {{ data[item.prop] }}
@@ -74,33 +74,33 @@
 
           <div
             v-if="props.add || props.edit || props.delete"
-            class="tree-item"
             :style="calcWidth(props.columns.length, true)"
+            class="tree-item"
           >
             <el-button
               v-if="props.add"
               :disabled="!data.id"
-              size="small"
               circle
               icon="Plus"
+              size="small"
               @click="handleAdd(data)"
             />
             <el-button
               v-if="props.edit"
               :disabled="!data.id"
-              size="small"
-              icon="Edit"
               circle
+              icon="Edit"
+              size="small"
               @click="handleEdit(data)"
             />
             <el-button
               v-if="props.delete"
               :disabled="!data.id"
-              type="danger"
-              size="small"
-              icon="Delete"
               circle
-              @click="handleDelete(data.id)"
+              icon="Delete"
+              size="small"
+              type="danger"
+              @click="handleDelete([data.id])"
             />
           </div>
         </div>
@@ -111,7 +111,7 @@
 
 <script lang="ts" setup>
 import { onMounted, PropType, ref } from 'vue'
-import { ElMessageBox, ElMessage, ElTree } from 'element-plus'
+import { ElMessage, ElMessageBox, ElTree } from 'element-plus'
 import { Icon } from '@/components/Icon'
 import type Node from 'element-plus/es/components/tree/src/model/node'
 import type { AllowDropType } from 'element-plus/es/components/tree/src/tree.type'

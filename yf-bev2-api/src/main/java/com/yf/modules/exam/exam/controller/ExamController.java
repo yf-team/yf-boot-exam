@@ -7,6 +7,7 @@ import com.yf.base.api.api.dto.BaseIdReqDTO;
 import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.exam.dto.ExamDTO;
+import com.yf.modules.exam.exam.dto.request.ExamListReqDTO;
 import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.service.ExamService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -87,7 +88,7 @@ public class ExamController extends BaseController {
     @Operation(summary = "分页查找")
     @RequiresPermissions("exam:exam:view")
     @PostMapping("/paging")
-    public ApiRest<IPage<ExamDTO>> paging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
+    public ApiRest<IPage<ExamDTO>> paging(@RequestBody PagingReqDTO<ExamListReqDTO> reqDTO) {
 
         //分页查询并转换
         IPage<ExamDTO> page = baseService.paging(reqDTO);
@@ -117,13 +118,7 @@ public class ExamController extends BaseController {
      */
     @Operation(summary = "分页查找")
     @PostMapping("/client-paging")
-    public ApiRest<IPage<ExamDTO>> clientPaging(@RequestBody PagingReqDTO<ExamDTO> reqDTO) {
-
-        ExamDTO params = reqDTO.getParams();
-        if (params == null) {
-            params = new ExamDTO();
-        }
-
+    public ApiRest<IPage<ExamDTO>> clientPaging(@RequestBody PagingReqDTO<ExamListReqDTO> reqDTO) {
 
         //分页查询并转换
         IPage<ExamDTO> page = baseService.paging(reqDTO);

@@ -29,6 +29,7 @@ import com.yf.system.modules.user.dto.response.UserListRespDTO;
 import com.yf.system.modules.user.entity.SysUser;
 import com.yf.system.modules.user.enums.LoginType;
 import com.yf.system.modules.user.enums.SysRoleId;
+import com.yf.system.modules.user.enums.SysUserId;
 import com.yf.system.modules.user.enums.UserState;
 import com.yf.system.modules.user.mapper.SysUserMapper;
 import com.yf.system.modules.user.service.SysUserBindService;
@@ -105,10 +106,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void delete(List<String> ids) {
 
-        int count = sysUserRoleService.countWithLevel(ids, UserUtils.getRoleLevel());
-
-        if (count < ids.size()) {
-            throw new ServiceException("删除错误，可能存在越权操作！");
+        // 超级用户可以删除任何用户
+        if(!SysUserId.ADMIN.equals(UserUtils.getUserId())){
+            int count = sysUserRoleService.countWithLevel(ids, UserUtils.getRoleLevel());
+            if (count < ids.size()) {
+                throw new ServiceException("删除错误，可能存在越权操作！");
+            }
         }
 
         if (ids.contains(UserUtils.getUserId())) {
@@ -253,6 +256,34 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.setToken(user);
     }
 
+    @Override
+    public void pass(SysUserPassReqDTO reqDTO) {
+
+        // 旧密码不能与新密码一致
+        boolean same = reqDTO.getOldPass().equals(reqDTO.getNewPass());
+        if(same){
+            throw new ServiceException("新密码不能与旧密码一样！");
+        }
+
+        // 获取当前用户
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .select(SysUser::getId, SysUser::getPassword, SysUser::getSalt)
+                .eq(SysUser::getId, UserUtils.getUserId());
+        SysUser user = this.getOne(wrapper, false);
+
+        // 旧密码不对
+        boolean check = PassHandler.checkPass(reqDTO.getOldPass(), user.getSalt(), user.getPassword());
+        if (!check) {
+            throw new ServiceException(ApiError.ERROR_90010007);
+        }
+
+        PassInfo passInfo = PassHandler.buildPassword(reqDTO.getNewPass());
+        user.setPassword(passInfo.getPassword());
+        user.setSalt(passInfo.getSalt());
+        this.updateById(user);
+
+    }
 
     @CacheEvict(value = CacheKey.MENU, allEntries = true)
     @Transactional(rollbackFor = Exception.class)

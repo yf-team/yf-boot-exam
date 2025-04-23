@@ -8,7 +8,6 @@
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="open_type" property="openType"/>
-        <result column="password" property="password"/>
         <result column="state" property="state"/>
         <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
@@ -19,13 +18,30 @@
         <result column="hand_min" property="handMin"/>
         <result column="late_max" property="lateMax"/>
         <result column="thanks" property="thanks"/>
-        <result column="result_type" property="resultType"/>
-        <result column="result_oppty" property="resultOppty"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
     </resultMap>
 
+
+    <select id="paging" resultMap="BaseResultMap">
+        SELECT * FROM el_exam ee
+        <where>
+            <if test="query!=null">
+                <if test="query.title!=null and query.title!=''">
+                    AND ee.title LIKE CONCAT('%', #{query.title}, '%')
+                </if>
+                <if test="query.startTimeL!=null">
+                    AND ee.start_time >= #{query.startTimeL}
+                </if>
+
+                <if test="query.startTimeR!=null">
+                    AND ee.end_time &lt;= #{query.startTimeR}
+                </if>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
 
 </mapper>

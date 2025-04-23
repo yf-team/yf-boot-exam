@@ -1,15 +1,12 @@
 package com.yf.modules.exam.exam.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.utils.BeanMapper;
-import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.exam.dto.ExamDTO;
 import com.yf.modules.exam.exam.dto.ExamRuleDTO;
+import com.yf.modules.exam.exam.dto.request.ExamListReqDTO;
 import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.entity.Exam;
 import com.yf.modules.exam.exam.mapper.ExamMapper;
@@ -36,20 +33,8 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
     private final ExamRuleService examRuleService;
 
     @Override
-    public IPage<ExamDTO> paging(PagingReqDTO<ExamDTO> reqDTO) {
-
-        //查询条件
-        QueryWrapper<Exam> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        ExamDTO params = reqDTO.getParams();
-
-        //获得数据
-        IPage<Exam> page = this.page(reqDTO.toPage(), wrapper);
-        //转换结果
-        IPage<ExamDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<ExamDTO>>() {
-        });
-        return pageData;
+    public IPage<ExamDTO> paging(PagingReqDTO<ExamListReqDTO> reqDTO) {
+        return baseMapper.paging(reqDTO.toPage(), reqDTO.getParams());
     }
 
 
