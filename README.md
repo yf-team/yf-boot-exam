@@ -47,16 +47,16 @@ QQ交流群：757328773
 联系人：郭经理  
 手机号：18603038204  
 微信号：gyh_yinzi  
-<img src="https://cdn.yfhl.net//be2/q_dora.png" style="zoom:50%;" />    
+<img src="https://cdn.yfhl.net/be2/q_dora.png" style="zoom:50%;" />    
 
 
 
 ## 系统截图
-<img src="https://cdn.yfhl.net//be2/s1.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s2.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s3.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s4.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s5.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s6.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s7.png" style="zoom:50%;" />  
-<img src="https://cdn.yfhl.net//be2/s8.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s1.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s2.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s3.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s4.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s5.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s6.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s7.png" style="zoom:50%;" />  
+<img src="https://cdn.yfhl.net/be2/s8.png" style="zoom:50%;" />  
