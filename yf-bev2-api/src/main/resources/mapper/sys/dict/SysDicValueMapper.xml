@@ -17,14 +17,14 @@
         SELECT `title`
         FROM el_sys_dic_value
         WHERE `dic_code` = #{dicCode}
-          AND `dic_value` = #{value}
+          AND `dic_value` = #{dicValue}
         LIMIT 1
     </select>
 
     <select id="findTableText" resultType="String">
         SELECT `${dicText}`
         FROM ${dicTable}
-        WHERE `${dicCode}` = #{value}
+        WHERE `${dicCode}` = #{dicValue}
         LIMIT 1
     </select>
 

@@ -32,8 +32,8 @@
     </select>
 
     <select id="listStat" resultType="com.yf.modules.exam.repo.dto.response.RepoStatRespDTO">
-        SELECT dv.value                                                                           AS quType,
-               (SELECT COUNT(0) FROM el_repo_qu WHERE repo_id = #{repoId} AND qu_type = dv.value) AS quCount
+        SELECT dv.dic_value                                                                           AS quType,
+               (SELECT COUNT(0) FROM el_repo_qu WHERE repo_id = #{repoId} AND qu_type = dv.dic_value) AS quCount
         FROM el_sys_dic_value dv
         WHERE dv.dic_code = 'qu_type'
     </select>

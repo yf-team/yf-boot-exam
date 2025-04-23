@@ -172,18 +172,18 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
 
 
     @Override
-    @Cacheable(value = CacheKey.DICT, key = "#dicCode + '-' + #value")
-    public String findDictText(String dicCode, String value) {
-        String text = baseMapper.findDictText(dicCode, value);
+    @Cacheable(value = CacheKey.DICT, key = "#dicCode + '-' + #dicValue")
+    public String findDictText(String dicCode, String dicValue) {
+        String text = baseMapper.findDictText(dicCode, dicValue);
         return StringUtils.isBlank(text) ? "" : text;
     }
 
 
     @Override
-    public String findTableText(String dicTable, String dicText, String dicCode, String value) {
+    public String findTableText(String dicTable, String dicText, String dicCode, String dicValue) {
 
         // 手动缓存，提高短时效率
-        String key = MessageFormat.format("{0}-{1}-{2}-{3}-{4}", CacheKey.DICT, dicTable, dicText, dicCode, value);
+        String key = MessageFormat.format("{0}-{1}-{2}-{3}-{4}", CacheKey.DICT, dicTable, dicText, dicCode, dicValue);
 
         String result = redisService.getString(key);
         if (result != null) {
@@ -191,7 +191,7 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
         }
 
         // 查询新数据
-        String text = baseMapper.findTableText(dicTable, dicText, dicCode, value);
+        String text = baseMapper.findTableText(dicTable, dicText, dicCode, dicValue);
         if (StringUtils.isBlank(text)) {
             text = "";
         }

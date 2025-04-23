@@ -18,10 +18,10 @@ public interface SysDicValueMapper extends BaseMapper<SysDicValue> {
      * 查找数据字典
      *
      * @param dicCode
-     * @param value
+     * @param dicValue
      * @return
      */
-    String findDictText(@Param("dicCode") String dicCode, @Param("value") String value);
+    String findDictText(@Param("dicCode") String dicCode, @Param("dicValue") String dicValue);
 
     /**
      * 查找数据字典
@@ -29,11 +29,11 @@ public interface SysDicValueMapper extends BaseMapper<SysDicValue> {
      * @param dicTable
      * @param dicText
      * @param dicCode
-     * @param value
+     * @param dicValue
      * @return
      */
     String findTableText(@Param("dicTable") String dicTable,
                          @Param("dicText") String dicText,
                          @Param("dicCode") String dicCode,
-                         @Param("value") String value);
+                         @Param("dicValue") String dicValue);
 }
