@@ -1,17 +1,18 @@
 <template>
   <el-select
     v-model="value"
-    multiple
     :placeholder="props.title"
-    @change="selectChange"
+    clearable
+    multiple
     style="width: 100%"
+    @change="selectChange"
   >
     <el-option v-for="item in options" :key="item.id" :label="item.roleName" :value="item.id" />
   </el-select>
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch, onMounted, unref } from 'vue'
+import { onMounted, PropType, ref, unref, watch } from 'vue'
 import { pagingApi } from '@/api/sys/role'
 import type { RoleDataType } from '../types'
 

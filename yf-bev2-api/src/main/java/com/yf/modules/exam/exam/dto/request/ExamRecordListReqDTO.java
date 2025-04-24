@@ -28,6 +28,9 @@ public class ExamRecordListReqDTO implements Serializable {
     @Schema(description = "考试名称")
     private String title;
 
+    @Schema(description = "考试ID")
+    private String examId;
+
     @JsonDeserialize(using = NumericBooleanDeserializer.class)
     @Schema(description = "是否通过")
     private Boolean passed;

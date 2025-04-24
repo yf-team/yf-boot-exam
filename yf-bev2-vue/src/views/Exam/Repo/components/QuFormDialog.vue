@@ -1,21 +1,21 @@
 <template>
   <el-dialog
     v-model="dialogVisible"
-    title="试题管理"
-    width="80%"
     :before-close="handleClose"
     align-center
+    title="试题管理"
+    width="80%"
   >
-    <el-form :model="form" :rules="rules" ref="formRef" label-width="120px">
+    <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="试题题型" prop="quType">
-            <DictListSelect dic-code="qu_type" v-model="form.quType" :disabled="!!form.id" />
+            <DictListSelect v-model="form.quType" :disabled="!!form.id" dic-code="qu_type" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="难度等级" prop="difficultyLevel">
-            <DictListSelect dic-code="qu_difficulty_level" v-model="form.difficultyLevel" />
+            <DictListSelect v-model="form.difficultyLevel" dic-code="qu_difficulty_level" />
           </el-form-item>
         </el-col>
 
@@ -27,29 +27,29 @@
 
         <el-col :span="24">
           <el-form-item label="试题题干" prop="content">
-            <Editor v-model="form.content" height="100px" ref="editorRef" />
+            <Editor ref="editorRef" v-model="form.content" height="100px" />
           </el-form-item>
         </el-col>
 
         <el-col :span="24">
           <el-form-item label="试题解析" prop="analysis">
-            <Editor v-model="form.analysis" height="100px" ref="analysisRef" />
+            <Editor ref="analysisRef" v-model="form.analysis" height="100px" />
           </el-form-item>
         </el-col>
       </el-row>
 
-      <el-col :span="24" v-if="form.quType">
+      <el-col v-if="form.quType" :span="24">
         <el-divider />
 
         <div style="padding-bottom: 10px">
-          <el-button @click="addAnswer" type="primary">添加选项</el-button>
+          <el-button type="primary" @click="addAnswer">添加选项</el-button>
         </div>
 
-        <el-table :data="form.answerList" style="width: 100%" border>
+        <el-table :data="form.answerList" border style="width: 100%">
           <el-table-column label="序号" width="180">
             <template #default="{ $index }">第{{ $index + 1 }}项</template>
           </el-table-column>
-          <el-table-column label="是否答案" width="180" align="center">
+          <el-table-column align="center" label="是否答案" width="180">
             <template #default="{ row, $index }">
               <el-checkbox
                 v-model="row.isRight"
@@ -63,9 +63,9 @@
               <el-input v-model="row.content" placeholder="输入选项内容" />
             </template>
           </el-table-column>
-          <el-table-column label="操作项" align="center" width="180px">
+          <el-table-column align="center" label="操作项" width="180px">
             <template #default="{ $index }">
-              <el-button type="danger" :icon="Delete" circle @click="removeAnswer($index)" />
+              <el-button :icon="Delete" circle type="danger" @click="removeAnswer($index)" />
             </template>
           </el-table-column>
         </el-table>
@@ -75,14 +75,14 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="handleClose">取消</el-button>
-        <el-button type="primary" @click="handleSave(formRef)" :loading="loading">保存</el-button>
+        <el-button :loading="loading" type="primary" @click="handleSave(formRef)">保存</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { DictListSelect } from '@/components/DictListSelect'
 import { QuDataType } from '@/views/Exam/Repo/types'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
@@ -161,6 +161,13 @@ watch(
 )
 
 watch(
+  () => props.repoId,
+  (val) => {
+    form.value.repoId = val
+  }
+)
+
+watch(
   () => form.value.quType,
   (val) => {
     if (val) {
@@ -191,6 +198,10 @@ const handleSave = async (formEl: FormInstance | undefined) => {
           emit('update:visible', false)
           emit('saved')
           loading.value = false
+
+          // 重置表单，保留题库
+          formEl?.resetFields()
+          form.value.repoId = props.repoId
         })
         .catch(() => {
           loading.value = false
@@ -228,15 +239,15 @@ const autoFill = (quType: string) => {
   // 先清理
   form.value.answerList = []
 
-  if (quType === 'radio' || quType === 'multi' || quType === 'multi2') {
+  if (quType === 'radio' || quType === 'multi') {
     for (let i = 0; i < 3; i++) {
       form.value.answerList?.push({ content: '', isRight: false })
     }
   }
 
   if (quType === 'judge') {
-    form.value.answerList?.push({ content: '是', isRight: false })
-    form.value.answerList?.push({ content: '否', isRight: false })
+    form.value.answerList?.push({ content: '正确', isRight: false })
+    form.value.answerList?.push({ content: '错误', isRight: false })
   }
 }
 

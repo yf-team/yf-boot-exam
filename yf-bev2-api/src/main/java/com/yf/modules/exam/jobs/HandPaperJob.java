@@ -22,8 +22,6 @@ public class HandPaperJob implements Job {
     @Autowired
     private PaperService paperService;
 
-    @Autowired
-    private JobService jobService;
 
 
     @Override

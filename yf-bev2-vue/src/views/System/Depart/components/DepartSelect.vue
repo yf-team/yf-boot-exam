@@ -1,17 +1,19 @@
 <template>
   <el-tree-select
-    style="width: 100%"
-    :check-strictly="true"
     v-model="value"
+    :check-strictly="true"
     :data="treeData"
-    :render-after-expand="false"
-    @change="handlerChange"
     :props="{ label: 'deptName' }"
+    :render-after-expand="false"
+    clearable
+    placeholder="请选择部门"
+    style="width: 250px"
+    @change="handlerChange"
   />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, onMounted, unref } from 'vue'
+import { onMounted, ref, unref, watch } from 'vue'
 import { treeApi } from '@/api/sys/depart'
 
 const value = ref()
@@ -22,10 +24,6 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: ''
-  },
-  title: {
-    type: String,
-    default: '请选择数据'
   }
 })
 

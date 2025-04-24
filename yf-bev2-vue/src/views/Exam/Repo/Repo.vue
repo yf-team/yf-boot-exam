@@ -20,28 +20,21 @@
         <el-table-column align="center" label="创建时间" prop="createTime" />
         <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="{ row }">
-            <el-button icon="Setting" size="small" type="primary" @click="toQuList(row.id)"
-              >试题管理
-            </el-button>
+            <el-button icon="Setting" type="primary" @click="toQuList(row.id)">试题管理</el-button>
           </template>
         </el-table-column>
       </template>
     </DataTable>
 
-    <el-dialog v-model="dialogVisible" :before-close="handleClose" title="题库管理" width="50%">
-      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="题库名称" prop="title">
-              <el-input v-model="form.title" autocomplete="off" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="题库分类" prop="catId">
-              <DictListSelect v-model="form.catId" dic-code="repo_catalog" />
-            </el-form-item>
-          </el-col>
-        </el-row>
+    <el-dialog v-model="dialogVisible" :before-close="handleClose" title="题库管理" width="30%">
+      <el-form ref="formRef" :model="form" :rules="rules" label-position="top" label-width="120px">
+        <el-form-item label="题库名称" prop="title">
+          <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+
+        <el-form-item label="题库分类" prop="catId">
+          <DictListSelect v-model="form.catId" dic-code="repo_catalog" />
+        </el-form-item>
       </el-form>
 
       <template #footer>
@@ -97,7 +90,7 @@ let options = ref<OptionsType>({
 
 const table = ref()
 const dialogVisible = ref(false)
-const form = ref<RepoDataType>({})
+const form = ref<RepoDataType>({ title: '', catId: '' })
 const formRef = ref<FormInstance>()
 const rules = reactive<FormRules>({
   title: [
@@ -136,10 +129,12 @@ const handleEdit = (row: any) => {
 }
 
 const handleSave = (formEl: FormInstance | undefined) => {
+  console.log('++++++', formEl)
+
   if (!formEl) return
 
-  formEl.validate((valid) => {
-    if (valid) {
+  formEl?.validate((isValid) => {
+    if (isValid) {
       const formData = unref(form)
       saveApi(formData).then(() => {
         ElMessage({
@@ -151,8 +146,6 @@ const handleSave = (formEl: FormInstance | undefined) => {
         table.value.reload()
         dialogVisible.value = false
       })
-    } else {
-      dialogVisible.value = false
     }
   })
 }

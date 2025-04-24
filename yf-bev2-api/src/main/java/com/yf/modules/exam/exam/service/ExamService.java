@@ -51,4 +51,11 @@ public interface ExamService extends IService<Exam> {
      * @return
      */
     ExamDetailDTO detail(String id);
+
+    /**
+     * 查找最低交卷时间
+     * @param id
+     * @return
+     */
+    int findHandMin(String id);
 }

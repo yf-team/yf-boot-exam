@@ -193,7 +193,7 @@ const dicCode = ref('')
 const dictType = ref(0)
 
 const showItem = (row: any) => {
-  dicCode.value = row.code
+  dicCode.value = row.dicCode
   dictType.value = row.type
   drawerVisible.value = true
 }

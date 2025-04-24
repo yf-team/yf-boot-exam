@@ -3,7 +3,6 @@ package com.yf.system.modules.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.ability.Constant;
 import com.yf.ability.captcha.service.CaptchaService;
@@ -88,18 +87,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             roles.add(role.getId());
         }
         respDTO.setRoles(roles);
+
+        // 清理掉密码
+        respDTO.setPassword(null);
+        respDTO.setSalt(null);
+
         return respDTO;
     }
 
     @Override
     public IPage<UserListRespDTO> paging(PagingReqDTO<SysUserQueryReqDTO> reqDTO) {
-
-        //创建分页对象
-        Page page = reqDTO.toPage();
-
-        //转换结果
-        IPage<UserListRespDTO> pageData = baseMapper.paging(page, reqDTO.getParams());
-        return pageData;
+        return baseMapper.paging(reqDTO.toPage(), reqDTO.getParams());
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -1,5 +1,6 @@
 package com.yf.modules.exam.exam.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.base.api.api.dto.PagingReqDTO;
@@ -70,5 +71,19 @@ public class ExamServiceImpl extends ServiceImpl<ExamMapper, Exam> implements Ex
         List<ExamRuleDTO> ruleList = examRuleService.listByExam(id);
         dto.setRuleList(ruleList);
         return dto;
+    }
+
+    @Override
+    public int findHandMin(String id) {
+
+        QueryWrapper<Exam> wrapper = new QueryWrapper<>();
+        wrapper.lambda().select(Exam::getHandMin).eq(Exam::getId, id);
+
+        Exam entity = this.getOne(wrapper, false);
+        if (entity != null && entity.getHandMin() != null && entity.getHandMin() > 0) {
+            return entity.getHandMin();
+        }
+
+        return 0;
     }
 }

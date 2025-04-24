@@ -36,7 +36,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
         //查询条件
         QueryWrapper<ExamRecord> wrapper = new QueryWrapper<>();
         wrapper.lambda()
-                .select(ExamRecord::getId, ExamRecord::getMaxScore)
+                .select(ExamRecord::getId, ExamRecord::getMaxScore, ExamRecord::getTryCount)
                 .eq(ExamRecord::getUserId, userId)
                 .eq(ExamRecord::getExamId, examId);
 
@@ -61,6 +61,7 @@ public class ExamRecordServiceImpl extends ServiceImpl<ExamRecordMapper, ExamRec
                 record.setPassed(passed);
                 record.setPaperId(paperId);
             }
+            record.setTryCount(record.getTryCount() + 1);
             record.setLastScore(score);
             this.updateById(record);
         }

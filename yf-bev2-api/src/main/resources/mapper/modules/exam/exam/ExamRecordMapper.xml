@@ -15,7 +15,7 @@
     </resultMap>
 
     <select id="clientPaging" resultMap="BaseResultMap">
-        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_exam ex ON rc.exam_id=ex.id WHERE user_id=#{query.userId}
+        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_exam ex ON rc.exam_id=ex.id WHERE user_id=#{query.userId} AND ex.id IS NOT NULL
         <if test="query!=null">
             <if test="query.title!=null and query.title!=''">
                 AND ex.title LIKE CONCAT('%', #{query.title} '%')
@@ -28,9 +28,13 @@
     </select>
 
     <select id="paging" resultMap="BaseResultMap">
-        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_sys_user uc ON rc.user_id=uc.id
+        SELECT rc.* FROM el_exam_record rc LEFT JOIN el_sys_user uc ON rc.user_id=uc.id LEFT JOIN el_exam ee ON ee.id=rc.exam_id
         <where>
+            AND ee.id IS NOT NULL
             <if test="query!=null">
+                <if test="query.examId!=null and query.examId!=''">
+                    AND rc.exam_id=#{query.examId}
+                </if>
                 <if test="query.userName!=null and query.userName!=''">
                     AND (uc.real_name LIKE CONCAT('%', #{query.userName} '%') OR uc.user_name LIKE CONCAT('%',
                     #{query.userName} '%'))

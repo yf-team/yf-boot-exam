@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.repo.dto.RepoQuDTO;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuListReqDTO;
 import com.yf.modules.exam.repo.entity.RepoQu;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface RepoQuService extends IService<RepoQu> {
      * @param reqDTO
      * @return
      */
-    IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuDTO> reqDTO);
+    IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuListReqDTO> reqDTO);
 
     /**
      * 添加或保存

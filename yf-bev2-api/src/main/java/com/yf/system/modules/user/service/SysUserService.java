@@ -28,7 +28,6 @@ public interface SysUserService extends IService<SysUser> {
      */
     SysUserSaveReqDTO detail(String id);
 
-
     /**
      * 分页查询数据
      *

@@ -8,6 +8,7 @@ import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.repo.dto.RepoQuDTO;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuListReqDTO;
 import com.yf.modules.exam.repo.service.RepoQuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -84,7 +85,7 @@ public class RepoQuController extends BaseController {
     @Operation(summary = "分页查找")
     @RequiresPermissions("repo:qu:view")
     @PostMapping("/paging")
-    public ApiRest<IPage<RepoQuDTO>> paging(@RequestBody PagingReqDTO<RepoQuDTO> reqDTO) {
+    public ApiRest<IPage<RepoQuDTO>> paging(@RequestBody PagingReqDTO<RepoQuListReqDTO> reqDTO) {
 
         //分页查询并转换
         IPage<RepoQuDTO> page = repoQuService.paging(reqDTO);

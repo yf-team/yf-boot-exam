@@ -13,6 +13,7 @@ import com.yf.base.utils.jackson.JsonHelper;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
 import com.yf.modules.exam.repo.dto.RepoQuDTO;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
+import com.yf.modules.exam.repo.dto.request.RepoQuListReqDTO;
 import com.yf.modules.exam.repo.entity.RepoQu;
 import com.yf.modules.exam.repo.mapper.RepoQuMapper;
 import com.yf.modules.exam.repo.service.RepoQuAnswerService;
@@ -41,17 +42,26 @@ public class RepoQuServiceImpl extends ServiceImpl<RepoQuMapper, RepoQu> impleme
     private final RepoQuAnswerService repoQuAnswerService;
 
     @Override
-    public IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuDTO> reqDTO) {
+    public IPage<RepoQuDTO> paging(PagingReqDTO<RepoQuListReqDTO> reqDTO) {
 
         //查询条件
         QueryWrapper<RepoQu> wrapper = new QueryWrapper<>();
 
         // 请求参数
-        RepoQuDTO params = reqDTO.getParams();
+        RepoQuListReqDTO params = reqDTO.getParams();
 
         if (params != null) {
             if (StringUtils.isNotBlank(params.getContent())) {
                 wrapper.lambda().like(RepoQu::getContent, params.getContent());
+            }
+            if (StringUtils.isNotBlank(params.getRepoId())) {
+                wrapper.lambda().eq(RepoQu::getRepoId, params.getRepoId());
+            }
+            if (StringUtils.isNotBlank(params.getQuType())) {
+                wrapper.lambda().eq(RepoQu::getQuType, params.getQuType());
+            }
+            if (StringUtils.isNotBlank(params.getDifficultyLevel())) {
+                wrapper.lambda().eq(RepoQu::getDifficultyLevel, params.getDifficultyLevel());
             }
         }
 

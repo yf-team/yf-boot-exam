@@ -9,10 +9,13 @@
     >
       <template #search>
         <DepartSelect v-model="query.params.deptCode" class="filter-item" />
+        <RoleSelect v-model="query.params.roleIds" class="filter-item" title="搜索角色" />
         <el-input
-          v-model="query.params['roleName']"
+          v-model="query.params.userName"
           class="filter-item"
-          placeholder="搜索角色名称"
+          clearable
+          placeholder="姓名/账号"
+          style="width: 200px"
         />
       </template>
 
@@ -68,13 +71,18 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="用户头像" prop="avatar">
-              <el-input v-model="form.avatar" autocomplete="off" />
+              <file-uploader v-model="form.avatar" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
             <el-form-item label="登录密码" prop="password">
-              <el-input v-model="form.password" autocomplete="off" type="password" />
+              <el-input
+                v-model="form.password"
+                autocomplete="new-password"
+                placeholder="不修改请留空！！"
+                type="password"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -101,6 +109,7 @@ import { detailApi, saveApi } from '@/api/sys/user'
 import RoleSelect from '../Role/components/RoleSelect.vue'
 import DepartSelect from '../Depart/components/DepartSelect.vue'
 import type { UserDataType } from './types'
+import { FileUploader } from '@/plugins/uploader'
 
 // 表格查询参数
 let query = ref<TableQueryType>({
@@ -108,7 +117,8 @@ let query = ref<TableQueryType>({
   size: 10,
   params: {
     title: '',
-    deptCode: ''
+    deptCode: '',
+    roleIds: []
   }
 })
 

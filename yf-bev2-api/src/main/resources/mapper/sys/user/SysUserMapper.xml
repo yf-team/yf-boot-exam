@@ -21,10 +21,6 @@
         <result column="update_by" property="updateBy"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`user_name`,`avatar`,`real_name`,`password`,`salt`,`state`,`id_card`,`mobile`,`email`,`dept_code`,`create_time`,`update_time`,`create_by`,`update_by`
-    </sql>
 
     <resultMap id="ListResultMap"
                type="com.yf.system.modules.user.dto.response.UserListRespDTO">

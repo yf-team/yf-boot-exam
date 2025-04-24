@@ -40,7 +40,7 @@
             class="answer-item"
             @click="itemClick(item)"
           >
-            <div v-if="detail.quType === 'multi' || detail.quType === 'multi2'">
+            <div v-if="detail.quType === 'multi'">
               <input :checked="item.checked" type="checkbox" />
             </div>
             <div v-if="detail.quType === 'radio' || detail.quType === 'judge'">
@@ -50,6 +50,15 @@
               {{ item.content }}
             </div>
           </div>
+        </div>
+
+        <div style="text-align: center; padding-top: 20px">
+          <el-button :disabled="!hasPrev" icon="Back" size="large" type="primary" @click="prevQu"
+            >上一题
+          </el-button>
+          <el-button :disabled="!hasNext" icon="Right" size="large" type="primary" @click="nextQu"
+            >下一题
+          </el-button>
         </div>
       </el-card>
     </el-col>
@@ -69,26 +78,62 @@ const route = useRoute()
 const paperId = route.query.id as string
 const detail = ref({})
 let cardList = ref<QuCardType>()
+let allQuIds = ref<string[]>([])
+
+const hasNext = ref(false)
+const hasPrev = ref(false)
 
 // 查找答题卡
 const listCard = () => {
   quCardApi({ id: paperId }).then((res) => {
     cardList.value = res.data
     // 加载第一个题目
-    loadFirst()
+    buildAllQuIds()
   })
+}
+
+// 下一题
+const nextQu = () => {
+  const index = allQuIds.value.indexOf(detail.value.quId)
+  quDetail(allQuIds.value[index + 1])
+}
+
+// 上一题
+const prevQu = () => {
+  const index = allQuIds.value.indexOf(detail.value.quId)
+  quDetail(allQuIds.value[index - 1])
 }
 
 // 查找详情
 const quDetail = (quId: string) => {
+  console.log('当前ID', quId)
+
+  const index = allQuIds.value.indexOf(quId)
+
+  // 上下一题
+  hasPrev.value = index > 0
+  hasNext.value = index < allQuIds.value.length - 1
+
   quDetailApi({ paperId: paperId, quId: quId }).then((res) => {
     detail.value = res.data
   })
 }
 
-// 显示首个题目
-const loadFirst = () => {
-  quDetail(cardList.value[0].itemList[0].quId)
+const buildAllQuIds = () => {
+  const ids = []
+  if (!cardList.value || cardList.value.length === 0) {
+    return []
+  }
+  for (let i = 0; i < cardList.value.length; i++) {
+    const itemList = cardList.value[i].itemList
+    for (let j = 0; j < itemList.length; j++) {
+      ids.push(itemList[j].quId)
+    }
+  }
+  allQuIds.value = ids
+
+  // 查找第一题
+  quDetail(ids[0])
 }
 
 // 显示首个题目
@@ -111,7 +156,7 @@ const tagType = (item) => {
 const itemClick = (e) => {
   e.checked = !e.checked
   // 单选排他
-  if (detail.value.quType === 'radio' || detail.value === 'judge') {
+  if (detail.value.quType === 'radio' || detail.value.quType === 'judge') {
     for (const a of detail.value.answerList) {
       if (a.answerId !== e.answerId) {
         a.checked = false

@@ -99,23 +99,7 @@ let options = ref<OptionsType>({
   del: {
     enable: true,
     permission: ['role:delete']
-  },
-
-  // 批量操作
-  batch: [
-    {
-      key: 'state',
-      label: '启用',
-      params: { state: 1 },
-      action: '/api/user/state',
-      idsKey: 'userIds'
-    },
-    {
-      key: 'state',
-      label: '禁用',
-      params: { state: 0 }
-    }
-  ]
+  }
 })
 
 const tableRef = ref()

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.yf.ability.task.enums.JobGroup;
 import com.yf.ability.task.service.JobService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.base.api.exception.ServiceException;
@@ -218,10 +219,9 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
 
         // 到期执行任务
         String paperId = paper.getId();
-
         // 执行阅卷或完成
         String jobName = "force:hand:paper:" + paperId;
-        jobService.addCronJob(HandPaperJob.class, jobName, CronUtils.dateToCron(paper.getLimitTime()), paperId);
+        jobService.addCronJob(HandPaperJob.class, jobName, JobGroup.SYSTEM, CronUtils.dateToCron(paper.getLimitTime()), paperId);
 
         return paperId;
     }
@@ -248,6 +248,12 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         // 考试用时
         long useTime = (System.currentTimeMillis() - paper.getCreateTime().getTime()) / 1000 / 60;
         paper.setUserTime((int) useTime);
+
+        // 最低交卷时间校验
+        int handMin = examService.findHandMin(paper.getExamId());
+        if (handMin > 0 && useTime < handMin) {
+            throw new ServiceException(String.format("请至少作答%s分钟后再交卷！", handMin));
+        }
 
         // 是否合格
         boolean passed = DecimalUtils.ge(userScore, paper.getQualifyScore());

@@ -1,15 +1,21 @@
 <template>
-  <el-select v-model="value" placeholder="请选择题库" @change="selectChange" style="width: 100%">
+  <el-select
+    v-model="repoId"
+    clearable
+    placeholder="请选择题库"
+    style="width: 100%"
+    @change="selectChange"
+  >
     <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id || ''" />
   </el-select>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, onMounted, unref } from 'vue'
+import { onMounted, ref, unref, watch } from 'vue'
 import { pagingApi } from '@/api/modules/exam/repo'
 import type { RepoDataType } from '../types'
 
-const value = ref<String>()
+const repoId = ref<String>()
 const options = ref<RepoDataType[]>([])
 
 // 组件参数
@@ -26,7 +32,7 @@ const emit = defineEmits(['update:modelValue'])
 watch(
   () => props.modelValue,
   (val) => {
-    value.value = val
+    repoId.value = val
   }
 )
 
@@ -40,7 +46,8 @@ const loadData = async () => {
 
 // 选定内容
 const selectChange = () => {
-  emit('update:modelValue', unref(value))
+  console.log('selectChange', unref(repoId))
+  emit('update:modelValue', unref(repoId))
 }
 
 // 加载第一页数据
