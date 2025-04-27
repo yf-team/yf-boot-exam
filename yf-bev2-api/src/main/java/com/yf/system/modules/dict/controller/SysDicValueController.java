@@ -10,12 +10,12 @@ import com.yf.system.modules.dict.dto.request.SysDicValueReqDTO;
 import com.yf.system.modules.dict.service.SysDicValueService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,11 +30,11 @@ import java.util.List;
  */
 @Tag(name = "字典值管理")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/sys/dic/value")
 public class SysDicValueController extends BaseController {
-
-    @Autowired
-    private SysDicValueService baseService;
+    
+    private final SysDicValueService baseService;
 
     /**
      * 添加或修改
@@ -44,7 +44,7 @@ public class SysDicValueController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:dict:add", "sys:dict:edit"}, logical = Logical.OR)
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<BaseIdRespDTO> save(@RequestBody SysDicValueDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
@@ -58,7 +58,7 @@ public class SysDicValueController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:dict:delete"})
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
+    @PostMapping("/delete")
     public ApiRest<?> edit(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.removeByIds(reqDTO.getIds());
@@ -71,7 +71,7 @@ public class SysDicValueController extends BaseController {
      * @return
      */
     @Operation(summary = "分类树列表")
-    @RequestMapping(value = "/tree", method = {RequestMethod.POST})
+    @PostMapping("/tree")
     public ApiRest<List<DicValueTreeDTO>> tree(@RequestBody SysDicValueReqDTO reqDTO) {
         List<DicValueTreeDTO> dtoList = baseService.findTree(reqDTO);
         return super.success(dtoList);

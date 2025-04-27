@@ -7,8 +7,6 @@
           class="filter-item"
           dic-code="plugin_group"
         />
-
-        <el-input v-model="query.params.title" class="filter-item" placeholder="插件名称" />
       </template>
 
       <template #columns>
@@ -83,35 +81,7 @@ const configItems = ref<ConfigIem[]>()
 
 // 表格默认参数
 let options = ref<OptionsType>({
-  listUrl: '/api/sys/plugin/data/paging',
-  delUrl: '/api/sys/plugin/data/delete',
-  add: {
-    enable: true,
-    permission: ['sys:user:add']
-  },
-  edit: {
-    enable: true,
-    permission: ['sys:user:edit']
-  },
-  del: {
-    enable: true,
-    permission: ['sys:user:delete']
-  },
-  // 批量操作
-  batch: [
-    {
-      key: 'state',
-      label: '启用',
-      params: { state: 0 },
-      action: '/api/sys/user/state'
-    },
-    {
-      key: 'state',
-      label: '禁用',
-      params: { state: 1 },
-      action: '/api/sys/user/state'
-    }
-  ]
+  listUrl: '/api/sys/plugin/data/paging'
 })
 
 const table = ref()

@@ -12,9 +12,9 @@ import com.yf.system.modules.depart.entity.SysDepart;
 import com.yf.system.modules.depart.service.SysDepartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +32,11 @@ import java.util.List;
  */
 @Tag(name = "部门信息")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/sys/depart")
 public class SysDepartController extends BaseController {
 
-    @Autowired
-    private SysDepartService baseService;
+    private final SysDepartService baseService;
 
     /**
      * 添加或修改

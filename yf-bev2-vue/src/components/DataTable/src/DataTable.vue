@@ -5,7 +5,7 @@
         <slot name="search"></slot>
       </div>
 
-      <el-button type="primary" icon="Search" @click="search">搜索</el-button>
+      <el-button icon="Search" type="primary" @click="search">搜索</el-button>
       <el-button icon="RefreshLeft" @click="reset()">重置</el-button>
     </div>
 
@@ -13,69 +13,67 @@
       <div class="opt-box-left">
         <el-button
           v-if="add && add.enable"
-          v-permission="add.permission"
-          type="primary"
-          icon="Plus"
-          @click="onAdd"
+          v-hasPermi="add.permission"
           class="filter-item"
-          >添加</el-button
-        >
+          icon="Plus"
+          type="primary"
+          @click="onAdd"
+          >添加
+        </el-button>
         <el-button
           v-if="edit && edit.enable"
-          v-permission="edit.permission"
-          type="success"
-          icon="Edit"
-          class="filter-item"
+          v-hasPermi="edit.permission"
           :disabled="selectedIds.length === 0"
+          class="filter-item"
+          icon="Edit"
+          type="success"
           @click="onEdit"
-          >修改</el-button
-        >
+          >修改
+        </el-button>
         <el-button
           v-if="del && del.enable"
-          v-permission="del.permission"
-          type="danger"
-          icon="Delete"
-          class="filter-item"
+          v-hasPermi="del.permission"
           :disabled="selectedIds.length === 0"
+          class="filter-item"
+          icon="Delete"
+          type="danger"
           @click="onDelete"
-          >删除</el-button
-        >
+          >删除
+        </el-button>
         <el-button
-          class="filter-item"
-          v-permission="ip.permission"
           v-if="ip && ip.enable"
-          type="default"
-          icon="Upload"
-          >导入</el-button
-        >
-        <el-button
-          v-permission="op.permission"
-          v-if="op && op.enable"
-          type="default"
-          icon="Download"
+          v-hasPermi="ip.permission"
           class="filter-item"
-          >导出</el-button
-        >
+          icon="Upload"
+          >导入
+        </el-button>
+        <el-button
+          v-if="op && op.enable"
+          v-hasPermi="op.permission"
+          class="filter-item"
+          icon="Download"
+          >导出
+        </el-button>
 
         <el-dropdown v-if="selectedIds.length > 0 && batch" style="margin-left: 10px">
-          <el-button type="primary" plain>
-            批量操作<el-icon class="el-icon--right"><arrow-down /></el-icon>
+          <el-button plain type="primary">
+            批量操作
+            <el-icon class="el-icon--right">
+              <arrow-down />
+            </el-icon>
           </el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item
-                :key="index"
-                v-for="(item, index) in batch"
-                @click="onBatch(item)"
-                >{{ item.label }}</el-dropdown-item
-              >
+              <el-dropdown-item v-for="(item, index) in batch" :key="index" @click="onBatch(item)"
+                >{{ item.label }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
 
       <div class="opt-box-right">
-        <el-button icon="Refresh" size="small" circle @click="reload" />
+        <el-button circle icon="Refresh" size="small" @click="reload" />
       </div>
     </div>
 
@@ -84,19 +82,19 @@
       :row-key="rowKey || 'id'"
       stripe
       style="width: 100%"
-      @selection-change="selection"
       @select="rowSelect"
+      @selection-change="selection"
     >
       <slot name="columns"></slot>
     </el-table>
 
     <div class="paging-box">
       <el-pagination
-        background
-        layout="total, sizes, prev, pager, next"
-        :total="total"
         :current-page="current"
         :page-sizes="[10, 50, 100, 500]"
+        :total="total"
+        background
+        layout="total, sizes, prev, pager, next"
         @size-change="sizeChange"
         @current-change="currentChange"
       />
@@ -106,9 +104,9 @@
 
 <script lang="ts" setup>
 import request from '@/config/axios'
-import { onMounted, toRefs, PropType, ref, unref } from 'vue'
-import { OptionsType, BatchType, TableQueryType } from './types'
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { onMounted, PropType, ref, toRefs, unref } from 'vue'
+import { BatchType, OptionsType, TableQueryType } from './types'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 // 页面参数
 const current = ref(1)

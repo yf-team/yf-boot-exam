@@ -6,11 +6,11 @@ import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.AbcTags;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DecimalUtils;
+import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.dto.response.PaperQuCardItemRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperQuCardRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO;
 import com.yf.modules.exam.paper.dto.response.PaperQuFillRespDTO;
-import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
 import com.yf.modules.exam.paper.entity.PaperQu;
 import com.yf.modules.exam.paper.entity.PaperQuAnswer;
 import com.yf.modules.exam.paper.mapper.PaperQuMapper;
@@ -18,7 +18,6 @@ import com.yf.modules.exam.paper.service.PaperQuAnswerService;
 import com.yf.modules.exam.paper.service.PaperQuService;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
 import com.yf.modules.exam.repo.dto.request.RepoQuDetailDTO;
-import com.yf.modules.exam.repo.service.RepoQuService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,6 @@ import java.util.*;
 public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> implements PaperQuService {
 
     private final PaperQuAnswerService paperQuAnswerService;
-    private final RepoQuService repoQuService;
 
 
     @Transactional(rollbackFor = Exception.class)

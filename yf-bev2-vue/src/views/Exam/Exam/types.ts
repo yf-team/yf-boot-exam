@@ -4,7 +4,7 @@ export type ExamType = {
   content?: string
   startTime?: string
   endTime?: string
-  qualifyScore: number
+  qualifyScore?: number
   totalScore?: number
   totalTime?: number
   chance?: number

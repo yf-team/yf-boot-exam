@@ -3,18 +3,18 @@ package com.yf.system.modules.dict.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yf.ability.redis.service.RedisService;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.BeanMapper;
-import com.yf.ability.redis.service.RedisService;
+import com.yf.base.utils.CacheKey;
 import com.yf.system.modules.dict.dto.SysDicValueDTO;
 import com.yf.system.modules.dict.dto.ext.DicValueTreeDTO;
 import com.yf.system.modules.dict.dto.request.SysDicValueReqDTO;
 import com.yf.system.modules.dict.entity.SysDicValue;
 import com.yf.system.modules.dict.mapper.SysDicValueMapper;
 import com.yf.system.modules.dict.service.SysDicValueService;
-import com.yf.base.utils.CacheKey;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,7 @@ import java.util.Map;
  * @since 2020-12-01 14:00
  */
 @Service
+@RequiredArgsConstructor
 public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDicValue> implements SysDicValueService {
 
     /**
@@ -42,8 +43,7 @@ public class SysDicValueServiceImpl extends ServiceImpl<SysDicValueMapper, SysDi
      */
     private static final String ROOT_TAG = "0";
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
     @Override
     public List<DicValueTreeDTO> findTree(SysDicValueReqDTO reqDTO) {

@@ -17,7 +17,7 @@ import com.yf.system.modules.user.dto.request.UserRoleReqDTO;
 import com.yf.system.modules.user.entity.SysUserRole;
 import com.yf.system.modules.user.mapper.SysUserRoleMapper;
 import com.yf.system.modules.user.service.SysUserRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -33,11 +33,11 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2020-04-13 16:57
  */
+@RequiredArgsConstructor
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
 
-    @Autowired
-    private SysRoleService sysRoleService;
+    private final SysRoleService sysRoleService;
 
     @Override
     public IPage<SysUserRoleDTO> paging(PagingReqDTO<SysUserRoleDTO> reqDTO) {
@@ -50,10 +50,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         //获得数据
         IPage<SysUserRole> page = this.page(query, wrapper);
+
         //转换结果
-        IPage<SysUserRoleDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysUserRoleDTO>>() {
-        });
-        return pageData;
+        return JsonHelper.parseObject(page, new TypeReference<Page<SysUserRoleDTO>>() {});
     }
 
     @Override

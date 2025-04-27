@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -37,7 +34,7 @@ public class CaptchaController extends BaseController {
 
     private final CaptchaService captchaService;
 
-    @RequestMapping(value = "/gen", method = RequestMethod.GET)
+    @GetMapping("/gen")
     @Operation(summary = "验证码图片")
     @Parameters({
             @Parameter(name = "key", description = "验证码ID,前端自行使用UUID生成，务必确保整个系统不重复",

@@ -3,12 +3,10 @@ import config from './config'
 
 import { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, RequestConfig } from './types'
 import { ElMessage } from 'element-plus'
-import { useStorage } from '@/hooks/web/useStorage'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import router from '@/router'
 import { useUserStoreWithOut } from '@/store/modules/user'
 
-const { clear } = useStorage()
 const userStore = useUserStoreWithOut()
 const tagsViewStore = useTagsViewStore()
 

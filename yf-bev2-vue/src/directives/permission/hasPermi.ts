@@ -1,19 +1,34 @@
 import type { App, Directive, DirectiveBinding } from 'vue'
-import { useI18n } from '@/hooks/web/useI18n'
-import router from '@/router'
+import { useStorage } from '@/hooks/web/useStorage'
 
-const { t } = useI18n()
+const { getStorage } = useStorage()
 
-const hasPermission = (value: string): boolean => {
-  const permission = (router.currentRoute.value.meta.permission || []) as string[]
-  if (!value) {
-    throw new Error(t('permission.hasPermission'))
-  }
-  if (permission.includes(value)) {
+const hasPermission = (arr: string[]): boolean => {
+  // 获取后端权限
+  const userInfo = getStorage('userInfo') || { permissions: [] }
+  const permissions = userInfo.permissions || []
+  // 未提供权限或权限为空则通行
+  if (!arr || arr.length === 0) {
     return true
   }
+
+  // 一项符合就通过
+  for (let i = 0; i < arr.length; i++) {
+    const p = arr[i]
+
+    // 给空默认有权限
+    if (p === '') {
+      return true
+    }
+    if (permissions.includes(p)) {
+      return true
+    }
+  }
+
+  // 默认不通过
   return false
 }
+
 function hasPermi(el: Element, binding: DirectiveBinding) {
   const value = binding.value
 
@@ -22,6 +37,7 @@ function hasPermi(el: Element, binding: DirectiveBinding) {
     el.parentNode?.removeChild(el)
   }
 }
+
 const mounted = (el: Element, binding: DirectiveBinding<any>) => {
   hasPermi(el, binding)
 }

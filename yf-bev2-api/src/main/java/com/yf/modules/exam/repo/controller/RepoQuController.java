@@ -41,7 +41,7 @@ public class RepoQuController extends BaseController {
      */
     @Operation(summary = "添加或修改")
     @RequiresPermissions(value = {"repo:qu:add", "repo:qu:edit"}, logical = Logical.OR)
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<?> save(@RequestBody RepoQuDetailDTO reqDTO) {
         repoQuService.save(reqDTO);
         return super.success();

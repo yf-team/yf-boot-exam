@@ -14,8 +14,11 @@ import com.yf.modules.exam.paper.service.PaperService;
 import com.yf.system.modules.user.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -27,11 +30,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "试卷")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/exam/paper/paper")
 public class PaperController extends BaseController {
 
-    @Autowired
-    private PaperService baseService;
+    private final PaperService baseService;
 
     /**
      * 添加或修改
@@ -40,7 +43,7 @@ public class PaperController extends BaseController {
      * @return
      */
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<?> save(@RequestBody PaperDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
@@ -53,7 +56,7 @@ public class PaperController extends BaseController {
      * @return
      */
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
+    @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -67,7 +70,7 @@ public class PaperController extends BaseController {
      * @return
      */
     @Operation(summary = "查找详情")
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    @PostMapping("/detail")
     public ApiRest<PaperDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
         PaperDTO dto = baseService.detail(reqDTO.getId());
         return super.success(dto);
@@ -80,7 +83,7 @@ public class PaperController extends BaseController {
      * @return
      */
     @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
+    @PostMapping("/paging")
     public ApiRest<IPage<PaperDTO>> paging(@RequestBody PagingReqDTO<PaperDTO> reqDTO) {
 
         //分页查询并转换

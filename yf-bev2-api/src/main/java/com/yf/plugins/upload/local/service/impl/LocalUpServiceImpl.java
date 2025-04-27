@@ -8,16 +8,15 @@ import com.yf.plugins.upload.local.config.LocalConfig;
 import com.yf.plugins.upload.local.dto.UploadRespDTO;
 import com.yf.plugins.upload.local.utils.OssUtils;
 import com.yf.system.modules.plugin.service.PluginDataService;
-import lombok.extern.log4j.Log4j2;
-import org.apache.tika.Tika;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.apache.tika.Tika;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +34,7 @@ import java.util.regex.Pattern;
  */
 @Log4j2
 @Service
+@RequiredArgsConstructor
 public class LocalUpServiceImpl implements UploadService {
 
 
@@ -43,9 +43,7 @@ public class LocalUpServiceImpl implements UploadService {
      */
     private static final String PLUGIN_CODE = "upload-local";
 
-    @Autowired
-    private PluginDataService pluginDataService;
-
+    private final PluginDataService pluginDataService;
 
     @Override
     public UploadRespDTO upload(MultipartFile file) {

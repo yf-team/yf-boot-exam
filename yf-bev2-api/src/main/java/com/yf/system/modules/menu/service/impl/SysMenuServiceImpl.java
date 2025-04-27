@@ -19,9 +19,9 @@ import com.yf.system.modules.role.service.SysRoleMenuService;
 import com.yf.system.modules.user.UserUtils;
 import com.yf.system.modules.user.entity.SysUserRole;
 import com.yf.system.modules.user.service.SysUserRoleService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -41,16 +41,15 @@ import java.util.Map;
  * @author 聪明笨狗
  * @since 2021-03-02 13:09
  */
+@RequiredArgsConstructor
 @Log4j2
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
 
 
-    @Autowired
-    private SysRoleMenuService sysRoleMenuService;
+    private final SysRoleMenuService sysRoleMenuService;
 
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private final SysUserRoleService sysUserRoleService;
 
 
     @CacheEvict(value = CacheKey.MENU, allEntries = true)
@@ -153,9 +152,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<MenuTreeRespDTO> listTree() {
-        // 列出用户菜单
-        List<MenuTreeRespDTO> list = baseMapper.listTree();
-        return list;
+        return baseMapper.listTree();
     }
 
 

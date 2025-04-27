@@ -4,6 +4,7 @@ import com.yf.base.api.annon.Dict;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Schema(name = "管理用户登录响应类", description = "管理用户登录响应类")
 public class SysUserLoginDTO implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
 
@@ -52,12 +54,6 @@ public class SysUserLoginDTO implements Serializable {
     @Dict(dictTable = "el_sys_depart", dicCode = "dept_code", dicText = "dept_name")
     @Schema(description = "部门编码")
     private String deptCode;
-
-    @Schema(description = "角色类型")
-    private Integer roleType;
-
-    @Schema(description = "实人认证状态")
-    private Boolean realPerson;
 
     @Schema(description = "状态")
     private Integer state;

@@ -60,7 +60,7 @@ public class SysMenuController extends BaseController {
     @RequiresPermissions(value = {"sys:menu:add", "sys:menu:update"}, logical = Logical.OR)
     @DataProtect(clazz = SysMenu.class, update = true)
     @Operation(summary = "添加或修改")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<?> save(@RequestBody SysMenuDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
@@ -75,7 +75,7 @@ public class SysMenuController extends BaseController {
     @RequiresPermissions(value = {"sys:menu:delete"})
     @DataProtect(clazz = SysMenu.class, delete = true)
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
+    @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -90,7 +90,7 @@ public class SysMenuController extends BaseController {
      */
 
     @Operation(summary = "查找详情")
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    @PostMapping("/detail")
     public ApiRest<SysMenuDTO> find(@RequestBody BaseIdReqDTO reqDTO) {
         SysMenu entity = baseService.getById(reqDTO.getId());
         SysMenuDTO dto = new SysMenuDTO();
@@ -105,7 +105,7 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @Operation(summary = "菜单树结构", description = "一次性加载完全部数据，用于后端维护")
-    @RequestMapping(value = "/tree", method = {RequestMethod.POST})
+    @PostMapping("/tree")
     public ApiRest<List<MenuTreeRespDTO>> tree() {
         //分页查询并转换
         List<MenuTreeRespDTO> list = baseService.listTree();
@@ -122,7 +122,7 @@ public class SysMenuController extends BaseController {
     @RequiresPermissions(value = {"sys:menu:sort"})
     @DataProtect(clazz = SysMenu.class, update = true)
     @Operation(summary = "调整菜单排序")
-    @RequestMapping(value = "/sort", method = {RequestMethod.POST})
+    @PostMapping("/sort")
     public ApiRest<?> sort(@RequestBody DepartSortReqDTO reqDTO) {
         baseService.sort(reqDTO);
         return super.success();

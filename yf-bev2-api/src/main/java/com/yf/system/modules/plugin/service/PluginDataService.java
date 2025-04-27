@@ -6,8 +6,6 @@ import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.system.modules.plugin.dto.PluginDataDTO;
 import com.yf.system.modules.plugin.entity.PluginData;
 
-import java.util.List;
-
 /**
  * <p>
  * 插件信息业务接口类
@@ -33,30 +31,6 @@ public interface PluginDataService extends IService<PluginData> {
      * @return
      */
     void save(PluginDataDTO reqDTO);
-
-    /**
-     * 批量删除
-     *
-     * @param ids
-     * @return
-     */
-    void delete(List<String> ids);
-
-    /**
-     * 查找详情
-     *
-     * @param id
-     * @return
-     */
-    PluginDataDTO detail(String id);
-
-    /**
-     * 查找列表
-     *
-     * @param reqDTO
-     * @return
-     */
-    List<PluginDataDTO> list(PluginDataDTO reqDTO);
 
     /**
      * 根据插件编码查找配置数据，为JSON字符串

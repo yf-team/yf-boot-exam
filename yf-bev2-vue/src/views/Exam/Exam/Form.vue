@@ -8,8 +8,8 @@
             <el-input v-model="form.title" autocomplete="off" />
           </el-form-item>
         </el-col>
-        <el-col :span="12" prop="endTime">
-          <el-form-item label="考试时间">
+        <el-col :span="12">
+          <el-form-item label="考试时间" prop="endTime">
             <el-date-picker
               v-model="dateRange"
               range-separator="到"
@@ -134,8 +134,8 @@ const form = ref<ExamType>({
   handMin: 0,
   lateMax: 0,
   totalTime: 5,
-  startTime: null,
-  endTime: null
+  startTime: '',
+  endTime: ''
 })
 const formRef = ref<FormInstance>()
 const rules = reactive<FormRules>({
@@ -217,9 +217,7 @@ watch(
     if (val && val.length > 0) {
       for (let i = 0; i < val.length; i++) {
         const rule = val[i]
-
-        console.log(rule)
-        total += rule.quCount * rule.quScore
+        total += (rule.quCount ?? 0) * (rule.quScore ?? 0)
       }
     }
 
@@ -275,7 +273,7 @@ const mergeRule = (statList, null2: boolean) => {
 
     if (form.value.id && null2) {
       const ruleList = form.value.ruleList
-      if (ruleList.length > 0) {
+      if (ruleList && ruleList.length > 0) {
         for (let j = 0; j < ruleList.length; j++) {
           const rule = ruleList[j]
           if (item.quType === rule.quType) {

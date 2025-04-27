@@ -26,12 +26,10 @@ import com.yf.system.modules.user.UserUtils;
 import com.yf.system.modules.user.dto.request.*;
 import com.yf.system.modules.user.dto.response.UserListRespDTO;
 import com.yf.system.modules.user.entity.SysUser;
-import com.yf.system.modules.user.enums.LoginType;
 import com.yf.system.modules.user.enums.SysRoleId;
 import com.yf.system.modules.user.enums.SysUserId;
 import com.yf.system.modules.user.enums.UserState;
 import com.yf.system.modules.user.mapper.SysUserMapper;
-import com.yf.system.modules.user.service.SysUserBindService;
 import com.yf.system.modules.user.service.SysUserRoleService;
 import com.yf.system.modules.user.service.SysUserService;
 import lombok.RequiredArgsConstructor;
@@ -64,8 +62,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final RedisService redisService;
 
     private final CaptchaService captchaService;
-
-    private final SysUserBindService sysUserBindService;
 
     private final CfgSwitchService cfgSwitchService;
 
@@ -340,11 +336,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 保存绑定关系
         this.saveOrUpdate(user);
 
-        // 更新手机绑定
-        if (!StringUtils.isBlank(user.getMobile())) {
-            sysUserBindService.save(true, user.getId(), LoginType.MOBILE, user.getMobile());
-        }
-
     }
 
 
@@ -450,11 +441,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         // 保存用户
         this.save(user);
-
-        // 有手机自动添加绑定关系
-        if (!StringUtils.isBlank(mobile)) {
-            sysUserBindService.save(false, user.getId(), LoginType.MOBILE, mobile);
-        }
 
         return this.setToken(user);
     }

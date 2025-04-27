@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.ability.redis.service.RedisService;
 import com.yf.base.api.exception.ServiceException;
-import com.yf.base.utils.BeanMapper;
 import com.yf.base.enums.DataScope;
+import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DeptCodeGen;
 import com.yf.system.modules.depart.dto.SysDepartDTO;
 import com.yf.system.modules.depart.dto.request.DepartQueryReqDTO;
@@ -15,8 +15,8 @@ import com.yf.system.modules.depart.entity.SysDepart;
 import com.yf.system.modules.depart.mapper.SysDepartMapper;
 import com.yf.system.modules.depart.service.SysDepartService;
 import com.yf.system.modules.user.UserUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,7 @@ import java.util.List;
  * @since 2020-09-02 17:25
  */
 @Service
+@RequiredArgsConstructor
 public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart> implements SysDepartService {
 
 
@@ -41,8 +42,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     private static final String ROOT_TAG = "0";
     private static final String LOCK_DEPT = "sys:lock:dept";
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
 
     @Transactional(rollbackFor = Exception.class)
@@ -89,8 +89,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         }
 
         // 查询参数
-        List<SysDepartTreeDTO> treeData = baseMapper.tree(reqDTO);
-        return treeData;
+        return baseMapper.tree(reqDTO);
     }
 
 

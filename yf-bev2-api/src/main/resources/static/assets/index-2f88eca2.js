@@ -1,0 +1,1 @@
+import{L as s}from"./index-20708d06.js";const a=a=>s.post({url:"/api/sys/role/paging",data:a}),o=a=>s.post({url:"/api/sys/role/save",data:a}),p=a=>s.post({url:"/api/sys/role/list-menus",data:a}),t=a=>s.post({url:"/api/sys/role/save-menus",data:a});export{t as a,p as l,a as p,o as s};

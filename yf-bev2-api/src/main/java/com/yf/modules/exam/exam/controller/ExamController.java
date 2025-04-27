@@ -12,9 +12,9 @@ import com.yf.modules.exam.exam.dto.response.ExamDetailDTO;
 import com.yf.modules.exam.exam.service.ExamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-04-14 17:29
  */
 @Tag(name = "考试")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/exam/exam/exam")
 public class ExamController extends BaseController {
 
-    @Autowired
-    private ExamService baseService;
+    private final ExamService examService;
 
     /**
      * 添加或修改
@@ -46,7 +46,7 @@ public class ExamController extends BaseController {
     @RequiresPermissions(value = {"exam:exam:add", "exam:exam:edit"}, logical = Logical.OR)
     @PostMapping("/save")
     public ApiRest<?> save(@RequestBody ExamDetailDTO reqDTO) {
-        baseService.save(reqDTO);
+        examService.save(reqDTO);
         return super.success();
     }
 
@@ -61,7 +61,7 @@ public class ExamController extends BaseController {
     @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
-        baseService.delete(reqDTO.getIds());
+        examService.delete(reqDTO.getIds());
         return super.success();
     }
 
@@ -75,7 +75,7 @@ public class ExamController extends BaseController {
     @RequiresPermissions("exam:exam:view")
     @PostMapping("/detail")
     public ApiRest<ExamDetailDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
-        ExamDetailDTO dto = baseService.detail(reqDTO.getId());
+        ExamDetailDTO dto = examService.detail(reqDTO.getId());
         return super.success(dto);
     }
 
@@ -91,7 +91,7 @@ public class ExamController extends BaseController {
     public ApiRest<IPage<ExamDTO>> paging(@RequestBody PagingReqDTO<ExamListReqDTO> reqDTO) {
 
         //分页查询并转换
-        IPage<ExamDTO> page = baseService.paging(reqDTO);
+        IPage<ExamDTO> page = examService.paging(reqDTO);
 
         return super.success(page);
     }
@@ -106,7 +106,7 @@ public class ExamController extends BaseController {
     @Operation(summary = "详情用于考试")
     @PostMapping("/detail-for-exam")
     public ApiRest<ExamDetailDTO> detailForExam(@RequestBody BaseIdReqDTO reqDTO) {
-        ExamDetailDTO dto = baseService.detail(reqDTO.getId());
+        ExamDetailDTO dto = examService.detail(reqDTO.getId());
         return super.success(dto);
     }
 
@@ -121,7 +121,7 @@ public class ExamController extends BaseController {
     public ApiRest<IPage<ExamDTO>> clientPaging(@RequestBody PagingReqDTO<ExamListReqDTO> reqDTO) {
 
         //分页查询并转换
-        IPage<ExamDTO> page = baseService.paging(reqDTO);
+        IPage<ExamDTO> page = examService.paging(reqDTO);
 
         return super.success(page);
     }

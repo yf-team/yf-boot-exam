@@ -50,7 +50,7 @@ public class SysUserController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:user:add", "sys:user:edit"}, logical = Logical.OR)
     @Operation(summary = "用户详情")
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    @PostMapping("/detail")
     public ApiRest<SysUserSaveReqDTO> detail(@RequestBody BaseIdReqDTO reqDTO) {
         SysUserSaveReqDTO respDTO = baseService.detail(reqDTO.getId());
         return super.success(respDTO);
@@ -62,7 +62,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @Operation(summary = "账号密码登录")
-    @RequestMapping(value = "/login", method = {RequestMethod.POST})
+    @PostMapping(value = "/login")
     public ApiRest<SysUserLoginDTO> login(@RequestBody SysUserLoginReqDTO reqDTO) {
         SysUserLoginDTO respDTO = baseService.login(reqDTO);
         return super.success(respDTO);
@@ -75,7 +75,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @Operation(summary = "退出登录")
-    @RequestMapping(value = "/logout", method = {RequestMethod.POST})
+    @PostMapping("/logout")
     public ApiRest<?> logout(HttpServletRequest request) {
         String token = request.getHeader("token");
         baseService.logout(token);
@@ -88,7 +88,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @Operation(summary = "获取会话")
-    @RequestMapping(value = "/info", method = {RequestMethod.POST})
+    @PostMapping("/info")
     public ApiRest<?> info(@RequestBody BaseTokenReqDTO reqDTO) {
         SysUserLoginDTO respDTO = baseService.token(reqDTO.getToken());
         return success(respDTO);
@@ -101,7 +101,7 @@ public class SysUserController extends BaseController {
      */
     @DataProtect(clazz = SysUser.class, update = true, currUsr = true)
     @Operation(summary = "修改用户资料")
-    @RequestMapping(value = "/update", method = {RequestMethod.POST})
+    @PostMapping("/update")
     public ApiRest<?> update(@RequestBody SysUserUpdateReqDTO reqDTO) {
         baseService.update(reqDTO);
         return success();
@@ -129,7 +129,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions(value = {"sys:user:add", "sys:user:edit"}, logical = Logical.OR)
     @DataProtect(clazz = SysUser.class, update = true)
     @Operation(summary = "保存或修改")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<?> save(@RequestBody SysUserSaveReqDTO reqDTO) {
         baseService.save(reqDTO);
         return success();
@@ -145,7 +145,7 @@ public class SysUserController extends BaseController {
     @RequiresPermissions(value = {"sys:user:delete"})
     @DataProtect(clazz = SysUser.class, delete = true)
     @Operation(summary = "批量删除")
-    @RequestMapping(value = "/delete", method = {RequestMethod.POST})
+    @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除
         baseService.delete(reqDTO.getIds());
@@ -160,7 +160,7 @@ public class SysUserController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:user:paging"})
     @Operation(summary = "分页查找")
-    @RequestMapping(value = "/paging", method = {RequestMethod.POST})
+    @PostMapping("/paging")
     public ApiRest<IPage<UserListRespDTO>> paging(@RequestBody PagingReqDTO<SysUserQueryReqDTO> reqDTO) {
 
         //分页查询并转换
@@ -176,7 +176,7 @@ public class SysUserController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:user:state"})
     @Operation(summary = "修改状态")
-    @RequestMapping(value = "/state", method = {RequestMethod.POST})
+    @PostMapping("/state")
     public ApiRest<?> state(@RequestBody BaseStateReqDTO reqDTO) {
 
         // 条件
@@ -197,7 +197,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @Operation(summary = "用户注册", description = "通过账号密码注册")
-    @RequestMapping(value = "/reg", method = {RequestMethod.POST})
+    @PostMapping("/reg")
     public ApiRest<SysUserLoginDTO> reg(@RequestBody UserRegReqDTO reqDTO) {
         SysUserLoginDTO respDTO = baseService.reg(reqDTO);
 
@@ -216,7 +216,7 @@ public class SysUserController extends BaseController {
      */
     @RequiresPermissions(value = {"sys:user:batch-role"})
     @Operation(summary = "批量修改角色")
-    @RequestMapping(value = "/batch-role", method = {RequestMethod.POST})
+    @PostMapping("/batch-role")
     public ApiRest<?> batchRole(@RequestBody UserRoleReqDTO reqDTO) {
         sysUserRoleService.batchRole(reqDTO);
         return success();

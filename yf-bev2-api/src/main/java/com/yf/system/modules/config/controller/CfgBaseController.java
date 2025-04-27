@@ -8,10 +8,10 @@ import com.yf.system.modules.config.service.CfgBaseService;
 import com.yf.system.modules.config.service.CfgSwitchService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -26,15 +26,13 @@ import java.util.Map;
  * @since 2020-04-17 09:12
  */
 @Tag(name = "通用配置")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/sys/config")
 public class CfgBaseController extends BaseController {
 
-    @Autowired
-    private CfgBaseService baseService;
-
-    @Autowired
-    private CfgSwitchService cfgSwitchService;
+    private final CfgBaseService baseService;
+    private final CfgSwitchService cfgSwitchService;
 
     /**
      * 添加或修改
@@ -43,7 +41,7 @@ public class CfgBaseController extends BaseController {
      * @return
      */
     @Operation(summary = "保存基础配置")
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @PostMapping("/save")
     public ApiRest<?> save(@RequestBody CfgBaseDTO reqDTO) {
         baseService.save(reqDTO);
         return super.success();
@@ -55,7 +53,7 @@ public class CfgBaseController extends BaseController {
      * @return
      */
     @Operation(summary = "简略详情")
-    @RequestMapping(value = "/detail", method = {RequestMethod.POST})
+    @PostMapping("/detail")
     public ApiRest<Map<String, Object>> detail() {
 
         // 返回数据

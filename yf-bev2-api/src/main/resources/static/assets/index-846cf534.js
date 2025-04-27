@@ -1,0 +1,1 @@
+import{L as s}from"./index-20708d06.js";const a=a=>s.post({url:"/api/sys/user/save",data:a}),p=a=>s.post({url:"/api/sys/user/detail",data:a}),t=a=>s.post({url:"/api/sys/user/info",data:a}),r=a=>s.post({url:"/api/sys/user/update",data:a}),u=a=>s.post({url:"/api/sys/user/update-pass",data:a});export{p as d,t as i,u as p,a as s,r as u};

@@ -16,8 +16,6 @@ import com.yf.system.modules.plugin.service.PluginDataService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * <p>
  * 插件信息业务实现类
@@ -35,17 +33,10 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
 
         //查询条件
         QueryWrapper<PluginData> wrapper = new QueryWrapper<>();
-
-        // 请求参数
-        PluginDataDTO params = reqDTO.getParams();
-
         //获得数据
         IPage<PluginData> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        log.info("++++++service转换了。。。");
-        IPage<PluginDataDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PluginDataDTO>>() {
-        });
-        return pageData;
+        return JsonHelper.parseObject(page, new TypeReference<Page<PluginDataDTO>>() {});
     }
 
 
@@ -55,35 +46,6 @@ public class PluginDataServiceImpl extends ServiceImpl<PluginDataMapper, PluginD
         PluginData entity = new PluginData();
         BeanMapper.copy(reqDTO, entity);
         this.saveOrUpdate(entity);
-    }
-
-    @Override
-    public void delete(List<String> ids) {
-        //批量删除
-        this.removeByIds(ids);
-    }
-
-    @Override
-    public PluginDataDTO detail(String id) {
-        PluginData entity = this.getById(id);
-        PluginDataDTO dto = new PluginDataDTO();
-        BeanMapper.copy(entity, dto);
-        return dto;
-    }
-
-    @Override
-    public List<PluginDataDTO> list(PluginDataDTO reqDTO) {
-
-        //分页查询并转换
-        QueryWrapper<PluginData> wrapper = new QueryWrapper<>();
-
-        //转换并返回
-        List<PluginData> list = this.list(wrapper);
-
-        //转换数据
-        List<PluginDataDTO> dtoList = BeanMapper.mapList(list, PluginDataDTO.class);
-
-        return dtoList;
     }
 
     @Override

@@ -14,8 +14,8 @@ import com.yf.system.modules.dict.entity.SysDic;
 import com.yf.system.modules.dict.mapper.SysDicMapper;
 import com.yf.system.modules.dict.service.SysDicService;
 import com.yf.system.modules.dict.service.SysDicValueService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,12 +30,11 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2020-12-01 14:00
  */
+@RequiredArgsConstructor
 @Service
 public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> implements SysDicService {
 
-
-    @Autowired
-    private SysDicValueService sysDicValueService;
+    private final SysDicValueService sysDicValueService;
 
     @Override
     public IPage<SysDicDTO> paging(PagingReqDTO<SysDicDTO> reqDTO) {
@@ -68,9 +67,7 @@ public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDic> impleme
         //获得数据
         IPage<SysDic> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<SysDicDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<SysDicDTO>>() {
-        });
-        return pageData;
+        return JsonHelper.parseObject(page, new TypeReference<Page<SysDicDTO>>() {});
     }
 
     @Override

@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.ability.shiro.MyShiroRealm;
 import com.yf.base.utils.CacheKey;
-import com.yf.system.modules.role.entity.SysRole;
 import com.yf.system.modules.role.entity.SysRoleMenu;
 import com.yf.system.modules.role.mapper.SysRoleMenuMapper;
 import com.yf.system.modules.role.service.SysRoleMenuService;
-import com.yf.system.modules.role.service.SysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,19 +24,11 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2021-03-02 15:44
  */
+@RequiredArgsConstructor
 @Service
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements SysRoleMenuService {
 
-    @Autowired
-    private MyShiroRealm myShiroRealm;
-
-    @Autowired
-    private SysRoleService roleService;
-
-    /**
-     * 默认后台首页
-     */
-    private static final String[] DASH_MENUS = {"1367010529427607568", "1367010529427607569"};
+    private final MyShiroRealm myShiroRealm;
 
     @Override
     public List<String> findRoleMenus(String roleId) {
@@ -67,9 +57,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveRoleIds(String roleId, List<String> ids) {
-
-        // 查找角色信息
-        SysRole role = roleService.getById(roleId);
 
         // 先清理
         QueryWrapper<SysRoleMenu> wrapper = new QueryWrapper<>();
