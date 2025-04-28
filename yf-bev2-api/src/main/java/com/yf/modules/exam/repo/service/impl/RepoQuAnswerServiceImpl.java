@@ -2,7 +2,7 @@ package com.yf.modules.exam.repo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yf.base.utils.AbcTags;
+import com.yf.base.utils.LetterUtils;
 import com.yf.base.utils.BeanMapper;
 import com.yf.modules.exam.repo.dto.RepoQuAnswerDTO;
 import com.yf.modules.exam.repo.entity.RepoQuAnswer;
@@ -50,7 +50,7 @@ public class RepoQuAnswerServiceImpl extends ServiceImpl<RepoQuAnswerMapper, Rep
                 BeanMapper.copy(item, answer);
                 answer.setQuId(quId);
                 if (StringUtils.isBlank(answer.getTag())) {
-                    answer.setTag(AbcTags.get(i));
+                    answer.setTag(LetterUtils.getLetter(i));
                 }
 
                 //补全ID避免新增

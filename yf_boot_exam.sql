@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 121.89.200.164--客户演示
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50732 (5.7.32)
- Source Host           : 121.89.200.164:3306
+ Source Server Version : 80028 (8.0.28)
+ Source Host           : localhost:3306
  Source Schema         : yf_boot_exam
 
  Target Server Type    : MySQL
- Target Server Version : 50732 (5.7.32)
+ Target Server Version : 80028 (8.0.28)
  File Encoding         : 65001
 
- Date: 24/04/2025 14:55:49
+ Date: 28/04/2025 16:06:43
 */
 
 SET NAMES utf8mb4;
@@ -22,20 +22,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_cfg_base`;
 CREATE TABLE `el_cfg_base` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `site_name` varchar(255) DEFAULT NULL COMMENT '系统名称',
-  `login_logo` varchar(255) DEFAULT NULL COMMENT '登录LOGO',
-  `login_bg` varchar(255) DEFAULT NULL COMMENT '登录背景',
-  `back_logo` varchar(255) DEFAULT NULL COMMENT '后台LOGO',
-  `copy_right` varchar(255) DEFAULT NULL COMMENT '版权信息',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `site_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '系统名称',
+  `login_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录LOGO',
+  `login_bg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录背景',
+  `back_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '后台LOGO',
+  `copy_right` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '版权信息',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统设置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统设置';
 
 -- ----------------------------
 -- Records of el_cfg_base
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_cfg_base` (`id`, `site_name`, `login_logo`, `login_bg`, `back_logo`, `copy_right`) VALUES ('1', '云帆考试系统V2', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966466990272513.png', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966559726333954.png', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966492999151618.png', '<p>&copy; 2025 北京云帆互联科技有限公司</p><p>官网： <a href=\"https://www.yfhl.net/\" target=\"_blank\">https://www.yfhl.net/</a> </p>');
+INSERT INTO `el_cfg_base` (`id`, `site_name`, `login_logo`, `login_bg`, `back_logo`, `copy_right`) VALUES ('1', '云帆考试系统V2', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966466990272513.png', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966559726333954.png', 'https://be2.yfhl.net/upload/file/2025/04/23/1914966492999151618.png', '<p>&copy; 2025 北京云帆互联科技有限公司官网： <a href=\"https://www.yfhl.net/\" target=\"_blank\">https://www.yfhl.net/</a> </p>');
 COMMIT;
 
 -- ----------------------------
@@ -43,10 +43,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_cfg_switch`;
 CREATE TABLE `el_cfg_switch` (
-  `id` varchar(32) NOT NULL COMMENT '功能名称',
-  `val` varchar(32) DEFAULT NULL COMMENT '开关或值',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '功能名称',
+  `val` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '开关或值',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='功能配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='功能配置';
 
 -- ----------------------------
 -- Records of el_cfg_switch
@@ -61,33 +61,33 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_exam`;
 CREATE TABLE `el_exam` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `title` varchar(500) NOT NULL COMMENT '考试名称',
-  `content` varchar(2000) DEFAULT NULL COMMENT '考试描述',
-  `open_type` int(11) NOT NULL DEFAULT '1' COMMENT '1公开2部门3定员',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT '考试状态',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试名称',
+  `content` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '考试描述',
+  `open_type` int NOT NULL DEFAULT '1' COMMENT '1公开2部门3定员',
+  `state` int NOT NULL DEFAULT '0' COMMENT '考试状态',
   `start_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间',
   `end_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
   `total_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '总分数',
-  `total_time` int(11) NOT NULL DEFAULT '0' COMMENT '总时长（分钟）',
+  `total_time` int NOT NULL DEFAULT '0' COMMENT '总时长（分钟）',
   `qualify_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '及格分数',
-  `chance` int(11) NOT NULL DEFAULT '0' COMMENT '考试机会',
-  `hand_min` int(11) NOT NULL DEFAULT '0' COMMENT '最低交卷分钟',
-  `late_max` int(11) NOT NULL DEFAULT '0' COMMENT '允许迟到分钟',
-  `thanks` varchar(2000) DEFAULT NULL COMMENT '感谢文字',
-  `repo_id` varchar(64) DEFAULT NULL COMMENT '组卷题库ID',
+  `chance` int NOT NULL DEFAULT '0' COMMENT '考试机会',
+  `hand_min` int NOT NULL DEFAULT '0' COMMENT '最低交卷分钟',
+  `late_max` int NOT NULL DEFAULT '0' COMMENT '允许迟到分钟',
+  `thanks` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '感谢文字',
+  `repo_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '组卷题库ID',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) DEFAULT NULL COMMENT '创建人',
-  `update_by` varchar(255) DEFAULT NULL COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='课程';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='课程';
 
 -- ----------------------------
 -- Records of el_exam
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915227067167539202', '云帆演示考试', '<p>1、本项目为云帆开源版考试系统。</p><p>2、为正常体验，将考试机会设置为不限制次数。</p><p>3、本系统每天自动重置系统数据，请不要上传重要资料。</p>', 1, 0, '2025-04-01 00:00:00', '2050-04-30 00:00:00', 150.00, 10, 90.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-24 10:11:31', '2025-04-24 10:13:37', '1000000000000000001', '1000000000000000001');
+INSERT INTO `el_exam` (`id`, `title`, `content`, `open_type`, `state`, `start_time`, `end_time`, `total_score`, `total_time`, `qualify_score`, `chance`, `hand_min`, `late_max`, `thanks`, `repo_id`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915227067167539202', '云帆演示考试', '<p>1、本项目为云帆开源版考试系统。</p><p>2、为正常体验，将考试机会设置为不限制次数。</p><p>3、本系统每天自动重置系统数据，请不要上传重要资料。</p>', 1, 0, '2025-04-01 00:00:00', '2050-04-30 00:00:00', 150.00, 10, 90.00, 0, 0, 0, NULL, '1910524655864012801', '2025-04-24 10:11:31', '2025-04-27 15:33:25', '1000000000000000001', '1000000000000000001');
 COMMIT;
 
 -- ----------------------------
@@ -95,27 +95,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_exam_record`;
 CREATE TABLE `el_exam_record` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `user_id` varchar(64) NOT NULL COMMENT '用户ID',
-  `exam_id` varchar(64) NOT NULL COMMENT '考试ID',
-  `paper_id` varchar(255) DEFAULT NULL COMMENT '结算的试卷ID',
-  `try_count` int(11) NOT NULL DEFAULT '1' COMMENT '考试次数',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `user_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `exam_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试ID',
+  `paper_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '结算的试卷ID',
+  `try_count` int NOT NULL DEFAULT '1' COMMENT '考试次数',
   `max_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最高分数',
   `last_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '最近分数',
-  `passed` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否通过',
+  `passed` tinyint NOT NULL DEFAULT '0' COMMENT '是否通过',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `user_id` (`user_id`,`exam_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='考试记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='考试记录';
 
 -- ----------------------------
 -- Records of el_exam_record
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1914133469835468801', '1000000000000000001', '1913063229371195394', '1914133345289805826', 1, 100.00, 100.00, 1);
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1914940214687117314', '1914226980618383361', '1913063229371195394', '1914940104871849985', 1, 50.00, 50.00, 0);
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1914982494612840449', '1914982048603136002', '1913063229371195394', '1914982469841281025', 1, 25.00, 25.00, 0);
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1915033211667046402', '1914982048603136002', '1915033038584897537', '1915033176044822530', 1, 20.00, 20.00, 1);
-INSERT INTO `el_exam_record` (`id`, `user_id`, `exam_id`, `paper_id`, `try_count`, `max_score`, `last_score`, `passed`) VALUES ('1915228791689183233', '1914226980618383361', '1915227067167539202', '1915228685405519873', 1, 60.00, 10.00, 0);
 COMMIT;
 
 -- ----------------------------
@@ -123,22 +118,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_exam_rule`;
 CREATE TABLE `el_exam_rule` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `exam_id` varchar(64) NOT NULL COMMENT '考试ID',
-  `repo_id` varchar(64) DEFAULT NULL COMMENT '题库ID',
-  `qu_type` varchar(64) NOT NULL DEFAULT '1' COMMENT '题型',
-  `qu_count` int(11) DEFAULT NULL COMMENT '出题数量',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `exam_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试ID',
+  `repo_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '题库ID',
+  `qu_type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '题型',
+  `qu_count` int DEFAULT NULL COMMENT '出题数量',
   `qu_score` decimal(10,0) NOT NULL DEFAULT '1' COMMENT '每题分数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='考试规则';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='考试规则';
 
 -- ----------------------------
 -- Records of el_exam_rule
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1915227599135309825', '1915227067167539202', '1910524655864012801', 'radio', 5, 10);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1915227599143698433', '1915227067167539202', '1910524655864012801', 'multi', 5, 10);
-INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1915227599147892738', '1915227067167539202', '1910524655864012801', 'judge', 5, 10);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1916395242890559489', '1915227067167539202', '1910524655864012801', 'radio', 5, 10);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1916395242898948097', '1915227067167539202', '1910524655864012801', 'multi', 5, 10);
+INSERT INTO `el_exam_rule` (`id`, `exam_id`, `repo_id`, `qu_type`, `qu_count`, `qu_score`) VALUES ('1916395242898948098', '1915227067167539202', '1910524655864012801', 'judge', 5, 10);
 COMMIT;
 
 -- ----------------------------
@@ -146,44 +141,32 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_paper`;
 CREATE TABLE `el_paper` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `user_id` varchar(64) NOT NULL COMMENT '用户ID',
-  `exam_id` varchar(64) NOT NULL COMMENT '考试ID',
-  `title` varchar(500) NOT NULL COMMENT '考试标题',
-  `total_time` int(11) NOT NULL DEFAULT '0' COMMENT '考试时长',
-  `user_time` int(11) NOT NULL DEFAULT '0' COMMENT '用户时长',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `user_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `exam_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试ID',
+  `title` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '考试标题',
+  `total_time` int NOT NULL DEFAULT '0' COMMENT '考试时长',
+  `user_time` int NOT NULL DEFAULT '0' COMMENT '用户时长',
   `total_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '试卷总分',
   `qualify_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '试卷及格分',
   `user_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '用户总得分',
   `limit_time` datetime NOT NULL COMMENT '最后截止时间',
   `hand_time` datetime DEFAULT NULL COMMENT '实际交卷时间',
-  `hand_state` int(11) NOT NULL DEFAULT '0' COMMENT '交卷状态,0未交卷,1已交卷,2强制交卷',
-  `passed` tinyint(4) NOT NULL DEFAULT '0' COMMENT '成绩是否合格',
+  `hand_state` int NOT NULL DEFAULT '0' COMMENT '交卷状态,0未交卷,1已交卷,2强制交卷',
+  `passed` tinyint NOT NULL DEFAULT '0' COMMENT '成绩是否合格',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) DEFAULT NULL COMMENT '创建人',
-  `update_by` varchar(255) DEFAULT NULL COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `exam_id` (`exam_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷';
 
 -- ----------------------------
 -- Records of el_paper
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914133345289805826', '1000000000000000001', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 100.00, '2025-04-21 09:48:27', '2025-04-21 09:45:57', 1, 1, '2025-04-21 09:45:27', '2025-04-21 09:45:27', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914940104871849985', '1914226980618383361', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 50.00, '2025-04-23 15:14:14', '2025-04-23 15:11:40', 1, 0, '2025-04-23 15:11:13', '2025-04-23 15:11:13', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914982469841281025', '1914982048603136002', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 25.00, '2025-04-23 18:02:34', '2025-04-23 17:59:40', 1, 0, '2025-04-23 17:59:34', '2025-04-23 17:59:34', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915031874090917889', '1914982048603136002', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 0.00, '2025-04-23 21:18:53', '2025-04-23 21:16:21', 1, 0, '2025-04-23 21:15:53', '2025-04-23 21:15:53', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915032220297158658', '1914982048603136002', '1913063229371195394', '新建考试', 0, 0, 100.00, 60.00, 25.00, '2025-04-23 21:27:16', '2025-04-23 21:17:39', 1, 0, '2025-04-23 21:17:15', '2025-04-23 21:17:15', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915033176044822530', '1914982048603136002', '1915033038584897537', 'dora134', 0, 0, 40.00, 10.00, 20.00, '2025-04-23 21:31:03', '2025-04-23 21:21:12', 1, 1, '2025-04-23 21:21:03', '2025-04-23 21:21:03', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915228685405519873', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 60.00, '2025-04-24 10:27:56', '2025-04-24 10:18:22', 1, 0, '2025-04-24 10:17:56', '2025-04-24 10:17:56', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915228928649986050', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 0.00, '2025-04-24 10:28:54', '2025-04-24 10:18:56', 1, 0, '2025-04-24 10:18:54', '2025-04-24 10:18:54', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915228951441833985', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 10.00, '2025-04-24 10:29:00', '2025-04-24 10:19:06', 1, 0, '2025-04-24 10:18:59', '2025-04-24 10:18:59', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915229003740610562', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 10.00, '2025-04-24 10:29:12', '2025-04-24 10:19:36', 1, 0, '2025-04-24 10:19:12', '2025-04-24 10:19:12', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915229186188640257', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 0.00, '2025-04-24 10:29:56', '2025-04-24 10:19:58', 1, 0, '2025-04-24 10:19:55', '2025-04-24 10:19:55', NULL, NULL);
-INSERT INTO `el_paper` (`id`, `user_id`, `exam_id`, `title`, `total_time`, `user_time`, `total_score`, `qualify_score`, `user_score`, `limit_time`, `hand_time`, `hand_state`, `passed`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915229210532380673', '1914226980618383361', '1915227067167539202', '云帆演示考试', 0, 0, 150.00, 90.00, 10.00, '2025-04-24 10:30:02', '2025-04-24 10:20:04', 1, 0, '2025-04-24 10:20:01', '2025-04-24 10:20:01', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -191,140 +174,26 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_paper_qu`;
 CREATE TABLE `el_paper_qu` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `paper_id` varchar(64) NOT NULL COMMENT '试卷ID',
-  `qu_id` varchar(64) NOT NULL COMMENT '题目ID',
-  `qu_type` varchar(32) NOT NULL COMMENT '题目类型',
-  `answered` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否已答',
-  `mark` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否标记',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '问题排序',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `paper_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷ID',
+  `qu_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目ID',
+  `qu_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型',
+  `answered` tinyint NOT NULL DEFAULT '0' COMMENT '是否已答',
+  `mark` tinyint NOT NULL DEFAULT '0' COMMENT '是否标记',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '问题排序',
   `score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '单题分分值',
   `actual_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '实际得分(主观题)',
-  `is_right` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否答对',
+  `is_right` tinyint NOT NULL DEFAULT '0' COMMENT '是否答对',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `paper_id` (`paper_id`) USING BTREE,
   KEY `qu_id` (`qu_id`) USING BTREE,
   KEY `sort` (`sort`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷考题';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷考题';
 
 -- ----------------------------
 -- Records of el_paper_qu
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345482743810', '1914133345289805826', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345486938114', '1914133345289805826', '1912339000495435778', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345625350146', '1914133345289805826', '1913062532164624386', 'multi', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914133345625350147', '1914133345289805826', '1913062799203377153', 'multi', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914940104993484802', '1914940104871849985', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914940104993484803', '1914940104871849985', '1912339000495435778', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914940105115119618', '1914940104871849985', '1913062799203377153', 'multi', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914940105119313922', '1914940104871849985', '1913062532164624386', 'multi', 0, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914982470004858881', '1914982469841281025', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914982470009053185', '1914982469841281025', '1912339000495435778', 'radio', 0, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914982470172631042', '1914982469841281025', '1913062532164624386', 'multi', 0, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1914982470176825345', '1914982469841281025', '1913062799203377153', 'multi', 0, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915031874267078657', '1915031874090917889', '1912339000495435778', 'radio', 1, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915031874271272961', '1915031874090917889', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915031874376130561', '1915031874090917889', '1913062532164624386', 'multi', 1, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915031874380324866', '1915031874090917889', '1913062799203377153', 'multi', 0, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915032220431376386', '1915032220297158658', '1912339000495435778', 'radio', 1, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915032220431376387', '1915032220297158658', '1911685389859876866', 'radio', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915032220548816898', '1915032220297158658', '1913062799203377153', 'multi', 1, 0, 0, 25.00, 25.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915032220557205505', '1915032220297158658', '1913062532164624386', 'multi', 1, 0, 0, 25.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915033176174845954', '1915033176044822530', '1911685389859876866', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915033176179040258', '1915033176044822530', '1912339000495435778', 'radio', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915033176300675074', '1915033176044822530', '1913062532164624386', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915033176304869377', '1915033176044822530', '1913062799203377153', 'multi', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228685783007233', '1915228685405519873', '1915221317120778241', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228685791395841', '1915228685405519873', '1912339000495435778', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228685795590145', '1915228685405519873', '1915220956456771585', 'radio', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228685795590146', '1915228685405519873', '1915217245693108225', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228685799784449', '1915228685405519873', '1915217036376367105', 'radio', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686139523073', '1915228685405519873', '1915225940757839873', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686143717378', '1915228685405519873', '1915225828769923074', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686143717379', '1915228685405519873', '1915226236653404162', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686147911681', '1915228685405519873', '1915225736142913538', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686147911682', '1915228685405519873', '1915224313552437249', 'multi', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686378598401', '1915228685405519873', '1915216824811479042', 'judge', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686382792705', '1915228685405519873', '1915220690789556226', 'judge', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686382792706', '1915228685405519873', '1915220312169734145', 'judge', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686386987010', '1915228685405519873', '1915219749436743681', 'judge', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228686386987011', '1915228685405519873', '1915218778346315778', 'judge', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228928981336066', '1915228928649986050', '1915221794214469634', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228928985530370', '1915228928649986050', '1915220843122483201', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228928985530371', '1915228928649986050', '1915221317120778241', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228928985530372', '1915228928649986050', '1915218291043688449', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228928985530373', '1915228928649986050', '1915219388600770562', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929283325953', '1915228928649986050', '1915225180309553153', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929287520257', '1915228928649986050', '1915224313552437249', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929291714561', '1915228928649986050', '1913062799203377153', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929291714562', '1915228928649986050', '1915226034232098818', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929291714563', '1915228928649986050', '1915225528378064898', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929501429762', '1915228928649986050', '1915219749436743681', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929505624065', '1915228928649986050', '1915220255701819393', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929505624066', '1915228928649986050', '1915218778346315778', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929505624067', '1915228928649986050', '1915221939685515265', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228929505624068', '1915228928649986050', '1915221894114402306', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228951714463746', '1915228951441833985', '1915221794214469634', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228951714463747', '1915228951441833985', '1915217421350559745', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228951718658049', '1915228951441833985', '1915217245693108225', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228951718658050', '1915228951441833985', '1915221404811091969', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228951718658051', '1915228951441833985', '1915220956456771585', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952003870722', '1915228951441833985', '1915224313552437249', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952008065025', '1915228951441833985', '1915224948528119809', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952008065026', '1915228951441833985', '1915224783004106754', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952008065027', '1915228951441833985', '1913062532164624386', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952008065028', '1915228951441833985', '1915225736142913538', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952184225794', '1915228951441833985', '1915218558250213377', 'judge', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952188420097', '1915228951441833985', '1915218671928434690', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952188420098', '1915228951441833985', '1915221062249701378', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952188420099', '1915228951441833985', '1915220690789556226', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915228952192614401', '1915228951441833985', '1915220220272533506', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004105515009', '1915229003740610562', '1915221317120778241', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004109709314', '1915229003740610562', '1915219521224663041', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004113903617', '1915229003740610562', '1915220105797394434', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004113903618', '1915229003740610562', '1915221794214469634', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004113903619', '1915229003740610562', '1911685389859876866', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004424282113', '1915229003740610562', '1915225736142913538', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004428476418', '1915229003740610562', '1915224948528119809', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004428476419', '1915229003740610562', '1915225630517755906', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004428476420', '1915229003740610562', '1913062799203377153', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004428476421', '1915229003740610562', '1915225528378064898', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004613025793', '1915229003740610562', '1915219652812562434', 'judge', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004613025794', '1915229003740610562', '1915221939685515265', 'judge', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004617220097', '1915229003740610562', '1915220220272533506', 'judge', 1, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004617220098', '1915229003740610562', '1915218558250213377', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229004617220099', '1915229003740610562', '1915220312169734145', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186461270018', '1915229186188640257', '1915217421350559745', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186461270019', '1915229186188640257', '1915219521224663041', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186465464322', '1915229186188640257', '1915219920572735489', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186465464323', '1915229186188640257', '1915221404811091969', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186465464324', '1915229186188640257', '1915218291043688449', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186700345346', '1915229186188640257', '1915226236653404162', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186704539650', '1915229186188640257', '1915224948528119809', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186704539651', '1915229186188640257', '1915224783004106754', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186704539652', '1915229186188640257', '1915225060553785346', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186704539653', '1915229186188640257', '1915225180309553153', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186914254850', '1915229186188640257', '1915219749436743681', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186918449153', '1915229186188640257', '1915221624873639937', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186918449154', '1915229186188640257', '1915218558250213377', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186918449155', '1915229186188640257', '1915220220272533506', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229186918449156', '1915229186188640257', '1915219698861826049', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229210813399042', '1915229210532380673', '1915220105797394434', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229210817593345', '1915229210532380673', '1915219920572735489', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229210817593346', '1915229210532380673', '1915221317120778241', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229210817593347', '1915229210532380673', '1915221794214469634', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229210821787650', '1915229210532380673', '1915220843122483201', 'radio', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211182497793', '1915229210532380673', '1915225940757839873', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211186692098', '1915229210532380673', '1915224783004106754', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211186692099', '1915229210532380673', '1915225828769923074', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211186692100', '1915229210532380673', '1915225372442230786', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211186692101', '1915229210532380673', '1915225736142913538', 'multi', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211413184514', '1915229210532380673', '1915219749436743681', 'judge', 1, 0, 0, 10.00, 10.00, 1);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211417378817', '1915229210532380673', '1915217849014378498', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211417378818', '1915229210532380673', '1915220613626945538', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211417378819', '1915229210532380673', '1915219263514042370', 'judge', 0, 0, 0, 10.00, 0.00, 0);
-INSERT INTO `el_paper_qu` (`id`, `paper_id`, `qu_id`, `qu_type`, `answered`, `mark`, `sort`, `score`, `actual_score`, `is_right`) VALUES ('1915229211417378820', '1915229210532380673', '1915221579218640898', 'judge', 0, 0, 0, 10.00, 0.00, 0);
 COMMIT;
 
 -- ----------------------------
@@ -332,422 +201,26 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_paper_qu_answer`;
 CREATE TABLE `el_paper_qu_answer` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `paper_id` varchar(64) NOT NULL COMMENT '试卷ID',
-  `answer_id` varchar(32) NOT NULL COMMENT '回答项ID',
-  `qu_id` varchar(32) NOT NULL COMMENT '题目ID',
-  `is_right` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否正确项',
-  `answer` varchar(2000) DEFAULT NULL COMMENT '填空题',
-  `checked` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否选中',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `abc` varchar(64) DEFAULT NULL COMMENT '选项标签',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `paper_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试卷ID',
+  `answer_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回答项ID',
+  `qu_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目ID',
+  `is_right` tinyint NOT NULL DEFAULT '0' COMMENT '是否正确项',
+  `answer` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '填空题',
+  `checked` tinyint NOT NULL DEFAULT '0' COMMENT '是否选中',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
+  `abc` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '选项标签',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `paper_id` (`paper_id`) USING BTREE,
   KEY `qu_id` (`qu_id`) USING BTREE,
   KEY `paper_qu_id` (`paper_id`,`qu_id`) USING BTREE,
   KEY `sort` (`sort`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷考题备选答案';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='试卷考题备选答案';
 
 -- ----------------------------
 -- Records of el_paper_qu_answer
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715330', '1914133345289805826', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715331', '1914133345289805826', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345503715332', '1914133345289805826', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345507909634', '1914133345289805826', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345507909635', '1914133345289805826', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103938', '1914133345289805826', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103939', '1914133345289805826', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345512103940', '1914133345289805826', '1912339000638042116', '1912339000495435778', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345633738754', '1914133345289805826', '1913062532181401602', '1913062532164624386', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933058', '1914133345289805826', '1913062532181401603', '1913062532164624386', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933059', '1914133345289805826', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345637933060', '1914133345289805826', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127361', '1914133345289805826', '1913062799232737282', '1913062799203377153', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127362', '1914133345289805826', '1913062799232737283', '1913062799203377153', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345642127363', '1914133345289805826', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914133345646321665', '1914133345289805826', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105010262018', '1914940104871849985', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105014456321', '1914940104871849985', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105014456322', '1914940104871849985', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105014456323', '1914940104871849985', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105018650625', '1914940104871849985', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105018650626', '1914940104871849985', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105022844930', '1914940104871849985', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105022844931', '1914940104871849985', '1912339000638042116', '1912339000495435778', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105127702530', '1914940104871849985', '1913062799232737282', '1913062799203377153', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105131896833', '1914940104871849985', '1913062799232737283', '1913062799203377153', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105131896834', '1914940104871849985', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105131896835', '1914940104871849985', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105136091137', '1914940104871849985', '1913062532181401602', '1913062532164624386', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105136091138', '1914940104871849985', '1913062532181401603', '1913062532164624386', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105140285442', '1914940104871849985', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914940105140285443', '1914940104871849985', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470017441794', '1914982469841281025', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470021636098', '1914982469841281025', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470025830401', '1914982469841281025', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470025830402', '1914982469841281025', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470025830403', '1914982469841281025', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470030024706', '1914982469841281025', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470030024707', '1914982469841281025', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470038413313', '1914982469841281025', '1912339000638042116', '1912339000495435778', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470185213954', '1914982469841281025', '1913062532181401602', '1913062532164624386', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470193602562', '1914982469841281025', '1913062532181401603', '1913062532164624386', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470197796866', '1914982469841281025', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470201991170', '1914982469841281025', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470201991171', '1914982469841281025', '1913062799232737282', '1913062799203377153', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470206185473', '1914982469841281025', '1913062799232737283', '1913062799203377153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470206185474', '1914982469841281025', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1914982470210379777', '1914982469841281025', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874275467266', '1915031874090917889', '1912339000633847809', '1912339000495435778', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874279661570', '1915031874090917889', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874283855874', '1915031874090917889', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874283855875', '1915031874090917889', '1912339000638042116', '1912339000495435778', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874288050178', '1915031874090917889', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874288050179', '1915031874090917889', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874288050180', '1915031874090917889', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874288050181', '1915031874090917889', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874384519169', '1915031874090917889', '1913062532181401602', '1913062532164624386', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874388713473', '1915031874090917889', '1913062532181401603', '1913062532164624386', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874388713474', '1915031874090917889', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874392907777', '1915031874090917889', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874392907778', '1915031874090917889', '1913062799232737282', '1913062799203377153', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874392907779', '1915031874090917889', '1913062799232737283', '1913062799203377153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874397102081', '1915031874090917889', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915031874397102082', '1915031874090917889', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220439764993', '1915032220297158658', '1912339000633847809', '1912339000495435778', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220439764994', '1915032220297158658', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220443959297', '1915032220297158658', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220443959298', '1915032220297158658', '1912339000638042116', '1912339000495435778', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220443959299', '1915032220297158658', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220448153602', '1915032220297158658', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220448153603', '1915032220297158658', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220448153604', '1915032220297158658', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220569788418', '1915032220297158658', '1913062799232737282', '1913062799203377153', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220569788419', '1915032220297158658', '1913062799232737283', '1913062799203377153', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220573982721', '1915032220297158658', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220573982722', '1915032220297158658', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220573982723', '1915032220297158658', '1913062532181401602', '1913062532164624386', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220578177025', '1915032220297158658', '1913062532181401603', '1913062532164624386', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220578177026', '1915032220297158658', '1913062532181401604', '1913062532164624386', 0, NULL, 1, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915032220578177027', '1915032220297158658', '1913062532181401605', '1913062532164624386', 0, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176183234562', '1915033176044822530', '1911685389926985729', '1911685389859876866', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176187428866', '1915033176044822530', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176187428867', '1915033176044822530', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176191623169', '1915033176044822530', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176191623170', '1915033176044822530', '1912339000633847809', '1912339000495435778', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176195817473', '1915033176044822530', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176195817474', '1915033176044822530', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176200011778', '1915033176044822530', '1912339000638042116', '1912339000495435778', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176309063681', '1915033176044822530', '1913062532181401602', '1913062532164624386', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176309063682', '1915033176044822530', '1913062532181401603', '1913062532164624386', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176313257986', '1915033176044822530', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176313257987', '1915033176044822530', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176313257988', '1915033176044822530', '1913062799232737282', '1913062799203377153', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176317452289', '1915033176044822530', '1913062799232737283', '1913062799203377153', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176317452290', '1915033176044822530', '1913062799241125890', '1913062799203377153', 0, NULL, 1, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915033176317452291', '1915033176044822530', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685812367361', '1915228685405519873', '1915221317175304193', '1915221317120778241', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685820755970', '1915228685405519873', '1915221317175304194', '1915221317120778241', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685820755971', '1915228685405519873', '1915221317175304195', '1915221317120778241', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685824950273', '1915228685405519873', '1915221317175304196', '1915221317120778241', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685824950274', '1915228685405519873', '1912339000633847809', '1912339000495435778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685829144577', '1915228685405519873', '1912339000638042114', '1912339000495435778', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685833338881', '1915228685405519873', '1912339000638042115', '1912339000495435778', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685833338882', '1915228685405519873', '1912339000638042116', '1912339000495435778', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685837533185', '1915228685405519873', '1915220956490326018', '1915220956456771585', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685837533186', '1915228685405519873', '1915220956494520321', '1915220956456771585', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685841727490', '1915228685405519873', '1915220956494520322', '1915220956456771585', 0, NULL, 1, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685841727491', '1915228685405519873', '1915220956498714626', '1915220956456771585', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685845921793', '1915228685405519873', '1915217245739245569', '1915217245693108225', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685845921794', '1915228685405519873', '1915217245743439873', '1915217245693108225', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685850116097', '1915228685405519873', '1915217245747634178', '1915217245693108225', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685850116098', '1915228685405519873', '1915217245751828482', '1915217245693108225', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685854310401', '1915228685405519873', '1915217036414115842', '1915217036376367105', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685854310402', '1915228685405519873', '1915217036418310145', '1915217036376367105', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685858504706', '1915228685405519873', '1915217036422504450', '1915217036376367105', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228685858504707', '1915228685405519873', '1915217036422504451', '1915217036376367105', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686156300290', '1915228685405519873', '1915225940808171521', '1915225940757839873', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686160494593', '1915228685405519873', '1915225940812365825', '1915225940757839873', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686160494594', '1915228685405519873', '1915225940812365826', '1915225940757839873', 1, NULL, 1, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686160494595', '1915228685405519873', '1915225940816560130', '1915225940757839873', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688897', '1915228685405519873', '1915225828807671809', '1915225828769923074', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688898', '1915228685405519873', '1915225828811866113', '1915225828769923074', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688899', '1915228685405519873', '1915225828811866114', '1915225828769923074', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688900', '1915228685405519873', '1915225828816060418', '1915225828769923074', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688901', '1915228685405519873', '1915226236720513026', '1915226236653404162', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686164688902', '1915228685405519873', '1915226236724707330', '1915226236653404162', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686173077505', '1915228685405519873', '1915226236728901634', '1915226236653404162', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686173077506', '1915228685405519873', '1915226236728901635', '1915226236653404162', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686177271809', '1915228685405519873', '1915225736239382529', '1915225736142913538', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686177271810', '1915228685405519873', '1915225736247771138', '1915225736142913538', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686177271811', '1915228685405519873', '1915225736247771139', '1915225736142913538', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686181466113', '1915228685405519873', '1915225736251965442', '1915225736142913538', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686181466114', '1915228685405519873', '1915224313678266370', '1915224313552437249', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686185660418', '1915228685405519873', '1915224313686654977', '1915224313552437249', 1, NULL, 1, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686185660419', '1915228685405519873', '1915224313690849281', '1915224313552437249', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686185660420', '1915228685405519873', '1915224313690849282', '1915224313552437249', 1, NULL, 1, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686399569921', '1915228685405519873', '1915216824866004993', '1915216824811479042', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686403764226', '1915228685405519873', '1915216824870199298', '1915216824811479042', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686403764227', '1915228685405519873', '1915220690814722050', '1915220690789556226', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686407958530', '1915228685405519873', '1915220690814722051', '1915220690789556226', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686407958531', '1915228685405519873', '1915220312203288578', '1915220312169734145', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686407958532', '1915228685405519873', '1915220312203288579', '1915220312169734145', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686412152833', '1915228685405519873', '1915219749461909505', '1915219749436743681', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686412152834', '1915228685405519873', '1915219749466103810', '1915219749436743681', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686412152835', '1915228685405519873', '1915218778375675905', '1915218778346315778', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228686416347137', '1915228685405519873', '1915218778375675906', '1915218778346315778', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228928993918978', '1915228928649986050', '1915221794248024066', '1915221794214469634', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228928998113282', '1915228928649986050', '1915221794248024067', '1915221794214469634', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228928998113283', '1915228928649986050', '1915221794252218370', '1915221794214469634', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228928998113284', '1915228928649986050', '1915221794252218371', '1915221794214469634', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929002307585', '1915228928649986050', '1915220843156037634', '1915220843122483201', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929002307586', '1915228928649986050', '1915220843160231938', '1915220843122483201', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929002307587', '1915228928649986050', '1915220843160231939', '1915220843122483201', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929006501890', '1915228928649986050', '1915220843164426241', '1915220843122483201', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929006501891', '1915228928649986050', '1915221317175304193', '1915221317120778241', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929006501892', '1915228928649986050', '1915221317175304194', '1915221317120778241', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929010696194', '1915228928649986050', '1915221317175304195', '1915221317120778241', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929010696195', '1915228928649986050', '1915221317175304196', '1915221317120778241', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929010696196', '1915228928649986050', '1915218291106603009', '1915218291043688449', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929010696197', '1915228928649986050', '1915218291110797313', '1915218291043688449', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929014890497', '1915228928649986050', '1915218291110797314', '1915218291043688449', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929014890498', '1915228928649986050', '1915218291114991618', '1915218291043688449', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929014890499', '1915228928649986050', '1915219388659490818', '1915219388600770562', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929019084801', '1915228928649986050', '1915219388663685122', '1915219388600770562', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929019084802', '1915228928649986050', '1915219388663685123', '1915219388600770562', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929019084803', '1915228928649986050', '1915219388663685124', '1915219388600770562', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929300103170', '1915228928649986050', '1915225180364079105', '1915225180309553153', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929300103171', '1915228928649986050', '1915225180368273409', '1915225180309553153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929304297474', '1915228928649986050', '1915225180372467713', '1915225180309553153', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929304297475', '1915228928649986050', '1915225180372467714', '1915225180309553153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929304297476', '1915228928649986050', '1915224313678266370', '1915224313552437249', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491778', '1915228928649986050', '1915224313686654977', '1915224313552437249', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491779', '1915228928649986050', '1915224313690849281', '1915224313552437249', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491780', '1915228928649986050', '1915224313690849282', '1915224313552437249', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491781', '1915228928649986050', '1913062799232737282', '1913062799203377153', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491782', '1915228928649986050', '1913062799232737283', '1913062799203377153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929308491783', '1915228928649986050', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929316880385', '1915228928649986050', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929316880386', '1915228928649986050', '1915226034286624769', '1915226034232098818', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929316880387', '1915228928649986050', '1915226034290819073', '1915226034232098818', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929316880388', '1915228928649986050', '1915226034290819074', '1915226034232098818', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929321074689', '1915228928649986050', '1915226034295013377', '1915226034232098818', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929321074690', '1915228928649986050', '1915225528445173762', '1915225528378064898', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929321074691', '1915228928649986050', '1915225528445173763', '1915225528378064898', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929321074692', '1915228928649986050', '1915225528445173764', '1915225528378064898', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929325268994', '1915228928649986050', '1915225528445173765', '1915225528378064898', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929518206977', '1915228928649986050', '1915219749461909505', '1915219749436743681', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929518206978', '1915228928649986050', '1915219749466103810', '1915219749436743681', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929522401281', '1915228928649986050', '1915220255731179522', '1915220255701819393', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929522401282', '1915228928649986050', '1915220255735373825', '1915220255701819393', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929522401283', '1915228928649986050', '1915218778375675905', '1915218778346315778', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929526595586', '1915228928649986050', '1915218778375675906', '1915218778346315778', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929526595587', '1915228928649986050', '1915221939710681090', '1915221939685515265', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929526595588', '1915228928649986050', '1915221939710681091', '1915221939685515265', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929530789890', '1915228928649986050', '1915221894139568129', '1915221894114402306', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228929530789891', '1915228928649986050', '1915221894143762433', '1915221894114402306', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951727046657', '1915228951441833985', '1915221794248024066', '1915221794214469634', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951727046658', '1915228951441833985', '1915221794248024067', '1915221794214469634', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951731240961', '1915228951441833985', '1915221794252218370', '1915221794214469634', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951731240962', '1915228951441833985', '1915221794252218371', '1915221794214469634', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951731240963', '1915228951441833985', '1915217421388308482', '1915217421350559745', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951731240964', '1915228951441833985', '1915217421392502785', '1915217421350559745', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951735435265', '1915228951441833985', '1915217421392502786', '1915217421350559745', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951735435266', '1915228951441833985', '1915217421396697089', '1915217421350559745', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951739629570', '1915228951441833985', '1915217245739245569', '1915217245693108225', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951739629571', '1915228951441833985', '1915217245743439873', '1915217245693108225', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951739629572', '1915228951441833985', '1915217245747634178', '1915217245693108225', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951743823873', '1915228951441833985', '1915217245751828482', '1915217245693108225', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951743823874', '1915228951441833985', '1915221404844646401', '1915221404811091969', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951743823875', '1915228951441833985', '1915221404848840705', '1915221404811091969', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951748018178', '1915228951441833985', '1915221404848840706', '1915221404811091969', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951748018179', '1915228951441833985', '1915221404853035009', '1915221404811091969', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951752212482', '1915228951441833985', '1915220956490326018', '1915220956456771585', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951752212483', '1915228951441833985', '1915220956494520321', '1915220956456771585', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951752212484', '1915228951441833985', '1915220956494520322', '1915220956456771585', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228951752212485', '1915228951441833985', '1915220956498714626', '1915220956456771585', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952016453633', '1915228951441833985', '1915224313678266370', '1915224313552437249', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952016453634', '1915228951441833985', '1915224313686654977', '1915224313552437249', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952020647938', '1915228951441833985', '1915224313690849281', '1915224313552437249', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952020647939', '1915228951441833985', '1915224313690849282', '1915224313552437249', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952024842241', '1915228951441833985', '1915224948586840065', '1915224948528119809', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952024842242', '1915228951441833985', '1915224948586840066', '1915224948528119809', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952029036545', '1915228951441833985', '1915224948586840067', '1915224948528119809', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952029036546', '1915228951441833985', '1915224948599422977', '1915224948528119809', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952029036547', '1915228951441833985', '1915224783087992834', '1915224783004106754', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952033230849', '1915228951441833985', '1915224783092187137', '1915224783004106754', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952033230850', '1915228951441833985', '1915224783092187138', '1915224783004106754', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952033230851', '1915228951441833985', '1915224783100575745', '1915224783004106754', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952037425153', '1915228951441833985', '1913062532181401602', '1913062532164624386', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952037425154', '1915228951441833985', '1913062532181401603', '1913062532164624386', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952041619457', '1915228951441833985', '1913062532181401604', '1913062532164624386', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952041619458', '1915228951441833985', '1913062532181401605', '1913062532164624386', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952041619459', '1915228951441833985', '1915225736239382529', '1915225736142913538', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952045813762', '1915228951441833985', '1915225736247771138', '1915225736142913538', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952045813763', '1915228951441833985', '1915225736247771139', '1915225736142913538', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952045813764', '1915228951441833985', '1915225736251965442', '1915225736142913538', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952196808705', '1915228951441833985', '1915218558279573506', '1915218558250213377', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952201003009', '1915228951441833985', '1915218558279573507', '1915218558250213377', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952205197313', '1915228951441833985', '1915218671953600514', '1915218671928434690', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952205197314', '1915228951441833985', '1915218671957794818', '1915218671928434690', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952205197315', '1915228951441833985', '1915221062270672898', '1915221062249701378', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952209391617', '1915228951441833985', '1915221062274867202', '1915221062249701378', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952209391618', '1915228951441833985', '1915220690814722050', '1915220690789556226', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952213585921', '1915228951441833985', '1915220690814722051', '1915220690789556226', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952213585922', '1915228951441833985', '1915220220301893634', '1915220220272533506', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915228952213585923', '1915228951441833985', '1915220220306087938', '1915220220272533506', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004122292226', '1915229003740610562', '1915221317175304193', '1915221317120778241', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004126486529', '1915229003740610562', '1915221317175304194', '1915221317120778241', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004126486530', '1915229003740610562', '1915221317175304195', '1915221317120778241', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004126486531', '1915229003740610562', '1915221317175304196', '1915221317120778241', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004130680834', '1915229003740610562', '1915219521266606082', '1915219521224663041', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004130680835', '1915229003740610562', '1915219521266606083', '1915219521224663041', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004134875138', '1915229003740610562', '1915219521270800386', '1915219521224663041', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004134875139', '1915229003740610562', '1915219521270800387', '1915219521224663041', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004134875140', '1915229003740610562', '1915220105856114689', '1915220105797394434', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004139069441', '1915229003740610562', '1915220105864503297', '1915220105797394434', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004139069442', '1915229003740610562', '1915220105864503298', '1915220105797394434', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004139069443', '1915229003740610562', '1915220105864503299', '1915220105797394434', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004143263746', '1915229003740610562', '1915221794248024066', '1915221794214469634', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004143263747', '1915229003740610562', '1915221794248024067', '1915221794214469634', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004147458049', '1915229003740610562', '1915221794252218370', '1915221794214469634', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004147458050', '1915229003740610562', '1915221794252218371', '1915221794214469634', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004151652354', '1915229003740610562', '1911685389926985729', '1911685389859876866', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004151652355', '1915229003740610562', '1911685389926985730', '1911685389859876866', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004151652356', '1915229003740610562', '1911685389926985731', '1911685389859876866', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004155846657', '1915229003740610562', '1911685389926985732', '1911685389859876866', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004436865026', '1915229003740610562', '1915225736239382529', '1915225736142913538', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004436865027', '1915229003740610562', '1915225736247771138', '1915225736142913538', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004441059330', '1915229003740610562', '1915225736247771139', '1915225736142913538', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004441059331', '1915229003740610562', '1915225736251965442', '1915225736142913538', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004441059332', '1915229003740610562', '1915224948586840065', '1915224948528119809', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004445253634', '1915229003740610562', '1915224948586840066', '1915224948528119809', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004445253635', '1915229003740610562', '1915224948586840067', '1915224948528119809', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004445253636', '1915229003740610562', '1915224948599422977', '1915224948528119809', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004449447937', '1915229003740610562', '1915225630597447682', '1915225630517755906', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004449447938', '1915229003740610562', '1915225630601641986', '1915225630517755906', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004449447939', '1915229003740610562', '1915225630601641987', '1915225630517755906', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004449447940', '1915229003740610562', '1915225630610030594', '1915225630517755906', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004453642241', '1915229003740610562', '1913062799232737282', '1913062799203377153', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004453642242', '1915229003740610562', '1913062799232737283', '1913062799203377153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004453642243', '1915229003740610562', '1913062799241125890', '1913062799203377153', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004453642244', '1915229003740610562', '1913062799241125891', '1913062799203377153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004457836546', '1915229003740610562', '1915225528445173762', '1915225528378064898', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004457836547', '1915229003740610562', '1915225528445173763', '1915225528378064898', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004457836548', '1915229003740610562', '1915225528445173764', '1915225528378064898', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004462030849', '1915229003740610562', '1915225528445173765', '1915225528378064898', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004621414402', '1915229003740610562', '1915219652841922562', '1915219652812562434', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004625608706', '1915229003740610562', '1915219652846116865', '1915219652812562434', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004625608707', '1915229003740610562', '1915221939710681090', '1915221939685515265', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004629803010', '1915229003740610562', '1915221939710681091', '1915221939685515265', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004629803011', '1915229003740610562', '1915220220301893634', '1915220220272533506', 0, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004629803012', '1915229003740610562', '1915220220306087938', '1915220220272533506', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004629803013', '1915229003740610562', '1915218558279573506', '1915218558250213377', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004633997313', '1915229003740610562', '1915218558279573507', '1915218558250213377', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004633997314', '1915229003740610562', '1915220312203288578', '1915220312169734145', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229004633997315', '1915229003740610562', '1915220312203288579', '1915220312169734145', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186469658625', '1915229186188640257', '1915217421388308482', '1915217421350559745', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186478047233', '1915229186188640257', '1915217421392502785', '1915217421350559745', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186478047234', '1915229186188640257', '1915217421392502786', '1915217421350559745', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186478047235', '1915229186188640257', '1915217421396697089', '1915217421350559745', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186482241538', '1915229186188640257', '1915219521266606082', '1915219521224663041', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186482241539', '1915229186188640257', '1915219521266606083', '1915219521224663041', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186482241540', '1915229186188640257', '1915219521270800386', '1915219521224663041', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186486435842', '1915229186188640257', '1915219521270800387', '1915219521224663041', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186486435843', '1915229186188640257', '1915219920610484226', '1915219920572735489', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186486435844', '1915229186188640257', '1915219920614678530', '1915219920572735489', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186486435845', '1915229186188640257', '1915219920618872834', '1915219920572735489', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186490630146', '1915229186188640257', '1915219920618872835', '1915219920572735489', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186490630147', '1915229186188640257', '1915221404844646401', '1915221404811091969', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186490630148', '1915229186188640257', '1915221404848840705', '1915221404811091969', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186490630149', '1915229186188640257', '1915221404848840706', '1915221404811091969', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186494824449', '1915229186188640257', '1915221404853035009', '1915221404811091969', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186494824450', '1915229186188640257', '1915218291106603009', '1915218291043688449', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186494824451', '1915229186188640257', '1915218291110797313', '1915218291043688449', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186499018753', '1915229186188640257', '1915218291110797314', '1915218291043688449', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186499018754', '1915229186188640257', '1915218291114991618', '1915218291043688449', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186708733953', '1915229186188640257', '1915226236720513026', '1915226236653404162', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186712928257', '1915229186188640257', '1915226236724707330', '1915226236653404162', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186717122562', '1915229186188640257', '1915226236728901634', '1915226236653404162', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186717122563', '1915229186188640257', '1915226236728901635', '1915226236653404162', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186717122564', '1915229186188640257', '1915224948586840065', '1915224948528119809', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186717122565', '1915229186188640257', '1915224948586840066', '1915224948528119809', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186721316865', '1915229186188640257', '1915224948586840067', '1915224948528119809', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186721316866', '1915229186188640257', '1915224948599422977', '1915224948528119809', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186721316867', '1915229186188640257', '1915224783087992834', '1915224783004106754', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186721316868', '1915229186188640257', '1915224783092187137', '1915224783004106754', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186725511169', '1915229186188640257', '1915224783092187138', '1915224783004106754', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186725511170', '1915229186188640257', '1915224783100575745', '1915224783004106754', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186725511171', '1915229186188640257', '1915225060599922689', '1915225060553785346', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186725511172', '1915229186188640257', '1915225060604116993', '1915225060553785346', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186729705473', '1915229186188640257', '1915225060608311298', '1915225060553785346', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186729705474', '1915229186188640257', '1915225060608311299', '1915225060553785346', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186729705475', '1915229186188640257', '1915225180364079105', '1915225180309553153', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186733899777', '1915229186188640257', '1915225180368273409', '1915225180309553153', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186733899778', '1915229186188640257', '1915225180372467713', '1915225180309553153', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186733899779', '1915229186188640257', '1915225180372467714', '1915225180309553153', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186926837762', '1915229186188640257', '1915219749461909505', '1915219749436743681', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186926837763', '1915229186188640257', '1915219749466103810', '1915219749436743681', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186931032066', '1915229186188640257', '1915221624911388674', '1915221624873639937', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186931032067', '1915229186188640257', '1915221624915582977', '1915221624873639937', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186931032068', '1915229186188640257', '1915218558279573506', '1915218558250213377', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186935226370', '1915229186188640257', '1915218558279573507', '1915218558250213377', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186935226371', '1915229186188640257', '1915220220301893634', '1915220220272533506', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186935226372', '1915229186188640257', '1915220220306087938', '1915220220272533506', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186935226373', '1915229186188640257', '1915219698886991874', '1915219698861826049', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229186939420674', '1915229186188640257', '1915219698886991875', '1915219698861826049', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210830176257', '1915229210532380673', '1915220105856114689', '1915220105797394434', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210834370561', '1915229210532380673', '1915220105864503297', '1915220105797394434', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210834370562', '1915229210532380673', '1915220105864503298', '1915220105797394434', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210834370563', '1915229210532380673', '1915220105864503299', '1915220105797394434', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210838564865', '1915229210532380673', '1915219920610484226', '1915219920572735489', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210838564866', '1915229210532380673', '1915219920614678530', '1915219920572735489', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210838564867', '1915229210532380673', '1915219920618872834', '1915219920572735489', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210838564868', '1915229210532380673', '1915219920618872835', '1915219920572735489', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210842759170', '1915229210532380673', '1915221317175304193', '1915221317120778241', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210842759171', '1915229210532380673', '1915221317175304194', '1915221317120778241', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210842759172', '1915229210532380673', '1915221317175304195', '1915221317120778241', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210842759173', '1915229210532380673', '1915221317175304196', '1915221317120778241', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210846953473', '1915229210532380673', '1915221794248024066', '1915221794214469634', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210846953474', '1915229210532380673', '1915221794248024067', '1915221794214469634', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210846953475', '1915229210532380673', '1915221794252218370', '1915221794214469634', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210846953476', '1915229210532380673', '1915221794252218371', '1915221794214469634', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210851147778', '1915229210532380673', '1915220843156037634', '1915220843122483201', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210851147779', '1915229210532380673', '1915220843160231938', '1915220843122483201', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210851147780', '1915229210532380673', '1915220843160231939', '1915220843122483201', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229210851147781', '1915229210532380673', '1915220843164426241', '1915220843122483201', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211195080706', '1915229210532380673', '1915225940808171521', '1915225940757839873', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211195080707', '1915229210532380673', '1915225940812365825', '1915225940757839873', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211199275010', '1915229210532380673', '1915225940812365826', '1915225940757839873', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211199275011', '1915229210532380673', '1915225940816560130', '1915225940757839873', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211199275012', '1915229210532380673', '1915224783087992834', '1915224783004106754', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211203469313', '1915229210532380673', '1915224783092187137', '1915224783004106754', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211203469314', '1915229210532380673', '1915224783092187138', '1915224783004106754', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211203469315', '1915229210532380673', '1915224783100575745', '1915224783004106754', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211203469316', '1915229210532380673', '1915225828807671809', '1915225828769923074', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211207663617', '1915229210532380673', '1915225828811866113', '1915225828769923074', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211207663618', '1915229210532380673', '1915225828811866114', '1915225828769923074', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211207663619', '1915229210532380673', '1915225828816060418', '1915225828769923074', 1, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211207663620', '1915229210532380673', '1915225372517728257', '1915225372442230786', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211211857921', '1915229210532380673', '1915225372521922561', '1915225372442230786', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211211857922', '1915229210532380673', '1915225372526116866', '1915225372442230786', 1, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211211857923', '1915229210532380673', '1915225372526116867', '1915225372442230786', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211211857924', '1915229210532380673', '1915225736239382529', '1915225736142913538', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211216052225', '1915229210532380673', '1915225736247771138', '1915225736142913538', 1, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211216052226', '1915229210532380673', '1915225736247771139', '1915225736142913538', 0, NULL, 0, 2, 'C');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211216052227', '1915229210532380673', '1915225736251965442', '1915225736142913538', 0, NULL, 0, 3, 'D');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211421573122', '1915229210532380673', '1915219749461909505', '1915219749436743681', 1, NULL, 1, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211425767426', '1915229210532380673', '1915219749466103810', '1915219749436743681', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211425767427', '1915229210532380673', '1915217849047932930', '1915217849014378498', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211429961729', '1915229210532380673', '1915217849047932931', '1915217849014378498', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211429961730', '1915229210532380673', '1915220613660499969', '1915220613626945538', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211429961731', '1915229210532380673', '1915220613664694274', '1915220613626945538', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211429961732', '1915229210532380673', '1915219263539208193', '1915219263514042370', 1, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211429961733', '1915229210532380673', '1915219263539208194', '1915219263514042370', 0, NULL, 0, 1, 'B');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211434156034', '1915229210532380673', '1915221579243806721', '1915221579218640898', 0, NULL, 0, 0, 'A');
-INSERT INTO `el_paper_qu_answer` (`id`, `paper_id`, `answer_id`, `qu_id`, `is_right`, `answer`, `checked`, `sort`, `abc`) VALUES ('1915229211434156035', '1915229210532380673', '1915221579248001026', '1915221579218640898', 1, NULL, 0, 1, 'B');
 COMMIT;
 
 -- ----------------------------
@@ -755,16 +228,16 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_repo`;
 CREATE TABLE `el_repo` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `title` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '题库名称',
-  `cat_id` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '分类ID',
-  `remark` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '题库备注',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '题库名称',
+  `cat_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分类ID',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '题库备注',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '创建人',
-  `update_by` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='题库';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='题库';
 
 -- ----------------------------
 -- Records of el_repo
@@ -778,23 +251,23 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_repo_qu`;
 CREATE TABLE `el_repo_qu` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `repo_id` varchar(64) NOT NULL COMMENT '所属题库',
-  `chapter_id` varchar(64) DEFAULT NULL COMMENT '所属章节',
-  `qu_type` varchar(32) NOT NULL COMMENT '题目类型',
-  `difficulty_level` varchar(32) NOT NULL DEFAULT '1' COMMENT '难度等级',
-  `content` text NOT NULL COMMENT '题目内容',
-  `analysis` text COMMENT '整题解析',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `repo_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '所属题库',
+  `chapter_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '所属章节',
+  `qu_type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目类型',
+  `difficulty_level` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '1' COMMENT '难度等级',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目内容',
+  `analysis` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci COMMENT '整题解析',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) DEFAULT NULL COMMENT '创建人',
-  `update_by` varchar(255) DEFAULT NULL COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `qu_type` (`qu_type`) USING BTREE,
   KEY `repo_id` (`repo_id`) USING BTREE,
   KEY `chapter_id` (`chapter_id`) USING BTREE,
   KEY `level` (`difficulty_level`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='问题题目';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='问题题目';
 
 -- ----------------------------
 -- Records of el_repo_qu
@@ -868,26 +341,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_repo_qu_answer`;
 CREATE TABLE `el_repo_qu_answer` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `qu_id` varchar(64) NOT NULL COMMENT '问题ID',
-  `is_right` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否正确',
-  `content` varchar(5000) NOT NULL COMMENT '答案内容',
-  `image` varchar(500) DEFAULT NULL COMMENT '图片地址',
-  `tag` varchar(255) DEFAULT NULL COMMENT 'ABCD标签',
+  `id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `qu_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '问题ID',
+  `is_right` tinyint NOT NULL DEFAULT '0' COMMENT '是否正确',
+  `content` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '答案内容',
+  `image` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '图片地址',
+  `tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'ABCD标签',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `qu_id` (`qu_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='候选答案';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='候选答案';
 
 -- ----------------------------
 -- Records of el_repo_qu_answer
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911611345437388801', '1911611345353502722', 0, '111', NULL, 'A');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911611345437388802', '1911611345353502722', 0, '333', NULL, 'B');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911611345437388803', '1911611345353502722', 0, '444', NULL, 'C');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911683311842291713', '1911683311779377154', 0, '111', NULL, 'A');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911683311842291714', '1911683311779377154', 1, '222', NULL, 'B');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911683311842291715', '1911683311779377154', 0, '333', NULL, 'C');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911685389926985729', '1911685389859876866', 1, '漠河', NULL, 'A');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911685389926985730', '1911685389859876866', 0, '新疆', NULL, 'B');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1911685389926985731', '1911685389859876866', 0, '四川', NULL, 'C');
@@ -918,10 +385,6 @@ INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, 
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217421392502785', '1915217421350559745', 0, '5年内', NULL, 'B');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217421392502786', '1915217421350559745', 0, '终生', NULL, 'C');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217421396697089', '1915217421350559745', 0, '1年内', NULL, 'D');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217677832249346', '1915217677798694913', 1, '3年内', NULL, 'A');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217677836443650', '1915217677798694913', 0, '5年内', NULL, 'B');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217677836443651', '1915217677798694913', 0, '终生', NULL, 'C');
-INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217677840637954', '1915217677798694913', 0, '1年内', NULL, 'D');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217849047932930', '1915217849014378498', 1, '正确', NULL, 'A');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915217849047932931', '1915217849014378498', 0, '错误', NULL, 'B');
 INSERT INTO `el_repo_qu_answer` (`id`, `qu_id`, `is_right`, `content`, `image`, `tag`) VALUES ('1915218291106603009', '1915218291043688449', 0, '收缴驾驶证', NULL, 'A');
@@ -1091,21 +554,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_depart`;
 CREATE TABLE `el_sys_depart` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `dept_type` int(11) NOT NULL DEFAULT '1' COMMENT '1公司2部门',
-  `parent_id` varchar(32) NOT NULL DEFAULT '0' COMMENT '所属上级',
-  `dept_name` varchar(255) NOT NULL DEFAULT '' COMMENT '部门名称',
-  `dept_code` varchar(255) NOT NULL DEFAULT '' COMMENT '部门编码',
-  `dept_level` int(11) NOT NULL DEFAULT '0' COMMENT '部门层级',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `dept_type` int NOT NULL DEFAULT '1' COMMENT '1公司2部门',
+  `parent_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '所属上级',
+  `dept_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '部门名称',
+  `dept_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '部门编码',
+  `dept_level` int NOT NULL DEFAULT '0' COMMENT '部门层级',
+  `sort` int NOT NULL DEFAULT '0' COMMENT '排序',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `dept_code` (`dept_code`) USING BTREE,
   KEY `parent_id` (`parent_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='部门信息';
 
 -- ----------------------------
 -- Records of el_sys_depart
@@ -1122,18 +585,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_dic`;
 CREATE TABLE `el_sys_dic` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `dic_code` varchar(255) DEFAULT NULL COMMENT '字典编码',
-  `type` int(11) DEFAULT NULL COMMENT '1分类字典,2数据字典',
-  `title` varchar(255) DEFAULT NULL COMMENT '字典名称',
-  `remark` varchar(255) DEFAULT NULL COMMENT '字典描述',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `dic_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典编码',
+  `type` int DEFAULT NULL COMMENT '1分类字典,2数据字典',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典名称',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '字典描述',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `code` (`dic_code`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类字典';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='分类字典';
 
 -- ----------------------------
 -- Records of el_sys_dic
@@ -1156,18 +619,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_dic_value`;
 CREATE TABLE `el_sys_dic_value` (
-  `id` varchar(32) NOT NULL COMMENT 'ID/字典编码',
-  `dic_code` varchar(255) DEFAULT NULL COMMENT '归属字典',
-  `dic_value` varchar(255) DEFAULT NULL COMMENT '子项编码',
-  `title` varchar(255) DEFAULT NULL COMMENT '分类名称',
-  `parent_id` varchar(32) DEFAULT NULL COMMENT '上级ID',
-  `remark` varchar(255) DEFAULT NULL COMMENT '描述',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID/字典编码',
+  `dic_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '归属字典',
+  `dic_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '子项编码',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分类名称',
+  `parent_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '上级ID',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '描述',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类字典值';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='分类字典值';
 
 -- ----------------------------
 -- Records of el_sys_dic_value
@@ -1201,11 +664,6 @@ INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1910604353570770946', 'qu_difficulty_level', 'extreme', '极难', '0', NULL, '2025-04-11 16:02:29', '2025-04-11 16:02:29', '', '');
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914160827720196097', 'yes_no', '1', '是', '0', NULL, '2025-04-21 11:34:39', '2025-04-21 11:34:39', '', '');
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914160855650066434', 'yes_no', '0', '否', '0', NULL, '2025-04-21 11:34:46', '2025-04-21 11:34:46', '', '');
-INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914501513326682114', '', '1914501513326682114', '分类1', '0', NULL, '2025-04-22 10:08:25', '2025-04-22 10:08:25', '', '');
-INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914502737182646274', '', '1914502737182646274', '子类1', '1914501513326682114', NULL, '2025-04-22 10:13:16', '2025-04-22 10:13:16', '', '');
-INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914502776537800706', '', '1914502776537800706', '子类2', '1914501513326682114', NULL, '2025-04-22 10:13:26', '2025-04-22 10:13:26', '', '');
-INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914503021984276481', '', '1914503021984276481', '孙子类', '1914502737182646274', NULL, '2025-04-22 10:14:24', '2025-04-22 10:14:24', '', '');
-INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1914503232257318913', '', '1914503232257318913', '存孙类', '1914503021984276481', NULL, '2025-04-22 10:15:14', '2025-04-22 10:15:14', '', '');
 INSERT INTO `el_sys_dic_value` (`id`, `dic_code`, `dic_value`, `title`, `parent_id`, `remark`, `create_time`, `update_time`, `create_by`, `update_by`) VALUES ('1915226614203678722', 'repo_catalog', '1915226614203678722', '云帆演示', '0', NULL, '2025-04-24 10:09:42', '2025-04-24 10:09:42', '', '');
 COMMIT;
 
@@ -1214,31 +672,31 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_menu`;
 CREATE TABLE `el_sys_menu` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `parent_id` varchar(32) DEFAULT NULL COMMENT '上级菜单',
-  `menu_type` int(11) NOT NULL DEFAULT '1' COMMENT '1菜单2功能',
-  `permission_tag` varchar(255) DEFAULT NULL COMMENT '权限标识',
-  `path` varchar(255) DEFAULT NULL COMMENT '访问路径',
-  `component` varchar(255) DEFAULT NULL COMMENT '视图或Layout',
-  `redirect` varchar(255) DEFAULT NULL COMMENT '跳转地址',
-  `name` varchar(255) DEFAULT NULL COMMENT '名称',
-  `meta_title` varchar(255) DEFAULT NULL COMMENT '路由标题',
-  `meta_icon` varchar(255) DEFAULT NULL COMMENT '路由标题',
-  `meta_active_menu` varchar(255) DEFAULT NULL COMMENT '高亮菜单',
-  `meta_no_cache` tinyint(4) DEFAULT NULL COMMENT '是否缓存',
-  `hidden` tinyint(4) DEFAULT NULL COMMENT '是否隐藏',
-  `sort` int(11) DEFAULT NULL COMMENT '越小越前',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `parent_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '上级菜单',
+  `menu_type` int NOT NULL DEFAULT '1' COMMENT '1菜单2功能',
+  `permission_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '权限标识',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '访问路径',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '视图或Layout',
+  `redirect` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '跳转地址',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `meta_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '路由标题',
+  `meta_icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '路由标题',
+  `meta_active_menu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '高亮菜单',
+  `meta_no_cache` tinyint DEFAULT NULL COMMENT '是否缓存',
+  `hidden` tinyint DEFAULT NULL COMMENT '是否隐藏',
+  `sort` int DEFAULT NULL COMMENT '越小越前',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `permission_tag` (`permission_tag`) USING BTREE,
   UNIQUE KEY `path` (`path`) USING BTREE,
   UNIQUE KEY `name` (`name`) USING BTREE,
   KEY `parent_id` (`parent_id`) USING BTREE,
   KEY `menu_type` (`menu_type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统菜单';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='系统菜单';
 
 -- ----------------------------
 -- Records of el_sys_menu
@@ -1312,23 +770,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_role`;
 CREATE TABLE `el_sys_role` (
-  `id` varchar(32) NOT NULL COMMENT '角色ID',
-  `role_name` varchar(255) NOT NULL DEFAULT '' COMMENT '角色名称',
-  `data_scope` int(11) NOT NULL COMMENT '数据权限',
-  `role_level` int(11) NOT NULL COMMENT '越大越高',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色ID',
+  `role_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '角色名称',
+  `data_scope` int NOT NULL COMMENT '数据权限',
+  `role_level` int NOT NULL COMMENT '越大越高',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注信息',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色';
 
 -- ----------------------------
 -- Records of el_sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1915230064660447233', '11', 2, 11, NULL, '2025-04-24 10:23:25', '', '2025-04-24 10:23:25', '');
 INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('admin', '超级管理员', 4, 999, '', '2020-12-03 16:52:16', '', '2022-06-15 15:47:31', '10001');
 INSERT INTO `el_sys_role` (`id`, `role_name`, `data_scope`, `role_level`, `remark`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('user', '学员', 1, 1, '注册用户', '2022-07-29 12:24:34', '', '2022-07-29 12:24:34', '10001');
 COMMIT;
@@ -1338,41 +795,23 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_role_menu`;
 CREATE TABLE `el_sys_role_menu` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `role_id` varchar(32) NOT NULL COMMENT '角色ID',
-  `menu_id` varchar(32) NOT NULL COMMENT '菜单ID',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `role_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色ID',
+  `menu_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单ID',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
-  `data_flag` int(11) NOT NULL DEFAULT '0' COMMENT '数据标识',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
+  `data_flag` int NOT NULL DEFAULT '0' COMMENT '数据标识',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `role_id` (`role_id`) USING BTREE,
   KEY `menu_id` (`menu_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色菜单授权';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='角色菜单授权';
 
 -- ----------------------------
 -- Records of el_sys_role_menu
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055651512321', '1552872688874184706', '1367010529435996174', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055655706626', '1552872688874184706', '1367010529435996176', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055655706627', '1552872688874184706', '1399266644605394945', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055655706628', '1552872688874184706', '1399266713060630529', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055659900930', '1552872688874184706', '1399266787438223361', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055659900931', '1552872688874184706', '1399266868300210177', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055659900932', '1552872688874184706', '1552549085188235265', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055664095234', '1552872688874184706', '1367010529435996178', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055664095235', '1552872688874184706', '1552509704679235586', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055664095236', '1552872688874184706', '1552510807093321730', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055664095237', '1552872688874184706', '1552510872314748929', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055664095238', '1552872688874184706', '1552510963301785601', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055668289538', '1552872688874184706', '1553180631951761409', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055668289539', '1552872688874184706', '1367010529435996179', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055668289540', '1552872688874184706', '1552615713615716353', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055672483841', '1552872688874184706', '1552615821107339266', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055672483842', '1552872688874184706', '1552615880121196546', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
-INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1553195055672483843', '1552872688874184706', '1552616085025529857', '2022-07-30 09:45:32', '2022-07-30 09:45:32', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392065', 'user', '1912388980346134529', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392066', 'user', '1912389902866522113', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
 INSERT INTO `el_sys_role_menu` (`id`, `role_id`, `menu_id`, `create_time`, `update_time`, `create_by`, `update_by`, `data_flag`) VALUES ('1914256054338392067', 'user', '1912445044980776961', '2025-04-21 17:53:03', '2025-04-21 17:53:03', '', '', 0);
@@ -1444,56 +883,32 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_user`;
 CREATE TABLE `el_sys_user` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `user_name` varchar(255) NOT NULL DEFAULT '' COMMENT '用户名',
-  `real_name` varchar(255) NOT NULL DEFAULT '' COMMENT '真实姓名',
-  `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
-  `password` varchar(255) NOT NULL DEFAULT '' COMMENT '密码',
-  `salt` varchar(255) NOT NULL DEFAULT '' COMMENT '密码盐',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `id_card` varchar(255) DEFAULT '' COMMENT '身份证号码',
-  `mobile` varchar(255) DEFAULT NULL COMMENT '手机号',
-  `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
-  `dept_code` varchar(32) DEFAULT NULL COMMENT '部门编码',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户名',
+  `real_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '真实姓名',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '头像',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码',
+  `salt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '密码盐',
+  `state` int NOT NULL DEFAULT '0' COMMENT '状态',
+  `id_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '' COMMENT '身份证号码',
+  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '手机号',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '邮箱',
+  `dept_code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '部门编码',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `create_by` varchar(255) NOT NULL DEFAULT '' COMMENT '创建人',
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '创建人',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `update_by` varchar(255) NOT NULL DEFAULT '' COMMENT '修改人',
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '修改人',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `dept_code` (`dept_code`) USING BTREE,
   KEY `user_name` (`user_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理用户';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='管理用户';
 
 -- ----------------------------
 -- Records of el_sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1000000000000000001', 'admin', '云帆超管', 'https://be2.yfhl.net/upload/file/2025/04/23/1914975014591750145.jpeg', '05c0de3b9209d13bd07add35970563b0', 'HhwDnq', 0, '', '', '', 'A01A01', '2020-12-03 16:52:10', '', '2025-04-24 11:12:31', '1000000000000000001');
-INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1914226980618383361', 'student', '云帆学员', 'https://be2.yfhl.net/upload/file/2025/04/23/1914968883077144577.webp', '57adae05a2485af81eaa722ac86f4f23', 'QvEQcj', 0, '', '', NULL, 'A01', '2025-04-21 15:57:31', '1000000000000000001', '2025-04-24 10:14:56', '1000000000000000001');
-INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1914982048603136002', 'dora', 'dora', '', '8924f9ff7c2d28961af26b98329c25bb', 'YNdNFi', 0, '', NULL, NULL, 'A01A01', '2025-04-23 17:57:54', '1000000000000000001', '2025-04-23 17:57:53', '');
-INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1915031068285427714', 'admin1', '二级管理员', '', '213d11a6f32e8b0f9ca8e3d479244481', 'CJEtKx', 0, '', NULL, NULL, 'A01', '2025-04-23 21:12:41', '1000000000000000001', '2025-04-23 21:12:40', '');
-COMMIT;
-
--- ----------------------------
--- Table structure for el_sys_user_bind
--- ----------------------------
-DROP TABLE IF EXISTS `el_sys_user_bind`;
-CREATE TABLE `el_sys_user_bind` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID',
-  `login_type` varchar(32) DEFAULT NULL COMMENT '登录类型',
-  `open_id` varchar(64) DEFAULT NULL COMMENT '三方ID',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录绑定';
-
--- ----------------------------
--- Records of el_sys_user_bind
--- ----------------------------
-BEGIN;
-INSERT INTO `el_sys_user_bind` (`id`, `user_id`, `login_type`, `open_id`, `create_time`, `update_time`) VALUES ('1557552631587586049', '1557544252961996802', 'mobile', '18682216559', NULL, NULL);
-INSERT INTO `el_sys_user_bind` (`id`, `user_id`, `login_type`, `open_id`, `create_time`, `update_time`) VALUES ('1557552992536805378', '1557552992415170561', 'mobile', '18603038204', NULL, NULL);
+INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1000000000000000001', 'admin', '云帆超管', 'https://be2.yfhl.net/upload/file/2025/04/23/1914975014591750145.jpeg', '05c0de3b9209d13bd07add35970563b0', 'HhwDnq', 0, '', '', '', 'A01A01', '2020-12-03 16:52:10', '', '2025-04-24 15:04:28', '1000000000000000001');
+INSERT INTO `el_sys_user` (`id`, `user_name`, `real_name`, `avatar`, `password`, `salt`, `state`, `id_card`, `mobile`, `email`, `dept_code`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES ('1914226980618383361', 'student', '云帆学员', 'https://be2.yfhl.net/upload/file/2025/04/24/1915311363890958337.jpeg', '57adae05a2485af81eaa722ac86f4f23', 'QvEQcj', 0, '', '', NULL, 'A01', '2025-04-21 15:57:31', '1000000000000000001', '2025-04-24 15:36:44', '1000000000000000001');
 COMMIT;
 
 -- ----------------------------
@@ -1501,96 +916,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `el_sys_user_role`;
 CREATE TABLE `el_sys_user_role` (
-  `id` varchar(32) NOT NULL COMMENT 'ID',
-  `user_id` varchar(32) NOT NULL COMMENT '用户ID',
-  `role_id` varchar(32) NOT NULL COMMENT '角色ID',
+  `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户ID',
+  `role_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户角色';
 
 -- ----------------------------
 -- Records of el_sys_user_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1557552631474339841', '1557544252961996802', '1552872688874184706');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1557552631482728450', '1557544252961996802', 'admin');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1557552992465502210', '1557552992415170561', '1552872688874184706');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1557552992469696513', '1557552992415170561', 'admin');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699765812061040642', '1699765811981348865', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699959928904511490', '1699959928875151362', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699964466159972353', '1699964466151583745', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1699975662460235778', '1699975662443458562', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1910217631959805953', '1700049535004397569', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1914982048628301825', '1914982048603136002', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1915031068314787841', '1915031068285427714', 'admin');
 INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1915227929898123265', '1914226980618383361', 'user');
-INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1915242420253753345', '1000000000000000001', 'admin');
-COMMIT;
-
--- ----------------------------
--- Table structure for el_tmpl
--- ----------------------------
-DROP TABLE IF EXISTS `el_tmpl`;
-CREATE TABLE `el_tmpl` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `title` varchar(255) DEFAULT NULL COMMENT '试卷标题',
-  `cat_id` varchar(32) DEFAULT NULL COMMENT '试卷分类',
-  `join_type` varchar(10) DEFAULT NULL COMMENT '组卷方式',
-  `qu_count` int(11) DEFAULT NULL COMMENT '题目数量',
-  `total_score` decimal(10,2) DEFAULT NULL COMMENT '总分数',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `join_type` (`join_type`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷';
-
--- ----------------------------
--- Records of el_tmpl
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
--- Table structure for el_tmpl_qu
--- ----------------------------
-DROP TABLE IF EXISTS `el_tmpl_qu`;
-CREATE TABLE `el_tmpl_qu` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `tmpl_id` varchar(32) NOT NULL DEFAULT '' COMMENT '模板ID',
-  `qu_id` varchar(32) NOT NULL DEFAULT '' COMMENT '题目ID',
-  `qu_type` varchar(32) NOT NULL COMMENT '题目类型',
-  `qu_score` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '分数',
-  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `tmpl_id` (`tmpl_id`) USING BTREE,
-  KEY `qu_id` (`qu_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷题目';
-
--- ----------------------------
--- Records of el_tmpl_qu
--- ----------------------------
-BEGIN;
-COMMIT;
-
--- ----------------------------
--- Table structure for el_tmpl_rule
--- ----------------------------
-DROP TABLE IF EXISTS `el_tmpl_rule`;
-CREATE TABLE `el_tmpl_rule` (
-  `id` varchar(64) NOT NULL COMMENT 'ID',
-  `tmpl_id` varchar(32) DEFAULT NULL COMMENT '分组ID',
-  `repo_id` varchar(32) DEFAULT NULL COMMENT '题库ID',
-  `qu_type` varchar(255) DEFAULT NULL COMMENT '试题类型',
-  `qu_level` varchar(255) DEFAULT NULL COMMENT '难度',
-  `qu_count` int(11) DEFAULT NULL COMMENT '试题数量',
-  `per_score` decimal(10,0) DEFAULT '1' COMMENT '每题分数',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `group_id` (`tmpl_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='大题组卷规则';
-
--- ----------------------------
--- Records of el_tmpl_rule
--- ----------------------------
-BEGIN;
+INSERT INTO `el_sys_user_role` (`id`, `user_id`, `role_id`) VALUES ('1915300793024335873', '1000000000000000001', 'admin');
 COMMIT;
 
 -- ----------------------------
@@ -1598,18 +937,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `pl_plugin_data`;
 CREATE TABLE `pl_plugin_data` (
-  `id` varchar(255) NOT NULL COMMENT 'ID',
-  `code` varchar(255) NOT NULL COMMENT '唯一识别码',
-  `title` varchar(255) NOT NULL COMMENT '插件名称',
-  `schema_id` varchar(255) NOT NULL COMMENT '元数据ID',
-  `group_id` varchar(255) NOT NULL COMMENT '分组ID',
-  `config_data` varchar(5000) DEFAULT NULL COMMENT '配置数据',
-  `service_clazz` varchar(2000) DEFAULT NULL COMMENT '后端服务类',
-  `component` varchar(255) NOT NULL COMMENT '前端页面',
-  `in_use` tinyint(4) NOT NULL COMMENT '是否使用',
-  `state` varchar(255) NOT NULL COMMENT '插件状态',
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '唯一识别码',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '插件名称',
+  `schema_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '元数据ID',
+  `group_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '分组ID',
+  `config_data` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配置数据',
+  `service_clazz` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '后端服务类',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '前端页面',
+  `in_use` tinyint NOT NULL COMMENT '是否使用',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '插件状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='插件信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='插件信息';
 
 -- ----------------------------
 -- Records of pl_plugin_data
@@ -1623,11 +962,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `pl_plugin_group`;
 CREATE TABLE `pl_plugin_group` (
-  `id` varchar(255) NOT NULL COMMENT 'ID',
-  `title` varchar(255) DEFAULT NULL COMMENT '分组名称',
-  `single` tinyint(4) DEFAULT NULL COMMENT '独立排斥',
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组名称',
+  `single` tinyint DEFAULT NULL COMMENT '独立排斥',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='插件分组';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='插件分组';
 
 -- ----------------------------
 -- Records of pl_plugin_group
@@ -1641,11 +980,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `pl_plugin_schema`;
 CREATE TABLE `pl_plugin_schema` (
-  `id` varchar(255) NOT NULL COMMENT 'ID',
-  `schema_data` varchar(5000) DEFAULT NULL COMMENT '元数据',
-  `group_id` varchar(255) DEFAULT NULL COMMENT '分组',
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ID',
+  `schema_data` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '元数据',
+  `group_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='插件元数据';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='插件元数据';
 
 -- ----------------------------
 -- Records of pl_plugin_schema
@@ -1660,13 +999,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `BLOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE,
   KEY `SCHED_NAME` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_blob_triggers
@@ -1679,11 +1018,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_calendars`;
 CREATE TABLE `qrtz_calendars` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `CALENDAR_NAME` varchar(200) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `CALENDAR_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `CALENDAR` blob NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`CALENDAR_NAME`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_calendars
@@ -1696,13 +1035,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(120) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `CRON_EXPRESSION` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_cron_triggers
@@ -1715,19 +1054,19 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE `qrtz_fired_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `ENTRY_ID` varchar(95) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `FIRED_TIME` bigint(20) NOT NULL,
-  `SCHED_TIME` bigint(20) NOT NULL,
-  `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) NOT NULL,
-  `JOB_NAME` varchar(200) DEFAULT NULL,
-  `JOB_GROUP` varchar(200) DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ENTRY_ID` varchar(95) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `INSTANCE_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `FIRED_TIME` bigint NOT NULL,
+  `SCHED_TIME` bigint NOT NULL,
+  `PRIORITY` int NOT NULL,
+  `STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`) USING BTREE,
   KEY `IDX_QRTZ_FT_TRIG_INST_NAME` (`SCHED_NAME`,`INSTANCE_NAME`) USING BTREE,
   KEY `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY` (`SCHED_NAME`,`INSTANCE_NAME`,`REQUESTS_RECOVERY`) USING BTREE,
@@ -1735,7 +1074,7 @@ CREATE TABLE `qrtz_fired_triggers` (
   KEY `IDX_QRTZ_FT_JG` (`SCHED_NAME`,`JOB_GROUP`) USING BTREE,
   KEY `IDX_QRTZ_FT_T_G` (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE,
   KEY `IDX_QRTZ_FT_TG` (`SCHED_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_fired_triggers
@@ -1748,20 +1087,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) NOT NULL,
-  `IS_DURABLE` varchar(1) NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `IS_DURABLE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `JOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`) USING BTREE,
   KEY `IDX_QRTZ_J_REQ_RECOVERY` (`SCHED_NAME`,`REQUESTS_RECOVERY`) USING BTREE,
   KEY `IDX_QRTZ_J_GRP` (`SCHED_NAME`,`JOB_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_job_details
@@ -1774,10 +1113,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_locks`;
 CREATE TABLE `qrtz_locks` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_locks
@@ -1792,10 +1131,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
 CREATE TABLE `qrtz_paused_trigger_grps` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_paused_trigger_grps
@@ -1808,18 +1147,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_scheduler_state`;
 CREATE TABLE `qrtz_scheduler_state` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(20) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(20) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `INSTANCE_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `LAST_CHECKIN_TIME` bigint NOT NULL,
+  `CHECKIN_INTERVAL` bigint NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_scheduler_state
 -- ----------------------------
 BEGIN;
-INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES ('examScheduler', 'iZ8vbf3hrxvyr76tels9ytZ1745477568169', 1745477750379, 10000);
+INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES ('examScheduler', 'MacBook-Pro-16.local1745742094389', 1745827600288, 10000);
 COMMIT;
 
 -- ----------------------------
@@ -1827,14 +1166,14 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simple_triggers`;
 CREATE TABLE `qrtz_simple_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `REPEAT_COUNT` bigint(20) NOT NULL,
-  `REPEAT_INTERVAL` bigint(20) NOT NULL,
-  `TIMES_TRIGGERED` bigint(20) NOT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `REPEAT_COUNT` bigint NOT NULL,
+  `REPEAT_INTERVAL` bigint NOT NULL,
+  `TIMES_TRIGGERED` bigint NOT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_simple_triggers
@@ -1847,22 +1186,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
 CREATE TABLE `qrtz_simprop_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
-  `INT_PROP_1` int(11) DEFAULT NULL,
-  `INT_PROP_2` int(11) DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `STR_PROP_1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `STR_PROP_2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `STR_PROP_3` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `INT_PROP_1` int DEFAULT NULL,
+  `INT_PROP_2` int DEFAULT NULL,
+  `LONG_PROP_1` bigint DEFAULT NULL,
+  `LONG_PROP_2` bigint DEFAULT NULL,
   `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
   `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_simprop_triggers
@@ -1875,21 +1214,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
 CREATE TABLE `qrtz_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `NEXT_FIRE_TIME` bigint(20) DEFAULT NULL,
-  `PREV_FIRE_TIME` bigint(20) DEFAULT NULL,
-  `PRIORITY` int(11) DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) NOT NULL,
-  `TRIGGER_TYPE` varchar(8) NOT NULL,
-  `START_TIME` bigint(20) NOT NULL,
-  `END_TIME` bigint(20) DEFAULT NULL,
-  `CALENDAR_NAME` varchar(200) DEFAULT NULL,
-  `MISFIRE_INSTR` smallint(6) DEFAULT NULL,
+  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `JOB_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `JOB_GROUP` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NEXT_FIRE_TIME` bigint DEFAULT NULL,
+  `PREV_FIRE_TIME` bigint DEFAULT NULL,
+  `PRIORITY` int DEFAULT NULL,
+  `TRIGGER_STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `TRIGGER_TYPE` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `START_TIME` bigint NOT NULL,
+  `END_TIME` bigint DEFAULT NULL,
+  `CALENDAR_NAME` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `MISFIRE_INSTR` smallint DEFAULT NULL,
   `JOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`) USING BTREE,
   KEY `IDX_QRTZ_T_J` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`) USING BTREE,
@@ -1904,7 +1243,7 @@ CREATE TABLE `qrtz_triggers` (
   KEY `IDX_QRTZ_T_NFT_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`) USING BTREE,
   KEY `IDX_QRTZ_T_NFT_ST_MISFIRE` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_STATE`) USING BTREE,
   KEY `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP` (`SCHED_NAME`,`MISFIRE_INSTR`,`NEXT_FIRE_TIME`,`TRIGGER_GROUP`,`TRIGGER_STATE`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of qrtz_triggers

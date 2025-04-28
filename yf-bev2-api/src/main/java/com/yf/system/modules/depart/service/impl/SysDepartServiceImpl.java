@@ -6,7 +6,7 @@ import com.yf.ability.redis.service.RedisService;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.enums.DataScope;
 import com.yf.base.utils.BeanMapper;
-import com.yf.base.utils.DeptCodeGen;
+import com.yf.base.utils.LetterUtils;
 import com.yf.system.modules.depart.dto.SysDepartDTO;
 import com.yf.system.modules.depart.dto.request.DepartQueryReqDTO;
 import com.yf.system.modules.depart.dto.request.DepartSortReqDTO;
@@ -267,10 +267,10 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         SysDepart max = this.getOne(wrapper, false);
 
         if (max != null) {
-            code += DeptCodeGen.gen(max.getSort() + 1);
+            code += LetterUtils.genDept(max.getSort() + 1);
             depart.setSort(max.getSort() + 1);
         } else {
-            code += DeptCodeGen.gen(1);
+            code += LetterUtils.genDept(1);
             depart.setSort(1);
         }
 

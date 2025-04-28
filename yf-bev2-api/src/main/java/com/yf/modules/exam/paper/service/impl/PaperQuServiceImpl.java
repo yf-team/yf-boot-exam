@@ -3,7 +3,7 @@ package com.yf.modules.exam.paper.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yf.base.api.exception.ServiceException;
-import com.yf.base.utils.AbcTags;
+import com.yf.base.utils.LetterUtils;
 import com.yf.base.utils.BeanMapper;
 import com.yf.base.utils.DecimalUtils;
 import com.yf.modules.exam.paper.dto.request.PaperQuFillReqDTO;
@@ -68,7 +68,7 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
                 ae.setAnswerId(answer.getId());
                 ae.setChecked(false);
                 ae.setIsRight(answer.getIsRight());
-                ae.setAbc(AbcTags.get(i));
+                ae.setAbc(LetterUtils.getLetter(i));
                 ae.setSort(i);
                 answerList.add(ae);
                 i++;

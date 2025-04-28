@@ -1,7 +1,5 @@
 package com.yf.base.utils;
 
-import java.text.MessageFormat;
-
 /**
  * 缓存Key定义
  *
@@ -29,22 +27,9 @@ public interface CacheKey {
      */
     String TOKEN = "user:token";
 
-
     /**
      * 上传配置
      */
-    String UPLOAD = "sys:upload";
-
     String SWITCH = "sys:switch";
 
-    /**
-     * 课件解锁，用于在解锁下一个课件时写入缓存
-     *
-     * @param userId
-     * @param courseId
-     * @return
-     */
-    static String unlockKey(String userId, String courseId) {
-        return MessageFormat.format("sys:file:unlock:{0}-{1}", userId, courseId);
-    }
 }

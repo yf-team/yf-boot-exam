@@ -164,6 +164,6 @@ public class DataPermissionHandler implements MultiDataPermissionHandler {
 
         return roles != null &&
                 roles.size() == 1 &&
-                "student".equals(roles.get(0));
+                "user".equals(roles.get(0));
     }
 }
