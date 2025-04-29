@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @author 聪明笨狗
  * @since 2025-04-11 09:42
  */
-@Tag(name = "问题题目")
+@Tag(name = "试题")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/exam/repo/qu")

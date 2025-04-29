@@ -27,7 +27,7 @@ import java.util.List;
  * @author 聪明笨狗
  * @since 2025-04-14 17:40
  */
-@Tag(name = "试卷考题")
+@Tag(name = "在线考试")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/exam/paper/qu")
@@ -69,7 +69,7 @@ public class PaperQuController extends BaseController {
      * @param reqDTO
      * @return
      */
-    @Operation(summary = "进行答题", description = "答题填充答案")
+    @Operation(summary = "保存答题", description = "考试过程中实时保存答题内容")
     @PostMapping("/fill-answer")
     public ApiRest<PaperQuFillRespDTO> fillAnswer(@RequestBody PaperQuFillReqDTO reqDTO) {
         PaperQuFillRespDTO respDTO = baseService.fillAnswer(reqDTO);

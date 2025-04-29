@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 聪明笨狗
  * @since 2025-04-14 17:29
  */
-@Tag(name = "考试")
+@Tag(name = "考试管理")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/exam/exam/exam")

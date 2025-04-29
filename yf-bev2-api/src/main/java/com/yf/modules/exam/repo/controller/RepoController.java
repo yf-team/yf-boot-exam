@@ -56,6 +56,7 @@ public class RepoController extends BaseController {
      * @return
      */
     @RequiresPermissions("repo:repo:delete")
+    @Operation(summary = "删除题库")
     @PostMapping("/delete")
     public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
         //根据ID删除

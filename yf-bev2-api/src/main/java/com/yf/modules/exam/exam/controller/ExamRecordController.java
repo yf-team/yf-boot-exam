@@ -40,7 +40,7 @@ public class ExamRecordController extends BaseController {
      * @param reqDTO
      * @return
      */
-    @Operation(summary = "分页查找")
+    @Operation(summary = "分页查找-管理端", description = "用于管理端，预览考试记录列表")
     @RequiresPermissions("exam:record:list")
     @PostMapping("/paging")
     public ApiRest<IPage<ExamRecordDTO>> paging(@RequestBody PagingReqDTO<ExamRecordListReqDTO> reqDTO) {
@@ -58,7 +58,7 @@ public class ExamRecordController extends BaseController {
      * @param reqDTO
      * @return
      */
-    @Operation(summary = "分页查找")
+    @Operation(summary = "分页查找-学员端", description = "用于学员端，查看自己的考试记录")
     @PostMapping("/client-paging")
     public ApiRest<IPage<ExamRecordDTO>> clientPaging(@RequestBody PagingReqDTO<ExamRecordListReqDTO> reqDTO) {
 

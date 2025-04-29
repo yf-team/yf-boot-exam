@@ -38,4 +38,11 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi examApi() {
+        return GroupedOpenApi.builder().group("考试模块接口")
+                .pathsToMatch("/api/exam/**")
+                .build();
+    }
+
 }
