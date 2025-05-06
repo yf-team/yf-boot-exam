@@ -3,8 +3,8 @@ package com.yf.ability.upload.factory;
 import com.yf.ability.upload.service.UploadService;
 import com.yf.base.utils.SpringUtils;
 import com.yf.system.modules.plugin.service.PluginDataService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @author van
  */
 @Log4j2
+@RequiredArgsConstructor
 @Service
 public class UploadFactory {
 
@@ -21,8 +22,7 @@ public class UploadFactory {
      */
     private static final String GROUP_ID = "upload";
 
-    @Autowired
-    private PluginDataService pluginDataService;
+    private final PluginDataService pluginDataService;
 
     /**
      * 获取工厂实例

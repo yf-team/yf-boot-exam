@@ -1,1 +1,0 @@
-import{L as s}from"./index-20708d06.js";const a=()=>s.post({url:"/api/sys/menu/tree"}),t=a=>s.post({url:"/api/sys/menu/save",data:a}),e=a=>s.post({url:"/api/sys/menu/delete",data:a}),p=a=>s.post({url:"/api/sys/menu/detail",data:a}),o=a=>s.post({url:"/api/sys/menu/sort",data:a});export{e as a,o as b,p as d,t as s,a as t};

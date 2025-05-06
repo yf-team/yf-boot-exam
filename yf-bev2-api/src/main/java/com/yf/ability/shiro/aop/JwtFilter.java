@@ -17,6 +17,8 @@ import org.apache.http.HttpStatus;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpHeaders;
 
+import java.util.Set;
+
 
 /**
  * 鉴权登录拦截器
@@ -32,10 +34,13 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     private static final String CROSS_OPTIONS = "OPTIONS";
 
     /**
-     * 特殊授权登录
+     * 特殊授权登录排除的URL前缀
      */
-    private static final String URL_EXCLUDE = "/api/connect";
-    private static final String URL_SYNC = "/api/open/user/sync";
+    private static final Set<String> EXCLUDED_URL_PREFIXES = Set.of(
+            "/api/connect",
+            "/api/open/user/sync",
+            "/api/sys/user/logout"
+    );
 
     /**
      * 执行登录认证
@@ -62,15 +67,15 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             return true;
         }
 
+        // URL地址
         String url = request.getRequestURI();
-        boolean login = this.executeLogin(servletRequest, servletResponse);
 
-        // 三方登录只是做登录尝试，即使未登录也通过
-        if (url.startsWith(URL_EXCLUDE) || url.startsWith(URL_SYNC)) {
+        // 特殊链接直接放行
+        if (EXCLUDED_URL_PREFIXES.stream().anyMatch(url::startsWith)) {
             return true;
         }
 
-        return login;
+        return this.executeLogin(servletRequest, servletResponse);
     }
 
 
@@ -82,7 +87,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
         // 尝试从cookie中获取
         if (StringUtils.isBlank(token)) {
-            Cookie[] cookies = request.getCookies();
+            Cookie [] cookies = request.getCookies();
             if (cookies != null && cookies.length > 0) {
                 for (Cookie cookie : cookies) {
                     if (Constant.TOKEN.equals(cookie.getName())) {

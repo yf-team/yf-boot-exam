@@ -3,8 +3,8 @@ package com.yf.ability.captcha.service.impl;
 
 import com.yf.ability.captcha.service.CaptchaService;
 import com.yf.ability.redis.service.RedisService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
  * @author bool
  * @date 2020-02-21 10:05
  */
+@RequiredArgsConstructor
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
 
-    @Autowired
-    private RedisService redisService;
+    private final RedisService redisService;
 
     /**
      * 验证码缓存前缀
@@ -55,6 +55,6 @@ public class CaptchaServiceImpl implements CaptchaService {
      * @return
      */
     private String appendKey(String key) {
-        return new StringBuffer(CAPTCHA_PREFIX).append(key).toString();
+        return CAPTCHA_PREFIX + key;
     }
 }

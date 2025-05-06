@@ -3,8 +3,8 @@ package com.yf.ability.redis.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.yf.ability.redis.service.RedisService;
 import com.yf.base.utils.jackson.JsonHelper;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +16,16 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author bool
  */
+@RequiredArgsConstructor
 @Service
 public class RedisServiceImpl implements RedisService {
 
     /**
      * 锁相关内容
      */
-    private static final String lock = "locked";
+    private static final String LOCKED = "locked";
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     /**
      * 删除一个或多个缓存
@@ -90,7 +90,7 @@ public class RedisServiceImpl implements RedisService {
                 }
             }
 
-            hasGet = redisTemplate.opsForValue().setIfAbsent(key, lock, ms, TimeUnit.MILLISECONDS);
+            hasGet = redisTemplate.opsForValue().setIfAbsent(key, LOCKED, ms, TimeUnit.MILLISECONDS);
             hasTry++;
         }
 
@@ -195,6 +195,6 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public boolean hasKey(String key) {
         Boolean has = redisTemplate.hasKey(key);
-        return has != null && has;
+        return Boolean.TRUE.equals(has);
     }
 }

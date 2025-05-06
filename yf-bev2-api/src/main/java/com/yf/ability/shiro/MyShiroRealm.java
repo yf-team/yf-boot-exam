@@ -5,6 +5,7 @@ import com.yf.ability.shiro.dto.SysUserLoginDTO;
 import com.yf.ability.shiro.jwt.JwtToken;
 import com.yf.ability.shiro.jwt.JwtUtils;
 import com.yf.ability.shiro.service.ShiroUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -14,7 +15,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +26,12 @@ import java.util.List;
  *
  * @author bool
  */
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @Component
 @Slf4j
 public class MyShiroRealm extends AuthorizingRealm {
 
-    @Autowired
-    @Lazy
-    private ShiroUserService shiroUserService;
+    private final ShiroUserService shiroUserService;
 
 
     @Override
@@ -87,9 +86,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         // 校验token有效性
         SysUserLoginDTO user = this.checkToken(token);
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, token, getName());
 
-        return info;
+        return new SimpleAuthenticationInfo(user, token, getName());
     }
 
 

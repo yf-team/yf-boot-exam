@@ -15,10 +15,13 @@ import com.yf.system.modules.menu.service.SysMenuService;
 import com.yf.system.modules.user.UserUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -31,12 +34,12 @@ import java.util.List;
  * @since 2021-03-02 13:09
  */
 @Tag(name = "菜单管理")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/sys/menu")
 public class SysMenuController extends BaseController {
 
-    @Autowired
-    private SysMenuService baseService;
+    private final SysMenuService baseService;
 
     /**
      * 查找菜单路由

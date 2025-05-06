@@ -67,28 +67,24 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         // 请求参数
         PaperDTO params = reqDTO.getParams();
 
+        if (params!=null) {
+            if (StringUtils.isNotBlank(params.getExamId())) {
+                wrapper.lambda().eq(Paper::getExamId, params.getExamId());
+            }
+            if (StringUtils.isNotBlank(params.getUserId())) {
+                wrapper.lambda().eq(Paper::getUserId, params.getUserId());
+            }
+        }
+
+        // 考试时间倒序
+        wrapper.lambda().orderByDesc(Paper::getCreateTime);
+
         //获得数据
         IPage<Paper> page = this.page(reqDTO.toPage(), wrapper);
         //转换结果
-        IPage<PaperDTO> pageData = JsonHelper.parseObject(page, new TypeReference<Page<PaperDTO>>() {
-        });
-        return pageData;
+        return JsonHelper.parseObject(page, new TypeReference<Page<PaperDTO>>() {});
     }
 
-
-    @Override
-    public void save(PaperDTO reqDTO) {
-        //复制参数
-        Paper entity = new Paper();
-        BeanMapper.copy(reqDTO, entity);
-        this.saveOrUpdate(entity);
-    }
-
-    @Override
-    public void delete(List<String> ids) {
-        //批量删除
-        this.removeByIds(ids);
-    }
 
     @Override
     public PaperDTO detail(String id) {
@@ -179,6 +175,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
 
         // 计算交卷时间
         Integer totalTime = exam.getTotalTime();
+        paper.setTotalTime(totalTime);
         if (totalTime != null && totalTime > 0) {
             Calendar cl = Calendar.getInstance();
             cl.setTimeInMillis(System.currentTimeMillis());

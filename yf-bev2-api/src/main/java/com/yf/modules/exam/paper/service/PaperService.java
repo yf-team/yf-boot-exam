@@ -8,8 +8,6 @@ import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 
-import java.util.List;
-
 /**
  * <p>
  * 试卷业务接口类
@@ -27,22 +25,6 @@ public interface PaperService extends IService<Paper> {
      * @return
      */
     IPage<PaperDTO> paging(PagingReqDTO<PaperDTO> reqDTO);
-
-    /**
-     * 添加或保存
-     *
-     * @param reqDTO
-     * @return
-     */
-    void save(PaperDTO reqDTO);
-
-    /**
-     * 批量删除
-     *
-     * @param ids
-     * @return
-     */
-    void delete(List<String> ids);
 
     /**
      * 查找详情

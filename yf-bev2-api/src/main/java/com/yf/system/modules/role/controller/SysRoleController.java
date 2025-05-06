@@ -15,9 +15,9 @@ import com.yf.system.modules.role.service.SysRoleService;
 import com.yf.system.modules.user.dto.request.SysRoleMenuReqDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,16 +35,13 @@ import java.util.List;
  * @since 2020-04-13 16:57
  */
 @Tag(name = "角色管理")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/sys/role")
 public class SysRoleController extends BaseController {
 
-    @Autowired
-    private SysRoleService baseService;
-
-    @Autowired
-    private SysRoleMenuService sysRoleMenuService;
-
+    private final SysRoleService baseService;
+    private final SysRoleMenuService sysRoleMenuService;
 
     /**
      * 添加或修改

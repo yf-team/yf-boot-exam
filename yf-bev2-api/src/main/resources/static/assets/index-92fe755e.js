@@ -1,1 +1,0 @@
-import{L as a}from"./index-20708d06.js";const p=p=>a.post({url:"/api/exam/repo/repo/save",data:p}),e=p=>a.post({url:"/api/exam/repo/repo/detail",data:p}),o=p=>a.post({url:"/api/exam/repo/repo/paging",data:p}),r=p=>a.post({url:"/api/exam/repo/repo/list-stat",data:p});export{p as a,e as d,o as p,r as s};

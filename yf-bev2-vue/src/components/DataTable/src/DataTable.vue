@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading" element-loading-text="加载中...">
-    <div class="search-box">
+    <div v-if="$slots.search" class="search-box">
       <div class="search-items">
         <slot name="search"></slot>
       </div>

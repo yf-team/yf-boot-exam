@@ -2,12 +2,12 @@ package com.yf.modules.exam.jobs;
 
 import com.yf.ability.task.service.JobService;
 import com.yf.modules.exam.paper.service.PaperService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,13 +16,11 @@ import org.springframework.stereotype.Component;
  * @author van
  */
 @Log4j2
+@RequiredArgsConstructor
 @Component
 public class HandPaperJob implements Job {
 
-    @Autowired
-    private PaperService paperService;
-
-
+    private final PaperService paperService;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {

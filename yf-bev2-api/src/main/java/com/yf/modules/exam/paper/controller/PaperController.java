@@ -5,7 +5,6 @@ import com.yf.base.api.api.ApiRest;
 import com.yf.base.api.api.controller.BaseController;
 import com.yf.base.api.api.dto.BaseIdReqDTO;
 import com.yf.base.api.api.dto.BaseIdRespDTO;
-import com.yf.base.api.api.dto.BaseIdsReqDTO;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
@@ -36,32 +35,6 @@ public class PaperController extends BaseController {
 
     private final PaperService baseService;
 
-    /**
-     * 添加或修改
-     *
-     * @param reqDTO
-     * @return
-     */
-    @Operation(summary = "添加或修改")
-    @PostMapping("/save")
-    public ApiRest<?> save(@RequestBody PaperDTO reqDTO) {
-        baseService.save(reqDTO);
-        return super.success();
-    }
-
-    /**
-     * 批量删除
-     *
-     * @param reqDTO
-     * @return
-     */
-    @Operation(summary = "批量删除")
-    @PostMapping("/delete")
-    public ApiRest<?> delete(@RequestBody BaseIdsReqDTO reqDTO) {
-        //根据ID删除
-        baseService.delete(reqDTO.getIds());
-        return super.success();
-    }
 
     /**
      * 查找详情

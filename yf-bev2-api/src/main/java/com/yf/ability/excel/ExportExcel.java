@@ -6,14 +6,13 @@ import com.yf.ability.excel.service.ExcelDictService;
 import com.yf.base.api.exception.ServiceException;
 import com.yf.base.utils.DateUtils;
 import com.yf.base.utils.Reflections;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -24,12 +23,11 @@ import java.util.*;
  *
  * @author bool
  */
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @Component
 public class ExportExcel {
 
-    @Lazy
-    @Autowired
-    private ExcelDictService excelDictService;
+    private final ExcelDictService excelDictService;
 
     /**
      * 导出数据

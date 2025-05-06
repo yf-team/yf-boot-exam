@@ -47,13 +47,15 @@
         </el-table-column>
         <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="{ row }">
-            <el-button icon="DocumentCopy" type="primary" @click="toRecord(row.id)"
+            <el-button icon="DocumentCopy" type="primary" @click="toRecord(row.userId)"
               >考试明细
             </el-button>
           </template>
         </el-table-column>
       </template>
     </DataTable>
+
+    <PaperListDialog v-model:visible="dialogVisible" :exam-id="examId" :user-id="userId" />
   </ContentWrap>
 </template>
 
@@ -62,10 +64,9 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
 import { onActivated, ref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { DictListSelect } from '@/components/DictListSelect'
-
-const { push } = useRouter()
+import PaperListDialog from '@/views/Exam/Exam/components/PaperListDialog.vue'
 
 // 获取参数
 const route = useRoute()
@@ -91,8 +92,12 @@ let options = ref<OptionsType>({
 
 const table = ref()
 
+const userId = ref<string>()
+const dialogVisible = ref(false)
+
 const toRecord = (id: string) => {
-  push({ name: 'TmplAdd', query: { id: id } })
+  userId.value = id
+  dialogVisible.value = true
 }
 
 onActivated(() => {
