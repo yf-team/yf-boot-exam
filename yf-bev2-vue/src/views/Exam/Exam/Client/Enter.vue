@@ -210,6 +210,7 @@ onMounted(() => {
 
 .tag-item {
   cursor: pointer;
+  margin: 5px;
 }
 
 .el-col {

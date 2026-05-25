@@ -44,18 +44,6 @@ const layout = computed(() => appStore.getLayout)
       ]"
       @click="appStore.setLayout('top')"
     ></div>
-    <div
-      :class="[
-        `${prefixCls}__cut-menu`,
-        'relative w-56px h-48px cursor-pointer bg-gray-300',
-        {
-          'is-acitve': layout === 'cutMenu'
-        }
-      ]"
-      @click="appStore.setLayout('cutMenu')"
-    >
-      <div class="absolute h-full w-[33%] top-0 left-[10%] bg-gray-200"></div>
-    </div>
   </div>
 </template>
 

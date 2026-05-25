@@ -11,7 +11,7 @@
         <el-table-column label="考试时间" prop="createTime" />
         <el-table-column align="center" label="用户得分" prop="userScore" />
         <el-table-column align="center" label="试卷总分" prop="totalScore" />
-        <el-table-column align="center" label="考试用时/总时长（分钟）">
+        <el-table-column align="center" label="用时/总时长（分钟）">
           <template #default="{ row }"> {{ row.userTime }} / {{ row.totalTime }}</template>
         </el-table-column>
         <el-table-column align="center" label="及格分数" prop="qualifyScore" />
@@ -51,14 +51,15 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:visible'])
-const loading = ref(false)
 
 // 表格查询参数
 let query = ref<TableQueryType>({
   current: 1,
   size: 10,
   params: {
-    title: ''
+    title: '',
+    examId: props.examId,
+    userId: props.userId
   }
 })
 

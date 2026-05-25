@@ -58,7 +58,9 @@ export const useAppStore = defineStore('app', {
       serverDynamicRouter: getStorage('serverDynamicRouter'), // 是否服务端渲染动态路由
       fixedMenu: getStorage('fixedMenu'), // 是否固定菜单
 
-      layout: getStorage('layout') || 'classic', // layout布局
+      layout: (['classic', 'topLeft', 'top'].includes(getStorage('layout'))
+        ? getStorage('layout')
+        : 'classic') as LayoutType, // layout布局
       isDark: getStorage('isDark'), // 是否是暗黑模式
       currentSize: getStorage('default') || 'default', // 组件尺寸
       theme: getStorage('theme') || {

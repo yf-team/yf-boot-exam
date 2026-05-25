@@ -61,4 +61,8 @@ body {
 .@{prefix-cls}-grey-mode {
   filter: grayscale(100%);
 }
+
+.el-config-provider {
+  height: 100%;
+}
 </style>

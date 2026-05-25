@@ -15,8 +15,8 @@
           title="是否通过"
         />
 
-        <div class="filter-item" style="width: 220px; align-items: center; display: flex">
-          分数段：
+        <div class="filter-item" style="width: 250px; align-items: center; display: flex">
+          <div class="w-60px text-14px">分数段：</div>
           <el-input-number
             v-model="query.params.scoreMin"
             :controls="false"

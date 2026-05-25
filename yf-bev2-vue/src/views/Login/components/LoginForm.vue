@@ -90,7 +90,7 @@
   </el-form>
 </template>
 
-<script lang="tsx" setup>
+<script setup lang="ts">
 import { computed, ref, unref, watch } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { useAppStore } from '@/store/modules/app'

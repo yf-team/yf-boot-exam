@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="ts">
 import { defineComponent, PropType, computed, h, unref } from 'vue'
 import { propTypes } from '@/utils/propTypes'
 

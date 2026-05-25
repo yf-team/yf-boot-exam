@@ -19,6 +19,8 @@ let query = ref<TableQueryType>({
   size: 10,
   params: {
     repoId: null,
+    quType: null,
+    difficultyLevel: null,
     content: ''
   }
 })

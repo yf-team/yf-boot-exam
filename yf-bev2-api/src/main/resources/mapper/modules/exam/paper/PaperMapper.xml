@@ -23,9 +23,4 @@
         <result column="update_by" property="updateBy"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`user_id`,`exam_id`,`title`,`total_time`,`user_time`,`total_score`,`qualify_score`,`user_score`,`limit_time`,`hand_time`,`hand_state`,`passed`,`create_time`,`update_time`,`create_by`,`update_by`
-    </sql>
-
 </mapper>

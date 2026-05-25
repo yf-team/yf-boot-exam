@@ -23,7 +23,7 @@ declare global {
 
   declare type ElementPlusInfoType = 'success' | 'info' | 'warning' | 'danger'
 
-  declare type LayoutType = 'classic' | 'topLeft' | 'top' | 'cutMenu'
+  declare type LayoutType = 'classic' | 'topLeft' | 'top'
 
   declare type AxiosHeaders =
     | 'application/json'

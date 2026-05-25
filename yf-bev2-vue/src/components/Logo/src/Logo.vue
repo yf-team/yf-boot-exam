@@ -24,7 +24,7 @@ onMounted(() => {
 watch(
   () => collapse.value,
   (collapse: boolean) => {
-    if (unref(layout) === 'topLeft' || unref(layout) === 'cutMenu') {
+    if (unref(layout) === 'topLeft') {
       show.value = true
       return
     }
@@ -41,7 +41,7 @@ watch(
 watch(
   () => layout.value,
   (layout) => {
-    if (layout === 'top' || layout === 'cutMenu') {
+    if (layout === 'top') {
       show.value = true
     } else {
       if (unref(collapse)) {
@@ -74,8 +74,7 @@ watch(
           'ml-10px text-16px font-700',
           {
             'text-[var(--logo-title-text-color)]': layout === 'classic',
-            'text-[var(--top-header-text-color)]':
-              layout === 'topLeft' || layout === 'top' || layout === 'cutMenu'
+            'text-[var(--top-header-text-color)]': layout === 'topLeft' || layout === 'top'
           }
         ]"
       >

@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import { ElSubMenu, ElMenuItem } from 'element-plus'
 import { hasOneShowingChild } from '../helper'
 import { useRenderMenuTitle } from './useRenderMenuTitle'
@@ -6,11 +7,8 @@ import { pathResolve } from '@/utils/routerHelper'
 
 const { renderMenuTitle } = useRenderMenuTitle()
 
-export const useRenderMenuItem = (
-  // allRouters: AppRouteRecordRaw[] = [],
-  menuMode: 'vertical' | 'horizontal'
-) => {
-  const renderMenuItem = (routers: AppRouteRecordRaw[]) => {
+export const useRenderMenuItem = (menuMode: 'vertical' | 'horizontal') => {
+  const renderMenuItem = (routers: AppRouteRecordRaw[]): any[] => {
     return routers.map((v) => {
       const meta = v.meta ?? {}
       if (!meta.hidden) {
@@ -22,29 +20,27 @@ export const useRenderMenuItem = (
           (!onlyOneChild?.children || onlyOneChild?.noShowingChildren) &&
           !meta?.alwaysShow
         ) {
-          return (
-            <ElMenuItem index={onlyOneChild ? pathResolve(fullPath, onlyOneChild.path) : fullPath}>
-              {{
-                default: () => renderMenuTitle(onlyOneChild ? onlyOneChild?.meta : meta)
-              }}
-            </ElMenuItem>
+          const index = onlyOneChild ? pathResolve(fullPath, onlyOneChild.path) : fullPath
+          return h(
+            ElMenuItem,
+            { index },
+            {
+              default: () => renderMenuTitle(onlyOneChild ? onlyOneChild?.meta : meta)
+            }
           )
         } else {
           const { getPrefixCls } = useDesign()
-
           const preFixCls = getPrefixCls('menu-popper')
-          return (
-            <ElSubMenu
-              index={fullPath}
-              popperClass={
-                menuMode === 'vertical' ? `${preFixCls}--vertical` : `${preFixCls}--horizontal`
-              }
-            >
-              {{
-                title: () => renderMenuTitle(meta),
-                default: () => renderMenuItem(v.children!)
-              }}
-            </ElSubMenu>
+          const popperClass =
+            menuMode === 'vertical' ? `${preFixCls}--vertical` : `${preFixCls}--horizontal`
+
+          return h(
+            ElSubMenu,
+            { index: fullPath, popperClass },
+            {
+              title: () => renderMenuTitle(meta),
+              default: () => renderMenuItem(v.children!)
+            }
           )
         }
       }

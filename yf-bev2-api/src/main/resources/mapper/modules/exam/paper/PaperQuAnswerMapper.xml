@@ -15,9 +15,5 @@
         <result column="abc" property="abc"/>
     </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        `id`,`paper_id`,`answer_id`,`qu_id`,`is_right`,`answer`,`checked`,`sort`,`abc`
-    </sql>
 
 </mapper>

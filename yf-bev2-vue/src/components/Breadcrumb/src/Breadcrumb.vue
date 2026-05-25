@@ -1,6 +1,21 @@
-<script lang="tsx">
+<template>
+  <ElBreadcrumb separator="/" :class="`${prefixCls} flex items-center h-full ml-[10px]`">
+    <TransitionGroup appear enter-active-class="animate__animated animate__fadeInRight">
+      <ElBreadcrumbItem
+        v-for="v in breadcrumbList"
+        :key="v.name"
+        :to="{ path: disabledMap[v.name || ''] ? '' : v.path }"
+      >
+        <Icon v-if="v.meta?.icon && breadcrumbIcon" :icon="v.meta.icon" class="mr-[5px]" />
+        {{ t(v.meta?.title || '') }}
+      </ElBreadcrumbItem>
+    </TransitionGroup>
+  </ElBreadcrumb>
+</template>
+
+<script setup lang="ts">
 import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
-import { ref, watch, computed, unref, defineComponent, TransitionGroup } from 'vue'
+import { ref, watch, computed, unref } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePermissionStore } from '@/store/modules/permission'
 import { filterBreadcrumb } from './helper'
@@ -17,73 +32,53 @@ const prefixCls = getPrefixCls('breadcrumb')
 
 const appStore = useAppStore()
 
-// 面包屑图标
 const breadcrumbIcon = computed(() => appStore.getBreadcrumbIcon)
 
-export default defineComponent({
-  name: 'Breadcrumb',
-  setup() {
-    const { currentRoute } = useRouter()
+const { currentRoute } = useRouter()
 
-    const { t } = useI18n()
+const { t } = useI18n()
 
-    const levelList = ref<AppRouteRecordRaw[]>([])
+const levelList = ref<AppRouteRecordRaw[]>([])
 
-    const permissionStore = usePermissionStore()
+const permissionStore = usePermissionStore()
 
-    const menuRouters = computed(() => {
-      const routers = permissionStore.getRouters
-      return filterBreadcrumb(routers)
-    })
-
-    const getBreadcrumb = () => {
-      const currentPath = currentRoute.value.matched.slice(-1)[0].path
-      levelList.value = filter<AppRouteRecordRaw>(unref(menuRouters), (node: AppRouteRecordRaw) => {
-        return node.path === currentPath
-      })
-    }
-
-    const renderBreadcrumb = () => {
-      const breadcrumbList = treeToList<AppRouteRecordRaw[]>(unref(levelList))
-      return breadcrumbList.map((v) => {
-        const disabled = !v.redirect || v.redirect === 'noredirect'
-        const meta = v.meta
-        return (
-          <ElBreadcrumbItem to={{ path: disabled ? '' : v.path }} key={v.name}>
-            {meta?.icon && breadcrumbIcon.value ? (
-              <>
-                <Icon icon={meta.icon} class="mr-[5px]"></Icon> {t(v?.meta?.title || '')}
-              </>
-            ) : (
-              t(v?.meta?.title || '')
-            )}
-          </ElBreadcrumbItem>
-        )
-      })
-    }
-
-    watch(
-      () => currentRoute.value,
-      (route: RouteLocationNormalizedLoaded) => {
-        if (route.path.startsWith('/redirect/')) {
-          return
-        }
-        getBreadcrumb()
-      },
-      {
-        immediate: true
-      }
-    )
-
-    return () => (
-      <ElBreadcrumb separator="/" class={`${prefixCls} flex items-center h-full ml-[10px]`}>
-        <TransitionGroup appear enter-active-class="animate__animated animate__fadeInRight">
-          {renderBreadcrumb()}
-        </TransitionGroup>
-      </ElBreadcrumb>
-    )
-  }
+const menuRouters = computed(() => {
+  const routers = permissionStore.getRouters
+  return filterBreadcrumb(routers)
 })
+
+const disabledMap = computed(() => {
+  const list = treeToList<AppRouteRecordRaw[]>(unref(levelList))
+  const map: Record<string, boolean> = {}
+  list.forEach((v) => {
+    map[v.name || ''] = !v.redirect || v.redirect === 'noredirect'
+  })
+  return map
+})
+
+const breadcrumbList = computed(() => {
+  return treeToList<AppRouteRecordRaw[]>(unref(levelList))
+})
+
+const getBreadcrumb = () => {
+  const currentPath = currentRoute.value.matched.slice(-1)[0].path
+  levelList.value = filter<AppRouteRecordRaw>(unref(menuRouters), (node: AppRouteRecordRaw) => {
+    return node.path === currentPath
+  })
+}
+
+watch(
+  () => currentRoute.value,
+  (route: RouteLocationNormalizedLoaded) => {
+    if (route.path.startsWith('/redirect/')) {
+      return
+    }
+    getBreadcrumb()
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 
 <style lang="less" scoped>

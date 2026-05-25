@@ -1,7 +1,7 @@
-<script lang="tsx">
+<script lang="ts">
 import { usePermissionStore } from '@/store/modules/permission'
 import { useAppStore } from '@/store/modules/app'
-import { computed, unref, defineComponent, watch, ref, onMounted } from 'vue'
+import { computed, unref, defineComponent, watch, ref, onMounted, h } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { ElScrollbar } from 'element-plus'
 import { Icon } from '@/components/Icon'
@@ -88,13 +88,10 @@ export default defineComponent({
       }
     )
 
-    // 是否显示菜单
     const showMenu = ref(unref(fixedMenu) ? true : false)
 
-    // tab高亮
     const tabActive = ref('')
 
-    // tab点击事件
     const tabClick = (item: AppRouteRecordRaw) => {
       if (isUrl(item.path)) {
         window.open(item.path)
@@ -105,7 +102,6 @@ export default defineComponent({
       tabActive.value = item.children ? item.path : item.path.split('/')[0]
       if (item.children) {
         if (newPath === oldPath || !unref(showMenu)) {
-          // showMenu.value = unref(fixedMenu) ? true : !unref(showMenu)
           showMenu.value = !unref(showMenu)
         }
         if (unref(showMenu)) {
@@ -123,87 +119,93 @@ export default defineComponent({
       }
     }
 
-    // 设置高亮
     const isActive = (currentPath: string) => {
       const { path } = unref(currentRoute)
-      if (tabPathMap[currentPath].includes(path)) {
+      if (tabPathMap[currentPath]?.includes(path)) {
         return true
       }
       return false
     }
 
-    return () => (
-      <div
-        id={`${variables.namespace}-menu`}
-        class={[
-          prefixCls,
-          'relative bg-[var(--left-menu-bg-color)] top-1px layout-border__right',
+    return () => {
+      const tabItems = unref(tabRouters).map((v) => {
+        const item = (
+          v.meta?.alwaysShow || (v?.children?.length && v?.children?.length > 1)
+            ? v
+            : {
+                ...(v?.children && v?.children[0]),
+                path: pathResolve(v.path, (v?.children && v?.children[0])?.path as string)
+              }
+        ) as AppRouteRecordRaw
+
+        return h(
+          'div',
           {
-            'w-[var(--tab-menu-max-width)]': !unref(collapse),
-            'w-[var(--tab-menu-min-width)]': unref(collapse)
-          }
-        ]}
-      >
-        <ElScrollbar class="!h-[calc(100%-var(--tab-menu-collapse-height)-1px)]">
-          <div>
-            {() => {
-              return unref(tabRouters).map((v) => {
-                const item = (
-                  v.meta?.alwaysShow || (v?.children?.length && v?.children?.length > 1)
-                    ? v
-                    : {
-                        ...(v?.children && v?.children[0]),
-                        path: pathResolve(v.path, (v?.children && v?.children[0])?.path as string)
-                      }
-                ) as AppRouteRecordRaw
-                return (
-                  <div
-                    class={[
-                      `${prefixCls}__item`,
-                      'text-center text-12px relative py-12px cursor-pointer',
-                      {
-                        'is-active': isActive(v.path)
-                      }
-                    ]}
-                    onClick={() => {
-                      tabClick(item)
-                    }}
-                  >
-                    <div>
-                      <Icon icon={item?.meta?.icon}></Icon>
-                    </div>
-                    {!unref(showTitle) ? undefined : (
-                      <p class="break-words mt-5px px-2px">{t(item.meta?.title || '')}</p>
-                    )}
-                  </div>
-                )
-              })
-            }}
-          </div>
-        </ElScrollbar>
-        <div
-          class={[
-            `${prefixCls}--collapse`,
-            'text-center h-[var(--tab-menu-collapse-height)] leading-[var(--tab-menu-collapse-height)] cursor-pointer'
-          ]}
-          onClick={setCollapse}
-        >
-          <Icon icon={unref(collapse) ? 'ep:d-arrow-right' : 'ep:d-arrow-left'}></Icon>
-        </div>
-        <Menu
-          class={[
-            '!absolute top-0 z-4000',
+            class: [
+              `${prefixCls}__item`,
+              'text-center text-12px relative py-12px cursor-pointer',
+              {
+                'is-active': isActive(v.path)
+              }
+            ],
+            onClick: () => tabClick(item)
+          },
+          [
+            h('div', [h(Icon, { icon: item?.meta?.icon })]),
+            unref(showTitle)
+              ? h('p', { class: 'break-words mt-5px px-2px' }, t(item.meta?.title || ''))
+              : null
+          ]
+        )
+      })
+
+      return h(
+        'div',
+        {
+          id: `${variables.namespace}-menu`,
+          class: [
+            prefixCls,
+            'relative bg-[var(--left-menu-bg-color)] top-1px layout-border__right',
             {
-              '!left-[var(--tab-menu-min-width)]': unref(collapse),
-              '!left-[var(--tab-menu-max-width)]': !unref(collapse),
-              '!w-[var(--left-menu-max-width)]': unref(showMenu) || unref(fixedMenu),
-              '!w-0': !unref(showMenu) && !unref(fixedMenu)
+              'w-[var(--tab-menu-max-width)]': !unref(collapse),
+              'w-[var(--tab-menu-min-width)]': unref(collapse)
             }
-          ]}
-          style="transition: width var(--transition-time-02), left var(--transition-time-02);"
-        ></Menu>
-      </div>
-    )
+          ]
+        },
+        [
+          h(
+            ElScrollbar,
+            { class: '!h-[calc(100%-var(--tab-menu-collapse-height)-1px)]' },
+            {
+              default: () => h('div', tabItems)
+            }
+          ),
+          h(
+            'div',
+            {
+              class: [
+                `${prefixCls}--collapse`,
+                'text-center h-[var(--tab-menu-collapse-height)] leading-[var(--tab-menu-collapse-height)] cursor-pointer'
+              ],
+              onClick: setCollapse
+            },
+            [h(Icon, { icon: unref(collapse) ? 'ep:d-arrow-right' : 'ep:d-arrow-left' })]
+          ),
+          h(Menu, {
+            class: [
+              '!absolute top-0 z-4000',
+              {
+                '!left-[var(--tab-menu-min-width)]': unref(collapse),
+                '!left-[var(--tab-menu-max-width)]': !unref(collapse),
+                '!w-[var(--left-menu-max-width)]': unref(showMenu) || unref(fixedMenu),
+                '!w-0': !unref(showMenu) && !unref(fixedMenu)
+              }
+            ],
+            style: 'transition: width var(--transition-time-02), left var(--transition-time-02);'
+          })
+        ]
+      )
+    }
   }
 })
 </script>
@@ -220,7 +222,6 @@ export default defineComponent({
 
     &:hover {
       color: var(--left-menu-text-active-color);
-      // background-color: var(--left-menu-bg-active-color);
     }
   }
 

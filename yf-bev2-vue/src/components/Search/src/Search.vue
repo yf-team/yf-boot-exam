@@ -1,6 +1,6 @@
-<script setup lang="tsx">
+<script setup lang="ts">
 import { Form, FormSchema, FormSetProps } from '@/components/Form'
-import { PropType, computed, unref, ref, watch, onMounted } from 'vue'
+import { PropType, computed, unref, ref, watch, onMounted, h } from 'vue'
 import { propTypes } from '@/utils/propTypes'
 import { useForm } from '@/hooks/web/useForm'
 import { findIndex } from '@/utils'
@@ -73,21 +73,19 @@ const newSchema = computed(() => {
           labelWidth: '0px',
           slots: {
             default: () => {
-              return (
-                <div>
-                  <ActionButton
-                    showSearch={propsComputed.showSearch}
-                    showReset={propsComputed.showReset}
-                    showExpand={propsComputed.showExpand}
-                    searchLoading={propsComputed.searchLoading}
-                    resetLoading={propsComputed.resetLoading}
-                    visible={visible.value}
-                    onExpand={setVisible}
-                    onReset={reset}
-                    onSearch={search}
-                  />
-                </div>
-              )
+              return h('div', [
+                h(ActionButton, {
+                  showSearch: propsComputed.showSearch,
+                  showReset: propsComputed.showReset,
+                  showExpand: propsComputed.showExpand,
+                  searchLoading: propsComputed.searchLoading,
+                  resetLoading: propsComputed.resetLoading,
+                  visible: visible.value,
+                  onExpand: setVisible,
+                  onReset: reset,
+                  onSearch: search
+                })
+              ])
             }
           }
         }

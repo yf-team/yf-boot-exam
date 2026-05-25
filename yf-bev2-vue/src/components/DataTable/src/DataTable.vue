@@ -104,7 +104,7 @@
 
 <script lang="ts" setup>
 import request from '@/config/axios'
-import { onMounted, PropType, ref, toRefs, unref } from 'vue'
+import { nextTick, onMounted, PropType, ref, toRefs, unref, watch } from 'vue'
 import { BatchType, OptionsType, TableQueryType } from './types'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
@@ -299,10 +299,23 @@ const currentChange = (current) => {
   loadData()
 }
 
+// 监听查询参数变化，自动刷新
+watch(
+  () => props.query?.params,
+  () => {
+    search()
+  },
+  { deep: true }
+)
+
 // 加载第一页数据
 onMounted(() => {
   // 首次加载数据
-  loadData()
+  nextTick(() => {
+    setTimeout(() => {
+      loadData()
+    }, 200)
+  })
 })
 
 // 对外开放数据

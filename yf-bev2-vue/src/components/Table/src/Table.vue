@@ -1,4 +1,4 @@
-<script lang="tsx">
+<script lang="ts">
 import {
   ElTable,
   ElTableColumn,
@@ -7,49 +7,35 @@ import {
   ElTooltipProps,
   ElImage
 } from 'element-plus'
-import { defineComponent, PropType, ref, computed, unref, watch, onMounted } from 'vue'
+import { defineComponent, PropType, ref, computed, unref, watch, onMounted, h } from 'vue'
 import { propTypes } from '@/utils/propTypes'
 import { setIndex } from './helper'
 import type { TableProps, TableColumn, Pagination, TableSetProps } from './types'
 import { set, get } from 'lodash-es'
-import { CSSProperties } from 'vue'
 import { getSlot } from '@/utils/tsxHelper'
 import TableActions from './components/TableActions.vue'
-// import Sortable from 'sortablejs'
-// import { Icon } from '@/components/Icon'
 
 export default defineComponent({
   name: 'Table',
   props: {
     pageSize: propTypes.number.def(10),
     currentPage: propTypes.number.def(1),
-    // 是否展示表格的工具栏
     showAction: propTypes.bool.def(false),
-    // 是否所有的超出隐藏，优先级低于schema中的showOverflowTooltip,
     showOverflowTooltip: propTypes.bool.def(true),
-    // 表头
     columns: {
       type: Array as PropType<TableColumn[]>,
       default: () => []
     },
-    // 展开行
-    // expand: propTypes.bool.def(false),
-    // 是否展示分页
     pagination: {
       type: Object as PropType<Pagination>,
       default: (): Pagination | undefined => undefined
     },
-    // 仅对 type=selection 的列有效，类型为 Boolean，为 true 则会在数据更新之后保留之前选中的数据（需指定 row-key）
     reserveSelection: propTypes.bool.def(false),
-    // 加载状态
     loading: propTypes.bool.def(false),
-    // 是否叠加索引
     reserveIndex: propTypes.bool.def(false),
-    // 对齐方式
     align: propTypes.string
       .validate((v: string) => ['left', 'center', 'right'].includes(v))
       .def('left'),
-    // 表头对齐方式
     headerAlign: propTypes.string
       .validate((v: string) => ['left', 'center', 'right'].includes(v))
       .def('left'),
@@ -57,12 +43,10 @@ export default defineComponent({
       type: Array as PropType<Recordable[]>,
       default: () => []
     },
-    // 是否自动预览
     preview: {
       type: Array as PropType<string[]>,
       default: () => []
     },
-    // sortable: propTypes.bool.def(false),
     height: propTypes.oneOfType([Number, String]),
     maxHeight: propTypes.oneOfType([Number, String]),
     stripe: propTypes.bool.def(false),
@@ -75,15 +59,12 @@ export default defineComponent({
     showHeader: propTypes.bool.def(true),
     highlightCurrentRow: propTypes.bool.def(false),
     currentRowKey: propTypes.oneOfType([Number, String]),
-    // row-class-name, 类型为 (row: Recordable, rowIndex: number) => string | string
     rowClassName: {
       type: [Function, String] as PropType<(row: Recordable, rowIndex: number) => string | string>,
       default: ''
     },
     rowStyle: {
-      type: [Function, Object] as PropType<
-        (row: Recordable, rowIndex: number) => Recordable | CSSProperties
-      >,
+      type: [Function, Object] as PropType<(row: Recordable, rowIndex: number) => Recordable>,
       default: () => undefined
     },
     cellClassName: {
@@ -94,7 +75,7 @@ export default defineComponent({
     },
     cellStyle: {
       type: [Function, Object] as PropType<
-        (row: Recordable, column: any, rowIndex: number) => Recordable | CSSProperties
+        (row: Recordable, column: any, rowIndex: number) => Recordable
       >,
       default: () => undefined
     },
@@ -103,9 +84,7 @@ export default defineComponent({
       default: ''
     },
     headerRowStyle: {
-      type: [Function, Object] as PropType<
-        (row: Recordable, rowIndex: number) => Recordable | CSSProperties
-      >,
+      type: [Function, Object] as PropType<(row: Recordable, rowIndex: number) => Recordable>,
       default: () => undefined
     },
     headerCellClassName: {
@@ -116,7 +95,7 @@ export default defineComponent({
     },
     headerCellStyle: {
       type: [Function, Object] as PropType<
-        (row: Recordable, column: any, rowIndex: number) => Recordable | CSSProperties
+        (row: Recordable, column: any, rowIndex: number) => Recordable
       >,
       default: () => undefined
     },
@@ -137,17 +116,19 @@ export default defineComponent({
     },
     tooltipOptions: {
       type: Object as PropType<
-        Pick<
-          ElTooltipProps,
-          | 'effect'
-          | 'enterable'
-          | 'hideAfter'
-          | 'offset'
-          | 'placement'
-          | 'popperClass'
-          | 'popperOptions'
-          | 'showAfter'
-          | 'showArrow'
+        Partial<
+          Pick<
+            ElTooltipProps,
+            | 'effect'
+            | 'enterable'
+            | 'hideAfter'
+            | 'offset'
+            | 'placement'
+            | 'popperClass'
+            | 'popperOptions'
+            | 'showAfter'
+            | 'showArrow'
+          >
         >
       >,
       default: () => ({
@@ -192,19 +173,14 @@ export default defineComponent({
   setup(props, { attrs, emit, slots, expose }) {
     const elTableRef = ref<ComponentRef<typeof ElTable>>()
 
-    // 注册
     onMounted(() => {
       const tableRef = unref(elTableRef)
-      emit('register', tableRef?.$parent, elTableRef)
+      emit('register', tableRef?.$parent, tableRef)
     })
 
     const pageSizeRef = ref(props.pageSize)
-
     const currentPageRef = ref(props.currentPage)
-
-    // useTable传入的props
     const outsideProps = ref<TableProps>({})
-
     const mergeProps = ref<TableProps>({})
 
     const getProps = computed(() => {
@@ -212,33 +188,6 @@ export default defineComponent({
       Object.assign(propsObj, unref(mergeProps))
       return propsObj
     })
-
-    // const sortableEl = ref()
-    // 初始化拖拽
-    // const initDropTable = () => {
-    //   const el = unref(elTableRef)?.$el.querySelector('.el-table__body tbody')
-    //   if (!el) return
-    //   if (unref(sortableEl)) unref(sortableEl).destroy()
-
-    //   sortableEl.value = Sortable.create(el, {
-    //     handle: '.table-move',
-    //     animation: 180,
-    //     onEnd(e: any) {
-    //       emit('sortable-change', e)
-    //     }
-    //   })
-    // }
-
-    // watch(
-    //   () => getProps.value.sortable,
-    //   async (v) => {
-    //     await nextTick()
-    //     v && initDropTable()
-    //   },
-    //   {
-    //     immediate: true
-    //   }
-    // )
 
     const setProps = (props: TableProps = {}) => {
       mergeProps.value = Object.assign(unref(mergeProps), props)
@@ -342,23 +291,21 @@ export default defineComponent({
       return bindValue
     })
 
-    const renderTreeTableColumn = (columnsChildren: TableColumn[]) => {
+    const renderTreeTableColumn = (columnsChildren: TableColumn[]): any => {
       const { align, headerAlign, showOverflowTooltip, preview } = unref(getProps)
       return columnsChildren.map((v) => {
         if (v.hidden) return null
         const props = { ...v } as any
         if (props.children) delete props.children
-
         const children = v.children
 
-        const slots = {
+        const columnSlots: Recordable = {
           default: (...args: any[]) => {
             const data = args[0]
             let isImageUrl = false
             if (preview.length) {
-              isImageUrl = preview.some((item) => (item as string) === v.field)
+              isImageUrl = preview.some((item: string) => item === v.field)
             }
-
             return children && children.length
               ? renderTreeTableColumn(children)
               : props?.slots?.default
@@ -371,39 +318,37 @@ export default defineComponent({
           }
         }
         if (props?.slots?.header) {
-          slots['header'] = (...args: any[]) => props.slots.header(...args)
+          columnSlots.header = (...args: any[]) => props.slots.header(...args)
         }
 
-        return (
-          <ElTableColumn
-            showOverflowTooltip={showOverflowTooltip}
-            align={align}
-            headerAlign={headerAlign}
-            {...props}
-            prop={v.field}
-          >
-            {slots}
-          </ElTableColumn>
+        return h(
+          ElTableColumn,
+          {
+            showOverflowTooltip,
+            align,
+            headerAlign,
+            ...props,
+            prop: v.field
+          },
+          columnSlots
         )
       })
     }
 
     const renderPreview = (url: string) => {
-      return (
-        <div class="flex items-center">
-          <ElImage
-            src={url}
-            fit="cover"
-            class="w-[100%] h-100px"
-            lazy
-            preview-src-list={[url]}
-            preview-teleported
-          />
-        </div>
-      )
+      return h('div', { class: 'flex items-center' }, [
+        h(ElImage, {
+          src: url,
+          fit: 'cover',
+          class: 'w-[100%] h-100px',
+          lazy: true,
+          previewSrcList: [url],
+          previewTeleported: true
+        })
+      ])
     }
 
-    const renderTableColumn = (columnsChildren?: TableColumn[]) => {
+    const renderTableColumn = (columnsChildren?: TableColumn[]): any => {
       const {
         columns,
         reserveIndex,
@@ -419,43 +364,36 @@ export default defineComponent({
       return (columnsChildren || columns).map((v) => {
         if (v.hidden) return null
         if (v.type === 'index') {
-          return (
-            <ElTableColumn
-              type="index"
-              index={
-                v.index ? v.index : (index) => setIndex(reserveIndex, index, pageSize, currentPage)
-              }
-              align={v.align || align}
-              headerAlign={v.headerAlign || headerAlign}
-              label={v.label}
-              width="65px"
-            ></ElTableColumn>
-          )
+          return h(ElTableColumn, {
+            type: 'index',
+            index: v.index
+              ? v.index
+              : (index: number) => setIndex(reserveIndex, index, pageSize, currentPage),
+            align: v.align || align,
+            headerAlign: v.headerAlign || headerAlign,
+            label: v.label,
+            width: '65px'
+          })
         } else if (v.type === 'selection') {
-          return (
-            <ElTableColumn
-              type="selection"
-              reserveSelection={reserveSelection}
-              align={align}
-              headerAlign={headerAlign}
-              width="50"
-            ></ElTableColumn>
-          )
+          return h(ElTableColumn, {
+            type: 'selection',
+            reserveSelection,
+            align,
+            headerAlign,
+            width: '50'
+          })
         } else {
           const props = { ...v } as any
           if (props.children) delete props.children
-
           const children = v.children
 
-          const slots = {
+          const columnSlots: Recordable = {
             default: (...args: any[]) => {
               const data = args[0]
-
               let isImageUrl = false
               if (preview.length) {
-                isImageUrl = preview.some((item) => (item as string) === v.field)
+                isImageUrl = preview.some((item: string) => item === v.field)
               }
-
               return children && children.length
                 ? renderTreeTableColumn(children)
                 : props?.slots?.default
@@ -468,26 +406,26 @@ export default defineComponent({
             }
           }
           if (props?.slots?.header) {
-            slots['header'] = (...args: any[]) => props.slots.header(...args)
+            columnSlots.header = (...args: any[]) => props.slots.header(...args)
           }
 
-          return (
-            <ElTableColumn
-              showOverflowTooltip={showOverflowTooltip}
-              align={align}
-              headerAlign={headerAlign}
-              {...props}
-              prop={v.field}
-            >
-              {slots}
-            </ElTableColumn>
+          return h(
+            ElTableColumn,
+            {
+              showOverflowTooltip,
+              align,
+              headerAlign,
+              ...props,
+              prop: v.field
+            },
+            columnSlots
           )
         }
       })
     }
 
     return () => {
-      const tableSlots = {}
+      const tableSlots: Recordable = {}
       if (getSlot(slots, 'empty')) {
         tableSlots['empty'] = (...args: any[]) => getSlot(slots, 'empty', args)
       }
@@ -495,45 +433,41 @@ export default defineComponent({
         tableSlots['append'] = (...args: any[]) => getSlot(slots, 'append', args)
       }
 
-      // const { sortable } = unref(getProps)
-
-      // const sortableEl = sortable ? (
-      //   <ElTableColumn
-      //     className="table-move cursor-move"
-      //     type="sortable"
-      //     prop="sortable"
-      //     width="60px"
-      //     align="center"
-      //   >
-      //     <Icon icon="ant-design:drag-outlined" />
-      //   </ElTableColumn>
-      // ) : null
-
-      return (
-        <div v-loading={unref(getProps).loading}>
-          {unref(getProps).showAction ? (
-            <TableActions
-              columns={unref(getProps).columns}
-              onChangSize={changSize}
-              onRefresh={refresh}
-            />
-          ) : null}
-          <ElTable ref={elTableRef} data={unref(getProps).data} {...unref(getBindValue)}>
-            {{
-              default: () => renderTableColumn(),
-              ...tableSlots
-            }}
-          </ElTable>
-          {unref(getProps).pagination ? (
-            <ElPagination
-              v-model:pageSize={pageSizeRef.value}
-              v-model:currentPage={currentPageRef.value}
-              class="mt-10px"
-              {...unref(pagination)}
-            ></ElPagination>
-          ) : undefined}
-        </div>
-      )
+      return h('div', [
+        unref(getProps).showAction
+          ? h(TableActions, {
+              columns: unref(getProps).columns,
+              onChangeSize: changSize,
+              onRefresh: refresh
+            })
+          : null,
+        h(
+          ElTable,
+          {
+            ref: elTableRef,
+            data: unref(getProps).data,
+            ...unref(getBindValue)
+          },
+          {
+            default: () => renderTableColumn(),
+            ...tableSlots
+          }
+        ),
+        unref(getProps).pagination
+          ? h(ElPagination, {
+              currentPage: unref(currentPageRef),
+              'onUpdate:currentPage': (val: number) => {
+                currentPageRef.value = val
+              },
+              pageSize: unref(pageSizeRef),
+              'onUpdate:pageSize': (val: number) => {
+                pageSizeRef.value = val
+              },
+              class: 'mt-10px',
+              ...unref(pagination)
+            })
+          : null
+      ])
     }
   }
 })
