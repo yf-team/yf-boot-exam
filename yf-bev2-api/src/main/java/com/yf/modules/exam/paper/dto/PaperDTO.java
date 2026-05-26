@@ -1,5 +1,6 @@
 package com.yf.modules.exam.paper.dto;
 
+import com.yf.base.api.annon.Dict;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public class PaperDTO implements Serializable {
     @Schema(description = "ID")
     private String id;
 
+    @Dict(dictTable = "el_sys_user", dicText = "real_name", dicCode = "id")
     @Schema(description = "用户ID")
     private String userId;
 

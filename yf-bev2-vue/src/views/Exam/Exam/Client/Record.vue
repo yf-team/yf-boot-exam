@@ -23,19 +23,21 @@
         <el-table-column align="center" label="最近分数" prop="lastScore" />
         <el-table-column align="center" label="是否通过">
           <template #default="{ row }">
-            <span v-if="row.passed" style="color: #67c23a">通过</span>
-            <span v-else style="color: #f56c6c">未通过</span>
+            <span v-if="row.passed" class="!text-[#67c23a]">通过</span>
+            <span v-else class="!text-[#f56c6c]">未通过</span>
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作" width="180px">
           <template #default="{ row }">
-            <el-button icon="DocumentCopy" type="primary" @click="toRecord(row.id)"
+            <el-button icon="DocumentCopy" type="primary" @click="toRecord(row)"
               >考试明细
             </el-button>
           </template>
         </el-table-column>
       </template>
     </DataTable>
+
+    <PaperListDialog v-model:visible="dialogVisible" :exam-id="examId" :user-id="userId" />
   </ContentWrap>
 </template>
 
@@ -44,13 +46,9 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { DataTable } from '@/components/DataTable'
 import { onActivated, ref } from 'vue'
 import type { OptionsType, TableQueryType } from '@/components/DataTable/src/types'
-import { useRoute, useRouter } from 'vue-router'
 import { DictListSelect } from '@/components/DictListSelect'
+import PaperListDialog from '@/views/Exam/Exam/components/PaperListDialog.vue'
 
-const { push } = useRouter()
-
-// 获取参数
-const route = useRoute()
 
 // 表格查询参数
 let query = ref<TableQueryType>({
@@ -69,8 +67,15 @@ let options = ref<OptionsType>({
 
 const table = ref()
 
-const toRecord = (id: string) => {
-  push({ name: 'TmplAdd', query: { id: id } })
+
+const dialogVisible = ref(false)
+const examId = ref('')
+const userId = ref('')
+
+const toRecord = (row) => {
+  examId.value = row.examId
+  userId.value = row.userId
+  dialogVisible.value = true
 }
 
 onActivated(() => {

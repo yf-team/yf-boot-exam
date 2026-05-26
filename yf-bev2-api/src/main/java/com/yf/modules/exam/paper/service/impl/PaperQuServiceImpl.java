@@ -43,10 +43,12 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList) {
+    public void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList, int startSort) {
 
         List<PaperQu> paperQuList = new ArrayList<>();
         List<PaperQuAnswer> answerList = new ArrayList<>();
+
+        int sort = startSort;
 
         for (RepoQuDetailDTO dto : quList) {
             PaperQu entity = new PaperQu();
@@ -56,6 +58,7 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
             entity.setScore(perScore);
             entity.setQuId(dto.getId());
             entity.setAnswered(false);
+            entity.setSort(sort);
             paperQuList.add(entity);
 
             List<RepoQuAnswerDTO> answers = dto.getAnswerList();
@@ -73,6 +76,8 @@ public class PaperQuServiceImpl extends ServiceImpl<PaperQuMapper, PaperQu> impl
                 answerList.add(ae);
                 i++;
             }
+
+            sort++;
         }
 
         // 保存题目

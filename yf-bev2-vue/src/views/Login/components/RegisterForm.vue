@@ -36,7 +36,7 @@
         v-model="form.password"
         :placeholder="t('login.passwordPlaceholder')"
         :strength="true"
-        style="width: 100%"
+        class="!w-full"
       />
     </el-form-item>
 
@@ -45,12 +45,12 @@
         v-model="form.checkPassword"
         :placeholder="t('login.passwordPlaceholder')"
         :strength="true"
-        style="width: 100%"
+        class="!w-full"
       />
     </el-form-item>
 
     <el-form-item :label="t('login.code')" prop="captchaValue">
-      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" style="width: 100%" />
+      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" class="!w-full" />
     </el-form-item>
 
     <el-form-item>

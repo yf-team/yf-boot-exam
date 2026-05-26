@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -37,8 +38,23 @@ public class PaperQuDetailDTO implements Serializable {
     @Schema(description = "题目类型")
     private String quType;
 
+    @Schema(description = "是否已答")
+    private Boolean answered;
+
     @Schema(description = "题目内容")
     private String content;
+
+    @Schema(description = "题目内容")
+    private Integer sort;
+
+    @Schema(description = "是否答对")
+    private Boolean isRight;
+
+    @Schema(description = "单题分分值")
+    private BigDecimal score;
+
+    @Schema(description = "实际得分(主观题)")
+    private BigDecimal actualScore;
 
     @Schema(description = "选项列表")
     private List<PaperQuAnswerDetailDTO> answerList;

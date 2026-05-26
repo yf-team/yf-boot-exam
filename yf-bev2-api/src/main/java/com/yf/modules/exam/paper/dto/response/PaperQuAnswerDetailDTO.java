@@ -46,4 +46,7 @@ public class PaperQuAnswerDetailDTO implements Serializable {
     @Schema(description = "选项标签")
     private String abc;
 
+    @Schema(description = "是否正确项")
+    private Boolean isRight;
+
 }

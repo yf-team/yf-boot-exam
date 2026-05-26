@@ -15,20 +15,20 @@
           title="是否通过"
         />
 
-        <div class="filter-item" style="width: 250px; align-items: center; display: flex">
+        <div class="filter-item !w-250px !flex !items-center">
           <div class="w-60px text-14px">分数段：</div>
           <el-input-number
             v-model="query.params.scoreMin"
             :controls="false"
             clearable
-            style="width: 60px"
+            class="!w-60px"
           />
           <span>&nbsp;到&nbsp;</span>
           <el-input-number
             v-model="query.params.scoreMax"
             :controls="false"
             clearable
-            style="width: 60px"
+            class="!w-60px"
           />
         </div>
       </template>
@@ -41,8 +41,8 @@
         <el-table-column align="center" label="最近分数" prop="lastScore" />
         <el-table-column align="center" label="是否通过">
           <template #default="{ row }">
-            <span v-if="row.passed" style="color: #67c23a">通过</span>
-            <span v-else style="color: #f56c6c">未通过</span>
+            <span v-if="row.passed" class="!text-[#67c23a]">通过</span>
+            <span v-else class="!text-[#f56c6c]">未通过</span>
           </template>
         </el-table-column>
         <el-table-column :align="'center'" label="操作" width="180px">

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yf.base.api.api.dto.PagingReqDTO;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperDetailRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 
@@ -66,4 +67,11 @@ public interface PaperService extends IService<Paper> {
      * @return
      */
     PaperRealTimeRespDTO realTimeState(String paperId);
+
+    /**
+     * 完整试卷详情
+     * @param id
+     * @return
+     */
+    PaperDetailRespDTO fullDetail(String id);
 }

@@ -7,7 +7,7 @@
     :render-after-expand="false"
     clearable
     placeholder="请选择部门"
-    style="width: 250px"
+    class="!w-250px"
     @change="handlerChange"
   />
 </template>

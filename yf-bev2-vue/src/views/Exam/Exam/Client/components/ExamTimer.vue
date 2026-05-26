@@ -1,7 +1,7 @@
 <template>
   <div class="count-box">
-    <span style="">剩余考试时间：</span>
-    <span style="color: #409eff"
+    <span>剩余考试时间：</span>
+    <span class="!text-[#409eff]"
       ><CountDown :left-seconds="seconds" @overdue="examTimeout" @warn="showWarn" />
     </span>
   </div>

@@ -3,7 +3,7 @@
     v-model="repoId"
     clearable
     placeholder="请选择题库"
-    style="width: 100%"
+    class="!w-full"
     @change="selectChange"
   >
     <el-option v-for="item in options" :key="item.id" :label="item.title" :value="item.id || ''" />

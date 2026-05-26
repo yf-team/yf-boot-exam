@@ -21,6 +21,7 @@ import com.yf.modules.exam.exam.service.ExamService;
 import com.yf.modules.exam.jobs.HandPaperJob;
 import com.yf.modules.exam.paper.dto.PaperDTO;
 import com.yf.modules.exam.paper.dto.response.PaperCheckRespDTO;
+import com.yf.modules.exam.paper.dto.response.PaperDetailRespDTO;
 import com.yf.modules.exam.paper.dto.response.PaperRealTimeRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
 import com.yf.modules.exam.paper.mapper.PaperMapper;
@@ -204,13 +205,17 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         }
 
         // 循环保存
+        int sort = 1;
         for (ExamRuleDTO rule : ruleList) {
             // 未抽题的
             if (rule.getQuCount() == null || rule.getQuCount() == 0) {
                 continue;
             }
             List<RepoQuDetailDTO> quList = repoQuService.listForPaper(rule.getRepoId(), rule.getQuType(), rule.getQuCount());
-            paperQuService.saveToPaper(paper.getId(), rule.getQuScore(), quList);
+            paperQuService.saveToPaper(paper.getId(), rule.getQuScore(), quList, sort);
+
+            // 序号增加
+            sort+=quList.size();
         }
 
 
@@ -276,6 +281,11 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         respDTO.setHanded(paper.getHandState() != null && paper.getHandState().equals(1));
 
         return respDTO;
+    }
+
+    @Override
+    public PaperDetailRespDTO fullDetail(String id) {
+        return baseMapper.selectPaperDetail(id);
     }
 
     /**

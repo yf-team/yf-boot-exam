@@ -23,4 +23,55 @@
         <result column="update_by" property="updateBy"/>
     </resultMap>
 
+
+    <resultMap id="DetailResultMap" type="com.yf.modules.exam.paper.dto.response.PaperDetailRespDTO">
+        <collection property="quList" column="id" select="selectQuDetail" />
+    </resultMap>
+
+
+    <select id="selectPaperDetail" resultMap="DetailResultMap">
+        SELECT * FROM el_paper WHERE id=#{id}
+    </select>
+
+    <resultMap id="QuResultMap" type="com.yf.modules.exam.paper.dto.response.PaperQuDetailDTO">
+        <id column="id" property="id"/>
+        <result column="qu_id" property="quId"/>
+        <result column="qu_type" property="quType"/>
+        <result column="answered" property="answered"/>
+        <result column="score" property="score"/>
+        <result column="is_right" property="isRight"/>
+        <result column="actual_score" property="actualScore"/>
+        <result column="content" property="content"/>
+        <collection property="answerList" column="{paperId=paper_id,quId=qu_id}" select="selectAnswerList"/>
+    </resultMap>
+
+
+    <resultMap id="AnswerResultMap" type="com.yf.modules.exam.paper.dto.response.PaperQuAnswerDetailDTO">
+        <id column="id" property="id"/>
+        <result column="qu_id" property="quId"/>
+        <result column="answer_id" property="answerId"/>
+        <result column="content" property="content"/>
+        <result column="checked" property="checked"/>
+        <result column="sort" property="sort"/>
+        <result column="abc" property="abc"/>
+        <result column="is_right" property="isRight"/>
+    </resultMap>
+
+    <select id="selectQuDetail" resultMap="QuResultMap">
+        SELECT pq.id, pq.answered, pq.is_right, pq.sort,  pq.score, pq.actual_score, pq.paper_id, pq.qu_id, pq.qu_type, qu.content
+        FROM el_paper_qu pq
+                 LEFT JOIN el_repo_qu qu ON pq.qu_id = qu.id
+        WHERE pq.paper_id = #{id}
+    </select>
+
+    <select id="selectAnswerList" resultMap="AnswerResultMap">
+        SELECT pqa.id, qa.content, qa.is_right, pqa.answer_id, pqa.qu_id, pqa.checked, pqa.sort, pqa.abc
+        FROM el_paper_qu_answer pqa
+                 LEFT JOIN el_repo_qu_answer qa ON pqa.answer_id = qa.id
+        WHERE pqa.paper_id = #{paperId}
+          AND pqa.qu_id = #{quId}
+    </select>
+
+
+
 </mapper>

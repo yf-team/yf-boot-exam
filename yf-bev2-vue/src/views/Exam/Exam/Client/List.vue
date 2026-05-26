@@ -7,10 +7,10 @@
 
       <template #columns>
         <el-table-column label="考试名称" prop="title" />
-        <el-table-column align="center" label="开始时间" prop="startTime" />
-        <el-table-column align="center" label="结束时间" prop="endTime" />
+        <el-table-column align="center" label="开始时间" prop="startTime" show-overflow-tooltip />
+        <el-table-column align="center" label="结束时间" prop="endTime" show-overflow-tooltip />
         <el-table-column align="center" label="创建人" prop="createBy_dictText" />
-        <el-table-column align="center" label="创建时间" prop="createTime" />
+        <el-table-column align="center" label="创建时间" prop="createTime" show-overflow-tooltip />
         <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="{ row }">
             <el-button icon="Position" type="primary" @click="toDetail(row.id)">进入考试</el-button>

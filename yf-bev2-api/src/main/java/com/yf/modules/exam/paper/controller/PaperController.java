@@ -50,6 +50,19 @@ public class PaperController extends BaseController {
     }
 
     /**
+     * 查找详情-带答题结果
+     *
+     * @param reqDTO
+     * @return
+     */
+    @Operation(summary = "查找详情-带答题结果")
+    @PostMapping("/full-detail")
+    public ApiRest<PaperDTO> fullDetail(@RequestBody BaseIdReqDTO reqDTO) {
+        PaperDTO dto = baseService.fullDetail(reqDTO.getId());
+        return super.success(dto);
+    }
+
+    /**
      * 分页查找
      *
      * @param reqDTO

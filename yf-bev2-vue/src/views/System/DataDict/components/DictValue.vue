@@ -9,11 +9,11 @@
       default-expand-all
       row-key="id"
       stripe
-      style="width: 100%"
+      class="!w-full"
     >
       <el-table-column label="名称">
         <template #default="scope">
-          <el-input v-model="scope.row.title" style="width: calc(100% - 150px)" />
+          <el-input v-model="scope.row.title" class="!w-[calc(100%-150px)]" />
         </template>
       </el-table-column>
 
@@ -45,7 +45,7 @@
       </el-table-column>
     </el-table>
 
-    <el-button style="width: 100%; margin-top: 20px" type="primary" @click="handleAdd"
+    <el-button class="!w-full !mt-20px" type="primary" @click="handleAdd"
       >添加新的项目
     </el-button>
   </div>

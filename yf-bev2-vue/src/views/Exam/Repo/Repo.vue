@@ -17,7 +17,7 @@
         <el-table-column label="题库分类" prop="catId_dictText" />
         <el-table-column align="center" label="题目数量" prop="quCount" />
         <el-table-column align="center" label="创建人" prop="createBy_dictText" />
-        <el-table-column align="center" label="创建时间" prop="createTime" />
+        <el-table-column align="center" label="创建时间" prop="createTime" show-overflow-tooltip />
         <el-table-column :align="'center'" label="操作" width="180px">
           <template #default="{ row }">
             <el-button icon="Setting" type="primary" @click="toQuList(row.id)">试题管理</el-button>

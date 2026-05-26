@@ -61,3 +61,12 @@ export const realTimeStateApi = (data: any) => {
     data
   })
 }
+
+
+// 考试详情-试题列表
+export const paperFullDetailApi = (data: any) => {
+  return request.post({
+    url: '/api/exam/paper/paper/full-detail',
+    data
+  })
+}

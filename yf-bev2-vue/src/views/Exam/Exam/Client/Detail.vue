@@ -28,7 +28,7 @@
       <h3>注意事项</h3>
       <div class="alert-box" v-html="detail.content"></div>
     </div>
-    <div style="margin-top: 20px">
+    <div class="!mt-20px">
       <el-button
         size="large"
         type="primary"

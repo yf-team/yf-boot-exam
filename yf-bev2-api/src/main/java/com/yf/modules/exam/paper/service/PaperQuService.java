@@ -23,13 +23,13 @@ public interface PaperQuService extends IService<PaperQu> {
 
 
     /**
-     * 保存试卷题目，用于考试
-     *
+     *  保存试卷题目，用于考试
      * @param paperId
-     * @param perScore 每题的分数
-     * @param quList   试题列表
+     * @param perScore
+     * @param quList
+     * @param startSort
      */
-    void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList);
+    void saveToPaper(String paperId, BigDecimal perScore, List<RepoQuDetailDTO> quList, int startSort);
 
     /**
      * 查找答题卡列表，按题型进行分组

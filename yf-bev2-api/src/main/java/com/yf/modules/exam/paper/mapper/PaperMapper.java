@@ -1,7 +1,9 @@
 package com.yf.modules.exam.paper.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yf.modules.exam.paper.dto.response.PaperDetailRespDTO;
 import com.yf.modules.exam.paper.entity.Paper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +15,10 @@ import com.yf.modules.exam.paper.entity.Paper;
  */
 public interface PaperMapper extends BaseMapper<Paper> {
 
+    /**
+     * 查找试卷详情，包含全部试题及答案
+     * @param id
+     * @return
+     */
+    PaperDetailRespDTO selectPaperDetail(@Param("id") String id);
 }

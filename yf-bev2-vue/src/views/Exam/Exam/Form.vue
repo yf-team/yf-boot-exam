@@ -62,7 +62,7 @@
 
         <el-col :span="24">
           <el-form-item label="考试说明" prop="content">
-            <Editor ref="editorRef" v-model="form.content" height="100px" style="width: 100%" />
+            <Editor ref="editorRef" v-model="form.content" height="100px" class="!w-full" />
           </el-form-item>
         </el-col>
 
@@ -73,11 +73,11 @@
             <repo-select v-model="form.repoId" />
           </el-form-item>
 
-          <div style="font-size: 12px; color: #2d8cf0; padding-bottom: 10px"
+          <div class="!text-12px !text-[#2d8cf0] !pb-10px"
             >* 不需要抽取的题型抽题数量设置为0即可
           </div>
 
-          <el-table :data="form.ruleList" border style="width: 100%">
+          <el-table :data="form.ruleList" border class="!w-full">
             <el-table-column label="题型" prop="quType_dictText" />
             <el-table-column label="总题数" prop="totalCount" />
             <el-table-column label="抽取题数">
@@ -102,7 +102,7 @@
       </el-row>
     </el-form>
 
-    <div style="padding-top: 20px">
+    <div class="!pt-20px">
       <el-button :loading="loading" type="primary" @click="handleSave(formRef)">保存</el-button>
     </div>
   </ContentWrap>

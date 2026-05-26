@@ -55,7 +55,7 @@
           >导出
         </el-button>
 
-        <el-dropdown v-if="selectedIds.length > 0 && batch" style="margin-left: 10px">
+        <el-dropdown v-if="selectedIds.length > 0 && batch" class="!ml-10px">
           <el-button plain type="primary">
             批量操作
             <el-icon class="el-icon--right">
@@ -81,7 +81,7 @@
       :data="records"
       :row-key="rowKey || 'id'"
       stripe
-      style="width: 100%"
+      class="!w-full"
       @select="rowSelect"
       @selection-change="selection"
     >

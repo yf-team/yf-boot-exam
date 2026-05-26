@@ -12,7 +12,7 @@
       </el-card>
     </el-col>
     <el-col :span="4">
-      <el-card style="height: 70vh">
+      <el-card class="!h-70vh">
         <div v-for="card in cardList" :key="card?.quType">
           <h3>{{ card?.quType_dictText }}</h3>
           <el-tag
@@ -29,7 +29,7 @@
       </el-card>
     </el-col>
     <el-col :span="20">
-      <el-card style="height: 70vh">
+      <el-card class="!h-70vh">
         <h3> {{ detail.quType_dictText }}</h3>
         <div v-html="detail.content"></div>
         <div>
@@ -52,7 +52,7 @@
           </div>
         </div>
 
-        <div style="text-align: center; padding-top: 20px">
+        <div class="!text-center !pt-20px">
           <el-button :disabled="!hasPrev" icon="Back" size="large" type="primary" @click="prevQu"
             >上一题
           </el-button>

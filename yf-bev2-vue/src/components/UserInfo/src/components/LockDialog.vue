@@ -18,7 +18,7 @@
         <el-input v-model="form.password" type="password" :show-password="true" />
       </el-form-item>
       <el-form-item>
-        <el-button style="width: 100%" type="primary" @click="handleLock(formRef)">{{
+        <el-button class="!w-full" type="primary" @click="handleLock(formRef)">{{
           t('lock.lock')
         }}</el-button>
       </el-form-item>

@@ -22,7 +22,7 @@
     </div>
 
     <div class="header-box" ref="treeHeader">
-      <div class="tree-header" style="flex-grow: 1"> 菜单名称 </div>
+      <div class="tree-header !flex-1"> 菜单名称 </div>
       <div class="tree-header" :style="calcWidth(0, true)"> 菜单类型 </div>
       <div class="tree-header" :style="calcWidth(1, false)"> 权限标识 </div>
       <div class="tree-header" :style="calcWidth(2, false)"> 菜单路由 </div>
@@ -47,7 +47,7 @@
     >
       <template #default="{ data }">
         <div class="tree-box">
-          <div class="tree-item" style="flex-grow: 1">
+          <div class="tree-item !flex-1">
             <Icon v-if="data.metaIcon" :icon="data.metaIcon" />
             <span>&nbsp;{{ data.metaTitle }}</span>
           </div>

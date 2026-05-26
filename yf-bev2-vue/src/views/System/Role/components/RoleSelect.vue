@@ -4,7 +4,7 @@
     :placeholder="props.title"
     clearable
     multiple
-    style="width: 100%"
+    class="!w-full"
     @change="selectChange"
   >
     <el-option v-for="item in options" :key="item.id" :label="item.roleName" :value="item.id" />

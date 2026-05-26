@@ -92,7 +92,7 @@ const handleRefresh = () => {
         <el-table-column align="center" label="题型" prop="quType_dictText" />
         <el-table-column align="center" label="难度等级" prop="difficultyLevel_dictText" />
         <el-table-column align="center" label="创建人" prop="createBy_dictText" />
-        <el-table-column align="center" label="创建时间" prop="createTime" />
+        <el-table-column align="center" label="创建时间" prop="createTime" show-overflow-tooltip />
       </template>
     </DataTable>
 

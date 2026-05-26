@@ -41,11 +41,11 @@
       <el-col v-if="form.quType" :span="24">
         <el-divider />
 
-        <div style="padding-bottom: 10px">
+        <div class="!pb-10px">
           <el-button type="primary" @click="addAnswer">添加选项</el-button>
         </div>
 
-        <el-table :data="form.answerList" border style="width: 100%">
+        <el-table :data="form.answerList" border class="!w-full">
           <el-table-column label="序号" width="180">
             <template #default="{ $index }">第{{ $index + 1 }}项</template>
           </el-table-column>

@@ -32,7 +32,7 @@
     </el-form-item>
 
     <el-form-item :label="t('login.code')" prop="captchaValue">
-      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" style="width: 100%" />
+      <input-captcha v-model="form" :placeholder="t('login.codePlaceholder')" class="!w-full" />
     </el-form-item>
 
     <el-form-item>
@@ -53,7 +53,7 @@
       </div>
     </el-form-item>
 
-    <el-form-item style="display: none">
+    <el-form-item class="!hidden">
       <el-divider content-position="center">其它登录方式</el-divider>
 
       <div class="flex justify-between w-[100%]">

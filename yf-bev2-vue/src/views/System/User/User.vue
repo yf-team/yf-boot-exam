@@ -15,7 +15,7 @@
           class="filter-item"
           clearable
           placeholder="姓名/账号"
-          style="width: 200px"
+          class="!w-200px"
         />
       </template>
 
