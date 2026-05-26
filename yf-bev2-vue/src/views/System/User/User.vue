@@ -12,10 +12,9 @@
         <RoleSelect v-model="query.params.roleIds" class="filter-item" title="搜索角色" />
         <el-input
           v-model="query.params.userName"
-          class="filter-item"
+          class="filter-item !w-200px"
           clearable
           placeholder="姓名/账号"
-          class="!w-200px"
         />
       </template>
 
