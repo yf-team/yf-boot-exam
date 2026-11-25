@@ -142,3 +142,11 @@ pnpm run build:pro
 ![系统截图](https://cdn.yfhl.net/be2/s6.png)   
 ![系统截图](https://cdn.yfhl.net/be2/s7.png)   
 ![系统截图](https://cdn.yfhl.net/be2/s8.png)   
+
+
+
+# 免安装使用类似功能
+
+如果您觉得安装此系统非常麻烦，且功能需求较为单一，可以直接使用云帆轻工具，云帆轻工具不做大而全的系统：签到、报名、问卷、抽奖、分班、准考证、证书、溯源码、打卡、AI 题库、刷题训练、在线考试，每个工具只解决一个具体问题。无需申请、无需下载 App，点开就能创建，把二维码发出去就能收数据。
+
+云帆轻工具：[https://yfbox.cn](https://yfbox.cn)
